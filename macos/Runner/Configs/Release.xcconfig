@@ -1,0 +1,11 @@
+#include "../../Flutter/Flutter-Release.xcconfig"
+#include "Warnings.xcconfig"
+
+// flutter_tools builds release and profile for a generic destination, which
+// defaults to a universal binary; every XClient artifact ships one slice.
+// :default= keeps an unlisted host from resolving ARCHS to the empty string.
+XClient_HOST_ARCH_arm64e = arm64
+XClient_HOST_ARCH_arm64 = arm64
+XClient_HOST_ARCH_x86_64 = x86_64
+ARCHS = $(XClient_HOST_ARCH_$(NATIVE_ARCH_ACTUAL):default=$(NATIVE_ARCH))
+

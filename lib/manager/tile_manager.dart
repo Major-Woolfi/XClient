@@ -1,0 +1,51 @@
+import 'dart:async';
+
+import 'package:xclient/common/app_localizations.dart';
+import 'package:xclient/enum/enum.dart';
+import 'package:xclient/plugins/app.dart';
+import 'package:xclient/plugins/tile.dart';
+import 'package:xclient/providers/providers.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class TileManager extends ConsumerStatefulWidget {
+  final Widget child;
+
+  const TileManager({super.key, required this.child});
+
+  @override
+  ConsumerState<TileManager> createState() => _TileContainerState();
+}
+
+class _TileContainerState extends ConsumerState<TileManager> with TileListener {
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+
+  bool get isStart => ref.read(isStartProvider);
+
+  @override
+  Future<void> onStart() async {
+    if (isStart && ref.read(coreStatusProvider) == CoreStatus.connected) {
+      return;
+    }
+    unawaited(ref.read(setupActionProvider.notifier).setRunning(true));
+    unawaited(app?.tip(currentAppLocalizations.startVpn));
+    super.onStart();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tile?.addListener(this);
+  }
+
+  @override
+  void dispose() {
+    tile?.removeListener(this);
+    super.dispose();
+  }
+}
+
+

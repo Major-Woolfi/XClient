@@ -1,0 +1,9 @@
+[submodule "core/Clash.Meta"]
+	path = core/Clash.Meta
+	url = https://github.com/Major-Woolfi/Clash.Meta.git
+	branch = FlClash
+[submodule "plugins/prism_ui"]
+	path = plugins/prism_ui
+	url = https://github.com/Major-Woolfi/prism_ui.git
+	branch = main
+

@@ -1,2 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# freezed emits lines of trailing spaces, and generated code is never edited by hand.
+lib/**/generated/** -whitespace

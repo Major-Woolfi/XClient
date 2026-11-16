@@ -1,0 +1,32 @@
+import 'package:xclient/common/proxy.dart';
+import 'package:xclient/providers/state.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class ProxyManager extends ConsumerStatefulWidget {
+  final Widget child;
+
+  const ProxyManager({super.key, required this.child});
+
+  @override
+  ConsumerState createState() => _ProxyManagerState();
+}
+
+class _ProxyManagerState extends ConsumerState<ProxyManager> {
+  @override
+  void initState() {
+    super.initState();
+    ref.listenManual(proxyStateProvider, (prev, next) {
+      if (prev != next) {
+        systemProxyQueue?.apply(next);
+      }
+    }, fireImmediately: true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
+
+

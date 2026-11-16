@@ -1,0 +1,6 @@
+id=xclient_mitm_ca
+name=XClient MITM CA
+version=1
+versionCode=1
+author=XClient
+description=Adds XClient's MITM certificate to the system's trusted CAs.

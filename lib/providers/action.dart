@@ -1,0 +1,48 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart' show CancelToken, DioException;
+import 'package:xclient/common/app_data.dart';
+import 'package:xclient/common/boot_guard.dart';
+import 'package:xclient/common/common.dart';
+import 'package:xclient/common/mitm_module.dart';
+import 'package:xclient/common/system_dns.dart';
+import 'package:xclient/core/core.dart';
+import 'package:xclient/database/database.dart';
+import 'package:xclient/enum/enum.dart';
+import 'package:xclient/models/models.dart';
+import 'package:xclient/plugins/app.dart';
+import 'package:xclient/plugins/service.dart';
+import 'package:xclient/providers/actions/system_exit.dart';
+import 'package:xclient/providers/mitm.dart';
+import 'package:xclient/providers/providers.dart';
+import 'package:xclient/state.dart';
+import 'package:xclient/ui/ui.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart' show compute, listEquals;
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' show basename, basenameWithoutExtension, join;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+part 'actions/common.dart';
+part 'actions/setup.dart';
+part 'actions/backup.dart';
+part 'actions/core.dart';
+part 'actions/system.dart';
+part 'actions/store.dart';
+part 'actions/theme.dart';
+part 'actions/proxies.dart';
+part 'actions/profiles.dart';
+part 'actions/scripts.dart';
+part 'actions/mitm_modules.dart';
+part 'actions/clash_providers.dart';
+part 'actions/icon_sets.dart';
+part 'actions/geo_resource.dart';
+part 'actions/resources.dart';
+part 'actions/updating.dart';
+part 'generated/action.g.dart';
+
+

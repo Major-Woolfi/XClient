@@ -1,0 +1,163 @@
+import 'dart:async';
+
+import 'package:xclient/common/common.dart';
+import 'package:xclient/enum/enum.dart';
+import 'package:xclient/providers/providers.dart';
+import 'package:xclient/state.dart';
+import 'package:xclient/ui/icons/icons.dart';
+import 'package:xclient/widgets/widgets.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:prism_ui/prism_ui.dart';
+
+class CoreStatusButton extends ConsumerStatefulWidget {
+  const CoreStatusButton({super.key});
+
+  @override
+  ConsumerState<CoreStatusButton> createState() => _CoreStatusButtonState();
+}
+
+class _CoreStatusButtonState extends ConsumerState<CoreStatusButton> {
+  static const _holdDuration = Duration(milliseconds: 600);
+
+  Timer? _holdTimer;
+  CoreStatus _status = CoreStatus.disconnected;
+
+  @override
+  void initState() {
+    super.initState();
+    _status = ref.read(coreStatusProvider);
+    ref.listenManual(coreStatusProvider, (_, next) {
+      _onStatusChanged(next);
+    });
+  }
+
+  @override
+  void dispose() {
+    _holdTimer?.cancel();
+    super.dispose();
+  }
+
+  void _onStatusChanged(CoreStatus next) {
+    setState(() {
+      _status = next;
+      switch (next) {
+        case CoreStatus.connecting:
+          _holdTimer ??= Timer(_holdDuration, () {
+            if (mounted) {
+              setState(() {
+                _holdTimer = null;
+              });
+            }
+          });
+          break;
+        case CoreStatus.disconnected:
+          _holdTimer?.cancel();
+          _holdTimer = null;
+          break;
+        case CoreStatus.connected:
+          break;
+      }
+    });
+  }
+
+  Future<void> _handleConnection() async {
+    if (_holdTimer != null) {
+      return;
+    }
+    final coreStatus = ref.read(coreStatusProvider);
+    if (coreStatus == CoreStatus.connecting) {
+      return;
+    }
+    final tip = coreStatus == CoreStatus.connected
+        ? context.appLocalizations.forceRestartCoreTip
+        : context.appLocalizations.restartCoreTip;
+    final res = await dialogs.showMessage(message: TextSpan(text: tip));
+    if (res != true || !mounted) {
+      return;
+    }
+    try {
+      await ref.read(coreActionProvider.notifier).restartCore();
+    } catch (error) {
+      dialogs.showBanner(error.toString(), level: BannerLevel.error);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final coreStatus = _holdTimer != null ? CoreStatus.connecting : _status;
+    final appLocalizations = context.appLocalizations;
+    final colorScheme = context.colorScheme;
+    final statusColor = switch (coreStatus) {
+      CoreStatus.connecting => null,
+      CoreStatus.connected => colorScheme.successContainer,
+      CoreStatus.disconnected => colorScheme.errorContainer,
+    };
+    final statusForeground = switch (coreStatus) {
+      CoreStatus.connecting => null,
+      CoreStatus.connected => colorScheme.onSuccessContainer,
+      CoreStatus.disconnected => colorScheme.onErrorContainer,
+    };
+    final pane = TonalButtonTheme.glassOf(context) && statusColor != null
+        ? LiquidGlassStyle.tinted(colorScheme, statusColor)
+        : null;
+    final iconOnly =
+        coreStatus == CoreStatus.connected || ViewScope.isMobileOf(context);
+    final icon = switch (coreStatus) {
+      CoreStatus.connecting => ActivityIndicator(
+        color: iconOnly ? null : colorScheme.onPrimary,
+      ),
+      CoreStatus.connected => const GlyphIcon(AppGlyphs.check, fill: 1),
+      CoreStatus.disconnected => const GlyphIcon(AppGlyphs.refresh, fill: 1),
+    };
+    return Tooltip(
+      message: appLocalizations.coreStatus,
+      child: FadeScaleBox(
+        alignment: Alignment.centerRight,
+        child: iconOnly
+            ? IconButton.filled(
+                key: ValueKey(coreStatus),
+                style: ButtonStyle.from(
+                  backgroundColor: pane == null
+                      ? statusColor
+                      : Colors.transparent,
+                  foregroundColor: statusForeground,
+                  backgroundBuilder: pane == null
+                      ? null
+                      : LiquidGlass.buttonBackground((_) => pane),
+                  pressLook: PressLook.none,
+                ),
+                onPressed: _handleConnection,
+                icon: icon,
+              )
+            : FilledButton.icon(
+                key: ValueKey(coreStatus),
+                onPressed: _handleConnection,
+                style: ButtonStyle.from(
+                  backgroundColor: pane == null
+                      ? statusColor
+                      : Colors.transparent,
+                  foregroundColor: statusForeground,
+                  backgroundBuilder: pane == null
+                      ? null
+                      : LiquidGlass.buttonBackground((_) => pane),
+                  pressLook: PressLook.none,
+                ),
+                icon: SizedBox.square(
+                  dimension: globalState.measure.textHeight(
+                    AppTextStyle.subheadline,
+                  ),
+                  child: icon,
+                ),
+                label: Text(switch (coreStatus) {
+                  CoreStatus.connecting => appLocalizations.connecting,
+                  CoreStatus.connected => appLocalizations.connected,
+                  CoreStatus.disconnected => appLocalizations.disconnected,
+                }),
+              ),
+      ),
+    );
+  }
+}
+
+

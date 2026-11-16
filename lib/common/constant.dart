@@ -1,0 +1,211 @@
+// ignore_for_file: constant_identifier_names
+
+import 'dart:io';
+import 'dart:math';
+
+import 'package:collection/collection.dart';
+import 'package:xclient/common/common.dart';
+import 'package:xclient/enum/enum.dart';
+import 'package:xclient/models/models.dart';
+import 'package:flutter/widgets.dart';
+
+const appName = 'XClient';
+const appHelperService = 'XClientHelperService';
+const coreManifestName = 'manifest.json';
+const browserUa =
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+const packageName = 'com.xclient';
+final unixSocketPath = '/tmp/XClientSocket_${Random().nextInt(10000)}.sock';
+final windowsPipeName = '\\\\.\\pipe\\XClientCore_${_randomPipeId()}';
+const helperPort = 47890;
+const helperPortKey =
+    'SYSTEM\\CurrentControlSet\\Services\\$appHelperService\\Runtime';
+const helperPortValue = 'Port';
+const helperSocketPath = '/run/XClient/helper.sock';
+const helperUnitPath = '/etc/systemd/system/XClient-helper.service';
+const helperProtocolVersionHeader = 'x-XClient-helper-protocol';
+final helperProtocolVersion = Platform.isWindows ? '8' : '6';
+const maxTextScale = 1.4;
+const minTextScale = 0.8;
+
+const watchExecution = false;
+
+const safeModeBuild = bool.fromEnvironment('SAFE_MODE');
+
+/// The bundled core has no MITM, so this stays off until one that has it ships.
+/// Not const so tests can cover both states.
+bool mitmFeature = const bool.fromEnvironment('FEATURE_MITM');
+
+const disclaimerVersion = 1;
+
+String _randomPipeId() {
+  final random = Random.secure();
+  return List.generate(
+    16,
+    (_) => random.nextInt(256).toRadixString(16).padLeft(2, '0'),
+  ).join();
+}
+
+/// Depends on [context]'s text scaler, so the caller rebuilds when the system
+/// font scale changes.
+double systemTextScaleOf(BuildContext context) {
+  MediaQuery.textScalerOf(context);
+  return WidgetsBinding.instance.platformDispatcher.textScaleFactor;
+}
+
+/// How long, in milliseconds, the Core may spend on one manual delay test. It
+/// spends this twice in the worst case - once queueing for a slot, once on the
+/// probe itself - so the guard below has to outlast twice the longest option.
+const delayTestTimeoutOptions = [500, 1000, 2000, 5000, 8000];
+
+const defaultDelayTestTimeout = 8000;
+
+const delayTestGuardDuration = Duration(seconds: 30);
+
+const delayTimedOutValue = -1;
+
+const probeTimeoutDuration = Duration(seconds: 10);
+
+/// Outlasts the Core's one-second pick poll (`routePollInterval` in
+/// core/route.go), so groups re-picking on neighbouring polls cost one route
+/// check.
+const probeSettleDuration = Duration(milliseconds: 1500);
+
+/// Spans a config load, whose providers, rule sets and url-test picks land
+/// over a few seconds, so an exit moving with each costs one probe more.
+const probeThrottleDuration = Duration(seconds: 5);
+
+/// Covers a start, which moves the route three times within about 150 ms
+/// (`proxied`, then the listeners, then the Android TUN).
+const probeMoveSettleDuration = Duration(milliseconds: 300);
+
+const downloadTimeoutDuration = Duration(seconds: 20);
+
+/// A healthy source answers within a second; past this the outbound is down.
+const outboundIpTimeoutDuration = Duration(seconds: 6);
+
+/// The Core may spend a method's own timeout twice, once queueing for a probe
+/// slot and once on the request, before the transport is considered
+/// unresponsive. [budgetFactor] covers methods that spend it more than once.
+Duration coreGuardFor(int timeout, {int budgetFactor = 2}) =>
+    Duration(milliseconds: timeout * budgetFactor) + const Duration(seconds: 5);
+
+/// Kept in step with serviceSweepBudgetFactor in core/service_check.go.
+const serviceSweepBudgetFactor = 6;
+
+const coreConnectionWaitDuration = Duration(seconds: 10);
+
+/// Keep at or below the Core's delay-test concurrency (`delayTestConcurrency`
+/// in core/delay.go).
+const maxConcurrentDelayTests = 32;
+const maxConcurrentImports = 4;
+const maxConcurrentIconLoads = 8;
+
+const renderThrottleDuration = Duration(milliseconds: 300);
+const defaultUpdateDuration = Duration(days: 1);
+const MMDB = 'GEOIP.metadb';
+const ASN = 'ASN.mmdb';
+const GEOIP = 'GEOIP.dat';
+const GEOSITE = 'GEOSITE.dat';
+
+final double kHeaderHeight = getWindowHeaderHeight(
+  isDesktop: system.isDesktop,
+  isMacOS: system.isMacOS,
+);
+const profilesDirectoryName = 'profiles';
+const providersDirectoryName = 'providers';
+const proxiesProviderDirectoryName = 'proxies';
+const rulesProviderDirectoryName = 'rules';
+
+/// The Core reads the CA here, and map-local files only from [mitmResourcesDirectoryName].
+const mitmDirectoryName = 'mitm';
+const mitmModulesDirectoryName = 'modules';
+const mitmResourcesDirectoryName = 'resources';
+
+const localhost = '127.0.0.1';
+const clashConfigKey = 'clash_config';
+const configKey = 'config';
+const systemDnsRecordKey = 'system_dns_record';
+const bootRecordKey = 'boot_record';
+const appliedConfigMd5Key = 'applied_config_md5';
+const defaultSystemDnsFallback = '223.5.5.5';
+const repository = 'Major-Woolfi/XClient';
+const maxMobileWidth = 600;
+const maxLaptopWidth = 840;
+const defaultTestUrl = 'https://www.gstatic.com/generate_204';
+
+const shareLinkSchemes = {
+  'hysteria',
+  'hysteria2',
+  'hy2',
+  'hysteria2+realm',
+  'hy2+realm',
+  'tuic',
+  'trojan',
+  'vless',
+  'vmess',
+  'ss',
+  'ssr',
+  'socks',
+  'socks5',
+  'socks5h',
+  'anytls',
+  'mierus',
+};
+
+const stringListEquality = ListEquality<String>();
+const intListEquality = ListEquality<int>();
+const ruleListEquality = ListEquality<Rule>();
+const scriptListEquality = ListEquality<Script>();
+const mitmModuleListEquality = ListEquality<MitmModule>();
+const profileListEquality = ListEquality<Profile>();
+const proxyGroupsEquality = ListEquality<ProxyGroup>();
+const customProxiesEquality = ListEquality<CustomProxy>();
+const clashProviderListEquality = ListEquality<ClashProvider>();
+const iconSetListEquality = ListEquality<IconSet>();
+const hotKeyActionListEquality = ListEquality<HotKeyAction>();
+const stringAndStringMapEntryListEquality =
+    ListEquality<MapEntry<String, String>>();
+const keyboardModifierListEquality = SetEquality<KeyboardModifier>();
+
+const proxiesListStoreKey = PageStorageKey<String>('proxies_list');
+const toolsStoreKey = PageStorageKey<String>('tools');
+const profilesStoreKey = PageStorageKey<String>('profiles');
+
+const defaultPrimaryColor = 0xFF007AFF;
+
+const maxLogsLength = 5000;
+const maxRequestsLength = 2000;
+const maxDnsQueriesLength = 3000;
+const pausedMaxLogsLength = maxLogsLength * 2;
+const pausedMaxRequestsLength = maxRequestsLength * 2;
+const pausedMaxDnsQueriesLength = maxDnsQueriesLength * 2;
+
+const trafficSampleLength = 30;
+
+// iOS 27's system colors but the deeper blue of earlier iOS, in the order of the
+// macOS accent colors.
+const defaultPrimaryColors = [
+  defaultPrimaryColor,
+  0xFFCB30E0,
+  0xFFFF2D55,
+  0xFFFF383C,
+  0xFFFF8D28,
+  0xFFFFCC00,
+  0xFF34C759,
+  0xFF8E8E93,
+];
+
+const scriptTemplate = '''
+const main = (config) => {
+  return config;
+}''';
+
+const backupDatabaseName = 'database.sqlite';
+const configJsonName = 'config.json';
+
+
+
+
+
+
