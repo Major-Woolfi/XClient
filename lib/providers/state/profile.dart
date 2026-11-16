@@ -39,7 +39,7 @@ Future<ClashConfig> clashConfig(Ref ref, int profileId) async {
   }
   final outbounds = await ref
       .read(coreHandlerProvider)
-      .getProfileOutbounds(profileId);
+      .getProfileOutboundsForProfile(profileId);
   return clashConfigTask(outbounds);
 }
 

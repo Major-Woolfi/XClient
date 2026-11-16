@@ -1823,6 +1823,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("예"),
     "zhCN": MessageLookupByLibrary.simpleMessage("중국어 간체"),
+    "xrayConfig": MessageLookupByLibrary.simpleMessage("XRay 구성"),
+    "xrayListenPort": MessageLookupByLibrary.simpleMessage("수신 포트"),
+    "xrayLogLevel": MessageLookupByLibrary.simpleMessage("로그 수준"),
+    "xrayDnsServers": MessageLookupByLibrary.simpleMessage("DNS 서버"),
+    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage("라우팅 규칙"),
+    "xrayOutbounds": MessageLookupByLibrary.simpleMessage("아웃바운드"),
+    "xraySave": MessageLookupByLibrary.simpleMessage("저장"),
+    "xrayReset": MessageLookupByLibrary.simpleMessage("초기화"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("변경 사항을 XRay 코어 구성에 적용"),
   };
 }
 

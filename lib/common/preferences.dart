@@ -191,6 +191,9 @@ class Preferences {
     final sharedPreferencesIns = await _store.value;
     await sharedPreferencesIns?.clear();
   }
+
+  /// Прямой доступ к хранилищу (для специфических случаев, например CoreManager).
+  Future<SharedPreferences?> get store async => await _store.value;
 }
 
 final preferences = Preferences();

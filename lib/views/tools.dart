@@ -14,6 +14,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/advanced.dart';
+import 'config/core_kernel.dart';
+import 'config/xray_config.dart';
 import 'developer.dart';
 import 'disclaimer.dart';
 import 'theme.dart';
@@ -56,6 +58,8 @@ class _ToolViewState extends ConsumerState<ToolsView> {
         if (system.isAndroid) const _AccessItem(),
         const _BackupItem(),
         const _AdvancedConfigItem(),
+        const _CoreKernelItem(),
+        const _XRayConfigItem(),
         const _GeneralItem(),
       ],
     );
@@ -203,6 +207,32 @@ class _AdvancedConfigItem extends StatelessWidget {
       leading: const GlyphIcon(AppGlyphs.wrench),
       title: Text(context.appLocalizations.advancedConfig),
       widget: const AdvancedConfigView(),
+    );
+  }
+}
+
+class _CoreKernelItem extends StatelessWidget {
+  const _CoreKernelItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const GlyphIcon(AppGlyphs.cpu),
+      title: Text(context.appLocalizations.coreKernel),
+      widget: const CoreKernelView(),
+    );
+  }
+}
+
+class _XRayConfigItem extends StatelessWidget {
+  const _XRayConfigItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const GlyphIcon(AppGlyphs.vpn),
+      title: Text(context.appLocalizations.xrayConfig),
+      widget: const XRayConfigView(),
     );
   }
 }

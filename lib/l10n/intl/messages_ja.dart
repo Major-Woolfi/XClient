@@ -1851,6 +1851,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("はい"),
     "zhCN": MessageLookupByLibrary.simpleMessage("簡体字中国語"),
+    "xrayConfig": MessageLookupByLibrary.simpleMessage("XRay 設定"),
+    "xrayListenPort": MessageLookupByLibrary.simpleMessage("リッスンポート"),
+    "xrayLogLevel": MessageLookupByLibrary.simpleMessage("ログレベル"),
+    "xrayDnsServers": MessageLookupByLibrary.simpleMessage("DNSサーバー"),
+    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage("ルーティングルール"),
+    "xrayOutbounds": MessageLookupByLibrary.simpleMessage("アウトバウンド"),
+    "xraySave": MessageLookupByLibrary.simpleMessage("保存"),
+    "xrayReset": MessageLookupByLibrary.simpleMessage("リセット"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("変更を XRay コア設定に適用"),
   };
 }
 

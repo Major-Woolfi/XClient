@@ -2332,6 +2332,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("Oui"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Chinois simplifié"),
+    "xrayConfig": MessageLookupByLibrary.simpleMessage("Configuration XRay"),
+    "xrayListenPort": MessageLookupByLibrary.simpleMessage("Port d'écoute"),
+    "xrayLogLevel": MessageLookupByLibrary.simpleMessage("Niveau de journalisation"),
+    "xrayDnsServers": MessageLookupByLibrary.simpleMessage("Serveurs DNS"),
+    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage("Règles de routage"),
+    "xrayOutbounds": MessageLookupByLibrary.simpleMessage("Connexions sortantes"),
+    "xraySave": MessageLookupByLibrary.simpleMessage("Enregistrer"),
+    "xrayReset": MessageLookupByLibrary.simpleMessage("Réinitialiser"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
+      "Appliquer les modifications à la configuration du cœur XRay",
+    ),
   };
 }
 

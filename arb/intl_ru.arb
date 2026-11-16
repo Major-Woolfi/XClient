@@ -1076,7 +1076,23 @@
   "fakeipFilterDesc": "Эти домены получают реальные IP вместо Fake-IP. В режиме whitelist Fake-IP получают только они.",
   "fallbackFilterGeositeDesc": "Домены из этих категорий GeoSite сразу разрешаются через Fallback.",
   "fallbackFilterIpcidrDesc": "Если Nameserver возвращает IP из этих диапазонов, используется ответ Fallback.",
-  "fallbackFilterDomainDesc": "Эти домены сразу разрешаются через Fallback."
+  "fallbackFilterDomainDesc": "Эти домены сразу разрешаются через Fallback.",
+  "coreKernel": "Ядро",
+  "activeCore": "Активное ядро",
+  "coreUnknown": "Неизвестно",
+  "coreNotInstalled": "Не установлено",
+  "coreVersions": "Версии",
+  "coreNoVersions": "Нет доступных версий",
+  "coreInstalled": "Установлено",
+  "coreNotInstalledShort": "Не установлено",
+  "preRelease": "Предварительная",
+  "autoUpdate": "Автообновление",
+  "autoUpdateTip": "Автоматически скачивать новые версии ядра",
+  "install": "Установить",
+  "installing": "Установка...",
+  "use": "Использовать",
+  "active": "Активно",
+  "retry": "Повторить"
 }
 
 

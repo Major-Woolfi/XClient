@@ -15,7 +15,7 @@ class CoreAction extends _$CoreAction {
 
     final version = ref.read(versionProvider);
     if (!isInit) {
-      await _core.init(version);
+      await _core.initCore(version);
     } else {
       await ref.read(proxiesActionProvider.notifier).updateGroups();
       await ref.read(providersProvider.notifier).syncProviders();

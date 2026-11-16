@@ -505,7 +505,7 @@ class SetupAction extends _$SetupAction {
         : null;
     final hasScript = scriptContent?.isNotEmpty == true;
     final profileBase = !isCustom && !hasScript
-        ? await _core.getProfileBase(profileId)
+        ? await _core.getProfileBaseForProfile(profileId)
         : null;
     Map<String, dynamic> rawConfig = isCustom
         ? {
@@ -515,7 +515,7 @@ class SetupAction extends _$SetupAction {
               groups: setupState.proxyGroups,
             ),
           }
-        : profileBase?.base.config ?? await _core.readConfig(profileId);
+        : profileBase?.base.config ?? await _core.readProfileConfig(profileId);
     final proxyGroups = isCustom ? setupState.proxyGroups : <ProxyGroup>[];
     final rules = isCustom ? setupState.rules : <Rule>[];
     if (hasScript) {
@@ -801,6 +801,15 @@ class SetupAction extends _$SetupAction {
             }
           }
           try {
+            // Auto-detect core type from profile config and switch if needed.
+            if (profileId != null) {
+              final profilePath =
+                  await appPath.getProfilePath(profileId.toString());
+              final profileFile = File(profilePath);
+              if (await profileFile.exists()) {
+                await _core.detectAndSwitchCore(profilePath);
+              }
+            }
             await _core.setupConfig(
               params: setupParams,
               preloadInvoke: preloadInvoke,

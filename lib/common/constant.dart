@@ -153,6 +153,9 @@ const shareLinkSchemes = {
   'mierus',
 };
 
+/// XRay-native link schemes (vmess://, vless://, trojan://, ss://, ssconf://).
+const xrayLinkSchemes = {'vmess', 'vless', 'trojan', 'shadowsocks', 'ss', 'ssconf'};
+
 const stringListEquality = ListEquality<String>();
 const intListEquality = ListEquality<int>();
 const ruleListEquality = ListEquality<Rule>();

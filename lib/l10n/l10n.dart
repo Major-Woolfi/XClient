@@ -530,6 +530,11 @@ class AppLocalizations {
     return Intl.message('Update', name: 'update', desc: '', args: []);
   }
 
+  /// `Version`
+  String get version {
+    return Intl.message('Version', name: 'version', desc: '', args: []);
+  }
+
   /// `Add`
   String get add {
     return Intl.message('Add', name: 'add', desc: '', args: []);
@@ -9068,6 +9073,146 @@ class AppLocalizations {
     return Intl.message(
       'These domains are resolved by Fallback directly.',
       name: 'fallbackFilterDomainDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Core`
+  String get coreKernel {
+    return Intl.message('Core', name: 'coreKernel', desc: '', args: []);
+  }
+
+  /// `Active core`
+  String get activeCore {
+    return Intl.message('Active core', name: 'activeCore', desc: '', args: []);
+  }
+
+  /// `Unknown`
+  String get coreUnknown {
+    return Intl.message('Unknown', name: 'coreUnknown', desc: '', args: []);
+  }
+
+  /// `Not installed`
+  String get coreNotInstalled {
+    return Intl.message(
+      'Not installed',
+      name: 'coreNotInstalled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Versions`
+  String get coreVersions {
+    return Intl.message('Versions', name: 'coreVersions', desc: '', args: []);
+  }
+
+  /// `No versions available`
+  String get coreNoVersions {
+    return Intl.message(
+      'No versions available',
+      name: 'coreNoVersions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Installed`
+  String get coreInstalled {
+    return Intl.message('Installed', name: 'coreInstalled', desc: '', args: []);
+  }
+
+  /// `Not installed`
+  String get coreNotInstalledShort {
+    return Intl.message(
+      'Not installed',
+      name: 'coreNotInstalledShort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pre-release`
+  String get preRelease {
+    return Intl.message('Pre-release', name: 'preRelease', desc: '', args: []);
+  }
+
+  /// `Auto-update`
+  String get autoUpdateTip {
+    return Intl.message(
+      'Automatically download new core versions',
+      name: 'autoUpdateTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Install`
+  String get install {
+    return Intl.message('Install', name: 'install', desc: '', args: []);
+  }
+
+  /// `Installing...`
+  String get installing {
+    return Intl.message('Installing...', name: 'installing', desc: '', args: []);
+  }
+
+  /// `Use`
+  String get use {
+    return Intl.message('Use', name: 'use', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `XRay config`
+  String get xrayConfig {
+    return Intl.message('XRay config', name: 'xrayConfig', desc: '', args: []);
+  }
+
+  /// `Listen port`
+  String get xrayListenPort {
+    return Intl.message('Listen port', name: 'xrayListenPort', desc: '', args: []);
+  }
+
+  /// `Log level`
+  String get xrayLogLevel {
+    return Intl.message('Log level', name: 'xrayLogLevel', desc: '', args: []);
+  }
+
+  /// `DNS servers`
+  String get xrayDnsServers {
+    return Intl.message('DNS servers', name: 'xrayDnsServers', desc: '', args: []);
+  }
+
+  /// `Routing rules`
+  String get xrayRoutingRules {
+    return Intl.message('Routing rules', name: 'xrayRoutingRules', desc: '', args: []);
+  }
+
+  /// `Outbounds`
+  String get xrayOutbounds {
+    return Intl.message('Outbounds', name: 'xrayOutbounds', desc: '', args: []);
+  }
+
+  /// `Save`
+  String get xraySave {
+    return Intl.message('Save', name: 'xraySave', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get xrayReset {
+    return Intl.message('Reset', name: 'xrayReset', desc: '', args: []);
+  }
+
+  /// `Apply changes to XRay core config`
+  String get xrayApplyDesc {
+    return Intl.message(
+      'Apply changes to XRay core config',
+      name: 'xrayApplyDesc',
       desc: '',
       args: [],
     );

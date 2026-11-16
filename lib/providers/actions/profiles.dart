@@ -191,6 +191,21 @@ class ProfilesAction extends _$ProfilesAction {
     final bytes = await platformFile.readBytes();
     globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
     ref.read(currentPageLabelProvider.notifier).toProfiles();
+    final text = utf8.decode(bytes);
+    final trimmed = text.trim();
+    final isXrayJson =
+        (trimmed.startsWith('{') || trimmed.startsWith('[')) &&
+        _tryParseJson(trimmed) != null;
+    final isXrayLink = _isXrayLink(trimmed);
+    if (isXrayJson || isXrayLink) {
+      await _importXrayConfig(
+        bytes: bytes,
+        label: platformFile.name,
+      );
+      return;
+    }
+    // Clash profile: ensure Clash core is active.
+    await _ensureClashCoreActive();
     final profile = await globalState.loadingRun(
       tag: LoadingTag.profiles,
       () => _withAgeSecretKey(
@@ -204,6 +219,67 @@ class ProfilesAction extends _$ProfilesAction {
     );
     if (profile != null) {
       putProfile(profile);
+    }
+  }
+
+  Future<void> _ensureClashCoreActive() async {
+    final current = await _core.activeCoreType;
+    if (current != CoreType.clash) {
+      await _core.switchTo(CoreType.clash);
+    }
+  }
+
+  dynamic _tryParseJson(String text) {
+    try {
+      return jsonDecode(text);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  bool _isXrayLink(String text) {
+    if (text.contains('\n') || text.isEmpty) return false;
+    final index = text.indexOf('://');
+    if (index <= 0) return false;
+    final scheme = text.substring(0, index).toLowerCase();
+    return xrayLinkSchemes.contains(scheme);
+  }
+
+  Future<void> _importXrayConfig({
+    required Uint8List bytes,
+    required String label,
+  }) async {
+    final appLocalizations = currentAppLocalizations;
+    await _ensureXrayCoreActive();
+    final profile = await globalState.loadingRun(
+      tag: LoadingTag.profiles,
+      () async {
+        final path = await appPath.tempFilePath;
+        final file = File(path);
+        await file.safeWriteAsBytes(bytes);
+        final validated = await _core.validateProfile(path, '');
+        if (validated != null) {
+          throw MessageException(validated);
+        }
+        await file.safeDelete();
+        return Profile.normal(label: label)
+            .copyWith(type: ProfileType.file)
+            .saveFile(
+              bytes,
+              validate: (p, k) => _core.validateProfile(p, k),
+            );
+      },
+      title: appLocalizations.addProfile,
+    );
+    if (profile != null) {
+      putProfile(profile);
+    }
+  }
+
+  Future<void> _ensureXrayCoreActive() async {
+    final current = await _core.activeCoreType;
+    if (current != CoreType.xray) {
+      await _core.switchTo(CoreType.xray);
     }
   }
 
@@ -400,10 +476,41 @@ class ProfilesAction extends _$ProfilesAction {
     );
   }
 
-  Future<Profile> _download(Profile profile) {
-    return profile.update(
-      validate: (path, key) => _core.validateProfile(path, key),
-    );
+  Future<Profile> _download(Profile profile) async {
+    final response = await request.getFileResponseForUrl(profile.url);
+    final disposition = response.headers.value('content-disposition');
+    final userinfo = response.headers.value('subscription-userinfo');
+    final bytes = decompressUnlabeled(response.data ?? Uint8List(0));
+
+    // Write to temp file for core-type auto-detection.
+    final tempPath = await appPath.tempFilePath;
+    final tempFile = File(tempPath);
+    await tempFile.safeWriteAsBytes(bytes);
+
+    // Auto-detect core type from content and switch if needed.
+    await _core.detectAndSwitchCore(tempPath);
+
+    // Validate with the now-correct core.
+    final issue = await _core.validateProfile(tempPath, '');
+    if (issue != null) {
+      await tempFile.safeDelete();
+      throw MessageException(issue);
+    }
+
+    // Save to profile location.
+    final mFile = await profile.file;
+    await tempFile.copy(mFile.path);
+    await tempFile.safeDelete();
+
+    return profile
+        .copyWith(
+          label: profile.label.takeFirstValid([
+            getFileNameForDisposition(disposition),
+            profile.defaultLabel,
+          ]),
+          subscriptionInfo: SubscriptionInfo.formHString(userinfo),
+        )
+        .copyWith(lastUpdateDate: DateTime.now());
   }
 
   Future<Profile> _withAgeSecretKey(
@@ -423,6 +530,10 @@ class ProfilesAction extends _$ProfilesAction {
 
   Future<Profile> _fromShareLinks(Profile profile, List<String> links) async {
     final appLocalizations = currentAppLocalizations;
+    final hasXrayLink = links.any(_isXrayLink);
+    if (hasXrayLink) {
+      return _fromXrayLinks(profile, links);
+    }
     final decoded = await _core.decodeShareLinks(links);
     final taken = {...reservedCustomProxyNames};
     final proxies = <Map<String, dynamic>>[];
@@ -448,6 +559,39 @@ class ProfilesAction extends _$ProfilesAction {
         .copyWith(label: profile.label.takeFirstValid([label]))
         .saveFile(
           utf8.encode(config),
+          validate: (path, _) => _core.validateConfig(path),
+        );
+  }
+
+  Future<Profile> _fromXrayLinks(Profile profile, List<String> links) async {
+    final appLocalizations = currentAppLocalizations;
+    final decoded = await _core.decodeXrayLinks(links);
+    final taken = {...reservedCustomProxyNames};
+    final proxies = <Map<String, dynamic>>[];
+    for (final (index, definitions) in decoded.indexed) {
+      if (definitions.isEmpty) {
+        throw MessageException(
+          links.length == 1
+              ? appLocalizations.shareLinksInvalid
+              : appLocalizations.shareLinkUnreadable(links[index]),
+        );
+      }
+      for (final definition in definitions) {
+        final name = freeProxyName(linkProxyName(definition), taken);
+        proxies.add({...definition, 'name': name});
+      }
+    }
+    final first = proxies.first['name'] as String;
+    final label = proxies.length == 1
+        ? first
+        : appLocalizations.proxiesProfileLabel(first, proxies.length);
+    await _ensureXrayCoreActive();
+    final config = await _core.encodeXrayLinks(proxies);
+    final configText = '{\n  "outbounds": [\n${config.map((l) => '    $l').join(',\n')}\n  ]\n}';
+    return profile
+        .copyWith(label: profile.label.takeFirstValid([label]))
+        .saveFile(
+          utf8.encode(configText),
           validate: (path, _) => _core.validateConfig(path),
         );
   }

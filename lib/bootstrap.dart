@@ -8,6 +8,8 @@ import 'package:xclient/common/launch.dart';
 import 'package:xclient/common/migration.dart';
 import 'package:xclient/common/tray.dart';
 import 'package:xclient/common/window.dart';
+import 'package:xclient/core/core.dart';
+import 'package:xclient/core/xray/xray_core_handler.dart';
 import 'package:xclient/database/database.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/l10n/l10n.dart';
@@ -29,6 +31,9 @@ class Bootstrap {
 
   factory Bootstrap() {
     _instance ??= Bootstrap._internal();
+    // Register core implementations: Clash.Meta (default) and Xray-core.
+    coreRegistry.register(CoreType.clash, system.isAndroid ? coreLib! : coreService!);
+    coreRegistry.register(CoreType.xray, XRayCoreHandler());
     return _instance!;
   }
 
@@ -37,7 +42,7 @@ class Bootstrap {
   Future<ProviderContainer> init(int version) async {
     globalState.appEnv = const String.fromEnvironment(
       'APP_ENV',
-      defaultValue: 'pre',
+      defaultValue: 'stable',
     );
     windowPort = window;
     trayPort = appTray;
