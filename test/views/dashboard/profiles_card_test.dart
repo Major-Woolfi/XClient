@@ -299,7 +299,7 @@ void main() {
     setUpProfiles([_profile(1)]);
     await pumpDesktopCard(tester);
     expect(find.byType(SkeletonText), findsNothing);
-    expect(find.text('—'), findsNWidgets(3));
+    expect(find.text('-'), findsNWidgets(3));
 
     globalState.lastConfigCounts = (groups: 4, proxies: 2048, rules: 9);
     addTearDown(() => globalState.lastConfigCounts = null);
@@ -536,5 +536,3 @@ void main() {
     expect(stats, (groups: 2, proxies: 5, rules: 1, providers: 2));
   });
 }
-
-

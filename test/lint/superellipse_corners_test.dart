@@ -53,14 +53,14 @@ void main() {
           continue;
         }
         offenders.add(
-          '${entity.path}:${_lineOf(source, match.start)} — ${match[0]} '
+          '${entity.path}:${_lineOf(source, match.start)} - ${match[0]} '
           'draws circular corners; use the superellipse API or AppShape.',
         );
       }
       for (final match in _radiusCall.allMatches(source)) {
         if (_hasTopLevelBorderRadius(source, match.end - 1)) {
           offenders.add(
-            '${entity.path}:${_lineOf(source, match.start)} — ${match[1]} '
+            '${entity.path}:${_lineOf(source, match.start)} - ${match[1]} '
             'with borderRadius rounds with circular arcs; use a '
             'ShapeDecoration or customBorder with an AppShape.',
           );

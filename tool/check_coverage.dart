@@ -50,8 +50,8 @@ String _group(String path) {
   final normalized = path.replaceAll(r'\', '/');
   // Anchor on the project's own `lib/`, which is the last one on the path. The
   // first match is not it whenever the report carries absolute paths and
-  // something above the checkout is called `lib` — a clone under `~/dev/lib/`,
-  // a pub cache entry — and every file then lands in whatever directory
+  // something above the checkout is called `lib` - a clone under `~/dev/lib/`,
+  // a pub cache entry - and every file then lands in whatever directory
   // happened to follow that one.
   final int start;
   if (normalized.startsWith('lib/')) {

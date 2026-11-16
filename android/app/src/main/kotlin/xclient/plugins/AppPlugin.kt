@@ -165,8 +165,8 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     private val mainHandler = Handler(Looper.getMainLooper())
 
     /**
-     * The permission and consent hops below touch the Activity — starting an
-     * activity for result, raising a permission prompt — and read the state that
+     * The permission and consent hops below touch the Activity - starting an
+     * activity for result, raising a permission prompt - and read the state that
      * tracks whether one is already up. Their callers are coroutines on
      * [Dispatchers.Default], while the answers come back on the main thread
      * through the ActivityAware listeners, so main is the one thread both ends

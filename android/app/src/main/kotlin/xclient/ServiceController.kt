@@ -128,8 +128,8 @@ object ServiceController {
         stopServices()
     }
 
-    // A service the system started itself — always-on VPN, or the sticky restart
-    // after the process was killed — outlives every binding this process holds, so
+    // A service the system started itself - always-on VPN, or the sticky restart
+    // after the process was killed - outlives every binding this process holds, so
     // unbinding alone leaves the tunnel up while the app reports it stopped.
     private fun stopServices() {
         listOf(VpnService::class.intent, ProxyService::class.intent).forEach { intent ->

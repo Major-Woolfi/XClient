@@ -56,7 +56,7 @@ void main() {
           if (!_filled.hasMatch(call)) {
             final line = '\n'.allMatches(source.substring(0, start)).length;
             offenders.add(
-              '${entity.path}:${line + 1} — ${button[0]} holds $call; '
+              '${entity.path}:${line + 1} - ${button[0]} holds $call; '
               'pass fill: 1.',
             );
           }

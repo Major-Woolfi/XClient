@@ -522,7 +522,7 @@ class _NoValue extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExcludeSemantics(
       child: Text(
-        '—',
+        '-',
         style: style?.copyWith(color: context.colorScheme.onSurfaceVariant),
       ),
     );

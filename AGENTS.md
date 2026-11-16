@@ -35,7 +35,7 @@ Read these only when the task touches their area:
   summary, not part of the change. Edit a file surgically when a rewrite would give the same result, keep scratch checks
   out of the repository, and commit tests only where the task asks for them or the neighbouring code already keeps them.
 - Comments are allowed and sometimes necessary; excess is the problem. A comment must carry something the code cannot
-  say — a non-obvious constraint, an upstream behavior being worked around, a reason a reader would otherwise get
+  say - a non-obvious constraint, an upstream behavior being worked around, a reason a reader would otherwise get
   wrong. Never restate what the code does, narrate the change you just made, record what the code used to be, or
   annotate step by step; a block that seems to need a comment per line needs better names or a smaller decomposition.
   Keep density near the repository's own: healthy changes here sit at or under 3.6%, and a `comment-density` gate fails a file

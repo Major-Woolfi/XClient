@@ -45,7 +45,7 @@ final class CoreRpcClient implements CoreRpcChannel {
 
   /// Time since Core last answered any request. A method timeout is a liveness
   /// guard for a stalled link (a restart mid-flight, a stream that stopped
-  /// carrying data), not a budget for how long a single method may take — so a
+  /// carrying data), not a budget for how long a single method may take - so a
   /// request that is still waiting while Core demonstrably keeps replying to
   /// its siblings gets its window re-armed instead of being failed.
   final Stopwatch _sinceLastResponse = Stopwatch()..start();
@@ -129,7 +129,7 @@ final class CoreRpcClient implements CoreRpcChannel {
   /// link is still alive by answering some other request, so a slow method is
   /// not failed on behalf of a healthy link. Two things still end the wait:
   /// [idleTimeout] of silence, and a hard deadline set by whichever of
-  /// [_maxTimeoutExtension] windows and [extensionGrace] on top binds first —
+  /// [_maxTimeoutExtension] windows and [extensionGrace] on top binds first -
   /// a Core answering everything except this request has to surface as well.
   Future<Object?> _awaitResponse({
     required CoreMethod method,
@@ -302,5 +302,3 @@ final class CoreRpcClient implements CoreRpcChannel {
     await _eventSubscription.cancel();
   }
 }
-
-

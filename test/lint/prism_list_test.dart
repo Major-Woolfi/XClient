@@ -32,7 +32,7 @@ void main() {
       for (final match in _flutterList.allMatches(source)) {
         final line = '\n'.allMatches(source.substring(0, match.start)).length;
         offenders.add(
-          '$path:${line + 1} — ${match[0]} lays out every row a scrollbar '
+          '$path:${line + 1} - ${match[0]} lays out every row a scrollbar '
           'drag passes; use the prism_list equivalent.',
         );
       }

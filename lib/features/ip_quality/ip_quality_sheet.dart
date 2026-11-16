@@ -198,7 +198,7 @@ class _IpQualityDetail extends ConsumerWidget {
         switch ((quality, text)) {
           (null, _) => SkeletonText(width: width),
           (_, final text?) => Text(text),
-          _ => const Text('—'),
+          _ => const Text('-'),
         };
     final organization = quality?.organization;
     final asn = switch (quality?.asn) {
@@ -223,5 +223,3 @@ class _IpQualityDetail extends ConsumerWidget {
     ];
   }
 }
-
-

@@ -23,7 +23,7 @@ void main() {
           final match = _pxLength.firstMatch(lines[index]);
           if (match != null) {
             offenders.add(
-              '${entity.path}:${index + 1} — "${match[0]}"; write Flutter '
+              '${entity.path}:${index + 1} - "${match[0]}"; write Flutter '
               'lengths in dp and spell out a physical pixel.',
             );
           }

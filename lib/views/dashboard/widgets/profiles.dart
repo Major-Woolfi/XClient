@@ -273,7 +273,7 @@ class _ConfigStatsState extends ConsumerState<_ConfigStats>
         if (value != null)
           Text(dashboardCount(value), maxLines: 1, style: figure)
         else if (configCountsFailed)
-          Text('—', maxLines: 1, style: figure)
+          Text('-', maxLines: 1, style: figure)
         else
           SkeletonText(width: widget.figure.size * 1.5, style: figure),
         Text(name, maxLines: 1, style: label),

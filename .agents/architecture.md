@@ -157,7 +157,7 @@ four paths that must stay in sync: `_makeRealProfileTask` writes the credentials
 `skip-auth-prefixes` so a profile cannot silently exempt loopback; `UpdateParams.authentication` applies the same list
 to a running core; `XClientHttpOverrides` sends the credentials with the app's own proxied requests; and `sharedState`
 withholds the Android VPN system proxy declaration because `ProxyInfo` cannot carry credentials (TUN still captures that
-traffic). Desktop system proxy is deliberately not gated — dropping it would leak traffic direct, so the setting's
+traffic). Desktop system proxy is deliberately not gated - dropping it would leak traffic direct, so the setting's
 description tells users to supply credentials manually instead.
 
 ### Local Trust Boundary
@@ -456,7 +456,7 @@ failure shows at once, a stop cancels it, and a failure still standing when it e
 
 ## Route Consistency
 
-A probe result on the dashboard — the exit IP, a node's exit IP, a service check — either describes the route in
+A probe result on the dashboard - the exit IP, a node's exit IP, a service check - either describes the route in
 force or is being asked again. The mechanism has three parts.
 
 - The Core is the source of truth for the route. `core/route.go` keeps two counters. The epoch is a reset, which
@@ -1013,10 +1013,10 @@ where a route opens hosts the page in a nested `Navigator`, as the desktop case 
 rebuilds one row instead of the whole section. Titles and subtitles are `ConfigLabel` callbacks that receive
 `AppLocalizations`, which keeps literal labels such as `IPv6` and localized labels in the same shape.
 
-Build settings screens from these directly, or from a file-local helper that binds one provider once — see `_networkToggle`
+Build settings screens from these directly, or from a file-local helper that binds one provider once - see `_networkToggle`
 in `lib/views/config/network.dart` and `_appSettingToggle` in `lib/views/config/general.dart`. Declare a named
-`ConsumerWidget` only when a row is genuinely reused across screens. Rows with bespoke behaviour — a custom dialog, a derived value, or a
-second provider write — stay hand-written rather than growing extra parameters on the shared items.
+`ConsumerWidget` only when a row is genuinely reused across screens. Rows with bespoke behaviour - a custom dialog, a derived value, or a
+second provider write - stay hand-written rather than growing extra parameters on the shared items.
 
 In an inset grouped list (`generateSection`, `generateAnimatedSection`), a row's subtitle shows its value or state,
 never what the setting does. As iOS settings do, the explanation goes in the group's `footer`, drawn by `ListFooter`,
@@ -1277,7 +1277,7 @@ One deliberate exception: `globalState` owns the `ProviderContainer`, so it cann
 itself live in one. Code without a `Ref` reaches providers through
 `globalState.container.read(...)`. The remaining call sites are `lib/core/lib.dart`,
 `lib/common/print.dart`, and the tray `read` callback in
-`lib/providers/actions/system.dart` — all singletons or platform callbacks with no
+`lib/providers/actions/system.dart` - all singletons or platform callbacks with no
 `Ref` in scope.
 
 `lib/models/profile.dart` does not reach Core. `Profile.saveFile` and
@@ -1298,8 +1298,8 @@ moving them into providers would touch every layout call site without changing
 behaviour. `prism_ui` cannot read `globalState`, so it takes the same `Measure` from
 `MeasureScope`; see UI Layer.
 
-`globalState` in `lib/state.dart` is a singleton holding ambient app state — the
-package info, the measure and theme, the container, and the start/stop flags —
+`globalState` in `lib/state.dart` is a singleton holding ambient app state - the
+package info, the measure and theme, the container, and the start/stop flags -
 plus `safeRun`/`loadingRun`. Startup orchestration is **not** on it: `init` and
 `attach` live in `lib/bootstrap.dart`, above `lib/common`, because they drive the
 window, the autostart entry, the tray and the permission prompts. Providers are
@@ -1324,7 +1324,7 @@ package, and `lib/common` never imports the `lib/manager/manager.dart` barrel
 (import the single manager needed, as `common/context.dart` does with
 `manager/status_manager.dart`). The fourth walks the barrel's whole transitive
 closure and fails if *any* file in it imports one of those packages. That one is
-the real invariant — the local rules only stop the shortest path, and every leak
+the real invariant - the local rules only stop the shortest path, and every leak
 found so far arrived through a longer one.
 
 The shapes that keep the closure small:
@@ -1374,7 +1374,7 @@ buffer tagged with a generation counter:
   that needs a stable view has to read `list` at the moment it is notified, not
   hold the wrapper and read later.
 - Consumers that only need to know *that* the buffer changed watch `revision`,
-  not `list` — selecting on the list snapshots and deep-compares the whole
+  not `list` - selecting on the list snapshots and deep-compares the whole
   buffer on every arrival, which is what this design exists to avoid. See
   `lib/views/logs.dart` for the pattern: watch the generation, snapshot inside
   the throttled callback.
@@ -1554,7 +1554,7 @@ directives, so consumers continue to import the same public API:
 read-only view widgets watch. Callers pair `start(key, scope: ...)` with `stop(key, operation)` using the returned
 token, so overlapping operations on one key are reference counted and a late `stop` from a superseded operation
 cannot clear a newer one. Keys started with `UpdatingScope.core` depend on the Core to make progress, so
-`UpdatingKeys` discards them itself when `coreStatusProvider` leaves `connected` — that is the state's own
+`UpdatingKeys` discards them itself when `coreStatusProvider` leaves `connected` - that is the state's own
 invariant, not a policy, and it must stay inside the notifier where no warm-up ordering can miss it.
 `UpdatingScope.local` keys (profile updates run entirely in Dart) survive a Core restart. `UpdatingAction` holds
 only the policy half: the periodic sweep that discards a key stuck past `updatingStaleTimeout`. Do not move the
@@ -1681,13 +1681,13 @@ Windows helper integrity/version check:
   every launch. The response includes the running Helper path and protocol header; Dart checks both against the current
   installation. The launcher selects the Helper only when `/ping` reports ready; any other readiness (missing manifest,
   unavailable Helper, or a Helper built for a different Core) falls back to the direct Core without requesting elevation.
-  If `/start` reports a pre-spawn failure — `coreVerificationFailed` (the on-disk Core no longer matches the SHA the
-  Helper and manifest agree on) or `processLaunchFailed` (the Core process could not be spawned) — the launcher degrades
+  If `/start` reports a pre-spawn failure - `coreVerificationFailed` (the on-disk Core no longer matches the SHA the
+  Helper and manifest agree on) or `processLaunchFailed` (the Core process could not be spawned) - the launcher degrades
   to the direct Core rather than failing the launch. `/start` releases the previously managed Core before it verifies,
   so the Helper owns no Core when either code is reported and the direct retry cannot race a Helper-managed Core.
   A mismatched Helper is reinstalled through the explicit TUN authorization flow, not at startup.
 - TUN is not a required run condition. A direct Core runs unelevated and cannot bring up TUN, so any degrade to the
-  direct Core — an unready Helper at resolve time, or a pre-spawn `/start` failure — silently drops TUN and keeps the
+  direct Core - an unready Helper at resolve time, or a pre-spawn `/start` failure - silently drops TUN and keeps the
   Core running. Degrading is preferred over failing the launch: an unverified Core carries no privilege the direct
   launch path did not already have. `manifestMissing` is the one readiness that is surfaced to the user, because it
   means the installation itself is incomplete.
@@ -1704,7 +1704,7 @@ Windows helper integrity/version check:
   sing-tun installed; the Core runs the same teardown itself when its IPC host disconnects or it receives a termination
   signal. `HelperClient.stopTimeout` must stay above the Helper's graceful-plus-kill budget.
 - Never take `MANAGED_CORE` or `LOGS` with `lock().unwrap()`. The Helper is a long-lived service running as SYSTEM, so a
-  single panic while a lock is held would poison it and turn every later request into another panic — the service stays
+  single panic while a lock is held would poison it and turn every later request into another panic - the service stays
   dead until Windows restarts it. `lock_surviving_poison` recovers the guard through `PoisonError::into_inner` instead.
   `hub.rs` uses it at every lock site, tests included, and two tests in that file pin the behaviour.
 
@@ -1963,7 +1963,7 @@ returns the JSON the script produced. Nothing about the script runs in Dart.
 - `rust/tests/fixtures/profile_script.js` is the compatibility regression: an extension script written for the suite that
   performs the transform real ones perform, so it exercises `Map`/`Set`, spread, destructuring, optional chaining,
   nullish coalescing, `Object.fromEntries`, named capture groups and lookbehind in one pass. Keep it first-party and
-  free of external URLs — vendoring somebody's published script here carries their attribution and their links.
+  free of external URLs - vendoring somebody's published script here carries their attribution and their links.
 
 ## Rust Helper Service
 
@@ -1991,7 +1991,7 @@ password the app asks for and hands to `sudo -S` on stdin. A 126 means the user 
 
 - `XClientHelperService install`, run through `LinuxElevation` (`lib/common/linux_elevation.dart`), writes
   `/etc/systemd/system/XClient-helper.service` for the current executable path and enables and restarts it. It reads
-  `PKEXEC_UID`/`SUDO_UID` to learn who asked, and refuses to install without one — there would be no account to grant
+  `PKEXEC_UID`/`SUDO_UID` to learn who asked, and refuses to install without one - there would be no account to grant
   the socket to. It also refuses a Helper whose binary or directory is not root-owned and non-writable (a unit runs it
   as root at every boot, so an unpacked bundle would be a standing escalation), and refuses to replace a unit already
   installed for a different UID rather than restart the service out from under that account.
@@ -2033,8 +2033,8 @@ and an older Helper must be reinstalled) uses 32-character lowercase-hex session
 - `GET /ping?coreSha256=...` returns the current Helper executable path with `x-XClient-helper-protocol` when the
   requested SHA matches.
 - `POST /start` rejects unknown JSON fields and validates `{address, sessionId}` and, on Linux, the socket owner, which
-  leaves a running Core alone. It then releases any previously managed Core before verifying the Core — so every
-  outcome of a request that passed validation, including a rejected one, leaves the Helper owning no Core — and returns
+  leaves a running Core alone. It then releases any previously managed Core before verifying the Core - so every
+  outcome of a request that passed validation, including a rejected one, leaves the Helper owning no Core - and returns
   `{sessionId, pid}`.
 - `POST /stop` validates `{sessionId}` and only stops the matching managed Core. A session mismatch is HTTP 409.
 - `GET /logs` exposes the bounded recent Helper/Core stderr buffer with `no-store` caching.

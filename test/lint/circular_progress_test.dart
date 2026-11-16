@@ -20,7 +20,7 @@ void main() {
       for (var i = 0; i < lines.length; i++) {
         if (_circularProgress.hasMatch(lines[i])) {
           offenders.add(
-            '${entity.path}:${i + 1} — use ActivityIndicator, sized as the '
+            '${entity.path}:${i + 1} - use ActivityIndicator, sized as the '
             'glyph it stands in for.',
           );
         }

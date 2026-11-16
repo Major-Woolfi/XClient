@@ -55,7 +55,7 @@ void main() {
 
         final line = '\n'.allMatches(source.substring(0, match.start)).length;
         unlabelled.add(
-          '${file.path}:${line + 1} — an icon has no accessible name, so '
+          '${file.path}:${line + 1} - an icon has no accessible name, so '
           'TalkBack and VoiceOver announce nothing and the desktop build shows '
           'no hover hint.',
         );

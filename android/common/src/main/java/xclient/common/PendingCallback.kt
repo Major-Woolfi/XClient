@@ -6,9 +6,9 @@ package com.xclient.common
  * slot is cleared before the callback runs, so a callback that starts another
  * request cannot resolve itself twice.
  *
- * The two ends of such a hop live on different threads — the request is started
+ * The two ends of such a hop live on different threads - the request is started
  * from whatever coroutine wants the permission, the answer arrives on the main
- * thread through `onActivityResult` — so every read and write of the slot is a
+ * thread through `onActivityResult` - so every read and write of the slot is a
  * single atomic swap. Without that, a resolve that has already read the slot can
  * clear a callback a concurrent replace installed after it, and the request that
  * callback belonged to never completes: the VPN consent answer is lost and the

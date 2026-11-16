@@ -77,7 +77,7 @@ void main() {
       for (final (index, line) in lines.indexed) {
         if (_scopeRead.hasMatch(line)) {
           offenders.add(
-            '$path:${index + 1} — reads BottomInsetScope, which leaves out '
+            '$path:${index + 1} - reads BottomInsetScope, which leaves out '
             'the system bar the body runs under; read `context.bottomInset`.',
           );
         }
@@ -92,7 +92,7 @@ void main() {
               block.contains('Scaffold(') &&
               block.contains('searchState:')) {
             offenders.add(
-              '$path:${index + 1} — reads the bottom inset with the context '
+              '$path:${index + 1} - reads the bottom inset with the context '
               'its Scaffold is built with, above the room that scaffold '
               'adds for its docked search, so the end of the content stays '
               'under it; read it inside '

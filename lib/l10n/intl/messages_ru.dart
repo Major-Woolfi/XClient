@@ -67,7 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m17(names) => "Эти прокси или политики не существуют: ${names}";
 
   static String m18(name) =>
-      "${name} — встроенное имя политики, его нельзя использовать";
+      "${name} - встроенное имя политики, его нельзя использовать";
 
   static String m19(count) =>
       "Проблем: ${count}, применение профиля может завершиться ошибкой";
@@ -123,16 +123,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m40(invalid, total) =>
       "Недействительно: ${invalid} из ${total}";
 
-  static String m41(target) => "${target} — недопустимая политика";
+  static String m41(target) => "${target} - недопустимая политика";
 
-  static String m42(proxyName) => "${proxyName} — недопустимый прокси";
+  static String m42(proxyName) => "${proxyName} - недопустимый прокси";
 
   static String m43(providerName) =>
-      "${providerName} — недопустимый провайдер прокси";
+      "${providerName} - недопустимый провайдер прокси";
 
-  static String m44(ruleSet) => "${ruleSet} — недопустимый набор правил";
+  static String m44(ruleSet) => "${ruleSet} - недопустимый набор правил";
 
-  static String m45(subRule) => "${subRule} — недопустимый SUB_RULE";
+  static String m45(subRule) => "${subRule} - недопустимый SUB_RULE";
 
   static String m46(count) =>
       "${Intl.plural(count, one: '${count} элемент', few: '${count} элемента', many: '${count} элементов', other: '${count} элемента')}";
@@ -142,7 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m48(appName) =>
       "1. Откройте Системные настройки > Конфиденциальность и безопасность\n2. Выберите Службы геолокации\n3. Найдите и отметьте ${appName} в списке\n\nПосле настройки вернитесь в приложение и продолжайте работу. Спасибо за сотрудничество.";
 
-  static String m49(label, max) => "«${label}» — не более ${max} символов";
+  static String m49(label, max) => "«${label}» - не более ${max} символов";
 
   static String m50(size) => "Освобождено ${size}";
 
@@ -257,7 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m93(link) => "Не удалось прочитать прокси из ${link}";
 
-  static String m94(label) => "«${label}» — только одно значение";
+  static String m94(label) => "«${label}» - только одно значение";
 
   static String m95(value) => "Пик ${value}";
 
@@ -744,7 +744,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Сбор данных и конфиденциальность",
     ),
     "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "Вы самостоятельно убеждаетесь, что использование Программы законно в вашей стране или регионе, и единолично несёте юридическую ответственность за все действия с ней и их последствия.\n\nПодписки, узлы и конфигурации, которые вы импортируете, выбираете вы сами. Законность их источника, безопасность содержимого и надёжность сервиса — вопрос между вами и их поставщиками.",
+      "Вы самостоятельно убеждаетесь, что использование Программы законно в вашей стране или регионе, и единолично несёте юридическую ответственность за все действия с ней и их последствия.\n\nПодписки, узлы и конфигурации, которые вы импортируете, выбираете вы сами. Законность их источника, безопасность содержимого и надёжность сервиса - вопрос между вами и их поставщиками.",
     ),
     "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
       "Ваша ответственность",
@@ -762,7 +762,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Повторите заявление",
     ),
     "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "Программа — это клиент сетевого прокси с открытым исходным кодом на основе ядра Clash.Meta (mihomo). Она предоставляет только локальные инструменты: управление конфигурациями, маршрутизацию по правилам и пересылку трафика.",
+      "Программа - это клиент сетевого прокси с открытым исходным кодом на основе ядра Clash.Meta (mihomo). Она предоставляет только локальные инструменты: управление конфигурациями, маршрутизацию по правилам и пересылку трафика.",
     ),
     "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
       "Характер программы",
@@ -1402,7 +1402,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Правила маршрутизации",
     ),
     "mitmRuleCopiedForStash": MessageLookupByLibrary.simpleMessage(
-      "Этот модуль — переопределение Stash, поэтому правило скопировано, добавьте его вручную.",
+      "Этот модуль - переопределение Stash, поэтому правило скопировано, добавьте его вручную.",
     ),
     "mitmRunScript": MessageLookupByLibrary.simpleMessage("Запустить сейчас"),
     "mitmScriptNoOutput": MessageLookupByLibrary.simpleMessage(
@@ -1835,7 +1835,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Сопоставить ASN, которой принадлежит IP",
     ),
     "ruleActionIpCidr6Desc": MessageLookupByLibrary.simpleMessage(
-      "Сопоставить диапазон IP-адресов; IP-CIDR6 — просто псевдоним",
+      "Сопоставить диапазон IP-адресов; IP-CIDR6 - просто псевдоним",
     ),
     "ruleActionIpCidrDesc": MessageLookupByLibrary.simpleMessage(
       "Сопоставить диапазон IP-адресов",
@@ -2276,28 +2276,39 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreUnknown": MessageLookupByLibrary.simpleMessage("Неизвестно"),
     "coreNotInstalled": MessageLookupByLibrary.simpleMessage("Не установлено"),
     "coreVersions": MessageLookupByLibrary.simpleMessage("Версии"),
-    "coreNoVersions": MessageLookupByLibrary.simpleMessage("Нет доступных версий"),
+    "coreNoVersions": MessageLookupByLibrary.simpleMessage(
+      "Нет доступных версий",
+    ),
     "coreInstalled": MessageLookupByLibrary.simpleMessage("Установлено"),
-    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage("Не установлено"),
+    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage(
+      "Не установлено",
+    ),
     "preRelease": MessageLookupByLibrary.simpleMessage("Предварительная"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Автообновление"),
-    "autoUpdateTip": MessageLookupByLibrary.simpleMessage("Автоматически скачивать новые версии ядра"),
+    "autoUpdateTip": MessageLookupByLibrary.simpleMessage(
+      "Автоматически скачивать новые версии ядра",
+    ),
     "install": MessageLookupByLibrary.simpleMessage("Установить"),
     "installing": MessageLookupByLibrary.simpleMessage("Установка..."),
     "use": MessageLookupByLibrary.simpleMessage("Использовать"),
     "active": MessageLookupByLibrary.simpleMessage("Активно"),
     "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
     "xrayConfig": MessageLookupByLibrary.simpleMessage("Конфигурация XRay"),
-    "xrayListenPort": MessageLookupByLibrary.simpleMessage("Порт прослушивания"),
+    "xrayListenPort": MessageLookupByLibrary.simpleMessage(
+      "Порт прослушивания",
+    ),
     "xrayLogLevel": MessageLookupByLibrary.simpleMessage("Уровень логов"),
     "xrayDnsServers": MessageLookupByLibrary.simpleMessage("DNS серверы"),
-    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage("Правила маршрутизации"),
-    "xrayOutbounds": MessageLookupByLibrary.simpleMessage("Исходящие соединения"),
+    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage(
+      "Правила маршрутизации",
+    ),
+    "xrayOutbounds": MessageLookupByLibrary.simpleMessage(
+      "Исходящие соединения",
+    ),
     "xraySave": MessageLookupByLibrary.simpleMessage("Сохранить"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("Сброс"),
-    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("Применить изменения к конфигурации XRay ядра"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
+      "Применить изменения к конфигурации XRay ядра",
+    ),
   };
 }
-
-
-

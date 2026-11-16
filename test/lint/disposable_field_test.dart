@@ -36,7 +36,7 @@ final _declaration = RegExp(
 
 /// A `late` field declared without an initialiser, which the pattern above
 /// cannot see because there is no constructor call on the line. These are
-/// built in `initState` and owned just the same — `pages/editor.dart` kept a
+/// built in `initState` and owned just the same - `pages/editor.dart` kept a
 /// `late TextEditingController` alive for the process this way.
 final _lateDeclaration = RegExp(
   '^\\s+late\\s+(?:final\\s+)?(${_disposableTypes.join('|')})'

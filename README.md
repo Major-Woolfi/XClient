@@ -1,220 +1,96 @@
-# XClient - многофункциональный VPN-клиент для Windows, Android, macOS и Linux
+# XClient
 
-[![Stars](https://img.shields.io/github/stars/Major-Woolfi/XClient?style=social)](https://github.com/Major-Woolfi/XClient/stargazers)
-[![Issues](https://img.shields.io/github/issues/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/issues)
-[![License](https://img.shields.io/github/license/Major-Woolfi/XClient)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Major-Woolfi/.github/blob/main/community/CONTRIBUTING.md)
-![Status](https://img.shields.io/badge/Status-active-brightgreen)
+Кроссплатформенный VPN-клиент на базе **Clash.Meta** и **Xray-core**.  
+Windows · macOS · Linux · Android. Без рекламы, без трекинга, с открытым исходным кодом.
 
-[🐛 Сообщить о баге](https://github.com/Major-Woolfi/XClient/issues/new) •
-[💡 Предложить идею](https://github.com/Major-Woolfi/XClient/discussions)
-
----
-
-## 📖 Описание проекта
-
-### Идея и концепция
-
-**XClient** - это проект, созданный для решения конкретной задачи: удобный, простой и бесплатный VPN-клиент для всех основных платформ.
-
-Проект разработан и поддерживается единственным владельцем и основателем - Major Woolfi. Основная идея родилась из необходимости иметь собственный VPN-клиент без лишнего мусора, рекламы и Legacy-кода. Проект воплощает подход простоты, открытости и максимального удобства, что позволяет добиться комфортной и быстрой работы.
-
-### Полное описание
-
-Проект ориентирован на пользователей, которым нужен надёжный VPN-клиент на всех устройствах:
-
-- Поддержка всех основных платформ: Android, Windows, macOS, Linux
-- Ядро Clash.Meta (mihomo) с полным набором функций
-- Профили из ссылок подписки или файлов с встроенным редактором
-- Живые виды соединений, запросов, DNS-запросов и логов
-- Резервное копирование и восстановление через WebDAV или локальный файл
-
-Ключевые принципы проекта:
-
-1. **Простота** - упрощение сложных процессов настройки и использования
-2. **Открытость** - полный доступ к исходному коду под лицензией MIT
-3. **Надёжность** - максимальная устойчивость к любому сценарию использования
-4. **Чистота** - без рекламы, без трекинга, без лишнего кода
-
-### Для кого этот проект
-
-- Пользователи VPN-сервисов
-- Владельцы собственных VPN-проектов
-- Разработчики клиентских приложений
-
-> Но на этом аудитория не ограничивается. Она ограничивается лишь вашей фантазией.
+[![GitHub release](https://img.shields.io/github/v/release/Major-Woolfi/XClient?include_prereleases&label=Latest)](https://github.com/Major-Woolfi/XClient/releases/latest)
+[![GitHub stars](https://img.shields.io/github/stars/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/graphs/contributors)
 
 ---
 
-## ✨ Реализованные фичи
+## 📥 Скачать
 
-### 🖥️ Клиент
+Все релизы публикуются в этом же репозитории:
 
-#### Основной интерфейс
+👉 **[Последний релиз на GitHub](https://github.com/Major-Woolfi/XClient/releases/latest)**
 
-Главный экран приложения доступен всем пользователям:
+| Платформа | Файл |
+|:----------|:-----|
+| **Windows** | `XClient-Setup.exe` (инсталлятор) / `.zip` (портативная версия) |
+| **macOS** | `.dmg` (Apple Silicon и Intel) |
+| **Linux** | `.AppImage` / `.tar.gz` |
+| **Android** | `.apk` |
 
-- **Статус подключения** - текущее состояние VPN, время работы, использованный трафик
-- **Быстрые действия** - включение/выключение VPN, смена профиля, проверка задержки
-- **Живые виды** - соединения, запросы, DNS-запросы, логи в реальном времени
-- **Настройки** - язык (многоязычие), тема (светлая/тёмная/авто), системные настройки
+После установки просто запустите приложение - дополнительная настройка не требуется.
 
-#### Профили и подписки
+---
 
-- **Импорт по ссылке** - поддержка `clash://install-config?url=...`, `clashmeta://`, `XClient://`
-- **Импорт из файла** - загрузка конфигурационного файла через встроенный селектор файлов
-- **Редактирование** - встроенный редактор профилей с поддержкой скриптов и кастомных правил
-- **Пользовательские прокси и группы** - создание и редактирование собственных прокси-серверов и групп
+## 🔥 Киллер-фичи
 
-#### VPN-конфиги
+### Два ядра в одном приложении
 
-- **Ядро Clash.Meta (mihomo)** - полноценное ядро с поддержкой всех современных протоколов
-- **Правила маршрутизации** - гибкая система правил для разблока и управления трафиком
-- **Группы прокси** - URL-тест, Fallback, Selector, Load-balance и другие типы групп
-- **Тесты задержки** - проверка доступности и скорости каждого прокси-узла
-- **Системный прокси** - автоматическая настройка системного прокси на всех платформах
-- **Режим TUN** - полноценный VPN-туннель на Android, Windows, macOS, Linux
+**Clash.Meta** для привычных YAML-подписок и **Xray-core** для современных ссылок (vmess, vless, trojan, shadowsocks). Ядро выбирается автоматически по содержимому конфига - вам не нужно переключать его вручную.
 
-#### Статистика и логи
+### Импорт конфигов
 
-- Отображение трафика по устройству и в агрегате
+- По ссылке: `clash://`, `clashmeta://`, `vmess://`, `vless://`, `trojan://`, `ss://`, `ssconf://`
+- Из файла: YAML (Clash), JSON (Xray)
+- По QR-коду и URL подписки
+- Автообновление подписок
+
+### Управление ядрами
+
+Устанавливайте, переключайте и удаляйте версии ядер прямо в интерфейсе. Каждое ядро живёт в своей папке и обновляется независимо от приложения.
+
+### Настройка Xray без кода
+
+Графический конфигуратор Xray-core: порт прослушивания, уровень логов, DNS-серверы, правила маршрутизации и исходящие соединения - всё в удобной форме, без ручного редактирования.
+
+### Конфиденциальность
+
+Никакой телеметрии, никакой аналитики, никакой рекламы. Ваши серверы, ключи и подписки никуда не уходят с устройства.
+
+### Другие возможности
+
+- Поддержка нескольких языков интерфейса
+- Трей и строка меню на десктопе (быстрое включение/выключение)
+- TUN-режим на Android, Windows, macOS, Linux
+- Тесты задержки до прокси-узлов
 - Живые логи соединений и DNS-запросов
-- История подключений и ошибок
-
-#### Платёжные системы
-
-В клиенте не реализованы платёжные системы - приложение бесплатно и открыто.
-
-#### Партнёрская программа
-
-В клиенте не реализована партнёрская программа.
-
-#### Поддержка
-
-- **Переписка** - общение через GitHub Issues и Discussions
-
-#### Уведомления
-
-- **Напоминание об обновлении** - уведомление о выходе новой версии через GitHub Releases
-
-#### Технические особенности
-
-- **Мультиязычность** - поддержка нескольких языков интерфейса
-- **Фоновые задачи** - проверка обновлений, синхронизация профилей, очистка кэша
-- **Отладочное меню** - инструменты для разработчиков и продвинутых пользователей
-
-### 🌐 Архитектура
-
-Клиент построен на Flutter и использует нативные интеграции для каждой платформы:
-
-- **Flutter UI** - кроссплатформенный интерфейс на Dart
-- **Clash.Meta (mihomo)** - Go-ядро для обработки сетевого трафика
-- **Нативные плагины** - системный прокси, трей, быстрые настройки, горячие клавиши
-- **Веб-интерфейс** - отсутствует (клиентское приложение)
+- Резервное копирование и восстановление профилей
 
 ---
 
-## 🚀 Быстрый старт
+## 📋 Поддерживаемые протоколы
 
-### Предварительные требования
-
-- **Зависимости**
-  - Flutter 3.47+ (стабильный канал)
-  - Go 1.27+
-  - Rust через rustup
-  - Android SDK с NDK (для сборки под Android)
-  - GCC (MinGW-w64) (для сборки под Windows)
-  - Xcode и Node.js (для сборки под macOS)
-
-- **Железо** (минимум для запуска и корректной работы)
-  - CPU 1 ядро 2 ГГц
-  - RAM 600 МБ
-  - ROM 1 ГБ
-
-### Установка
-
-```bash
-# Клонируйте репозиторий
-git clone --recursive https://github.com/Major-Woolfi/XClient.git
-cd XClient
-```
-
-### Конфигурация
-
-Настраивайте проект через переменные окружения и файлы конфигурации в приложении.
-
-### Проверка
-
-Перед запуском убедитесь, что:
-
-- [ ] Все зависимости установлены корректно
-- [ ] Flutter SDK настроен и работает
-- [ ] Go и Rust установлены и доступны в PATH
-
-После запуска убедитесь, что:
-
-- [ ] Приложение успешно запускается
-- [ ] Подключение к VPN устанавливается корректно
+`Clash` · `VLESS` · `VMess` · `Trojan` · `Shadowsocks` · `Hysteria2` · `SOCKS5` · `WireGuard`
 
 ---
 
-## 🏗️ Архитектура проекта
+## 🛠️ Быстрый старт
 
-```plaintext
-XClient/
-├── lib/                # Dart-код приложения (UI, провайдеры, модели)
-├── core/               # Go-ядро (Clash.Meta / mihomo)
-├── android/            # Android-модули и нативный код
-├── linux/              # Linux-раннер и паковка
-├── macos/              # macOS-раннер и паковка
-├── windows/            # Windows-раннер и паковка
-├── plugins/            # Локальные Flutter-плагины
-├── services/           # Нативные сервисы (Helper)
-├── assets/             # Ресурсы (иконки, шрифты, изображения)
-├── tool/               # Инструменты сборки
-├── test/               # Тесты
-├── pubspec.yaml        # Описание пакета
-└── LICENSE             # Лицензия MIT
-```
-
----
-
-## 📊 Статистика проекта
-
-| Метрика | Значение |
-| --------- | ---------- |
-| ⭐ Stars | [![Stars](https://img.shields.io/github/stars/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/stargazers) |
-| 🍴 Forks | [![Forks](https://img.shields.io/github/forks/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/network/members) |
-| 🐛 Issues | [![Issues](https://img.shields.io/github/issues/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/issues) |
-| 👥 Contributors | [![Contributors](https://img.shields.io/github/contributors/Major-Woolfi/XClient)](https://github.com/Major-Woolfi/XClient/graphs/contributors) |
+1. Скачайте установочный файл с [страницы релизов](https://github.com/Major-Woolfi/XClient/releases/latest).
+2. Установите приложение.
+3. Добавьте профиль по ссылке или через импорт файла.
+4. Нажмите «Подключить».
 
 ---
 
 ## 🤝 Контрибьюция
 
-Приветствуем любой вклад в проект! Перед созданием PR обязательно прочитай:
-
-- 📋 [CONTRIBUTING](https://github.com/Major-Woolfi/.github/blob/main/community/CONTRIBUTING.md) - правила участия
-- 💬 [CODE OF CONDUCT](https://github.com/Major-Woolfi/.github/blob/main/community/CODE_OF_CONDUCT.md) - кодекс поведения
-- 🐛 [ISSUE TEMPLATE](https://github.com/Major-Woolfi/.github/tree/main/community/ISSUES.md) - шаблоны багов и фич
-- 🔀 [PULL REQUEST TEMPLATE](https://github.com/Major-Woolfi/.github/blob/main/community/PULL_REQUEST_TEMPLATE.md) - требования к PR
-
-Все общие правила хранятся в [репозитории `.github`](https://github.com/Major-Woolfi/.github) в папке `community`.
-
----
-
-## 👤 Владелец и основатель
-
-VPN-клиент и проект `XClient` разработаны и поддерживаются единственным владельцем и основателем - Major Woolfi.
+Приветствуется любой вклад - от исправления опечаток до новых фичей.
+Перед отправкой Pull Request прочтите [правила участия](CONTRIBUTING.md) и [кодекс поведения](CODE_OF_CONDUCT.md).
 
 ---
 
 ## 📄 Лицензия
 
-Этот проект распространяется под лицензией **MIT**. Подробности в файле [LICENSE](LICENSE).
+Проект распространяется под лицензией **MIT**. Подробности в [LICENSE](LICENSE).
 
 ---
 
-**⭐ Поставь звезду, если проект понравился!**
-
-**[📧 Контакты](https://Major_Woolfi.t.me)**
+Сделано с ❤️ [Major Woolfi](https://github.com/Major-Woolfi)

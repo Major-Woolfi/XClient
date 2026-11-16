@@ -109,8 +109,8 @@ class Git {
 
   /// Whether [name] is one of the tags [versionTags] would return.
   ///
-  /// [tagExists] answers a different question — a tag on another branch exists
-  /// but is not derivable here — so callers comparing against a built changelog
+  /// [tagExists] answers a different question - a tag on another branch exists
+  /// but is not derivable here - so callers comparing against a built changelog
   /// want this one.
   bool tagIsReachable(String name, {String revision = 'HEAD'}) =>
       _run(['tag', '--merged', revision, '--list', name]).trim().isNotEmpty;

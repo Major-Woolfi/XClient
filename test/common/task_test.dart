@@ -282,7 +282,7 @@ void main() {
 
   // The core re-reads these two keys out of the generated config on every
   // profile apply and adopts whatever it finds, so a subscription that ships
-  // them would otherwise decide whether GEO databases auto-update — including
+  // them would otherwise decide whether GEO databases auto-update - including
   // switching the updater back on after the user turned it off.
   test(
     'makeRealProfileTask lets the app setting own the geo updater',
@@ -945,6 +945,3 @@ DOMAIN-SUFFIX,ads.example.com,REJECT
     expect(encoded, contains('\n'));
   });
 }
-
-
-

@@ -672,7 +672,7 @@ class _Source extends StatelessWidget {
         ),
         Flexible(
           child: Text(
-            name.isEmpty ? '—' : name,
+            name.isEmpty ? '-' : name,
             style: AppTextStyle.footnote.of(context, emphasized: true),
           ),
         ),
@@ -690,7 +690,7 @@ class _Exit extends StatelessWidget {
   Widget build(BuildContext context) {
     final exit = info.chains.firstOrNull ?? '';
     return EmojiText(
-      exit.isEmpty ? '—' : exit,
+      exit.isEmpty ? '-' : exit,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: isBuiltinOutbound(exit) ? _muted(context) : null,
@@ -851,7 +851,7 @@ List<RecordColumn<DnsQuery>> _dnsColumns(BuildContext context) {
     ),
     RecordColumn(
       TableColumn('initiator', appLocalizations.initiatorShort, width: 52),
-      cell: (_, query) => _Muted(query.initiator?.label ?? '—'),
+      cell: (_, query) => _Muted(query.initiator?.label ?? '-'),
       sortKey: (query) => query.initiator?.label ?? '',
     ),
     RecordColumn(
@@ -887,7 +887,7 @@ class _DnsResult extends StatelessWidget {
             .copyWith(color: DashboardColors.of(context).warn),
       );
     }
-    final answer = query.answers.firstOrNull ?? '—';
+    final answer = query.answers.firstOrNull ?? '-';
     return Row(
       children: [
         if (query.cached)
@@ -920,5 +920,3 @@ class _DnsResult extends StatelessWidget {
     );
   }
 }
-
-

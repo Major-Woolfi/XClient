@@ -479,7 +479,7 @@ class RecordCellText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text.isEmpty ? '—' : text,
+      text.isEmpty ? '-' : text,
       style: muted
           ? TextStyle(color: context.colorScheme.onSurfaceVariant)
           : null,

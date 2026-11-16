@@ -275,7 +275,7 @@ class Database extends _$Database {
   }
 
   /// Rules move from `profile_rule_mapping` onto their owner, and everything a
-  /// custom overwrite kept — its groups, its rules and its dialers — is
+  /// custom overwrite kept - its groups, its rules and its dialers - is
   /// dropped: those groups named the subscription's own proxies, which a
   /// custom profile does not have. The mapping table marks the old shape, so
   /// a database that went back to an older build and returns is left as is.
@@ -632,5 +632,3 @@ Database get database => _database;
 
 @visibleForTesting
 set database(Database value) => _database = value;
-
-

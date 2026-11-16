@@ -21,7 +21,7 @@ void main() {
         final match = _materialIcon.firstMatch(lines[i]);
         if (match != null) {
           offenders.add(
-            '${entity.path}:${i + 1} — ${match[0]} is a Material icon; '
+            '${entity.path}:${i + 1} - ${match[0]} is a Material icon; '
             'draw it in AppGlyphs and show it with GlyphIcon.',
           );
         }

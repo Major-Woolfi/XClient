@@ -38,7 +38,7 @@ was replaced by the in-repo `plugins/window` package; the behaviors it carried
 re-map on Linux, corner preference, terminate and activate events) live there
 now, see the window plugin section of `architecture.md`.
 
-`launch_at_startup` — `Major-Woolfi/launch_at_startup`, version 0.5.1.
+`launch_at_startup` - `Major-Woolfi/launch_at_startup`, version 0.5.1.
 
 - Migrates `win32_registry` from `^2.0.0` to `^3.0.3`, which is a breaking rename
   across the whole Windows implementation (`Registry.openPath` → `CURRENT_USER.open`,

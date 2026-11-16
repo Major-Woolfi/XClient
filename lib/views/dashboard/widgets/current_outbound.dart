@@ -679,7 +679,7 @@ class _Placeholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('—', maxLines: 1, style: _cellStyle(context));
+    return Text('-', maxLines: 1, style: _cellStyle(context));
   }
 }
 
@@ -950,5 +950,3 @@ class _MorphClipper extends CustomClipper<Path> {
   bool shouldReclip(_MorphClipper oldClipper) =>
       oldClipper.progress != progress;
 }
-
-

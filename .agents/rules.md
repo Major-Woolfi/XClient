@@ -39,7 +39,7 @@ the superellipse API at each layer:
   `clipBehavior` still clips to the shape path.
 - Canvas: `canvas.drawRSuperellipse(RSuperellipse.fromRectAndRadius(...))` instead of `drawRRect`.
 
-Passing `BorderRadius.circular(x)` as the `borderRadius` argument of these APIs is expected — it only
+Passing `BorderRadius.circular(x)` as the `borderRadius` argument of these APIs is expected - it only
 carries the corner magnitude; the rendered geometry stays a superellipse.
 
 Pills are no exception. `StadiumBorder` joins its round caps to the straight sides with a curvature jump, while
@@ -112,7 +112,7 @@ These directories are excluded from analysis:
 
 Comments are part of the code and some of them are load-bearing. What this repository limits is the useless and the
 frequent. Every comment that restates the code devalues the ones carrying real information, until readers skim past all
-of them — a file with three comments that matter is more readable than one with thirty.
+of them - a file with three comments that matter is more readable than one with thirty.
 
 The two halves are enforced differently, because only one of them can be counted. Whether a comment is useless is a
 judgment, and it lives in the rules below and in review. Whether comments are too frequent is arithmetic, and
@@ -127,7 +127,7 @@ judgment, and it lives in the rules below and in review. Whether comments are to
 - Never narrate. Not what this diff changed, not what the code used to be, not the order you did things in. Version
   history belongs in git and change rationale belongs in the commit message.
 - Never annotate line by line or statement by statement. A block that seems to need a comment per step needs better
-  names or a smaller decomposition instead — reach for structure before prose.
+  names or a smaller decomposition instead - reach for structure before prose.
 - Prefer encoding the intent in structure and naming. A named mixin, type, or method that makes the invariant hard to
   break beats a paragraph asking the next reader not to break it.
 - Delete commented-out code, stale version notes, and comments that only restate the code, whenever you edit the file
@@ -142,7 +142,7 @@ judgment, and it lives in the rules below and in review. Whether comments are to
 diffs under 20 added lines so small edits are never caught. The number is calibrated on this repository's own history:
 healthy changes sit at or under 3.6%, while the core fix that prompted the gate ran 22.4%.
 
-It is a ceiling on frequency, not a target to fill. Do not read `core/`'s inherited mihomo density as a quota either —
+It is a ceiling on frequency, not a target to fill. Do not read `core/`'s inherited mihomo density as a quota either -
 it is forked upstream code, not a house style.
 
 Three gates run the same script, and they do not have equal force. The `PostToolUse` hooks in `.claude/settings.json`
@@ -178,7 +178,7 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
   low priority even when the bug is real and the fix is small: every patch is one more thing to carry across an upstream
   rebase. Solve it on the XClient side of the boundary and note the mihomo behaviour you are working around. Reach into
   the submodule only for a feature that has nowhere else to live, or when the problem is one the XClient patches
-  themselves introduced — and say which of the two it is in the commit message.
+  themselves introduced - and say which of the two it is in the commit message.
 - Do not expose direct filesystem deletion APIs through Core or helper IPC; use
   a scope-specific cleanup API instead.
 - The desktop IPC socket in `plugins/rust_api` admits a Unix peer only when its effective uid is the app's own or root:
@@ -203,20 +203,20 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
 - `TunHandler`'s hooks in `core/lib.go` check `callbacks` under `th.mu` before every call. `clear` drops the callbacks
   while connections may still be resolving, and a call through the nil interface panics on a mihomo goroutine, outside
   every recovery.
-- The Android bridge resolves an owner in two steps — `ResolveUid` then `ResolvePackage` — because mihomo fills
+- The Android bridge resolves an owner in two steps - `ResolveUid` then `ResolvePackage` - because mihomo fills
   `metadata.Uid` from a procfs lookup that Android Q closed off. Collapsing them back into one call that returns only a
   package name is what left every connection reporting uid 0, so `UID` rules matched nothing.
 - The desktop delivery path in `core/server.go` must not report failures through `logError`. A log event is published to
   the log subscriber, batched, and handed back to `send`, so a send failure reported that way feeds itself; use
   `logDeliveryError`, which writes to stderr and latches until a frame gets through or the next connection is installed.
-  A write that fails without putting a byte on the wire — host backpressure hitting `ipcWriteTimeout`, or a payload above
-  `maxIPCFrameSize` — drops that one frame and keeps the connection: the stream is still framed correctly, and tearing it
+  A write that fails without putting a byte on the wire - host backpressure hitting `ipcWriteTimeout`, or a payload above
+  `maxIPCFrameSize` - drops that one frame and keeps the connection: the stream is still framed correctly, and tearing it
   down here ends the read loop, and with it the Core process. A half-written frame whose write merely timed out is
   resumed for as long as the stall lasts: Windows Modern Standby suspends the app while the Helper's Core keeps running,
   so the host can stop draining for hours and still come back, and go-winio reports the expiry as its own `ErrTimeout`
   rather than `os.ErrDeadlineExceeded`, which is why `send` checks `Timeout()`. The wait has no cap on purpose, and
-  `send` holds `writeMu` throughout, so every other frame — method responses and the single batcher goroutine behind
-  the event queues — waits behind the stalled one. Memory is bounded by the queues; what gives is delivery: the state
+  `send` holds `writeMu` throughout, so every other frame - method responses and the single batcher goroutine behind
+  the event queues - waits behind the stalled one. Memory is bounded by the queues; what gives is delivery: the state
   queue fills and `enqueueState` starts dropping, which is the case the `UpdatingAction` sweep above exists for. Nothing
   on the Dart side restarts the Core over a stall: `CoreRpcClient` times each pending request out on its own and hands
   the caller `null` (a `no_response` exception for message methods), and the sweep clears core-scope updating state
@@ -237,7 +237,7 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
   `core/lib.go`, and never cleared. mihomo checks `DefaultSocketHook` for nil once and dereferences it again when the
   socket is created (`component/dialer/socket_hook.go`), so clearing it while a dial is in flight calls a nil func
   value. Stopping the TUN swaps `activeTunHandler` instead.
-- `tunnel.AllProxies()` returns a shared, cached map — never modify it. The cache is invalidated by
+- `tunnel.AllProxies()` returns a shared, cached map - never modify it. The cache is invalidated by
   `invalidateAllProxies` on `tunnel.UpdateProxies` and validated against each provider's `Version()`, so a rebuild
   costs one read per provider rather than one per proxy. Anything else added to `tunnel/patch.go` that derives from the
   proxy set needs both signals: the external controller can reload the config through `hub/route/configs.go` without
@@ -245,10 +245,10 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
 - Core state that mirrors mihomo state goes stale at the next `applyConfig`, which replaces every proxy, provider and
   rule. Read the tunnel instead of caching a snapshot of it: `lookupExternalProvider` kept one that was rebuilt only
   when the host asked for the provider list, and the host asks after a successful setup and not after a failed one, so
-  an update ran against a provider the tunnel no longer held — downloading, writing to disk and reporting success
+  an update ran against a provider the tunnel no longer held - downloading, writing to disk and reporting success
   against nothing.
 - Selection writes take `selectMu`, not `configMu`. mihomo's `Selector.Set` has no lock of its own, so the writes need
-  mutual exclusion against each other and against `patchSelectGroup` — but not against a whole config apply, which is
+  mutual exclusion against each other and against `patchSelectGroup` - but not against a whole config apply, which is
   what `configMu` made a proxy switch wait for, provider downloads included. `patchSelectGroup` takes `selectMu` under
   `configMu`, fixing the order as `configMu` → `selectMu`.
 - Queueing for the delay-test semaphore and probing the node each get the full timeout in `handleTestDelay`. With one
@@ -267,14 +267,14 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
   `downloadTimeoutDuration` matches mihomo's `resource.DefaultHttpTimeout`, which bounds the Core's provider downloads
   end to end. `shareLinkSchemes` are the schemes mihomo's `ConvertsV2Ray` reads, less http(s), which is a subscription.
 - Anything on the mihomo side that is reached from both a user-triggered core method and mihomo's own background
-  scheduler needs its in-flight guard on the XClient side. `updater.UpdateMMDB` and its siblings have none — only the
-  batch `UpdateGeoDatabases` does — and two concurrent runs close the mmap'd database twice, so `handleUpdateGeoData`
+  scheduler needs its in-flight guard on the XClient side. `updater.UpdateMMDB` and its siblings have none - only the
+  batch `UpdateGeoDatabases` does - and two concurrent runs close the mmap'd database twice, so `handleUpdateGeoData`
   claims per resource and `updater.GeoUpdateHook` releases.
 - A failed `applyConfig` rolls the tunnel back to the default config, and that rollback is the whole recovery:
-  `handleSetupConfig` returns the error and stops there. Do not add a teardown on top of it — stopping the listeners
+  `handleSetupConfig` returns the error and stops there. Do not add a teardown on top of it - stopping the listeners
   takes the app offline over a profile the user can still switch away from, and the error already reaches the host,
   which is what surfaces the failure (`MessageException` on the Flutter side, the config-error toast on Android). Keep
-  an empty `config.yaml` out of the failure path — it is how the app says "no profile selected", and `loadConfig`
+  an empty `config.yaml` out of the failure path - it is how the app says "no profile selected", and `loadConfig`
   resolves it to the defaults.
 - Package `init` in the Android library runs while the `.so` is being loaded, so a panic there takes the application
   down before it can report anything. `platform/limit.go` arms an fd-pressure probe and degrades to never blocking when
@@ -288,7 +288,7 @@ leaving a repo-wide policy as a comment reaches only the reader of that one file
 
 - Crash recovery is owned by `BootGuard` (`lib/common/boot_guard.dart`), and the signal it acts on is the persisted
   `BootRecord`, never a crash reporter. The record is stamped `starting` before `startCore` and `running` once
-  `_initApp` finishes, so only a launch that died before reaching `running` is a failed launch — a crash after hours of
+  `_initApp` finishes, so only a launch that died before reaching `running` is a failed launch - a crash after hours of
   runtime, or a process the system reclaimed in the background, is not one. `ApplicationExitInfo` can only veto a
   failure (user stop, low memory, signal, package change), never create one, and its timestamp is consumed through
   `handledExitAt` so the same exit cannot be counted twice.
@@ -455,7 +455,7 @@ collection for code under `core/`. CI still runs `CGO_ENABLED=0 go test .` and `
 plus a `GOOS=android` vet that covers the `android` files the first two exclude; verify cross-language
 protocol behavior through shared Dart contract tests under `test/core/` and native platform build checks.
 
-A Go test in `core/` that reaches `sendMessage` — directly, or through `handleStartLog` or `updater.GeoUpdateHook` —
+A Go test in `core/` that reaches `sendMessage` - directly, or through `handleStartLog` or `updater.GeoUpdateHook` -
 leaves events in the process-wide batcher, which flushes them up to `messageBatchInterval` later into whichever
 connection `captureFrames` has installed by then. Either keep the event out of the batcher or end the test with
 `settleMessageBatcher`. That batcher runs for the whole test binary and reads `conn` under `connMu`, so install a test
@@ -506,7 +506,7 @@ and is therefore null on every test host, so a `CoreLib()` built from it silentl
 path. `CoreLib.scoped` binds an explicit `Service` instead; reset the singleton with `CoreLib.resetInstance()` in `tearDown`.
 
 Three globals in `lib/common` reach real host state and carry a `@visibleForTesting` seam to stand in front of it:
-`AutoLaunch.launcher`, `listNetworkInterfaces` and `LinkManager.uriLinkStream`. Replace the launcher in particular — every
+`AutoLaunch.launcher`, `listNetworkInterfaces` and `LinkManager.uriLinkStream`. Replace the launcher in particular - every
 `enable`/`disable`/`isEnabled` writes the actual autostart entry (a LaunchAgents plist, a `.desktop` file or a registry
 key), so a test that skips the seam registers the test binary on the machine that ran it. `updateStatus` returns early
 under `kDebugMode`, which is always true beneath `flutter test`, so its remaining branches cannot be reached from a test
@@ -529,19 +529,19 @@ and leave headroom under a group floor that covers such a branch.
 
 A platform decision that drives layout takes `isDesktop`/`isMacOS` as parameters and reads `system` only at the call site,
 so every platform's outcome is reachable from one host. `getWindowHeaderHeight` and `showsWindowHeader` in
-`lib/common/layout.dart` own the window header rule for both `WindowHeaderContainer` and `overlayTopOffset` — they must
+`lib/common/layout.dart` own the window header rule for both `WindowHeaderContainer` and `overlayTopOffset` - they must
 agree, or the content is offset by a header that is not there. `WindowHeaderBar` takes its height and slots as arguments,
 which is what lets `test/manager/window_header_test.dart` measure the Windows caption bar on a macOS host.
 
 A `Stack` under loose constraints sizes to its non-positioned children, and falls back to `constraints.biggest` only when
-it has none — so a bar that fills the window must keep every slot positioned. One non-positioned child is enough to
+it has none - so a bar that fills the window must keep every slot positioned. One non-positioned child is enough to
 collapse `WindowHeaderBar` to that child's width: the macOS title did exactly that, leaving the app name over the traffic
 lights and the raw window painted black beside it, while Windows, whose slots are all positioned, stayed correct.
 `WindowHeaderLayout` positions the header across the top for the same reason, and the macOS group asserts the bar's
-width, not just its height — a height-only assertion cannot see this.
+width, not just its height - a height-only assertion cannot see this.
 
 The same seam carries the two other places a platform decision changed what was built: `AppTray` holds `isMacOS`/
-`isWindows` as state — `AppTray()` fills them from `system`, `AppTray.forPlatform` is the test seam — and `OnDemandView`
+`isWindows` as state - `AppTray()` fills them from `system`, `AppTray.forPlatform` is the test seam - and `OnDemandView`
 takes nullable `isAndroid`/`isMacOS` that fall back to the host. Every test names the platform it means, because
 `debugDefaultTargetPlatformOverride` does not move `system` and a suite that leaves it to the host asserts the macOS
 shape on a developer machine and the Linux one on CI. `WindowHeaderContainer` builds the caption buttons on every
@@ -560,26 +560,26 @@ sinks, and nothing in the standard set tracks `ChangeNotifier` disposal. A field
 that test's `_allowed` set with the reason, not left bare. Controllers received as widget parameters belong to the caller
 and are out of scope.
 
-An `IconButton` whose icon is an icon needs a `tooltip`. It is the button's only accessible name — without it TalkBack and
+An `IconButton` whose icon is an icon needs a `tooltip`. It is the button's only accessible name - without it TalkBack and
 VoiceOver announce nothing and the desktop build shows no hover hint. `test/lint/icon_button_tooltip_test.dart` enforces
 it and skips exactly two shapes: an `icon:` holding a `Text`, which is already a visible label, and
 `views/dashboard/widgets/core_status_button.dart`, which takes its label from an enclosing `Tooltip` (a second test fails
 if that wrapper disappears). Reuse an existing string before adding one; a label that depends on state goes on the button
 inside the `ValueListenableBuilder`, not outside it, or the tooltip cannot follow the icon. A row of window buttons hidden
-behind `system.isMacOS` is unreachable from a macOS test host, so extract it — `WindowHeaderActions` is the pattern.
+behind `system.isMacOS` is unreachable from a macOS test host, so extract it - `WindowHeaderActions` is the pattern.
 
 A tooltip needs an `Overlay` ancestor at build time, not at hover time: `RawTooltip` builds an `OverlayPortal`, so a
 button whose `tooltip` has nowhere to go throws "No Overlay widget found" and takes its whole subtree down with it.
 Everything `buildManagerStack` wraps around `PrismApp.builder`'s child sits *above* the app Navigator and therefore
-above the only Overlay in the tree. A manager that renders a tooltip — `WindowHeaderLayout` and its caption buttons are
-the case that broke Windows while macOS, which renders a bare title there, stayed clean — hosts its own with
+above the only Overlay in the tree. A manager that renders a tooltip - `WindowHeaderLayout` and its caption buttons are
+the case that broke Windows while macOS, which renders a bare title there, stayed clean - hosts its own with
 `Overlay.wrap`, spanning the window so the tooltip is not clipped to the widget that owns it. A test only reproduces this
 by mirroring that topology: build the widget from the app's `builder`, never from `home:`.
 
 A public top-level declaration that nothing outside its own file references is dead, and no lint catches it:
 `unused_element` covers only private ones, and a barrel `export` keeps a dead file compiling and off every
-"unused import" report. `test/lint/dead_file_test.dart` scans `lib/` for files whose declared names — types plus the
-`final appPath = AppPath()` singletons next to them — appear nowhere else, counting generated code as a consumer (a
+"unused import" report. `test/lint/dead_file_test.dart` scans `lib/` for files whose declared names - types plus the
+`final appPath = AppPath()` singletons next to them - appear nowhere else, counting generated code as a consumer (a
 riverpod notifier is reached through its generated provider) and barrels as neither. Files publishing only extensions or
 typedefs are skipped: those are reached through the types they attach to, never by name.
 
@@ -732,7 +732,7 @@ The project has no design library: `material_ui`, `cupertino_ui` and the SDK's
 neither package. Widgets come from `package:flutter/widgets.dart` and components, the
 `ThemeData` and the `ColorScheme` from `prism_ui`.
 
-Strings live in `arb/intl_{en,zh_CN,ja,ru,fr,es,ko}.arb` — flat JSON, no `@` metadata. Add a key to all seven, then regenerate with
+Strings live in `arb/intl_{en,zh_CN,ja,ru,fr,es,ko}.arb` - flat JSON, no `@` metadata. Add a key to all seven, then regenerate with
 `dart run intl_utils:generate`, which rewrites `lib/l10n/`. A key present in only some locales silently falls back to
 English at runtime, so add the translation rather than leaving it out.
 

@@ -26,7 +26,7 @@ void main() {
         final match = _passwordInputType.firstMatch(lines[i]);
         if (match != null) {
           offenders.add(
-            '${entity.path}:${i + 1} — ${match[0]} makes Android input '
+            '${entity.path}:${i + 1} - ${match[0]} makes Android input '
             'methods treat the field as a password, with no clipboard or '
             'Chinese input; keep autocorrect: false alone.',
           );

@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 const _entryPoints = ['lib/main.dart'];
 
-/// Types, and the top level names a file publishes alongside them — the
+/// Types, and the top level names a file publishes alongside them - the
 /// `final appPath = AppPath()` singleton pattern is how most of `lib/common`
 /// is actually consumed.
 final _declaration = RegExp(
@@ -85,7 +85,7 @@ void main() {
 
       if (!used) {
         orphans.add(
-          '$path — publishes ${names.join(', ')}, none of which is referenced '
+          '$path - publishes ${names.join(', ')}, none of which is referenced '
           'anywhere else. A barrel export keeps it compiling; it is still dead.',
         );
       }

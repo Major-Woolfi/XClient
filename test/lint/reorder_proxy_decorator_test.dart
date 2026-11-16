@@ -52,7 +52,7 @@ void main() {
           final arguments = _argumentsOf(source, match.end - 1);
           if (!arguments.contains('commonProxyDecorator(')) {
             offenders.add(
-              '$path:${_lineOf(source, match.start)} — a lifted row without '
+              '$path:${_lineOf(source, match.start)} - a lifted row without '
               'commonProxyDecorator keeps its place in the run, square edges '
               'and separator included.',
             );

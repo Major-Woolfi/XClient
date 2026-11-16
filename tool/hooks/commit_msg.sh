@@ -7,7 +7,7 @@ message_file="${1:?commit message file is required}"
 # The subject and the body have to be cut from the same text, or they overlap:
 # `git commit --cleanup=verbatim` and hook-written templates both leave blank
 # lines above the subject, and a body taken as "everything from line two" then
-# contains the subject itself — enough for the trailer checks below to read the
+# contains the subject itself - enough for the trailer checks below to read the
 # subject as a footer.
 cleaned="$(grep -v '^#' "$message_file" | sed '/[^[:space:]]/,$!d' || true)"
 

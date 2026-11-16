@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// in-memory state is mutated first and the row is persisted afterwards through
 /// [withRollback], which restores the pre-mutation snapshot when the write
 /// fails. These tests drive the real drift schema on an in-memory executor so
-/// both halves — the optimistic value and the rollback — are observable.
+/// both halves - the optimistic value and the rollback - are observable.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   const profileId = 1;
@@ -69,7 +69,7 @@ void main() {
   }
 
   /// `customStatement` does not raise a drift table-update notification, so the
-  /// streams the notifiers watch keep serving their last good rows — which is
+  /// streams the notifiers watch keep serving their last good rows - which is
   /// what lets a test observe the rolled-back state rather than an error state.
   Future<void> breakTable(String table) =>
       testDatabase.customStatement('DROP TABLE $table');
@@ -1319,5 +1319,3 @@ class _GatedProfileRules extends ProfileRules {
     await super.persistRule(rule);
   }
 }
-
-

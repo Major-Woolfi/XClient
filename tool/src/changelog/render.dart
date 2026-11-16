@@ -89,7 +89,7 @@ String renderReleaseJson(ChangelogVersion version) {
 /// The caption is sent with a parse mode, so entry text is markup, not text: a
 /// commit subject carrying a `<` is a malformed tag and Telegram rejects the
 /// whole upload. HTML rather than Markdown because it is the one
-/// Telegram parse mode with a defined escape — legacy Markdown has none, and a
+/// Telegram parse mode with a defined escape - legacy Markdown has none, and a
 /// subject containing a lone `*` or `_` cannot be made safe in it.
 String escapeTelegramHtml(String value) => value
     .replaceAll('&', '&amp;')
@@ -140,4 +140,3 @@ String _heading(ChangelogVersion version) => version.date.isEmpty
 
 String _prefix(ChangelogEntry entry) =>
     entry.scope == null ? '' : '**${entry.scope}** ';
-

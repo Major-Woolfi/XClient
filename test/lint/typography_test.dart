@@ -34,19 +34,19 @@ void main() {
         final line = lines[i];
         if (path != _typography && _textTheme.hasMatch(line)) {
           offenders.add(
-            '$path:${i + 1} — reads a Material TextTheme slot; use an '
+            '$path:${i + 1} - reads a Material TextTheme slot; use an '
             'AppTextStyle from $_typography.',
           );
         }
         if (checksSize && _fontSize.hasMatch(line)) {
           offenders.add(
-            '$path:${i + 1} — sets a font size outside prism_ui; use an '
+            '$path:${i + 1} - sets a font size outside prism_ui; use an '
             'AppTextStyle, or AppTextStyle.custom for a size off the scale.',
           );
         }
         if (checksSize && _fontWeight.hasMatch(line)) {
           offenders.add(
-            '$path:${i + 1} — sets a font weight outside prism_ui; pass '
+            '$path:${i + 1} - sets a font weight outside prism_ui; pass '
             'emphasized to AppTextStyle.of.',
           );
         }

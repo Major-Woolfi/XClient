@@ -37,7 +37,7 @@ with a `===` line carrying its timestamp and target.
 
 The hook runs for `flutter test` and for `dart run` of any root-package script
 too, so a pure Dart test run needs the Go toolchain, and on Linux and Windows
-also `cargo` and `rustc` — the Helper fingerprint shells out to both even on a
+also `cargo` and `rustc` - the Helper fingerprint shells out to both even on a
 cache hit. The hook protocol carries no build mode and no caller, so the only
 switch is the user-define in the root `pubspec.yaml`:
 

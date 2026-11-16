@@ -76,7 +76,7 @@ void main() {
       final line = "export '${p.basename(module)}';";
       if (exports.contains(line)) {
         leaked.add(
-          '$line — importing the barrel would pull the platform package into '
+          '$line - importing the barrel would pull the platform package into '
           'every one of its consumers',
         );
       }
@@ -148,7 +148,7 @@ void main() {
         "import 'package:xclient/manager/manager.dart';",
       )) {
         offenders.add(
-          '${p.relative(file.path)} — import the one manager it needs, not the '
+          '${p.relative(file.path)} - import the one manager it needs, not the '
           'barrel that reaches every platform manager',
         );
       }
@@ -157,5 +157,3 @@ void main() {
     expect(offenders, isEmpty, reason: offenders.join('\n'));
   });
 }
-
-

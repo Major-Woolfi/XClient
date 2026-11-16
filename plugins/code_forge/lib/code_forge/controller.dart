@@ -206,7 +206,7 @@ class CodeForgeController implements DeltaTextInputClient {
   /// renderer publishes them when a fold is toggled, so this is empty until
   /// then.
   ///
-  /// Use the setter to update this map — it rebuilds internal sorted caches
+  /// Use the setter to update this map - it rebuilds internal sorted caches
   /// used for O(log n) fold-region lookups.
   Map<int, FoldRange?> get foldings => _foldings;
 

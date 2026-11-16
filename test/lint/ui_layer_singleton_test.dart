@@ -49,7 +49,7 @@ void main() {
           }
           for (final entry in _forbidden.entries) {
             if (RegExp(entry.key).hasMatch(line)) {
-              offenders.add('$relative:${i + 1} — ${entry.value}');
+              offenders.add('$relative:${i + 1} - ${entry.value}');
             }
           }
         }
