@@ -10,11 +10,8 @@ output_base_file_name: XClient.exe
 # absolute path via Directory.current.
 setup_icon_file: windows\runner\resources\app_icon.ico
 locales:
-  # Written into the .iss verbatim, so this one stays relative to the generated
-  # script in dist/.
-  - lang: zh
-    file: ..\windows\packaging\exe\ChineseSimplified.isl
-  - lang: en
+  - zh
+  - en
 privileges_required: admin
 
 
