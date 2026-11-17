@@ -305,8 +305,8 @@ Iterable<CodeForgeSuggestion> _plain(Iterable<String> labels) =>
 String _escapeSnippet(String text) =>
     text.replaceAllMapped(RegExp(r'[$}\\]'), (match) => '\\${match[0]}');
 
-/// The names rules and groups refer to, read from the document's own
-/// top-level sections.
+/// Имена, на которые ссылаются правила и группы, прочитанные из собственных
+/// секций верхнего уровня документа.
 class _DocumentNames {
   static const _namingSections = {
     'proxies',
@@ -389,8 +389,8 @@ class _DocumentNames {
     flush();
   }
 
-  /// Whether the names outlast [edit], which they do inside a section that
-  /// names nothing; [lines] is the text after it.
+/// Живут ли имена после [edit], что они делают внутри секции, которая ничего не называет;
+/// [lines] — это текст после него.
   bool follow(
     ({int line, int removed, int inserted}) edit,
     List<String> lines,

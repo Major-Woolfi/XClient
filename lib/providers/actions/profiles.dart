@@ -78,7 +78,7 @@ class ProfilesAction extends _$ProfilesAction {
     ];
   }
 
-  /// Where a profile's own group takes a name, the name stands for that group.
+  /// Где группа самого профиля берёт имя, имя означает ту группу.
   Future<List<Profile>> proxyUsers(Set<String> names) async {
     final (ruleTargets, dialerTargets) = await (
       database.rulesDao.targetsNaming(names),
@@ -147,7 +147,7 @@ class ProfilesAction extends _$ProfilesAction {
       final updated = await profile.update(
         validate: (path, key) => _core.validateProfile(path, key),
       );
-      // The download can take minutes; edits and deletes made meanwhile win.
+      // Загрузка может занять минуты; правки и удаления, сделанные тем временем, выигрывают.
       final latest = ref.read(profilesProvider).getProfile(profile.id);
       if (latest == null) {
         await clearEffect(profile.id);
@@ -346,9 +346,7 @@ class ProfilesAction extends _$ProfilesAction {
     }
   }
 
-  /// [config] replaces what [profileId] holds. The providers it adds are saved
-  /// before the groups and rules naming them, and loaded afterwards; the
-  /// future completes once they have loaded.
+  /// [config] заменяет то, что содержит [profileId]. Добавленные им провайдеры сохраняются до групп и правил, называющих их, и загружаются после; будущее завершается, когда они загружены.
   Future<void> importCustomProfile(int profileId, CustomProfileImport config) {
     final profiles = ref.read(profilesProvider.notifier);
     final clashProviders = ref.read(clashProvidersProvider.notifier);
@@ -449,8 +447,7 @@ class ProfilesAction extends _$ProfilesAction {
     }
   }
 
-  /// Ids are taken up front so the list keeps the order of [links]; the share
-  /// links among them make up one profile, in the place of the first.
+  /// Id берутся заранее, чтобы список сохранял порядок [links]; share-ссылки среди них образуют один профиль, на месте первой.
   Future<void> addProfilesFromLinks(List<String> links) async {
     _showProfiles();
     final shareLinks = [
@@ -482,22 +479,22 @@ class ProfilesAction extends _$ProfilesAction {
     final userinfo = response.headers.value('subscription-userinfo');
     final bytes = decompressUnlabeled(response.data ?? Uint8List(0));
 
-    // Write to temp file for core-type auto-detection.
+    // Пишем во временный файл для автоматического определения типа ядра.
     final tempPath = await appPath.tempFilePath;
     final tempFile = File(tempPath);
     await tempFile.safeWriteAsBytes(bytes);
 
-    // Auto-detect core type from content and switch if needed.
+    // Автоопределить тип ядра по содержимому и переключить при необходимости.
     await _core.detectAndSwitchCore(tempPath);
 
-    // Validate with the now-correct core.
+    // Валидировать с теперь правильным ядром.
     final issue = await _core.validateProfile(tempPath, '');
     if (issue != null) {
       await tempFile.safeDelete();
       throw MessageException(issue);
     }
 
-    // Save to profile location.
+
     final mFile = await profile.file;
     await tempFile.copy(mFile.path);
     await tempFile.safeDelete();

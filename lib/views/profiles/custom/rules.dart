@@ -471,7 +471,7 @@ class _AddOrEditRuleViewState extends ConsumerState<_AddOrEditRuleView> {
 
   Widget _buildNoResolveItem(bool noResolve, bool src) {
     final appLocalizations = context.appLocalizations;
-    // The core turns no-resolve on with src, so the switch cannot disagree.
+    // Ядро включает no-resolve вместе с src, так что переключатель не может не согласиться.
     return _buildItem(
       title: appLocalizations.noResolveHostname,
       trailing: Switch(

@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod/misc.dart' show Override;
 
-/// A null [profileId] edits something app-level, outside any profile.
+/// Нулевой [profileId] редактирует что-то на уровне приложения, вне любого профиля.
 Future<void> showNestedFormSheet<T>({
   required BuildContext context,
   required int? profileId,
@@ -43,8 +43,8 @@ class NestedFormSheet<T> extends ConsumerStatefulWidget {
     required this.formBuilder,
   });
 
-  /// Answers save in the prompt on leaving with the form's own save action,
-  /// which closes the sheet once saved and otherwise shows the form why not.
+  /// Отвечает сохранением в приглашении при уходе с действия сохранения формы,
+  /// которое закрывает лист, когда сохранено, и иначе показывает форме, почему нет.
   static void bindSave(BuildContext context, FutureOr<void> Function() save) {
     context.findAncestorStateOfType<_NestedFormSheetState>()?._save = save;
   }

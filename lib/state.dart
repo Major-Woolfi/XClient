@@ -68,7 +68,7 @@ class GlobalState {
     );
   }
 
-  /// Concurrent [loadingRun]s would let the first to finish clear [tag].
+  /// Одновременные [loadingRun] позволили бы первому закончившему очистить [tag].
   Future<void> batchRun<T>(
     List<T> items,
     Future<void> Function(T item) task, {

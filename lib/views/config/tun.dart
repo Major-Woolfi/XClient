@@ -43,8 +43,8 @@ extension on TunOverrideKey {
   };
 }
 
-// Where sing-tun reads each key: strict-route in its Linux and Windows
-// routing, the Linux-only ones in its Linux device setup and routing rules.
+// Где sing-tun считывает каждый ключ: strict-route в маршрутизации Linux и Windows,
+// Linux-only ключи в настройке устройства Linux и правилах маршрутизации.
 bool _isRead(
   TunOverrideKey key, {
   required bool isLinux,

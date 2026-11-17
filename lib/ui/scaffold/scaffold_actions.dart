@@ -52,7 +52,7 @@ Widget _barButton(IconButtonData data, {Widget? icon}) => ElasticPress(
   child: AppBarActionButton(data: data, icon: icon),
 );
 
-/// [Scaffold.selectionActions] as the bar shows them, searching or not.
+/// [Scaffold.selectionActions] так, как бар их показывает, ищет или нет.
 class _SelectionButtons {
   const _SelectionButtons(this.actions);
 

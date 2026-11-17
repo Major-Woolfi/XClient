@@ -2,7 +2,7 @@ import 'package:xclient/ui/icons/app_glyphs.dart';
 import 'package:prism_ui/icons/glyph.dart';
 import 'package:prism_ui/null_status.dart';
 
-/// The illustrations of XClient's empty pages.
+/// Иллюстрации пустых страниц XClient.
 enum NullStatusIllustration implements Illustration {
   data,
   logs,

@@ -101,7 +101,7 @@ class ProfilesDao extends DatabaseAccessor<Database> with _$ProfilesDaoMixin {
     );
   }
 
-  /// The order [query] reads profiles back in.
+  /// Порядок, в котором [query] читает профили обратно.
   static int compare(Profile a, Profile b) => switch ((a.order, b.order)) {
     (final x?, final y?) when x != y => x.compareTo(y),
     (null, _?) => 1,

@@ -206,7 +206,7 @@ class _RecentFeedState extends State<_RecentFeed> {
     _scrollController =
         widget.scrollController ??
         sheetScrollController(context, initialScrollOffset: double.maxFinite);
-    // A sheet's one controller may have been left where the live feed reads.
+    // Один контроллер листа мог остаться там, где читает лента live.
     if (widget.scrollController != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted && _scrollController.hasClients) {

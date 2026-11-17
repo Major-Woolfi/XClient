@@ -57,8 +57,8 @@ class RoutedProbeState<K, V> {
   );
 }
 
-/// One probe answer before it is stamped. The counters are the Core's at
-/// launch and stay null when the Core gave no answer at all.
+/// Один ответ пробы до того, как он помечен. Счетчики — это значения ядра при
+/// запуске и остаются null, когда ядро не дало ответа вообще.
 class ProbeAnswer<V> {
   const ProbeAnswer({
     this.value,
@@ -73,11 +73,12 @@ class ProbeAnswer<V> {
   final List<RouteHit> hits;
 }
 
-/// Keeps one answer per target and only ever shows one that still describes
-/// the current route. A new route version only asks again for the answers
-/// whose exits the Core finds moved, and a target asked on its own waits out
-/// [throttleDuration] since its last probe. State changes are deferred to a
-/// microtask, so a widget may watch a target from its build.
+/// Хранит один ответ на цель и показывает только тот, который всё ещё
+/// описывает текущий маршрут. Новая версия маршрута снова запрашивает только
+/// ответы, выходы которых ядро считает перемещёнными, а цель, запрашиваемая
+/// сама по себе, выдерживает [throttleDuration] с момента последнего пробирования.
+/// Изменения состояния откладываются на микротаск, поэтому виджет может
+/// следить за целью из своей сборки.
 mixin RoutedProbe<K, V>
     on AnyNotifier<RoutedProbeState<K, V>, RoutedProbeState<K, V>> {
   final Map<K, int> _watchers = {};
@@ -95,8 +96,8 @@ mixin RoutedProbe<K, V>
   Duration _settleLength = Duration.zero;
   RouteState _route = const RouteState();
 
-  /// May also answer targets it was not asked for; a fresh one of those is
-  /// taken in place of its own lookup.
+  /// Может также отвечать на цели, о которых не просили; свежий из них
+  /// берётся вместо своего собственного поиска.
   @protected
   Future<Map<K, ProbeAnswer<V>>> probe(K target, RouteState route);
 
@@ -178,8 +179,8 @@ mixin RoutedProbe<K, V>
     }
   }
 
-  /// A re-probe dropped before it launched would leave its entry loading
-  /// with nothing left to settle it.
+  /// Повторное пробирование, отменённое до запуска, оставит его запись в
+  /// состоянии загрузки, без чего-либо, что бы устаканило её.
   void _forget(K target) {
     if (!ref.mounted ||
         _watchers.containsKey(target) ||
@@ -192,9 +193,10 @@ mixin RoutedProbe<K, V>
     state = RoutedProbeState(Map.of(state.entries)..remove(target));
   }
 
-  /// A refresh is the user asking, so it runs for targets nobody watches
-  /// too, and waits neither for the route to settle nor for the throttle;
-  /// the answer lands in the cache and stays until the route moves.
+  /// Обновление — это запрос пользователя, поэтому оно запускается и для целей,
+  /// за которыми никто не следит, и не ждёт ни пока маршрут не устаканится, ни
+  /// пока не истечёт дросселирование; ответ попадает в кэш и остаётся там, пока
+  /// маршрут не сдвинется.
   void refresh(Iterable<K> targets) {
     for (final target in targets) {
       _mark(target, keepValue: true, forced: true);
@@ -283,7 +285,8 @@ mixin RoutedProbe<K, V>
     });
   }
 
-  /// A target a newer route asked again belongs to that run from then on.
+  /// Цель, о которой спросила более новая версия маршрута, относится к тому
+  /// запуску с этого момента.
   Future<void> _run(K target, RouteState route, int run) async {
     var answers = <K, ProbeAnswer<V>>{};
     try {
@@ -303,7 +306,7 @@ mixin RoutedProbe<K, V>
     final answer = answers[target] ?? const ProbeAnswer();
     final stamp = _stampOf(answer, route);
     if (!current.synced || current.hasMovedSince(stamp)) {
-      // Stale twice under one route: the Core and host disagree, stop asking.
+      // Устарело дважды под одним маршрутом: ядро и хост не сходятся, перестаем спрашивать.
       if (_staleUnder[target] != current) {
         _staleUnder[target] = current;
         _invalidate(target, entries);
@@ -424,8 +427,9 @@ mixin RoutedProbe<K, V>
     }
   }
 
-  /// Answers the route moved under are checked in one call once it settles,
-  /// except a fresh landing, which is held back until its own check.
+  /// Ответы, под которыми маршрут сдвинулся, проверяются одним вызовом после
+  /// того, как он устаканится, за исключением свежей посадки, которая
+  /// откладывается до своей собственной проверки.
   Future<void> _verify() async {
     if (_verifying) {
       _reverify = true;
@@ -522,8 +526,9 @@ mixin RoutedProbe<K, V>
     }
   }
 
-  /// Nothing made before a move stands, so the question waits for the
-  /// route to settle and then overtakes any probe still out.
+  /// Ничто, созданное до сдвига, не остаётся, поэтому вопрос ждёт, пока
+  /// маршрут устаканится, а затем обгоняет любое пробирование, которое ещё
+  /// в пути.
   void _invalidate(K target, Map<K, ProbeEntry<V>> entries) {
     _landed.remove(target);
     _unverified.remove(target);

@@ -40,8 +40,7 @@ mixin ActivePollingMixin<T extends StatefulWidget>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // The overlay turns tickers off on a page an opaque route covers once
-    // that route has finished moving in.
+    // Оверлей выключает тикеры на странице, которую закрывает непрозрачный маршрут, как только тот закончит перемещаться.
     final isPageActive =
         PageActivityScope.isActiveOf(context) &&
         TickerMode.valuesOf(context).enabled;
@@ -162,8 +161,7 @@ class _TickBuilderState extends State<TickBuilder>
     });
   }
 
-  // Resuming restarts the interval, so a desktop window that loses focus more
-  // often than that would otherwise never tick.
+  // Возобновление перезапускает интервал, иначе окно на рабочем столе, которое теряет фокус чаще этого, никогда бы не тикало.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     final couldPoll = canPoll;

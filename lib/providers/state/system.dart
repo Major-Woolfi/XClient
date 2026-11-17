@@ -49,7 +49,7 @@ setupPatch(Ref ref) {
     appendSystemDns: ref.watch(
       networkSettingProvider.select((state) => state.appendSystemDns),
     ),
-    // Android's VPN service takes it on its next start instead.
+    // Android VPN-сервис берет его при следующем запуске.
     bypassPrivateRoute:
         system.isDesktop &&
         ref.watch(
@@ -115,8 +115,8 @@ Map<HotAction, HotKeyAction> _trayHotKeys(Ref ref) {
   };
 }
 
-/// Measured delays of the proxies the tray lists, by group and then proxy
-/// name. Resolved like a proxy card, so a nested group shows its selection.
+/// Измеренные задержки прокси, которые перечисляет трей, по группам и затем по
+/// именам прокси. Разрешается как карточка прокси, так что вложенная группа показывает свой выбор.
 @riverpod
 Map<String, Map<String, int>> trayDelays(Ref ref) {
   final delayMap = ref.watch(delayDataSourceProvider);
@@ -268,8 +268,9 @@ Future<VpnOptions> vpnOptions(Ref ref) async {
   return VpnOptions(
     enable: vpnSetting.enable && !safeMode,
     stack: tun.stack.name,
-    // VpnService.setHttpProxy cannot carry credentials, so an authenticated
-    // mixed port is left to TUN instead of declared as the system proxy.
+    // VpnService.setHttpProxy не может переносить учетные данные, поэтому
+    // аутентифицированный смешанный порт остается в TUN вместо объявления как
+    // системного прокси.
     systemProxy:
         vpnSetting.systemProxy && !networkSetting.authenticated && !safeMode,
     port: clashConfig.mixedPort,
@@ -287,7 +288,7 @@ Future<VpnOptions> vpnOptions(Ref ref) async {
 @riverpod
 class AccessControlState extends _$AccessControlState
     with AutoDisposeNotifierMixin {
-  /// A draft of the saved props, which the access page edits until it saves.
+  /// Черновик сохраненных свойств, который страница доступа редактирует до сохранения.
   @override
   AccessControlProps build() =>
       ref.read(vpnSettingProvider.select((state) => state.accessControlProps));

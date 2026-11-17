@@ -129,7 +129,8 @@ Future<SetupState> setupState(Ref ref, int? profileId) async {
   );
 }
 
-/// A module whose content is not on disk yet adds nothing until it downloads.
+/// Модуль, содержимого которого еще нет на диске, ничего не добавляет, пока
+/// не скачается.
 Future<List<MitmModuleSource>> mitmModuleSources(
   Iterable<MitmModule> modules,
 ) async {
@@ -154,7 +155,7 @@ Future<List<MitmModuleSource>> mitmModuleSources(
   return sources;
 }
 
-/// Subscription profiles double as proxy providers for custom profiles.
+/// Подписочные профили также служат провайдерами прокси для кастомных профилей.
 @riverpod
 Map<String, int> profileProviders(Ref ref) {
   final profiles = ref.watch(profilesProvider);

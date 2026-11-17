@@ -45,8 +45,8 @@ class MitmCa extends _$MitmCa {
 @Riverpod(keepAlive: true)
 MitmTrustStore? mitmTrustStore(Ref ref) => mitmTrustStoreForPlatform();
 
-/// Whether this device trusts the CA. A check records the CA it found
-/// trusted, which is the one the Core decrypts HTTPS with.
+/// Доверяет ли это устройство ЦС. Проверка фиксирует ЦС, который нашла
+/// доверенным — именно с ним ядро расшифровывает HTTPS.
 @Riverpod(keepAlive: true)
 class MitmTrustState extends _$MitmTrustState {
   @override
@@ -90,8 +90,8 @@ class MitmTrustState extends _$MitmTrustState {
 
   Future<void>? _refreshing;
 
-  /// Calls while a check runs share it, since each check runs the platform's
-  /// trust tools.
+  /// Вызовы во время проверки делят её, поскольку каждая проверка запускает
+  /// инструменты доверия платформы.
   Future<void> refresh() {
     if (state.isLoading) {
       return future.then((_) {}, onError: (_) {});
@@ -129,8 +129,8 @@ class MitmTrustState extends _$MitmTrustState {
     return outcome;
   }
 
-  /// False when the old CA is left in the trust store for the user to remove,
-  /// as safe mode always leaves it.
+  /// False, когда старый ЦС остаётся в хранилище доверия для пользователя,
+  /// чтобы удалить, так как безопасный режим всегда оставляет его.
   Future<bool> regenerate() async {
     final old = await ref.read(mitmCaProvider.future);
     final store = ref.read(mitmTrustStoreProvider);
@@ -157,8 +157,8 @@ class MitmTrustState extends _$MitmTrustState {
   }
 }
 
-/// Fetched again while shown, until the connection has closed and none of its
-/// requests is pending.
+/// Снова загружается пока показан, пока соединение не закроется и ни один из
+/// его запросов не будет в ожидании.
 @riverpod
 Future<MitmExchangeList> mitmExchanges(Ref ref, String connectionId) async {
   final list = await ref
@@ -227,8 +227,8 @@ typedef MitmCharsetTranscoder =
 @visibleForTesting
 MitmCharsetTranscoder mitmCharsetTranscoder = transcodeCharset;
 
-/// Whether the user was told, this run, what a copied or exported request
-/// can carry.
+/// Был ли пользователь предупреждён в этом запуске, что может нести
+/// скопированный или экспортированный запрос.
 @Riverpod(keepAlive: true)
 class MitmExportWarned extends _$MitmExportWarned {
   @override
@@ -237,7 +237,7 @@ class MitmExportWarned extends _$MitmExportWarned {
   void accept() => state = true;
 }
 
-/// Why the Core skips each of the user's hostnames, by the line.
+/// Почему ядро пропускает каждое из имён хостов пользователя, по строкам.
 @riverpod
 Future<Map<String, String>> mitmHostnameIssues(Ref ref) async {
   final hostname = ref.watch(
@@ -273,7 +273,7 @@ MitmModuleContent _parseModuleSource(MitmModuleSource source) =>
       resources: source.resources,
     );
 
-/// Null while the module's content is not on disk.
+/// Null, пока содержимое модуля не на диске.
 @riverpod
 Future<MitmModuleDetails?> mitmModuleDetails(Ref ref, int id) async {
   final module = ref.watch(

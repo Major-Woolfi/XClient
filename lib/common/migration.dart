@@ -11,9 +11,9 @@ typedef MigrationTransform =
     Future<MigrationData> Function(Map<String, Object?> configMap);
 
 abstract interface class MigrationStore {
-  /// False when the backing store could not be opened at all, as opposed to a
-  /// store that opened but holds nothing.
-  Future<bool> get isAvailable;
+/// Ложь, когда базовое хранилище не удалось открыть вообще, в отличие от
+/// хранилища, которое открылось, но не содержит ничего.
+Future<bool> get isAvailable;
 
   Future<Map<String, Object?>?> getConfigMap();
 
@@ -89,9 +89,9 @@ class Migration {
 
   static const currentVersion = 1;
 
-  /// One-off setting changes for upgrades, apart from [currentVersion], which
-  /// backups carry and an older app refuses when it is newer than its own.
-  static const upgradeVersion = 4;
+/// Одноразовые изменения настроек для обновлений, кроме [currentVersion], которую
+/// носят бэкапы и которую старое приложение отвергает, если она новее своей.
+static const upgradeVersion = 4;
 
   static const Map<int, Config Function(Config config)> _upgrades = {
     1: _resetThemeColors,

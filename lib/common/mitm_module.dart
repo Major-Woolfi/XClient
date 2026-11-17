@@ -29,8 +29,8 @@ class MitmModuleArgument {
   final String? label;
   final String? description;
 
-  /// A number, as Loon's type=number and Stash's integer values are, which an
-  /// object argument or a json value hands over as a number.
+/// Число, как type=number в Loon и integer values в Stash, которое объектный
+/// аргумент или json-значение передаёт как число.
   final bool number;
 
   String get title => label ?? name;

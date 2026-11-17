@@ -70,7 +70,7 @@ class Service {
           }
           break;
         case 'stopped':
-          // A report stamped before the newest command no longer describes it.
+          // Отчет, промеченный раньше новейшей команды, больше не описывает её.
           if (call.arguments != _commandRevision || !_startRequested) {
             break;
           }

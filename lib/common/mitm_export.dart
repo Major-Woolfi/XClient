@@ -6,8 +6,8 @@ import 'package:xclient/models/models.dart';
 
 String _shellQuoted(String text) => "'${text.replaceAll("'", r"'\''")}'";
 
-/// A POSIX shell command that sends [exchange] again, with [body] as the
-/// request body; a body that is not text is piped in from Base64.
+/// Команда оболочки POSIX, которая повторно отправляет [exchange] с [body] как
+/// телом запроса; тело, не являющееся текстом, подаётся из Base64.
 String mitmCurl(MitmExchange exchange, MitmBody? body) {
   final bytes = body == null ? const <int>[] : base64Decode(body.data);
   final authority = Uri.tryParse(exchange.url)?.authority;

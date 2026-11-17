@@ -57,7 +57,7 @@ class _MitmViewState extends ConsumerState<MitmView> {
   @override
   void initState() {
     super.initState();
-    // The user may come back from installing the certificate in Settings.
+    // Пользователь может вернуться из настроек после установки сертификата.
     _lifecycle = AppLifecycleListener(onResume: _checkTrust);
     _checkTrust();
   }
@@ -173,7 +173,7 @@ class _MitmViewState extends ConsumerState<MitmView> {
     }
     final check = ref.read(mitmTrustStateProvider).value;
     switch (outcome) {
-      // Only su installs straight away on Android.
+      // Только su устанавливает сертификат немедленно на Android.
       case MitmInstallOutcome.installed
           when isAndroid && check?.systemStore != true:
         await dialogs.showAlert(

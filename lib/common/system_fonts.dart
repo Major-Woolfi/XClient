@@ -13,8 +13,8 @@ import 'print.dart';
 Future<List<String>> Function() systemFontFamiliesReader = () =>
     Isolate.run(_readSystemFontFamilies);
 
-/// The font families the engine resolves by name on this host, each listed
-/// through the API the engine itself matches names against.
+/// Семейства шрифтов, которые движок разрешает по имени на этом хосте, каждое
+/// перечисленное через API, которое движок сам использует для сопоставления имён.
 Future<List<String>> loadSystemFontFamilies() async {
   try {
     return await systemFontFamiliesReader();

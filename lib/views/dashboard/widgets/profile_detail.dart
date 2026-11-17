@@ -56,7 +56,7 @@ ProfileStats profileStatsOf(
 
 ({String md5, ConfigCounts counts})? _countsCache;
 
-// package:yaml holds a document in many times its size.
+// package:yaml держит документ в много раз большем размере.
 const _maxCountedConfigBytes = 8 << 20;
 
 ConfigCounts? _cachedCounts() {
@@ -77,7 +77,7 @@ ConfigCounts? _countConfigFile(String path) {
   return configCountsOf(config is Map ? config : const {});
 }
 
-/// Parsed in an isolate: a large profile takes far longer than a frame.
+/// Разбирается в изоляте: большой профиль занимает гораздо больше кадра.
 Future<ConfigCounts?> _loadCounts() async {
   if (_cachedCounts() case final counts?) {
     return counts;
@@ -122,7 +122,7 @@ mixin ConfigCountsWatch<T extends ConsumerStatefulWidget> on ConsumerState<T> {
     });
   }
 
-  /// Called from build: groups refresh after every applied setup.
+  /// Вызывается из build: группы обновляются после каждого применённого сетапа.
   void watchConfigCounts() {
     ref.listen(groupsProvider, (_, _) {
       final cached = _cachedCounts();

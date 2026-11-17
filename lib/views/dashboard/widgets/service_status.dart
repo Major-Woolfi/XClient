@@ -78,8 +78,7 @@ Color _statusColor(BuildContext context, ServiceProbeStatus status) {
   return (localizations.servicePending, idle);
 }
 
-/// A service as the card shows it: a failure held through a start reads as
-/// still checking, without the result it replaced.
+/// Сервис, как карта его показывает: неудача, удержанная через запуск, читается как всё ещё проверка, без результата, который она заменила.
 class _ServiceView {
   _ServiceView(this.target, ProbeEntry<ServiceCheck> entry, this.phase)
     : check = phase == entry.phase ? entry.value : null;
@@ -173,7 +172,7 @@ class _ServiceStatusCardState extends ConsumerState<ServiceStatusCard>
     final density = DashboardDensityScope.of(context);
     final mobile = !density.isDesktop;
     final appLocalizations = context.appLocalizations;
-    // At most four: what the Core checks at once (serviceCheckConcurrency).
+    // Не более четырёх: то, что Core проверяет за раз (serviceCheckConcurrency).
     final shownCount = (mobile ? 1 : 2) * widget.columns;
     final stacked = widget.columns == 1;
     final shown = ref
@@ -449,9 +448,7 @@ mixin _NodeAddressWatch<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   }
 }
 
-/// Node names tend to carry their own flag emoji, so a service shows where
-/// its traffic leaves from as a flag and the address instead, and falls
-/// back to the node only when the address could not be looked up.
+/// Имена узлов часто носят свой флаг-эмодзи, поэтому сервис показывает, откуда уходит трафик, флагом и адресом вместо этого, и возвращается к узлу только тогда, когда адрес не удалось найти.
 class _OutboundIpLine extends StatelessWidget {
   const _OutboundIpLine({
     required this.ip,
@@ -529,8 +526,7 @@ class _NoValue extends StatelessWidget {
   }
 }
 
-/// The status dot sits in a notch cleared from the tile rather than on a ring
-/// painted in the surface colour, which differs between the card and the rows.
+/// Точка статуса сидит в вырезе из плитки, а не на кольце, окрашенном в цвет поверхности, который отличается между карточкой и строками.
 class _ServiceBadge extends StatelessWidget {
   const _ServiceBadge({
     required this.target,
@@ -646,7 +642,7 @@ Future<void> showServiceStatusSheet(BuildContext context) {
   );
 }
 
-/// Every enabled service, read from the cache and checked only on request.
+/// Каждый включённый сервис, читаемый из кэша и проверяемый только по запросу.
 class ServiceStatusSheet extends ConsumerWidget {
   const ServiceStatusSheet({super.key});
 

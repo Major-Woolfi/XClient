@@ -691,7 +691,7 @@ Stream<int> profileGroupsCount(Ref ref, int profileId) {
   return database.proxyGroupsDao.profileGroupsCount(profileId).watchSingle();
 }
 
-/// What the standard extension adds to a profile, or a custom profile's rules.
+/// То, что стандартное расширение добавляет в профиль, или правила кастомного профиля.
 @riverpod
 class ProfileRules extends _$ProfileRules
     with AsyncNotifierMixin, OptimisticMixin, RuleListMixin {
@@ -719,8 +719,8 @@ class ProfileRules extends _$ProfileRules
   }
 }
 
-/// Unless [group] says the name is a group's, a profile whose own group takes
-/// either name is left alone: there the name stands for that group.
+/// Если не [group] говорит, что имя относится к группе, профиль, у чьей группы берется
+/// любое из имен, остается в покое: там имя означает эту группу.
 Future<Profile Function(Profile profile)?> _renameProxyIn(
   int profileId, {
   required String oldName,
@@ -995,7 +995,7 @@ class CustomProxies extends _$CustomProxies
     );
   }
 
-  /// Upserts kept rows, так как удалённая забирает с собой свои диаллеры.
+  /// Обновляет или вставляет сохраненные строки, так как удалённая забирает с собой свои диаллеры.
   void setAll(List<CustomProxy> proxies) {
     final orders = indexing.generateNKeys(proxies.length);
     final next = [

@@ -48,7 +48,7 @@ String? validateHost(String? value, AppLocalizations appLocalizations) {
   return _isHost(value ?? '') ? null : appLocalizations.invalidHostContent;
 }
 
-/// mihomo starts no DNS server, and only logs why, for an address this refuses.
+/// у mihomo нет DNS-сервера, и он только пишет в лог причину, для какого адреса отказывается.
 String? validateListenAddress(
   String? value,
   AppLocalizations appLocalizations,

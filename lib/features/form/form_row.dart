@@ -136,12 +136,12 @@ class FormRow extends StatelessWidget {
   }
 }
 
-/// A bare text field set against the end of a [FormRow], as iOS and macOS set
-/// one in a grouped form; the row's focus ring is the only outline it gets.
+/// Голое текстовое поле в конце [FormRow], как iOS и macOS ставят одно
+/// в сгруппированной форме; кольцо фокуса строки — единственный её контур.
 class FormRowTextField extends StatelessWidget {
   static const _cursorWidth = 2.0;
 
-  // RenderEditable's caret gap plus cursor, which it keeps clear past the text.
+  // Отступ каретки RenderEditable плюс курсор, который она оставляет свободным за текстом.
   static const _caretMargin = 1 + _cursorWidth;
 
   final TextEditingController? controller;
@@ -226,7 +226,7 @@ class FormRowTextField extends StatelessWidget {
   }
 }
 
-/// A [FormRowTextField] for a secret, with the button that shows it.
+/// [FormRowTextField] для секрета, с кнопкой, которая показывает его.
 class FormRowSecretTextField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;

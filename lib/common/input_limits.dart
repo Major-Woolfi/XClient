@@ -18,8 +18,8 @@ abstract final class TextInputLimits {
   static const number = 10;
   static const interval = number;
 
-  /// mihomo multiplies these hours into a Duration, which overflows past
-  /// about 2.5 million and panics its update ticker.
+  /// mihomo умножает эти часы на Duration, который переполняется примерно после
+  /// 2,5 миллионов и паникует его тикер обновления.
   static const geoUpdateInterval = 6;
   static const rule = 1024;
   static const filter = 1024;
@@ -34,8 +34,8 @@ abstract final class TextInputLimits {
     return [LengthLimitingTextInputFormatter(maxLength)];
   }
 
-  /// A rule line joins its fields with commas, so no rule could name a policy
-  /// holding one.
+  /// Строка правила соединяет свои поля запятыми, поэтому никакое правило не может назвать политику,
+  /// содержащую её.
   static List<TextInputFormatter> policyName(int maxLength) {
     return [
       FilteringTextInputFormatter.deny(','),

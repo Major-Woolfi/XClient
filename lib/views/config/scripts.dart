@@ -377,7 +377,7 @@ class _ScriptTrailing extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isUpdating = ref.watch(isUpdatingProvider(script.updatingKey));
-    // Inset here, not in the row, so the sort handle that replaces it sits flush.
+    // Отступ здесь, а не в строке, чтобы сортировочная ручка, заменяющая её, прилегал вплотную.
     return Padding(
       padding: const EdgeInsetsDirectional.only(end: 16),
       child: AnimatedSwitcher(

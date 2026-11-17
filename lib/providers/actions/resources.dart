@@ -37,8 +37,7 @@ class ResourcesAction extends _$ResourcesAction {
     }
   }
 
-  /// A geo file fails here only when the Core turns the request down; a
-  /// download that fails later reaches the user from [GeoResourceAction].
+  /// Geo-файл терпит неудачу здесь только когда Core отклоняет запрос; загрузка, неудачная позже, доходит до пользователя из [GeoResourceAction].
   Future<List<UpdatingMessage>> updateAll() async {
     final appLocalizations = currentAppLocalizations;
     final geoResourceAction = ref.read(geoResourceActionProvider.notifier);
@@ -109,7 +108,7 @@ class ResourcesAction extends _$ResourcesAction {
     return failures;
   }
 
-  /// Geo files are left to the Core, which reads the same two settings.
+  /// Geo-файлы оставляются Core, который читает те же два параметра.
   Future<void> autoUpdate() async {
     final setting = ref.read(patchClashConfigProvider);
     if (!setting.geoAutoUpdate || _autoUpdating) {

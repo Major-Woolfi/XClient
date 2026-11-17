@@ -16,8 +16,7 @@ class Request {
   late final Dio dio;
   late final Dio _clashDio;
 
-  /// Refuses an untrusted certificate even with the certificate check turned
-  /// off, because what it fetches is installed, on Windows as administrator.
+  /// Отклоняет недоверенный сертификат даже при выключенной проверке сертификата, потому что то, что оно загружает, устанавливается, в Windows — с правами администратора.
   @visibleForTesting
   late final Dio releaseDio;
   String? userAgent;
@@ -104,7 +103,7 @@ class Request {
     }
   }
 
-  /// Null when this build is current; throws when GitHub cannot be asked.
+  /// Null, когда эта сборка актуальна; выбрасывает исключение, когда GitHub нельзя опросить.
   Future<Map<String, dynamic>?> checkForUpdate() async {
     final release = await latestRelease();
     final remoteVersion = release['tag_name'] as String;
@@ -114,7 +113,7 @@ class Request {
     return hasUpdate ? release : null;
   }
 
-  /// The release page redirect still answers once the hourly API quota is spent.
+  /// Редирект страницы релиза всё ещё отвечает, когда квота API в час исчерпана.
   Future<Map<String, dynamic>> latestRelease() async {
     try {
       final response = await dio.get<Map<String, dynamic>>(
@@ -187,8 +186,8 @@ class Request {
 
 final request = Request();
 
-/// Some subscription servers send a gzip or zlib body without saying so in
-/// Content-Encoding, which is the only signal dart:io decompresses on.
+/// Некоторые серверы подписки отправляют тело gzip или zlib, не говоря об этом в
+/// Content-Encoding, что единственный сигнал, на который dart:io реагирует для декомпрессии.
 Uint8List decompressUnlabeled(Uint8List bytes) {
   final codec = switch (bytes) {
     [0x1f, 0x8b, ...] => gzip,
@@ -205,7 +204,7 @@ Uint8List decompressUnlabeled(Uint8List bytes) {
   }
 }
 
-/// dart:io turns [Uri.userInfo] into Basic credentials still percent-encoded.
+/// dart:io превращает [Uri.userInfo] в учётные данные Basic, всё ещё процентно zakодированные.
 @visibleForTesting
 ({Uri uri, Map<String, Object> headers}) downloadTarget(String url) {
   final uri = url.webUri ?? Uri.parse(url);

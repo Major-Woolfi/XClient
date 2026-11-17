@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 
 import 'custom_issue.dart';
 
-/// A form [showFormSheet] opens: grouped rows under a bar whose check saves,
-/// with why the last save was refused above them.
+/// Форма, которую открывает [showFormSheet]: сгруппированные строки под баром, чья галочка сохраняет,
+/// с причиной, по которой последнее сохранение было отказано, над ними.
 class FormPage extends StatelessWidget {
   final String title;
   final VoidCallback onSave;

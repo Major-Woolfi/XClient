@@ -575,16 +575,15 @@ class ListHeader extends ConsumerWidget {
   final Function(String groupName) onScrollToSelected;
   final bool isExpand;
 
-  /// Whether the rows have settled under the header, squaring its bottom.
+  /// Осели ли ряды под заголовком, сквадряя его низ.
   final bool unfolded;
 
   final bool enterAnimated;
 
-  /// How far the group's own rows have scrolled under the pinned header, as a
-  /// fraction of the distance that rounds its bottom corners.
+  /// Насколько далеко свои ряды группы проскроллились под закрепленным заголовком, в долях расстояния, которое скругляет его нижние углы.
   final double floating;
 
-  /// The shadow that lifts the header off the rows under it.
+  /// Тень, которая приподнимает заголовок над рядами под ним.
   final double lift;
 
   const ListHeader({

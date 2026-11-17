@@ -19,7 +19,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' show join;
 
-/// The modules the user wrote, which a rule can be added to.
+/// Модули, которые написал пользователь, в которые можно добавить правило.
 List<MitmModule> watchLocalMitmModules(WidgetRef ref) => ref.watch(
   mitmModulesProvider.select(
     (state) => [
@@ -29,9 +29,8 @@ List<MitmModule> watchLocalMitmModules(WidgetRef ref) => ref.watch(
   ),
 );
 
-/// Copies a request, exports it, or writes a rule for it into one of the
-/// [modules] the user wrote, or a new one. A list knows only a summary of each
-/// request, so [load] reads the rest when an item is picked.
+/// Копирует запрос, экспортирует его или пишет правило для него в один из
+/// [modules], которые написал пользователь, или в новый. Список знает только краткое содержание каждого запроса, поэтому [load] читает остальное, когда элемент выбран.
 List<PopupMenuItem> mitmExchangeMenuItems(
   BuildContext context,
   WidgetRef ref, {

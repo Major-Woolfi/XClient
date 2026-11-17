@@ -382,8 +382,7 @@ class _UsageMeter extends StatelessWidget {
   }
 }
 
-/// The M3 Expressive wavy linear indicator: a wave up to [value], a gap,
-/// then a flat track ending in a stop dot.
+/// Волновой линейный индикатор M3 Expressive: волна до [value], затем промежуток и ровная дорожка, заканчивающаяся точкой остановки.
 class _WavyProgressPainter extends CustomPainter {
   const _WavyProgressPainter({
     required this.value,

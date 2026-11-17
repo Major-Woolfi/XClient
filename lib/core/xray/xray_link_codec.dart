@@ -1,4 +1,4 @@
-// XRay link encoder/decoder (port of https://github.com/INCY-DEV/incy-link-encoder).
+// XRay link encoder/decoder (порт https://github.com/INCY-DEV/incy-link-encoder).
 // Поддерживаемые схемы: vmess://, vless://, trojan://, ss://, ssconf://, v2ray://.
 import 'dart:convert';
 

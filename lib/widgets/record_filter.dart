@@ -30,8 +30,7 @@ class RecordFilterController<T> extends ValueNotifier<RecordFilterState> {
   final List<RecordGrouper<T>> groupers;
   final ValueChanged<RecordGrouping?>? onGroupingChanged;
 
-  // Apart from [value] so a list refresh, which only moves [options] when a
-  // value comes or goes, leaves the bar and its chips alone.
+  // Помимо [value], чтобы обновление списка, которое только перемещает [options] при появлении или исчезновении значения, не трогало строку и ее чипы.
   final _keywords = ValueNotifier<List<ScaffoldKeyword>>(const []);
   final _pinnedKeywords = ValueNotifier<List<ScaffoldKeyword>>(const []);
   final options = ValueNotifier<RecordFacetOptions>(const {});
@@ -238,7 +237,7 @@ void saveRecordGrouping(
   });
 }
 
-/// Lets a value tapped in a row narrow the list it sits in.
+/// Дает значению, на которое нажали в строке, сузить список, в котором оно сидит.
 class RecordFilterScope extends InheritedWidget {
   final ValueChanged<RecordFilter> onFilter;
 
@@ -258,8 +257,7 @@ class RecordFilterScope extends InheritedWidget {
   bool updateShouldNotify(RecordFilterScope oldWidget) => false;
 }
 
-/// Lays [groups] out folded under their headers, newest first whatever way
-/// the list reads ungrouped.
+/// Раскладывает [groups] сложенными под своими заголовками, самые новые первыми, каким бы образом список ни читал негруппированным.
 class RecordGroupedList<T> extends StatelessWidget {
   final List<RecordGroup<T>> groups;
   final RecordGrouping grouping;

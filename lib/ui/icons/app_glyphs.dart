@@ -1739,7 +1739,7 @@ abstract final class AppGlyphs {
 
   static Glyph sidebar(double progress) => Glyphs.sidebar(progress);
 
-  /// Play at 0, pause at 1; past either end it keeps turning, so it bounces.
+  /// Играет на 0, пауза на 1; заどлижа конец он продолжает вращаться, так что отскакивает.
   static Glyph playPause(double progress) {
     final fold = progress.clamp(0.0, 1.0);
     final turn = math.pi / 2 * progress;

@@ -1,6 +1,6 @@
 part of '../state.dart';
 
-/// An empty [url] is a local provider, saved with [content].
+/// Пустой [url] означает локального провайдера, сохраняемого с [content].
 typedef ImportedProvider = ({
   String label,
   String url,
@@ -32,15 +32,16 @@ final class CustomImportException implements Exception {
   String toString() => 'CustomImportException(${issue.name}, $item, $detail)';
 }
 
-/// What a config brings to a custom profile, its names moved off the app's:
-/// a provider whose source the app has is used under the app's label, a proxy
-/// the app holds unchanged under the app's name, one keeping an app proxy's
-/// name, server and credentials as that proxy, and any other name the app
-/// already uses takes a free one, with every reference to it following.
-/// A name the config repeats keeps its references on its first holder.
+/// Что конфиг приносит кастомному профилю, с именами, вынесенными из приложения:
+/// провайдер, источник которого есть у приложения, используется под меткой
+/// приложения, прокси, которое приложение хранит неизменным под своим именем,
+/// тот, что хранит имя, сервер и учётные данные приложения прокси, как тот
+/// прокси, и любое другое имя, которое приложение уже использует, берёт свободное,
+/// при этом каждая ссылка на него следует за ним.
+/// Имя, которое конфиг повторяет, сохраняет ссылки на своего первого владельца.
 ///
-/// Groups and rules carry id 0, since snowflake ids made on another isolate
-/// can repeat the UI isolate's.
+/// Группы и правила несут id 0, так как snowflake id, созданные на другом изоляте,
+/// могут повторять id изолята UI.
 class CustomProfileImport {
   final List<ImportedProvider> proxyProviders;
   final List<ImportedProvider> ruleProviders;
@@ -286,7 +287,7 @@ ProxyProviderOptions _proxyProviderOptions(
 Map<String, dynamic> _withoutName(Map<String, dynamic> definition) =>
     {...definition}..remove('name');
 
-/// Each profile picks a proxy's dialer, so the proxy keeps none of its own.
+/// Каждый профиль выбирает диаллер прокси, поэтому прокси не оставляет своего.
 Map<String, dynamic> _withoutDialer(Map<String, dynamic> definition) =>
     {...definition}..remove('dialer-proxy');
 
@@ -318,9 +319,10 @@ List<Object?>? _identityOf(Map<String, dynamic> definition) {
   ];
 }
 
-/// Proxies and groups share one namespace in mihomo, and in a custom profile
-/// that namespace takes in the app's proxies, so a group is moved off an app
-/// proxy's name as a proxy is, and a proxy off other profiles' [groupNames].
+/// Прокси и группы делят одно пространство имён в mihomo, и в кастомном профиле
+/// это пространство принимает прокси приложения, поэтому группа перемещается с
+/// имени прокси приложения, как и прокси, и прокси с имён других профилей
+/// [groupNames].
 ({
   Map<String, String> names,
   List<String> importedGroupNames,
@@ -421,8 +423,8 @@ _importProxies(
   );
 }
 
-/// The app proxy [definition] would be imported as: one that already holds it
-/// leaves nothing [added].
+/// Прокси приложения [definition] импортируется как: то, которое уже хранит его,
+/// не оставляет ничего в [added].
 ({String name, Map<String, dynamic>? added}) importProxy(
   Map<String, dynamic> definition, {
   required List<Map<String, dynamic>> existing,
@@ -482,7 +484,8 @@ Rule _importRule(
   return rule.copyWith(ruleTarget: names[rule.ruleTarget] ?? rule.ruleTarget);
 }
 
-/// Leaves out what [keys] cannot hold, which the override decoders refuse.
+/// Исключает то, что [keys] не может удержать, и что отвергают декодеры
+/// переопределений.
 Map<String, Object?> _knownKeys<K extends OverrideKey>(
   Map<String, Object?> section,
   List<K> keys, {

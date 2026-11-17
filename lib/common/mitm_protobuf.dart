@@ -13,10 +13,11 @@ class _Field {
   final void Function(StringBuffer out, String indent) show;
 }
 
-/// Reads [bytes] as `protoc --decode_raw` does, without a schema. A field of
-/// bytes shows as text first: the same bytes often also parse as a message.
-/// [cut] takes a body that stops inside a field, up to that field; [guessed]
-/// is for a body no header calls Protobuf, and asks for plausible numbers.
+/// Читает [bytes] как `protoc --decode_raw`, без схемы. Поле байтов показывается
+/// как текст сначала: те же байты часто также парсятся как сообщение.
+/// [cut] принимает тело, которое останавливается внутри поля, до этого поля;
+/// [guessed] — для тела, которое не заголовком называет Protobuf, и запрашивает
+/// возможные номера.
 String? mitmProtobufText(
   Uint8List bytes, {
   bool cut = false,
@@ -36,7 +37,7 @@ String? mitmProtobufText(
 
 const mitmGrpcInflateLimit = 8 << 20;
 
-/// The messages of a gRPC or gRPC-Web body, each read as Protobuf.
+/// Сообщения тела gRPC или gRPC-Web, каждое прочитано как Protobuf.
 String? mitmGrpcText(Uint8List bytes, {bool truncated = false}) {
   final out = StringBuffer();
   var inflated = 0;

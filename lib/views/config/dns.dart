@@ -90,7 +90,7 @@ extension on DnsOverrideKey {
   };
 }
 
-// mihomo reports `hosts` in connection metadata but rejects it as an
+// mihomo передаёт `hosts` в метаданных соединения, но отвергает его как
 // enhanced-mode.
 const _enhancedModes = [DnsMode.normal, DnsMode.fakeIp, DnsMode.redirHost];
 

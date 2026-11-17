@@ -90,7 +90,7 @@ class _MapEditViewState extends EditViewState<MapEditView, _Entry> {
   }
 }
 
-/// Adds when [entry] is null and edits it otherwise.
+/// Добавляет, когда [entry] null, и редактирует его иначе.
 Future<MapEntry<String, String>?> showMapEntryForm(
   BuildContext context, {
   MapEntry<String, String>? entry,

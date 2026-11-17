@@ -7,10 +7,10 @@ typedef _Range = ({BigInt start, BigInt end});
 
 const _families = [32, 128];
 
-/// The addresses of [include] that [exclude] leaves, as the fewest CIDR
-/// blocks that cover them, IPv4 first. With [wholeWhenEmpty], a family
-/// [include] names no block of counts as its whole address space. Entries that
-/// do not parse are ignored.
+/// Адреса [include], которые остаются после [exclude], в виде наименьшего набора
+/// блоков CIDR, покрывающих их, IPv4 сначала. С [wholeWhenEmpty] семейство
+/// [include], не называющее блок, считается целым адресным пространством.
+/// Записи, которые не распознаются, игнорируются.
 List<String> subtractCidrs(
   Iterable<String> include,
   Iterable<String> exclude, {
@@ -46,8 +46,8 @@ Future<List<String>> subtractCidrsTask(
 
 final _decimal = RegExp(r'^(0|[1-9][0-9]{0,2})$');
 
-/// As strict as Go's netip.ParsePrefix, since the core fails a whole config or
-/// update on one CIDR that parser refuses.
+/// Такая же строгая, как Go netip.ParsePrefix, поскольку ядро отменяет всю
+/// конфигурацию или обновление из-за одного CIDR, который парсер отвергает.
 bool isCidr(String value) {
   final slash = value.lastIndexOf('/');
   if (slash < 0) {

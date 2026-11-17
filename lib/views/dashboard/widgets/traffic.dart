@@ -73,8 +73,7 @@ class _Figure extends StatelessWidget {
   }
 }
 
-/// The zero line is the chart's bottom: a card lets the chart bleed past its
-/// edge so idle traffic, or none sampled yet, leaves no line.
+/// Нулевая линия — низ графика: карточка позволяет графику выходить за край, так что простая или ещё не отсAMPлированная нагрузка не оставляет линии.
 class _SpeedChart extends StatelessWidget {
   const _SpeedChart({required this.direction, required this.traffics});
 
@@ -96,7 +95,7 @@ class _SpeedChart extends StatelessWidget {
   }
 }
 
-/// The upload or the download on its own desktop card.
+/// Загрузка или отдача на своей карточке рабочего стола.
 class SpeedCard extends ConsumerWidget {
   const SpeedCard({super.key, required this.direction});
 
@@ -192,7 +191,7 @@ class SpeedCard extends ConsumerWidget {
   }
 }
 
-/// The phone's single card: both directions side by side.
+/// Единственная карточка телефона: оба направления рядом.
 class NetworkSpeedCard extends ConsumerWidget {
   const NetworkSpeedCard({super.key});
 
@@ -230,8 +229,7 @@ class NetworkSpeedCard extends ConsumerWidget {
   }
 }
 
-/// Keeps one shape at every width, growing only when the text needs more. The
-/// chart fills the tile under the title row, behind the figure and the total.
+/// Сохраняет одну форму при любой ширине, расширяясь только тогда, когда тексту нужно места. График заполняет плитку под заголовком, позади цифры и итога.
 class _SpeedTile extends StatelessWidget {
   const _SpeedTile({
     required this.direction,

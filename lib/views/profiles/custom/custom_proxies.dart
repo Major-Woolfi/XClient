@@ -336,8 +336,7 @@ class _CustomProxiesViewState extends ConsumerState<CustomProxiesView> {
     );
   }
 
-  /// A line whose name changed is a new proxy: what custom profiles name the
-  /// old one by is left missing, so the edit says which go and which come.
+  /// Строка, чье имя изменилось — новый прокси: то, чем кастомные профили называли старый, остается без имени, так что правка говорит, какие уходят, а какие приходят.
   Future<bool> _confirmReplaced(
     List<CustomProxy> previous,
     List<CustomProxy> next,
@@ -429,7 +428,7 @@ class _CustomProxiesViewState extends ConsumerState<CustomProxiesView> {
           texts: _searchTexts,
         )
         .toList();
-    // Indices among the matches cannot be mapped back onto the full list.
+    // Индексы среди совпадений нельзя отобразить обратно на полный список.
     final reorderable = _query.isEmpty;
     final selected = _selected.intersection({
       for (final proxy in all) proxy.id,
@@ -629,8 +628,7 @@ Future<Map<int, List<Map<String, dynamic>>>> _decodeShareLinks(
   return decoded;
 }
 
-/// Pops with what [read] made of the link, or with nothing when the link was
-/// left as it came, which would only drop what the link cannot carry.
+  /// Всплывает с тем, что [read] сделал из ссылки, или ни с чем, когда ссылка осталась как пришла, что только отбросит то, что ссылка не может унести.
 class _ShareLinkDialog extends StatefulWidget {
   final String initialLink;
   final Future<Map<String, dynamic>> Function(String link) read;
@@ -747,7 +745,7 @@ Future<bool> _handleSaveCustomProxy(
   required ValueChanged<String> onCoreRejected,
 }) async {
   final proxy = ref.read(customProxyProvider);
-  // A source still loading reads as empty below and would pass any name.
+  // Источник, который еще загружается, читается как пустой ниже и бы пропустил любое имя.
   Set<String> groupNames = const {};
   try {
     (_, groupNames) = await (
@@ -778,7 +776,7 @@ Future<bool> _handleSaveCustomProxy(
   if (!context.mounted) {
     return false;
   }
-  // The form stays editable while the core checks the proxy.
+  // Форма остается редактируемой, пока ядро проверяет прокси.
   if (!identical(ref.read(customProxyProvider), proxy)) {
     return _handleSaveCustomProxy(context, ref, onCoreRejected: onCoreRejected);
   }
@@ -791,8 +789,7 @@ Future<bool> _handleSaveCustomProxy(
   }
   final saved = proxy.id == -1 ? proxy.copyWith(id: snowflake.id) : proxy;
   ref.read(customProxiesProvider.notifier).put(saved);
-  // The closing form would otherwise take its stored copy for another proxy
-  // with its name.
+  // Иначе закрывающая форма взяла бы свою сохраненную копию за другой прокси с таким именем.
   ref.read(customProxyProvider.notifier).value = saved;
   return true;
 }
@@ -817,11 +814,10 @@ class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
   var _revealed = <String>{};
   late Set<ProxyField> _shown;
 
-  /// Added options not given a value since, the only ones a save keeps empty.
+  /// Добавленные опции без значения — единственные, которые сохранение оставляет пустыми.
   late Set<ProxyField> _untouched;
 
-  /// Bumped when the whole mapping is replaced, so the fields drop the text
-  /// they were initialized with.
+  /// Увеличивается, когда всё отображение заменяется, так что поля сбрасывают текст, с которым были инициализированы.
   int _revision = 0;
 
   @override
@@ -935,8 +931,7 @@ class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
         },
       );
 
-  /// Keeps a row for every option [proxy] offers that has a value, was shown,
-  /// or was [unlocked] by the change that led to [proxy].
+  /// Оставляет строку для каждой опции [proxy], у которой есть значение, которая показана или была [разблокирована] изменением, приведшим к [proxy].
   void _syncShown(
     CustomProxy proxy, {
     Iterable<ProxyField> unlocked = const [],
@@ -1570,8 +1565,7 @@ class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
   }
 }
 
-/// Writes each change straight into the form, since a sheet page's back
-/// button pops it without a result.
+  /// Пишет каждое изменение прямо в форму, так как кнопка «Назад» страницы листа всплывает без результата.
 class _ProxyValuesView extends ConsumerWidget {
   final String title;
   final List<String> path;
@@ -1664,8 +1658,7 @@ class _ProxyValuesView extends ConsumerWidget {
   }
 }
 
-/// The map counterpart of [_ProxyValuesView], writing straight into the form
-/// for the same reason.
+  /// Парная картам [_ProxyValuesView] запись прямо в форму по той же причине.
 class _ProxyEntriesView extends ConsumerWidget {
   final String title;
   final ProxyField field;

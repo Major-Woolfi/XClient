@@ -47,8 +47,8 @@ class System {
     try {
       deviceInfo = await DeviceInfoPlugin().deviceInfo;
     } on RangeError {
-      // device_info_plus turns the registry InstallDate into a DateTime, and
-      // some Windows installs store a value past DateTime's range.
+      // device_info_plus превращает реестровую InstallDate в DateTime, и
+      // некоторые установки Windows хранят значение за пределами диапазона DateTime.
       if (isWindows) return 0;
       rethrow;
     }
@@ -74,9 +74,9 @@ class System {
     return app?.getLastExitInfo();
   }
 
-  /// [corePath] is handed to `Process.run` as an argv entry, so it must stay
-  /// verbatim. Shell-quoting or escaping it here reaches `stat` as part of the
-  /// file name and turns every path containing a space into a miss.
+  /// [corePath] передаётся в `Process.run` как запись argv, поэтому должен оставаться
+  /// без изменений. Экранирование оболочки здесь попадёт в `stat` как часть имени
+  /// файла и превратит каждый путь с пробелом в промах.
   @visibleForTesting
   static List<String> statArguments(String corePath, {required bool isMacOS}) {
     return isMacOS
@@ -84,7 +84,7 @@ class System {
         : ['-c', '%U:%G %A', corePath];
   }
 
-  /// Execute for others fails it, so an older `+sx` Core is re-authorized.
+  /// Выполнение для остальных завершается неудачей, поэтому старый Core с `+sx` переавторизуется.
   @visibleForTesting
   static bool isPrivilegedStatOutput(
     String output, {
@@ -129,7 +129,7 @@ class System {
     }
   }
 
-  /// A read-only nosuid mount at a path that changes every run: no elevation sticks.
+  /// Nosuid-мамонт только для чтения по пути, который меняется каждый запуск: повышение не приживается.
   bool get isAppImage =>
       isLinux && Platform.environment.containsKey('APPIMAGE');
 
@@ -431,7 +431,7 @@ class Linux {
     return _instance!;
   }
 
-  /// An autostarted session can beat systemd to starting the installed Helper.
+  /// Автозапущенная сессия может опередить systemd в запуске установленного Хелпера.
   Future<AuthorizeCode> registerService() async {
     if (await _isHelperStillStarting()) {
       commonPrint.log(
@@ -460,8 +460,8 @@ class Linux {
     }
   }
 
-  /// pkexec and sudo both name the requesting user to the installer, which is
-  /// where the unit takes the account it grants the Helper socket to.
+  /// pkexec и sudo оба называют запрашивающего пользователя инсталлятору, где
+  /// юнит берёт аккаунт, который он предоставляет сокету Хелпера.
   @visibleForTesting
   Future<bool> installService() {
     return linuxElevation.elevate([appPath.helperPath, 'install']);

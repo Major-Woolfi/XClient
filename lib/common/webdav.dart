@@ -29,8 +29,8 @@ final class DAVException implements Exception {
   }
 }
 
-/// Requests go through `Dio`, so they inherit the app-wide HttpOverrides: the
-/// user's proxy selection and the TLS certificate setting apply here too.
+/// Запросы идут через `Dio`, поэтому наследуют HttpOverrides всего приложения:
+/// выбор прокси пользователя и настройка сертификата TLS применяются и здесь.
 class DAVTransport {
   DAVTransport({
     required String uri,
@@ -72,8 +72,8 @@ class DAVTransport {
     await _send('OPTIONS', path, collection: true, accept: const {200, 204});
   }
 
-  /// 405 means the collection is already there, which is the common case: the
-  /// backup directory only has to be created once per account.
+  /// 405 означает, что коллекция уже существует, что является типичным случаем:
+  /// каталог резервной копии нужно создать только один раз на аккаунт.
   Future<void> mkcol(String path) async {
     await _send(
       'MKCOL',
@@ -117,7 +117,7 @@ class DAVTransport {
     return bytes;
   }
 
-  /// Some servers answer a plain GET with a 206 that spans the whole object.
+  /// Некоторые серверы отвечают на обычный GET с 206, охватывающим весь объект.
   static bool _coversWhole(String? contentRange, int length) {
     final match = RegExp(
       r'^bytes\s+(\d+)-(\d+)/(\d+)$',
@@ -190,8 +190,8 @@ class DAVTransport {
         method: method,
         headers: {...headers, ..._authorization(method, uri, origin)},
         responseType: responseType,
-        // Redirects are followed by hand so that a PUT stays a PUT, and every
-        // status reaches the caller instead of becoming a DioException.
+        // Редиректы обрабатываются вручную, чтобы PUT оставался PUT, и каждый
+        // статус доходил до вызывающего кода, вместо того чтобы стать DioException.
         followRedirects: false,
         maxRedirects: 0,
         validateStatus: (_) => true,
@@ -212,7 +212,7 @@ class DAVTransport {
   }
 
   bool _adoptChallenge(Response<dynamic> response) {
-    // Basic and Digest may each arrive as their own www-authenticate line.
+    // Basic и Digest могут прийти каждая своей строкой www-authenticate.
     final headerValues = response.headers[Headers.wwwAuthenticateHeader];
     if (headerValues == null) {
       return false;
@@ -238,7 +238,7 @@ class DAVTransport {
   }
 
   Map<String, dynamic> _authorization(String method, Uri uri, Uri origin) {
-    // Never forward credentials to a redirect target on another origin.
+    // Никогда не пересылать учётные данные цели редиректа на другом источнике.
     if (!_sameOrigin(uri, origin)) {
       return const {};
     }
@@ -289,8 +289,8 @@ class _DigestChallenge {
     final nonce = values['nonce'];
     if (nonce == null) return null;
     final algorithm = values['algorithm'];
-    // Only MD5 is implemented; anything else would produce a wrong response
-    // hash, and Basic at least has a chance of being accepted.
+    // Реализован только MD5; всё остальное дало бы неверный хеш ответа,
+    // а Basic, по крайней мере, имеет шанс быть принятым.
     if (algorithm != null && algorithm.toUpperCase() != 'MD5') {
       return null;
     }

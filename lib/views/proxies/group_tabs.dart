@@ -117,7 +117,7 @@ class _GroupTabsState extends State<GroupTabs> {
     final hasMore = metrics.maxScrollExtent > 0;
     if (hasMore != _hasMore.value) {
       _hasMore.value = hasMore;
-      // The more button narrows the tabs it overflows.
+      // Кнопка «Еще» сужает вкладки, которые она перекрывает.
       WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(jump: true));
     }
     return false;

@@ -83,7 +83,7 @@ class TrackerInfoItem extends ConsumerWidget {
   final ValueChanged<TrackerInfo>? onClose;
   final String detailTitle;
 
-  /// What the detail opens on, where a memoized row outlives its traffic.
+  /// На чём открывается деталь, где строка с memoize переживает свой трафик.
   final ValueGetter<TrackerInfo>? latest;
 
   const TrackerInfoItem({
@@ -253,8 +253,7 @@ class _TrackerInfoBody extends StatelessWidget {
   }
 }
 
-/// Adds the host of a connection to the hostnames or excludes it, so that the
-/// list can be filled from what the apps really connect to.
+/// Добавляет хост соединения к именами хостов или исключает его, так что список может наполниться тем, к чему приложения действительно подключаются.
 class _MitmHostSection extends ConsumerWidget {
   final Metadata metadata;
 

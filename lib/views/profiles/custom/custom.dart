@@ -76,7 +76,7 @@ Widget _sectionRow(
 class CustomProfileView extends ConsumerStatefulWidget {
   final int profileId;
 
-  /// A new profile is dropped again when it is left as it was created.
+  /// Новый профиль отбрасывается снова, если оставить его как создан.
   final bool isNew;
 
   const CustomProfileView({
@@ -216,8 +216,7 @@ class _CustomProfileViewState extends ConsumerState<CustomProfileView> {
     }
   }
 
-  /// Done as the pop starts, so the page uncovered on the way out no longer
-  /// lists the profile.
+  /// Делается по началу всплытия, чтобы профиль больше не значился на странице, которая освобождается по пути вниз.
   void _discardIfUntouched() {
     if (_discarded || !widget.isNew || !_isUntouched) {
       return;
@@ -355,8 +354,7 @@ class _CustomProfileViewState extends ConsumerState<CustomProfileView> {
     );
   }
 
-  // The groups come a frame after the overview, while the push still holds:
-  // built in one frame, the first screen overran it on a phone.
+  // Группы приходят кадр после обзора, пока переход еще держится: построены за один кадр, первый экран перебирал на телефоне.
   void _showGroupsNextFrame() {
     if (_groupsScheduled) {
       return;
@@ -382,7 +380,7 @@ class _CustomProfileViewState extends ConsumerState<CustomProfileView> {
   void dispose() {
     if (_discardOnDispose) {
       final profileId = widget.profileId;
-      // Providers cannot change while the tree is unmounting.
+      // Провайдеры не могут меняться, пока дерево разгружается.
       unawaited(Future(() => _profilesAction.deleteProfile(profileId)));
     } else if (!_discarded && _edited) {
       final profileId = widget.profileId;

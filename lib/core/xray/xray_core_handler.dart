@@ -9,12 +9,12 @@ import 'package:xclient/core/core.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/models.dart';
 
-/// XRay-core handler: manages Xray-core binary process and JSON config.
+/// Обработчик ядра XRay: управляет бинарным процессом Xray-core и JSON-конфигом.
 ///
-/// Unlike Clash.Meta which exposes a method-call API, Xray-core is controlled
-/// via a JSON configuration file and its local API (stat, log, reverse, etc.).
-/// This handler translates the shared [CoreHandlerInterface] calls into Xray
-/// operations: write JSON config, start/stop process, query local API.
+/// В отличие от Clash.Meta, который предоставляет API вызовов методов, Xray-core
+/// управляется через JSON-конфигурационный файл и его локальный API (stat, log, reverse и т.д.).
+/// Этот обработчик переводит общие вызовы [CoreHandlerInterface] в операции XRay:
+/// запись JSON-конфига, запуск/остановку процесса, запросы к локальному API.
 class XRayCoreHandler implements CoreHandlerInterface {
   static XRayCoreHandler? _instance;
   factory XRayCoreHandler() => _instance ??= XRayCoreHandler._internal();
@@ -61,12 +61,12 @@ class XRayCoreHandler implements CoreHandlerInterface {
     final homeDir = await _homeDir;
     _configPath = p.join(homeDir, 'config.json');
 
-    // Write default config if none exists
+    // Запись конфига по умолчанию, если его нет
     if (!await File(_configPath!).exists()) {
       await _writeDefaultConfig();
     }
 
-    // Start Xray process
+    // Запуск процесса Xray
     try {
       _process = await Process.start(
         binaryPath,
@@ -90,7 +90,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
         _connected = false;
       });
 
-      // Give Xray a moment to start
+      // Даём Xray время на запуск
       await Future.delayed(const Duration(seconds: 2));
 
       _connected = true;
@@ -340,8 +340,8 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
   @override
   Future<ChangeProxyResult> changeProxy(ChangeProxyParams params) async {
-    // XRay does not support live proxy switching without config reload.
-    // The user should edit the XRay config and restart the core.
+    // XRay не поддерживает живое переключение прокси без перезагрузки конфига.
+    // Пользователь должен отредактировать конфиг XRay и перезапустить ядро.
     return const ChangeProxyResult(
       message: 'XRay core: change proxy via config edit and restart',
       changed: false,
@@ -730,7 +730,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
             flush: true,
           );
         } catch (_) {
-          // Asset may not exist; Xray will download on demand
+          // Ассет может не существовать; XRay загрузит его по требованию
         }
       }
     }

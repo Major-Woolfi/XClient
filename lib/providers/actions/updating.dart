@@ -27,10 +27,11 @@ class UpdatingAction extends _$UpdatingAction {
   }
 
   void _sweep() {
-    // Core-scope updates hang if the Core process wedges without dropping the
-    // connection, so they get a stale-timeout safety net. Local-scope updates
-    // (e.g. large subscription downloads) have no such upper bound and rely
-    // on their own network timeout/error handling instead.
+    // Обновления с областью Core застревают, если процесс ядра зависает, не
+    // разрывая соединение, поэтому им дают страховочный таймаут устаревания.
+    // Локальные обновления (например, большие загрузки подписок) не имеют
+    // такого верхнего предела и полагаются на свою сетевую обработку таймаутов
+    // и ошибок вместо этого.
     final notifier = ref.read(updatingKeysProvider.notifier);
     final expired = <String>[];
     for (final key in ref.read(updatingKeysProvider)) {

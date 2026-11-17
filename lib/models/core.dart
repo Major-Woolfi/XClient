@@ -111,7 +111,7 @@ abstract class MitmScriptOutput with _$MitmScriptOutput {
       _$MitmScriptOutputFromJson(json);
 }
 
-/// Times are in milliseconds, sizes those of the client's bodies.
+/// Время в миллисекундах, размеры тел клиента.
 @freezed
 abstract class MitmExchangeSummary with _$MitmExchangeSummary {
   const factory MitmExchangeSummary({
@@ -131,7 +131,7 @@ abstract class MitmExchangeSummary with _$MitmExchangeSummary {
       _$MitmExchangeSummaryFromJson(json);
 }
 
-/// Every request that started after [since] is still kept.
+/// Каждый запрос, начавшийся после [since], по-прежнему хранится.
 @freezed
 abstract class MitmExchangeList with _$MitmExchangeList {
   const factory MitmExchangeList({
@@ -187,8 +187,8 @@ abstract class MitmExchange with _$MitmExchange {
       _$MitmExchangeFromJson(json);
 }
 
-/// One side of a request as kept, decoded unless [encoding] names the coding
-/// the Core could not undo; [data] is Base64.
+/// Одна сторона запроса, как хранится, декодирована, если только [encoding] не называет кодировку,
+/// которую ядро не смог отменить; [data] в Base64.
 @freezed
 abstract class MitmBody with _$MitmBody {
   const factory MitmBody({
@@ -301,7 +301,7 @@ abstract class RouteSnapshot with _$RouteSnapshot {
       _$RouteSnapshotFromJson(json);
 }
 
-/// [exit] is the Core's name for where a connection left, only compared whole.
+/// [exit] — это имя ядра для того, где соединение ушло, сравнивается только целиком.
 @freezed
 abstract class RouteHit with _$RouteHit {
   const factory RouteHit({

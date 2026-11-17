@@ -186,7 +186,7 @@ class CommonAction extends _$CommonAction {
     );
   }
 
-  /// Downloads the latest release for this build even when it is not newer.
+  /// Качает последний релиз этой сборки, даже если он не новее.
   Future<void> testUpdateDownload() async {
     final suffix = selfUpdateSuffix;
     if (suffix == null || ref.read(updateDownloadStateProvider) != null) {
@@ -220,7 +220,7 @@ class CommonAction extends _$CommonAction {
         directory: directory,
         cancelToken: cancelToken,
         onReceiveProgress: (received, total) {
-          // Every chunk would otherwise rebuild the status on its own frame.
+          // Иначе каждый чанк перестраивал бы статус в своём кадре.
           final step = total > 0 ? total / 100 : 1 << 20;
           if (received - shown < step && received != total) return;
           shown = received;

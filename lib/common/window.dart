@@ -119,15 +119,15 @@ class Window implements WindowPort {
     );
   }
 
-  /// A probe that finds no effect is not cached, so a failure at startup
-  /// does not pin the toggle to off for the rest of the session.
+  /// Проба, не Finding эффекта, не кэшируется, поэтому неудача при запуске
+  /// не закрепляет переключатель в выключенном состоянии на остаток сеанса.
   Future<WindowEffect> _resolveBlurEffect() async {
     final cached = _blurEffect;
     if (cached != null) {
       return cached;
     }
-    // Windows 10's acrylic accent makes the window trail the pointer while it
-    // is dragged, so Windows 10 takes the plain accent blur.
+    // Акцент акрила Windows 10 заставляет окно тащиться за указателем, пока оно
+    // перетаскивается, поэтому Windows 10 берёт обычное размытие акцента.
     final candidates = system.isMacOS
         ? const [WindowEffect.glass, WindowEffect.blur]
         : const [WindowEffect.mica, WindowEffect.blur];
@@ -139,10 +139,9 @@ class Window implements WindowPort {
     return WindowEffect.none;
   }
 
-  /// Only Windows 10's accent blur takes the tint natively; it draws nothing
-  /// without one. Every material still keeps the sidebar's own color half over
-  /// it, or the rail takes the hue of whatever lies behind the window while
-  /// the content beside it keeps the theme's.
+  /// Только акцент размытия Windows 10 нативно принимает оттенок; без него он не рисует ничего.
+  /// Каждый материал всё ещё сохраняет цвет боковой панели наполовину поверх
+  /// него, или портал берёт оттенок того, что за окном, пока контент рядом сохраняет тему.
   @override
   Future<double?> setBlur({
     required bool enabled,
@@ -161,8 +160,8 @@ class Window implements WindowPort {
     return effect == WindowEffect.none ? null : _tintOpacity;
   }
 
-  /// Every desktop runner leaves the window hidden until [init] reveals it, so
-  /// a failure before that point would leave the error screen with no window.
+  /// Каждый рабочий стол оставляет окно скрытым, пока [init] не откроет его, поэтому
+  /// сбой до этого момента оставит экран ошибки без окна.
   Future<void> showInitFailure({required AsyncCallback onExit}) async {
     desktopWindow.addListener(_InitFailureWindowListener(onExit));
     try {
@@ -217,15 +216,15 @@ class Window implements WindowPort {
   }
 }
 
-/// Keeps a margin of the work area around a first window on a small screen.
+/// Сохраняет отступ рабочей области вокруг первого окна на маленьком экране.
 @visibleForTesting
 Size fittedWindowSize(Size visible) => Size(
   math.min(defaultWindowSize.width, visible.width * 0.9),
   math.min(defaultWindowSize.height, visible.height * 0.9),
 );
 
-/// On Windows the plugin scales by the window's monitor and screen_retriever by
-/// each display's own, so only physical pixels compare across mixed scales.
+/// На Windows плагин масштабирует по монитору окна, а screen_retriever по
+/// каждому дисплею своему, поэтому только физические пиксели сравнимы при смешанных масштабах.
 @visibleForTesting
 Offset? restoredWindowPosition(
   WindowProps props, {
@@ -268,10 +267,10 @@ class _InitFailureWindowListener with WindowListener {
   void onWindowShouldTerminate() => unawaited(onExit());
 }
 
-/// Serializes visibility requests so a burst of hotkey toggles lands in
-/// order, and holds back the Dock-hiding activation policy switch while a
-/// preceding regular switch settles: flipping regular → accessory → regular
-/// within about a second leaves macOS with stray Dock icons.
+/// Сериализует запросы видимости, чтобы цепочка переключений по горячим клавишам попадала
+/// по порядку, и задерживает переключение политики активации Dock-прятки, пока предыдущее
+/// обычное переключение не осядет: переключение regular → accessory → regular
+/// примерно за секунду оставляет у macOS блуждающие иконки Dock.
 class WindowVisibilityController {
   WindowVisibilityController({
     required Future<void> Function() showWindow,

@@ -21,8 +21,8 @@ class LocationPermissions extends _$LocationPermissions {
   @override
   WifiSsidPermission build() => WifiSsidPermission.denied;
 
-  /// Only a request can tell a permanent denial apart, so a check leaves that
-  /// answer in place until it sees the grant.
+  /// Только запрос может отличить постоянный отказ, поэтому проверка оставляет
+  /// этот ответ на месте, пока не увидит предоставление.
   Future<void> refresh() async {
     if (ref.read(safeModeProvider)) {
       return;
@@ -58,8 +58,8 @@ class LocationPermissions extends _$LocationPermissions {
     }
   }
 
-  /// Null while another request is showing, so only the caller that raised
-  /// the prompt follows up on the answer.
+  /// Null, пока другой запрос отображается, поэтому только вызывающий, который
+  /// инициировал запрос, отслеживает ответ.
   Future<WifiSsidPermission?> request() async {
     if (_requesting) {
       return null;

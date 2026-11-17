@@ -37,8 +37,8 @@ Future<void> _setEnabled(WidgetRef ref, MitmModule module, bool enabled) async {
   _putModule(ref, module.copyWith(enabled: enabled));
 }
 
-/// Runs a cron, event or generic script line now; any other line, any while
-/// decryption is off, and a task still running have none.
+/// Запускает cron-, event- или общую строку скрипта прямо сейчас; для любой
+/// другой строки, при выключенной дешифровке или пока задача ещё выполняется — ничего.
 PopupMenuItem? mitmRunScriptItem(WidgetRef ref, String line) {
   final name = mitmTaskName(line);
   if (name == null ||
@@ -396,7 +396,7 @@ class MitmModuleView extends ConsumerWidget {
     };
   }
 
-  /// A module written for Apple systems still applies, so this only warns.
+  /// Модуль, написанный для Apple-систем, всё ещё применяется, поэтому только предупреждаем.
   String? _systemTip(AppLocalizations appLocalizations, String? target) {
     final current = switch (true) {
       _ when system.isMacOS => 'mac',

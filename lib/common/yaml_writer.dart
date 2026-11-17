@@ -1,6 +1,7 @@
-/// Block-style YAML in which every string value is double-quoted, apart from
-/// multi-line text, and a key stays plain only when neither a YAML 1.1 nor a
-/// YAML 1.2 reader can resolve it to anything but that string.
+/// YAML в блоковом стиле, в котором каждое строковое значение в двойных кавычках,
+/// кроме многострочного текста, и ключ остаётся простым только тогда, когда ни
+/// один читатель YAML 1.1, ни YAML 1.2 не могут интерпретировать его как что-то
+/// другое, кроме этой строки.
 String writeYaml(Object? value) {
   final writer = _YamlWriter();
   writer.document(value);

@@ -26,8 +26,8 @@ class SelectionSheet<T> extends ConsumerStatefulWidget {
   final String? emptyLabel;
   final NullStatus? loadingStatus;
 
-  /// A picked item collapses out instead of the sheet closing, which it does
-  /// once the last item is picked.
+  /// Выбранный элемент сжимается вместо закрытия листа, что происходит, когда
+  /// выбран последний элемент.
   final bool removeOnSelect;
 
   const SelectionSheet({
@@ -204,7 +204,7 @@ class _SelectionSheetState<T> extends ConsumerState<SelectionSheet<T>>
     );
   }
 
-  /// A section's header leaves with the last of its items to start leaving.
+  /// Заголовок секции уходит вместе с последним из её элементов, который начинает уходить.
   Animation<double>? _headerAnimationOf(SelectionSection<T> section) {
     if (!section.items.every(_transitions.isLeaving)) {
       return null;

@@ -25,7 +25,8 @@ Set<String> appProviderNames(Ref ref, ProviderKind kind) {
   };
 }
 
-/// Null until every source loads, so no check reads a loading one as empty.
+/// Null, пока не загружены все источники, поэтому никакая проверка не читает
+/// загружающийся как пустой.
 @riverpod
 CustomProfileData? customProfileData(Ref ref, int profileId) {
   final groups = ref
@@ -74,8 +75,8 @@ bool customProfileTargetIsValid(Ref ref, int profileId, String? target) {
   );
 }
 
-/// A rule line joins its fields with commas, so the core reads a name holding
-/// one as cut short.
+/// Строка правила соединяет свои поля запятыми, поэтому ядро читает имя, которое
+/// содержит одну, как обрезанное.
 bool _isRuleLineTarget(CustomProfileData data, String? target) =>
     data.isRuleTarget(target) && !target!.contains(',');
 
@@ -105,8 +106,8 @@ bool customProfileRuleProviderIsValid(
   );
 }
 
-/// Names the core registers before any proxy is parsed, so neither a proxy nor
-/// a group can take one.
+/// Имена, которые ядро регистрирует, пока какой-либо прокси не распарсен,
+/// поэтому ни прокси, ни группа не могут взять одно.
 const reservedProxyNames = {
   'DIRECT',
   'REJECT',
@@ -116,15 +117,15 @@ const reservedProxyNames = {
   'PASS-RULE',
 };
 
-/// A group may take GLOBAL to stand in for the core's own selector, while a
-/// proxy of that name is shadowed by the selector.
+/// Группа может взять GLOBAL, чтобы заменить собственный селектор ядра, а прокси
+/// с таким именем затеняется селектором.
 const reservedCustomProxyNames = {...reservedProxyNames, 'GLOBAL'};
 
 Duration? _noRetry(int retryCount, Object error) => null;
 
 const _definitionEquality = DeepCollectionEquality();
 
-/// Lives with the list, as a verdict can rest on a file such as an ssh key.
+/// Живёт со списком, так как приговор может зависеть от файла, например ssh-ключа.
 @riverpod
 Map<Map<String, dynamic>, String> customProxyVerdicts(Ref ref) => LinkedHashMap(
   equals: _definitionEquality.equals,
@@ -189,8 +190,8 @@ Map<int, List<CustomIssue>> customProxyListIssues(Ref ref) {
   };
 }
 
-/// [groupNames] are every custom profile's: a proxy and a group of one name
-/// would stand for each other in the profiles naming the proxy.
+/// [groupNames] — это каждый кастомный профиль: прокси и группа с одним именем
+/// будут представлять друг друга в профилях, именующих прокси.
 List<CustomIssue> customProxyIssues(
   CustomProxy proxy, {
   required Iterable<CustomProxy> proxies,
@@ -231,8 +232,9 @@ List<CustomProxy> importedCustomProxies(
 
 typedef ShareLinkLine = ({int line, String link, CustomProxy? kept});
 
-/// [next], read from an edited link, plus what [previous] holds that its own
-/// link, read back as [linked], cannot carry, which the user could not remove.
+/// [next], прочитанный из отредактированной ссылки, плюс то, что содержит
+/// [previous], но не может нести его собственная ссылка, прочитанная обратно
+/// как [linked], что пользователь не мог удалить.
 Map<String, dynamic> withUnlinkedFields(
   Map<String, dynamic> next, {
   required Map<String, dynamic> previous,
@@ -266,8 +268,8 @@ Map<String, dynamic> _withUnlinked(
   return result;
 }
 
-/// A line that repeats a proxy's own link keeps that proxy as it is, since a
-/// link carries fewer fields than the mapping.
+/// Строка, повторяющая собственную ссылку прокси, оставляет прокси как есть,
+/// так как ссылка несёт меньше полей, чем сопоставление.
 class ShareLinkEdit {
   final List<CustomProxy> previous;
   final List<String> links;
@@ -317,9 +319,9 @@ class ShareLinkEdit {
     };
   }
 
-  /// A proxy named after one the edit dropped takes over its id, so each
-  /// profile's dialer for it stays, and the options it listed without a
-  /// value, which no link carries.
+  /// Прокси, названное по одному, который правка отбросила, берет на себя его
+  /// id, поэтому диаллер каждого профиля для него остается, и опции, которые
+  /// он перечислил без значения, которые не несет никакая ссылка.
   List<CustomProxy> apply(
     Map<int, List<Map<String, dynamic>>> decoded, {
     required Set<String> groupNames,
@@ -388,7 +390,7 @@ class ShareLinkEdit {
   }
 }
 
-// mihomo names the links without a fragment "", -01, -02 and so on.
+// mihomo называет ссылки без фрагмента "", -01, -02 и так далее.
 final _unnamedLinkPattern = RegExp(r'^(-\d+)?$');
 
 String linkProxyName(Map<String, dynamic> definition) {
@@ -421,8 +423,8 @@ String copiedProxyName(String name, Set<String> taken) {
   return _numberedName(base, index);
 }
 
-/// The groups [group] reaches back to itself through, or null when it is not
-/// on a loop; mihomo refuses the whole config for one.
+/// Группы, через которые [group] возвращается к самому себе, или null, когда
+/// это не в петле; mihomo отказывает всей конфигурации из-за одной.
 List<String>? proxyGroupLoop(ProxyGroup group, Iterable<ProxyGroup> groups) =>
     _loopFrom(group.name, {
       for (final item in groups)
@@ -451,8 +453,8 @@ List<String>? _loopFrom(String start, Map<String, List<String>> members) {
   return walk(start, [start]);
 }
 
-/// Tarjan's components of [edges], numbered as they close, so an edge never
-/// leads to a component numbered higher than its own.
+/// Компоненты Тарьяна [edges], пронумерованные по мере закрытия, так что ребро никогда
+/// не ведет к компоненту с более высоким номером, чем его собственное.
 List<int> _componentsOf(List<List<int>> edges) {
   final index = List.filled(edges.length, -1);
   final low = List.filled(edges.length, 0);
@@ -507,10 +509,11 @@ Set<String> _namesOnLoops(Map<String, List<String>> members) {
   };
 }
 
-/// [target] and what under it leads back to [proxy], through a group's own
-/// list or, where an app proxy dials through another, that proxy's entry in
-/// [dialers]; empty when the dial does not loop. What filters and providers
-/// pick is left to the core, which fails a dial that comes back to its dialer.
+/// [target] и то, что под ним ведет обратно к [proxy], через собственный список
+/// группы или, где приложение прокси набирает через другую, запись этого прокси
+/// в [dialers]; пусто, когда набор не зацикливается. То, что выбирают фильтры
+/// и провайдеры, остается на ядро, которое не справляется с набором, который
+/// возвращается к своему диаллеру.
 Set<String> dialerLoop(
   String target,
   Iterable<ProxyGroup> groups, {
@@ -524,7 +527,7 @@ bool _takesInEveryProxy(ProxyGroup group) =>
     (group.excludeFilter ?? '').isEmpty &&
     (group.excludeType ?? '').isEmpty;
 
-/// [dialerLoop] for any target of [proxy], finding what reaches it once.
+/// [dialerLoop] для любой цели [proxy], находящей то, что до неё доходит один раз.
 Set<String> Function(String target) dialerLoopsOf(
   Iterable<ProxyGroup> groups, {
   required String proxy,
@@ -566,7 +569,8 @@ class _DialerGraph {
     }
   }
 
-  /// The proxy's own dialer is the dial being checked, never a way back.
+  /// Собственный диаллер прокси — это проверяемый набор, никогда не путь
+  /// назад.
   Set<String> Function(String target) loopsOf(String proxy) {
     if (!declared.contains(proxy)) {
       return (_) => const {};
@@ -604,9 +608,9 @@ class _DialerGraph {
   }
 }
 
-/// Every dial of [dialers] at once: those that loop, and the groups each
-/// loop passes through, from reachability between the graph's components
-/// rather than one walk per dial.
+/// Каждый набор [dialers] сразу: те, что зацикливаются, и группы, через которые
+/// проходит каждый цикл, из достижимости между компонентами графа, а не одним
+/// обходом на набор.
 class _DialLoops {
   final looping = <String>{};
   final throughGroups = <String, List<CustomIssue>>{};
@@ -707,8 +711,8 @@ final _profileDialLoops = Expando<_DialLoops>();
 _DialLoops _dialLoopsIn(CustomProfileData data) =>
     _profileDialLoops[data] ??= _DialLoops(data.proxyGroups, data.dialers);
 
-/// Drops a dialer that leads back to its proxy, since mihomo would follow
-/// that loop on every dial.
+/// Выбрасывает диаллер, который ведет обратно к своему прокси, так как mihomo
+/// следовал бы этой петле при каждом наборе.
 List<Map<String, dynamic>> appProxiesPayload(
   Iterable<CustomProxy> proxies, {
   required Map<int, String> dialers,
@@ -766,7 +770,7 @@ List<CustomIssue> proxyDialerIssues(
   return const [];
 }
 
-/// What a stored group's check reads of the profile, once for all its groups.
+/// Что проверка сохраненной группы читает из профиля, один раз для всех его групп.
 class _StoredGroups {
   final groups = Set<ProxyGroup>.identity();
   final nameCounts = <String, int>{};
@@ -807,8 +811,7 @@ List<CustomIssue> proxyGroupIssues(ProxyGroup group, CustomProfileData data) {
         item,
   ];
   final emptyFallback = group.emptyFallback ?? '';
-  // The core takes only a proxy here, never a group, and refuses the whole
-  // config otherwise.
+  // Ядро берет здесь только прокси, никогда не группу, и отказывает всей конфигурации в противном случае.
   final invalidEmptyFallback =
       emptyFallback.isNotEmpty &&
       !reservedProxyNames.contains(emptyFallback) &&
@@ -820,8 +823,8 @@ List<CustomIssue> proxyGroupIssues(ProxyGroup group, CustomProfileData data) {
   final List<String>? loop;
   final bool takenName;
   final List<CustomIssue> dialerLoops;
-  // Moving a stored group last changes what a name stands for only when
-  // another group shares it.
+  // Перемещение сохраненной группы последним меняет то, что имя означает, только когда
+  // другая группа делит его.
   if (stored.groups.contains(group) && stored.nameCounts[name] == 1) {
     loop = stored.looping.contains(name)
         ? _loopFrom(name, stored.members)
@@ -884,7 +887,7 @@ List<CustomIssue> customRuleIssues(Rule rule, CustomProfileData data) {
 
 typedef ReferencedProviders = ({List<String> proxy, List<String> rule});
 
-/// A custom profile declares only the providers its groups and rules name.
+/// Кастомный профиль объявляет только провайдеров, которых называют его группы и правила.
 @riverpod
 ReferencedProviders customReferencedProviders(Ref ref, int profileId) {
   final groups = ref.watch(proxyGroupsProvider(profileId)).value ?? const [];
@@ -903,8 +906,8 @@ ReferencedProviders customReferencedProviders(Ref ref, int profileId) {
   );
 }
 
-/// Below this many rules and group members a check costs less than handing
-/// its input to an isolate.
+/// Ниже этого количества правил и членов группы проверка стоит дешевле, чем передача
+/// своего входа изоляту.
 const _inlineCheckWork = 2000;
 
 final _groupWork = Expando<int>();
@@ -969,7 +972,7 @@ CustomProfileIssues _collectIssues(_IssueInput input) {
   );
 }
 
-/// Keeps the last result while a large profile is checked in an isolate.
+/// Хранит последний результат, пока большой профиль проверяется в изоляте.
 @Riverpod(name: 'customProfileIssuesProvider')
 class CustomProfileIssuesState extends _$CustomProfileIssuesState {
   late final _check = LatestCompute<_IssueInput, CustomProfileIssues>(

@@ -136,7 +136,7 @@ class Database extends _$Database {
     return {for (final row in tableInfo) row.read<String>('name')};
   }
 
-  /// Drift rewinds user_version on downgrade but keeps the tables it added.
+  /// Drift сбрасывает user_version при откате, но сохраняет таблицы, которые он добавил.
   Future<bool> _createTableIfMissing(Migrator m, TableInfo table) async {
     if ((await _columnsOf(table.actualTableName)).isNotEmpty) {
       return false;
@@ -145,7 +145,7 @@ class Database extends _$Database {
     return true;
   }
 
-  /// Drift rewinds user_version on downgrade but keeps the columns it added.
+  /// Drift сбрасывает user_version при откате, но сохраняет столбцы, которые он добавил.
   Future<void> _addColumnIfMissing(
     Migrator m,
     TableInfo table,
@@ -169,7 +169,7 @@ class Database extends _$Database {
     await m.renameColumn(table, oldName, column);
   }
 
-  /// alterTable re-creates the old index, which names the dropped column.
+  /// alterTable пересоздаёт старый индекс, который называет удалённый столбец.
   Future<void> _dropProfileCustomProxies(Migrator m) async {
     final columns = await _columnsOf(customProxies.actualTableName);
     if (!columns.contains('profile_id')) {
@@ -193,7 +193,7 @@ class Database extends _$Database {
     );
   }
 
-  /// Schema 17 kept each group option in a column of its own.
+  /// Схема 17 держала каждую опцию группы в отдельном столбце.
   Future<void> _moveGroupOptionsToDefinition(Migrator m) async {
     final columns = await _columnsOf(proxyGroups.actualTableName);
     if (columns.isEmpty || columns.contains(proxyGroups.definition.name)) {
@@ -223,8 +223,8 @@ class Database extends _$Database {
     }
   }
 
-  /// Schema 1 kept each rule as one `value` string and its links in reverse
-  /// order; [_migrateToCustomProfiles] then moves both onto the rules.
+  /// Схема 1 держала каждое правило как одну строку `value` и его ссылки в обратном
+  /// порядке; [_migrateToCustomProfiles] затем переносит и то, и другое на правила.
   Future<void> _migrateV1Rules() async {
     final columns = await _columnsOf('rules');
     if (columns.contains('value')) {
@@ -274,11 +274,11 @@ class Database extends _$Database {
     }
   }
 
-  /// Rules move from `profile_rule_mapping` onto their owner, and everything a
-  /// custom overwrite kept - its groups, its rules and its dialers - is
-  /// dropped: those groups named the subscription's own proxies, which a
-  /// custom profile does not have. The mapping table marks the old shape, so
-  /// a database that went back to an older build and returns is left as is.
+  /// Правила переезжают из `profile_rule_mapping` на своего владельца, и всё, что
+  /// оставила кастомная перезапись — её группы, правила и диалеры — удаляется: эти
+  /// группы называли собственные прокси подписки, которых у кастомного профиля нет.
+  /// Таблица映射 ставит старую форму, поэтому база, которая вернулась на старую
+  /// сборку и вернулась обратно, остается как есть.
   Future<void> _migrateToCustomProfiles(Migrator m) async {
     final profileColumns = await _columnsOf('profiles');
     if (!profileColumns.contains(profiles.type.name)) {
@@ -437,7 +437,7 @@ class Database extends _$Database {
       return;
     }
     await transaction(() async {
-      // Backups taken while foreign keys were off may carry orphaned rows.
+      // Бэкапы, сделанные с выключенными внешними ключами, могут нести осиротевшие строки.
       await customStatement('PRAGMA defer_foreign_keys = ON');
       await batch((b) {
         if (isOverride) {
@@ -447,7 +447,7 @@ class Database extends _$Database {
           proxyGroupsDao.setAllWithBatch(b, proxyGroups);
           customProxiesDao.setAllWithBatch(b, customProxies);
           clashProvidersDao.setAllWithBatch(b, clashProviders);
-          // Rewriting profiles or custom proxies cascades into these.
+          // Перезапись профилей или кастомных прокси каскадирует в эти.
           proxyDialersDao.setAllWithBatch(b, proxyDialers);
           mitmModulesDao.setAllWithBatch(b, mitmModules);
           return;
@@ -519,7 +519,7 @@ const _v17GroupFlags = [
   ('hidden', 'hidden'),
 ];
 
-// SQLite builds before 3.32 cap a statement at 999 bound parameters.
+// SQLite до версии 3.32 ограничивает запрос 999 связанными параметрами.
 const _maxBoundValues = 900;
 
 extension TableInfoExt<Tbl extends Table, Row> on TableInfo<Tbl, Row> {
@@ -554,8 +554,8 @@ extension TableInfoExt<Tbl extends Table, Row> on TableInfo<Tbl, Row> {
     return query.map((row) => row.read(countExp));
   }
 
-  /// [select] that skips a row this version cannot read instead of failing the
-  /// whole query; the row itself stays in the table.
+  /// [select], который пропускает строку, которую эта версия не может прочитать,
+  /// вместо того чтобы провалить весь запрос; сама строка остаётся в таблице.
   Selectable<R> readable<R extends Object>(
     R Function(Row row) read, {
     Expression<bool> Function(Tbl tbl)? where,

@@ -23,8 +23,8 @@ final class BackupException implements Exception {
   String toString() => 'BackupException(${failure.name})';
 }
 
-/// Archive entries mirror the data directory, so an entry name is also the
-/// file's path relative to the home directory.
+/// Записи архива зеркалируют каталог данных, поэтому имя записи — это
+/// путь файла относительно домашнего каталога.
 abstract final class BackupEntries {
   static String profile(Object id) => '$profilesDirectoryName/$id.yaml';
 
@@ -39,8 +39,8 @@ abstract final class BackupEntries {
   static String mitmResource(String name) =>
       '$mitmDirectoryName/$mitmResourcesDirectoryName/$name';
 
-  /// A remote provider's cache belongs to the Core and downloads again, as
-  /// does what a module downloads; only a local module's attachments do not.
+  /// Кэш удалённого провайдера принадлежит ядру и загружается повторно, как
+  /// и то, что скачивает модуль; только вложения локального модуля не загружаются.
   static List<String> of({
     required Iterable<int> profileIds,
     required Iterable<int> scriptIds,
@@ -68,7 +68,7 @@ abstract final class BackupEntries {
     );
   }
 
-  /// One that climbed out of the resources directory could carry the CA key.
+  /// Тот, что вылез из каталога ресурсов, может нести ключ CA.
   static bool _isResourceName(String name) =>
       name.isNotEmpty &&
       name != '.' &&
@@ -141,8 +141,8 @@ Future<void> writeBackupArchive({
   }
 }
 
-/// Writes nothing outside [stagingDirPath]; the files the result names are left
-/// there at their [BackupEntries] paths.
+/// Не записывает ничего за пределами [stagingDirPath]; файлы, которые имена результата
+/// оставляют там, по путям [BackupEntries].
 @visibleForTesting
 Future<MigrationData> readBackupArchive({
   required String archivePath,
@@ -258,9 +258,9 @@ Future<void> _extract(String archivePath, String stagingDirPath) async {
   }
 }
 
-/// `posix.normalize` collapses `a/../b`, but a name that starts with `../`
-/// normalizes to itself and an absolute one stays absolute, so either would
-/// write wherever the archive asks. A backup file is untrusted input.
+/// `posix.normalize` схлопывает `a/../b`, но имя, начинающееся с `../`,
+/// нормализуется само в себя, а 절대ное остаётся абсолютным, поэтому любое из них
+/// запишет туда, куда просит архив. Резервная копия — недоверенный ввод.
 String? _stagedEntryPath(String stagingDirPath, String name) {
   final normalized = posix.normalize(name.replaceAll('\\', '/'));
   if (normalized.isEmpty ||
@@ -289,9 +289,9 @@ Map<String, Object?> _decodeConfig(String source) {
   return decoded;
 }
 
-/// Opening the database through drift would already run its migrations, so the
-/// version is read from the file header: SQLite keeps `user_version` as a
-/// big-endian integer at byte 60.
+/// Открытие базы через drift уже запустило бы её миграции, поэтому версия
+/// читается из заголовка файла: SQLite хранит `user_version` как
+/// big-endian целое в байте 60.
 Future<int> _readSchemaVersion(File databaseFile) async {
   final handle = await databaseFile.open();
   try {

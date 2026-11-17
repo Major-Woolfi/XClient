@@ -19,8 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'card.dart';
 import 'current_outbound.dart';
 
-/// Enough to fill the tallest card several times over; the full feed is a
-/// tap away.
+/// Достаточно, чтобы заполнить самую высокую карточку несколько раз; вся лента — в один тап.
 const _maxFeedRows = 100;
 const _midTableWidth = 620.0;
 const _wideTableWidth = 880.0;
@@ -33,7 +32,7 @@ double _tabHeightOf(DashboardDensity density) => density.isCompact ? 32 : 36;
 
 double _rowHeightOf(DashboardDensity density) => density.isCompact ? 32 : 34;
 
-/// Keeps the pill tabs concentric with the card's corners.
+/// Сохраняет таблетки вкладок концентрическими с углами карточки.
 double _tabInsetOf(DashboardDensity density) =>
     dashboardCardRadius(density) - _tabHeightOf(density) / 2;
 
@@ -76,8 +75,7 @@ void openDashboardFeed(BuildContext context, DashboardFeed feed) {
   );
 }
 
-/// Polls the live connections while the dashboard is shown: the whole list
-/// while its table is open, only the count otherwise.
+/// Опрашивает живые соединения, пока показана панель: весь список, пока его таблица открыта, иначе — только счётчик.
 mixin ConnectionsPolling<T extends ConsumerStatefulWidget>
     on
         ConsumerState<T>,
@@ -147,8 +145,7 @@ mixin ConnectionsPolling<T extends ConsumerStatefulWidget>
   }
 }
 
-/// Follows a counter the Core moves per event, at the cadence the feed's own
-/// list repaints at.
+/// Следит за счётчиком, который Core движет за событие, в темпе, с которым список ленты сам перерисовывается.
 class ThrottledCount extends ConsumerStatefulWidget {
   const ThrottledCount({
     super.key,
@@ -186,7 +183,7 @@ class _ThrottledCountState extends ConsumerState<ThrottledCount> {
     setState(() => _count = _latest);
   }
 
-  // A card can stay deactivated across timer ticks; a repaint there throws.
+  // Карточка может остаться деактивированной на тиках таймера; перерисовка там выбросит исключение.
   @override
   void deactivate() {
     _active = false;

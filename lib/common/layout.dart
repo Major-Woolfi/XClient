@@ -12,11 +12,11 @@ double getWindowHeaderHeight({required bool isDesktop, required bool isMacOS}) {
   return isMacOS ? 28 : 32;
 }
 
-/// Windows 11 draws its caption buttons 46 wide over a 32 tall title bar.
+/// Windows 11 рисует кнопки заголовка шириной 46 над 32-пиксельной панелью заголовка.
 const captionButtonWidth = 46.0;
 
-/// The pin is not a caption button: it keeps the round Material button in a
-/// square slot the height of the bar, with a regular icon size.
+/// Пин не является кнопкой заголовка: он удерживает круглую Material-кнопку в
+/// квадратном слоте высотой с панель, с обычным размером иконки.
 const pinIconSize = 16.0;
 
 Size getCaptionButtonSize(double headerHeight) =>
@@ -38,20 +38,20 @@ ViewMode getViewMode(double viewWidth) {
   return ViewMode.desktop;
 }
 
-/// An expanded sidebar in the laptop range would leave the content narrower
-/// than the mobile layout one breakpoint below, so labels wait for desktop.
+/// Развёрнутая боковая панель в диапазоне ноутбука оставила бы контент уже,
+/// чем мобильный макет на одном breakpoint ниже, поэтому метки ждут десктоп.
 bool canExpandSidebar(ViewMode viewMode) => viewMode == ViewMode.desktop;
 
-/// Measured on macOS 27, the traffic lights span 9 to 69 from the left edge
-/// of the hidden 32 tall title bar; macOS 10 keeps its title bar instead.
+/// Измерено на macOS 27, светофоры охватывают 9..69 от левого края
+/// скрытой 32-пиксельной панели заголовка; macOS 10 сохраняет свою панель заголовка.
 const macOSTrafficLightsArea = Size(78, 32);
 
 Size windowControlsOverSidebar({required bool isMacOS, required int version}) {
   return isMacOS && version > 10 ? macOSTrafficLightsArea : Size.zero;
 }
 
-/// The mobile view holds the traffic lights in its window header, so only a
-/// page filling a wider window meets them.
+/// Мобильное вид хранит светофоры в панели заголовка окна, поэтому только страница,
+/// заполняющая более широкое окно, встречает их.
 Size windowControlsOverPage({
   required bool isMacOS,
   required int version,

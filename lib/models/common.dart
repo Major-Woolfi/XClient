@@ -579,7 +579,7 @@ abstract class Group with _$Group {
 final _groupsByName = Expando<Map<String, Group>>();
 
 extension GroupsExt on List<Group> {
-  /// Indexed once per list, so a list must not change after its first lookup.
+  /// Индексируется один раз на список, поэтому список не должен меняться после первого поиска.
   Group? getGroup(String groupName) => (_groupsByName[this] ??= {
     for (final group in this) group.name: group,
   })[groupName];
@@ -595,7 +595,7 @@ extension GroupExt on Group {
     return proxyName.isNotEmpty && _isMember(proxyName) ? proxyName : realNow;
   }
 
-  /// A saved pick outlives a subscription update that renames or drops it.
+  /// Сохраненный выбор переживает обновление подписки, которая переименовывает или опускает его.
   bool _isMember(String proxyName) =>
       all.isEmpty || all.any((proxy) => proxy.name == proxyName);
 }

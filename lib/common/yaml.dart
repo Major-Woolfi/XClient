@@ -18,7 +18,7 @@ class Yaml {
 
 final yaml = Yaml();
 
-/// Applies `<<` merge keys as mihomo does; package:yaml keeps them as keys.
+/// Применяет ключи слияния `<<`, как mihomo; package:yaml хранит их как ключи.
 Object? loadPlainYaml(String content) => _plainYaml(loadYaml(content));
 
 Object? _plainYaml(Object? node) => switch (node) {

@@ -2,8 +2,8 @@ part of '../action.dart';
 
 typedef BackupDelivery = Future<bool> Function(String archivePath);
 
-/// Returns the archive to restore, or null when the user backed out. A source
-/// that downloads writes to [downloadPath], which is removed afterwards.
+/// Возвращает архив для восстановления, или null, когда пользователь отказался. Источник,
+/// который скачивает, пишет в [downloadPath], который затем удаляется.
 typedef BackupFetch = Future<String?> Function(String downloadPath);
 
 @Riverpod(keepAlive: true)
@@ -53,8 +53,7 @@ class BackupAction extends _$BackupAction {
     }
   }
 
-  /// Earlier versions staged restores in the home directory and never removed
-  /// the downloaded archive.
+  /// Ранние версии клали восстановление в домашнюю директорию и никогда не удаляли скачанный архив.
   Future<void> _discardLegacyStaging() async {
     final homeDirPath = await appPath.homeDirPath;
     await File(join(homeDirPath, 'backup.zip')).safeDelete();
@@ -128,7 +127,7 @@ class BackupAction extends _$BackupAction {
       await _restoreMitmModules();
       return;
     }
-    // A desktop backup carries no package lists; the apps picked here stay.
+    // В бэкапе десктопа нет списков пакетов; выбранные здесь приложения остаются.
     final accessControlProps = config.vpnProps.accessControlProps.hasPackages
         ? config.vpnProps.accessControlProps
         : ref.read(vpnSettingProvider).accessControlProps;
@@ -152,8 +151,7 @@ class BackupAction extends _$BackupAction {
     }
   }
 
-  /// The files go in before the rows that name them, so the returned callback
-  /// is how a restore whose rows fail takes them back out.
+  /// Файлы попадают раньше строк, их называющих, поэтому возвращённый callback — это как откат файлов при восстановлении, строки которого не прошли.
   Future<Future<void> Function()> _copyStagedFiles(
     MigrationData data,
     String stagingDirPath,
@@ -208,7 +206,7 @@ class BackupAction extends _$BackupAction {
     }
   }
 
-  /// A restored source outdates the mrs compiled from the one it replaced.
+  /// Восстановленный источник устаревает mrs, скомпилированный из того, что он заменил.
   Future<void> _clearOutdatedCompiledRuleSets(
     List<ClashProvider> restored,
   ) async {

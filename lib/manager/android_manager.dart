@@ -49,8 +49,7 @@ class _AndroidContainerState extends ConsumerState<AndroidManager>
     app?.onPackagesChanged = _reloadPackages;
   }
 
-  /// A reload reads every installed app's label, and a round of store updates
-  /// reports each app on its own.
+  /// Перезагрузка читает метку каждого установленного приложения, а раунд обновлений хранилища сообщает о каждом приложении отдельно.
   void _reloadPackages() {
     if (ref.read(packagesProvider).isEmpty) {
       return;

@@ -43,9 +43,9 @@ class CoreAction extends _$CoreAction {
     return _core.restart();
   }
 
-  // Nothing in lib/ calls CoreController.stop(); only close() (app exit)
-  // supersedes a start/restart. statusFirst lets onCrash catch a crash
-  // during initCore itself (it early-returns unless status is connected).
+  // Ничто в lib/ не вызывает CoreController.stop(); только close() (выход из приложения)
+  // отменяет запуск/перезапуск. statusFirst позволяет onCrash поймать сбой
+  // во время initCore сам по себе (он рано возвращается, если статус не connected).
   Future<bool> _applyLifecycleResult(
     CoreLifecycleResult result, {
     bool statusFirst = false,

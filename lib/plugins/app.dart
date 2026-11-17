@@ -78,8 +78,8 @@ class App {
         false;
   }
 
-  /// Android 17 drops traffic between the app and the local network until the
-  /// user grants this; earlier versions answer true.
+  /// Android 17 отсекает трафик между приложением и локальной сетью, пока
+  /// пользователь не выдаст это разрешение; более ранние версии отвечают true.
   Future<bool> requestLocalNetworkPermission() async {
     return await methodChannel.invokeMethod<bool>(
           'requestLocalNetworkPermission',
@@ -220,7 +220,7 @@ class App {
     await methodChannel.invokeMethod<bool>('clearDownloads');
   }
 
-  /// An accepted update ends this process before its status can arrive.
+  /// Принятое обновление завершает этот процесс, прежде чем его статус сможет прийти.
   Future<int?> installPackage(String path) {
     return methodChannel.invokeMethod<int>('installPackage', {'path': path});
   }
@@ -244,7 +244,7 @@ class App {
     );
   }
 
-  /// Null when su was denied.
+  /// Null, когда su было отказано.
   Future<MitmInstallOutcome?> installCaCertificateWithRoot(
     List<int> der,
   ) async {
@@ -271,8 +271,8 @@ class App {
     return removed == true;
   }
 
-  /// Saves [der] to Downloads where Android no longer takes it from an app;
-  /// null when the system's installer would not open.
+  /// Сохраняет [der] в Downloads, где Android больше не берет его из приложения;
+  /// null, когда установщик системы не откроет.
   Future<MitmInstallOutcome?> installCaCertificate(
     List<int> der, {
     required String name,

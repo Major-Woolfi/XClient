@@ -22,13 +22,13 @@ class RecordFilter {
   String toString() => 'RecordFilter(${kind.name}: $value)';
 }
 
-/// Filters on one facet widen each other, on different facets narrow.
+/// Фильтры по одной границе расширяют друг друга, по разным граням сужают.
 class RecordFacet<T> {
   final RecordFacetKind kind;
   final Iterable<String> Function(T item) valuesOf;
 
-  /// Only a facet whose values come from a fixed set is offered in the menu;
-  /// one growing with the user's apps or profiles is filtered from a row.
+  /// Только грань, чьи значения приходят из фиксированного набора, предлагается в меню;
+  /// одна, растущая с приложениями или профилями пользователя, фильтруется из строки.
   final bool offered;
 
   final List<String> order;
@@ -87,8 +87,8 @@ class RecordGroup<T> {
   const RecordGroup(this.key, this.items);
 }
 
-/// Groups follow their item shown highest; [reverse] marks a list shown
-/// bottom up.
+/// Группы следуют за своим элементом, показанным самым высоким; [reverse] помечает список,
+/// показанный снизу вверх.
 List<RecordGroup<T>> groupRecords<T>(
   List<T> items,
   String Function(T item) keyOf, {

@@ -49,9 +49,9 @@ ProxyState proxyState(Ref ref) {
   );
 }
 
-/// Watching the delay map instead would drop nodes one probe at a time, and
-/// reading it on any other rebuild would drop them whenever something
-/// unrelated changed mid-test.
+/// Вместо наблюдения за картой задержек узлы отпадали бы по одному зондированию,
+/// а чтение её при любой другой перерисовке сбрасывало бы их, когда что-то
+/// не связанное меняется посреди теста.
 @riverpod
 DelayMap delaysAtLastTestBatch(Ref ref) {
   ref.watch(sortNumProvider);
@@ -90,8 +90,9 @@ GroupsState _hideTimeoutProxies(Ref ref, GroupsState groups) {
   );
 }
 
-/// Searches before hiding, so a group whose matches all timed out keeps them,
-/// and with them its delay test, instead of dropping out of the results.
+/// Сначала ищет, а потом скрывает, поэтому группа, у всех совпадений которой
+/// истекло время ожидания, сохраняет их и с ними свой тест задержки, вместо
+/// чтобы выпасть из результатов.
 @riverpod
 GroupsState filterGroupsState(Ref ref, String query) {
   final searchQuery = SearchQuery(query);

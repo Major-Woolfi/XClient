@@ -120,6 +120,6 @@ double overlayTopOffset(Ref ref) {
     version: version,
     isMobileView: isMobileView,
   );
-  // The window controls over a page sit within its app bar.
+  // Элементы управления окном над страницей находятся в её строке приложения.
   return (showsHeader ? kHeaderHeight : 0) + bannerBarClearance;
 }

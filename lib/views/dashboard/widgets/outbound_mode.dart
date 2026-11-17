@@ -85,8 +85,7 @@ class OutboundModeCard extends ConsumerWidget {
   }
 }
 
-/// The desktop control row's mode switch; its buttons sit as far in from the
-/// card's ends as from its edges so their corners stay concentric.
+/// Переключатель режима строки управления рабочего стола; его кнопки расположены так далеко от краёв карточки, как и от её краёв, чтобы их углы оставались концентрическими.
 class OutboundModeBar extends ConsumerWidget {
   const OutboundModeBar({super.key});
 

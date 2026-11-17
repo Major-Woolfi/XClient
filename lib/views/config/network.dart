@@ -343,8 +343,8 @@ class _NumberItem extends ConsumerWidget {
   }
 }
 
-// Android's VPN service starts from these rows; the desktop TUN takes the
-// same keys as overrides, so a profile's own values apply unless picked.
+// Сервис VPN на Android начинается с этих строк; десктопный TUN использует те же
+// ключи, что и переопределения, поэтому значения профиля применяются, если не переопределены.
 List<Widget> tunItems({required bool isMipsStack}) {
   return [
     _NumberItem(
@@ -416,8 +416,8 @@ class TunSection extends ConsumerWidget {
   }
 }
 
-// mihomo keeps TCP keep-alive off on Android whatever the config says
-// (component/keepalive), and only Linux honours a routing mark.
+// mihomo отключает TCP keep-alive на Android независимо от конфига
+// (component/keepalive); только Linux учитывает routing mark.
 List<Widget> outboundItems({required bool isDesktop, required bool isLinux}) {
   return [
     if (isDesktop) ...[
@@ -461,9 +461,9 @@ List<Widget> networkOptionsItems({
     if (isDesktop) const TUNItem(),
     if (isMacOS) const AutoSetSystemDnsItem(),
     const TunStackItem(),
-    // mihomo's DefaultSocketHook ignores interface-name on Android
-    // (core/lib.go installHooks, vendored dialer.go), so these rows only
-    // apply on desktop.
+// DefaultSocketHook mihomo игнорирует interface-name на Android
+// (core/lib.go installHooks, vendored dialer.go), поэтому эти строки применяются
+// только на десктопе.
     if (isDesktop) ...[
       const InterfaceNameModeItem(),
       if (isCustomInterfaceName) const InterfaceNameItem(),

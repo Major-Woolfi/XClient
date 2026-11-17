@@ -76,8 +76,8 @@ class AppTray implements TrayPort {
   @override
   Future<void> shutdown() async {
     _isShutDown = true;
-    // Removing a status item makes macOS forget where the user dragged it in
-    // the menu bar; one that goes away with the process keeps its place.
+    // Удаление элемента статуса заставляет macOS забыть, куда пользователь перетащил его в
+    // строке меню; тот, что уходит с процессом, сохраняет своё место.
     if (isMacOS) {
       return;
     }

@@ -109,8 +109,7 @@ class TrackerInfoList extends StatelessWidget {
   }
 }
 
-/// What a finished row shows: it leaves out the traffic a request still
-/// reports, which would rebuild the rows on screen at every refresh.
+/// Что показывает закончившаяся строка: она опускает трафик, который запрос всё ещё сообщает, что перестраивал бы строки на экране при каждом обновлении.
 List<Object?> _shownInList(TrackerInfo trackerInfo) => [
   trackerInfo.start,
   trackerInfo.metadata,
@@ -119,8 +118,7 @@ List<Object?> _shownInList(TrackerInfo trackerInfo) => [
   trackerInfo.rulePayload,
 ];
 
-/// Same rows as [TrackerInfoList], but diffed by connection id so closed
-/// connections collapse out and surviving rows slide to their new slot.
+/// Те же строки, что [TrackerInfoList], но диффированные по id соединения, так что закрытые соединения сжимаются, а выжившие строки скользят на свой новый слот.
 class TrackerInfoAnimatedList extends StatelessWidget {
   final List<TrackerInfo> trackerInfos;
   final String detailTitle;

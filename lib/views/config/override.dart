@@ -22,7 +22,7 @@ abstract interface class OverrideModel<M> {
   bool get emptyCancels;
 }
 
-/// Where an override page keeps its model and the keys picked from it.
+/// Страница переопределения хранит здесь свою модель и выбранные ключи.
 abstract class OverrideTarget<K extends OverrideKey, M>
     implements OverrideModel<M> {
   const OverrideTarget();
@@ -85,7 +85,7 @@ class PatchOverrideTarget<K extends OverrideKey, M>
   ConfigLabel get addEntry =>
       (l) => l.addOverrideEntry;
 
-  /// An emptied entry overrides the profile's own value with nothing.
+  /// Очищенная запись переопределяет значение профиля ничем.
   @override
   bool get emptyCancels => false;
 
@@ -368,7 +368,7 @@ abstract class OverrideSpec<K extends OverrideKey, M> {
 
   NullStatusIllustration get illustration;
 
-  /// What a newly added key starts from.
+  /// Значение, с которого начинается только что добавленный ключ.
   M get defaults;
 
   String sectionOf(K key, AppLocalizations l) => l.options;
@@ -379,7 +379,7 @@ abstract class OverrideSpec<K extends OverrideKey, M> {
 
   OverrideField<M> fieldOf(K key);
 
-  /// Also resets the values of [keys], so a profile with no keys is untouched.
+  /// Также сбрасывает значения [keys], поэтому профиль без ключей не затрагивается.
   OverrideState<K, M> withoutKeys(OverrideState<K, M> state, Set<K> keys) {
     var model = state.model;
     for (final key in keys) {
@@ -407,8 +407,8 @@ abstract class OverrideSpec<K extends OverrideKey, M> {
 mixin OverrideQuickEdit<K extends OverrideKey, M> on OverrideSpec<K, M> {
   String overrideYaml(M model, Set<K> keys);
 
-  /// Throws when [content] names a key outside [values] or a value the model
-  /// cannot hold.
+  /// Выбрасывает исключение, когда [content] называет ключ вне [values] или значение,
+  /// которое модель не может хранить.
   OverrideState<K, M> applyOverrideYaml(M model, String content);
 
   EditorSchema get schema;
@@ -640,7 +640,7 @@ class OverrideSection<K extends OverrideKey, M> extends ConsumerWidget {
   final String title;
   final OverrideSpec<K, M> spec;
 
-  /// Keyed, since the section animates its rows in and out.
+  /// Ключи, поскольку секция анимирует появление и исчезновение строк.
   final List<Widget> items;
   final List<String> footer;
 
@@ -677,7 +677,7 @@ class OverrideSection<K extends OverrideKey, M> extends ConsumerWidget {
   }
 }
 
-/// A picked key's row, led by the button that takes it off the list.
+/// Строка выбранного ключа, ведомая кнопкой, которая удаляет его из списка.
 class OverrideEntry<K extends OverrideKey, M> extends StatelessWidget {
   const OverrideEntry({
     super.key,
@@ -701,7 +701,7 @@ class OverrideEntry<K extends OverrideKey, M> extends StatelessWidget {
   }
 }
 
-/// A key's own value; emptying it takes the key off the list.
+/// Значение ключа; очистка удаляет ключ из списка.
 class _ListedValue<K extends OverrideKey, M> implements OverrideModel<M> {
   const _ListedValue(this.spec, this.overrideKey);
 

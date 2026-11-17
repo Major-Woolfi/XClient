@@ -32,7 +32,7 @@ bool _bringsNewScripts(
 class MitmModulesAction extends _$MitmModulesAction {
   var _autoUpdating = false;
 
-  /// Files written before a row or a line names them, which [clean] keeps.
+  /// Файлы, записанные до того, как строка или линия их назовёт, [clean] сохраняет.
   final _held = <String>[];
 
   @override
@@ -106,9 +106,7 @@ class MitmModulesAction extends _$MitmModulesAction {
     ref.read(mitmModulesProvider.notifier).put(module, first: first);
   }
 
-  /// Downloads the resources of the lines the new values bring in, which the
-  /// last save did not see. Returns the module if the values turned it off by
-  /// declaring more scripts than the user accepted.
+  /// Качает ресурсы, которые вносят новые значения, и которые последнее сохранение не видела. Возвращает модуль, если значения выключили его, объявив больше скриптов, чем пользователь принял.
   Future<MitmModule?> setArguments(
     MitmModule module,
     Map<String, String> arguments,
@@ -209,10 +207,7 @@ class MitmModulesAction extends _$MitmModulesAction {
     mitmModulesProvider.future,
   )).where((item) => item.id == id).firstOrNull;
 
-  /// A module [added] with scripts starts off until the user accepts them, and
-  /// one an update brings new or changed scripts to turns off until they accept
-  /// again; with no earlier text, as after a restore, only the count can tell.
-  /// What the user changed while it downloaded stays.
+  /// Модуль [added] со скриптами выключается, пока пользователь их не примет, и тот, что обновление довело до новых или изменённых скриптов, выключается до повторного приёма; без раннего текста, как после восстановления, только количество может сказать. То, что пользователь изменил во время загрузки, остаётся.
   Future<MitmModule> _save(
     MitmModule module,
     String text, {
@@ -299,7 +294,7 @@ class MitmModulesAction extends _$MitmModulesAction {
     }
   }
 
-  /// A resource that fails to download keeps the copy an earlier update left.
+  /// Ресурс, который не удалось скачать, сохраняет копию, которую оставил предыдущее обновление.
   Future<Map<String, String>> _download(
     Set<String> urls, {
     required Map<String, String> previous,
@@ -345,8 +340,7 @@ class MitmModulesAction extends _$MitmModulesAction {
     return name;
   }
 
-  /// Removes every file no module names, judged file by file so that what a
-  /// save writes or names while it runs stays.
+  /// Удаляет каждый файл, которого не называет ни один модуль, по одному файлу, чтобы то, что сохранение записало или назвало во время работы, осталось.
   Future<void> clean() async {
     final stored = await database.mitmModulesDao.query().get();
     Future<void> sweep(
@@ -383,9 +377,7 @@ class MitmModulesAction extends _$MitmModulesAction {
     );
   }
 
-  /// Remote modules follow the resources' two settings. What a restore leaves
-  /// out, the content of remote modules and every downloaded resource, comes
-  /// back even with auto update off.
+  /// Удалённые модули следуют двум настройкам ресурсов. То, что восстановление исключает — содержимое удалённых модулей и каждый скачанный ресурс — возвращается даже при выключенном автообновлении.
   Future<void> autoUpdate() async {
     final setting = ref.read(patchClashConfigProvider);
     if (!mitmFeature || _autoUpdating || !ref.mounted || !setting.mitm.enable) {

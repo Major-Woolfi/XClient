@@ -81,7 +81,7 @@ class YamlItemStep extends YamlStep {
   const YamlItemStep();
 }
 
-/// The keys a block mapping already has on lines other than the caret's.
+/// Ключи, которые уже есть в блочном маппинге на строках, кроме той, где каретка.
 class YamlMappingScope {
   final List<YamlStep> path;
   final Map<String, String> siblings;
@@ -99,7 +99,7 @@ class YamlDocumentLines {
     return YamlLine.indentOf(text) > maxIndent ? null : YamlLine.parse(text);
   }
 
-  /// Null when an ancestor is not a bare key the scope could hang from.
+  /// Null, когда предок не является голым ключом, за которыйscope мог бы подвеситься.
   YamlMappingScope? mappingScope(
     int line,
     int column, {

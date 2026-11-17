@@ -13,8 +13,8 @@ import 'form_row.dart';
 
 const _ruleRowVerticalPadding = 7.0;
 
-/// Rule lists run to thousands of rows, so a rule row is padded tighter than
-/// other list rows.
+/// Списки правил тянутся на тысячи строк, поэтому строка правила поджата уже,
+/// чем другие строки списка.
 double get ruleItemHeight =>
     globalState.measure.listTitleHeight +
     globalState.measure.listSubtitleHeight +

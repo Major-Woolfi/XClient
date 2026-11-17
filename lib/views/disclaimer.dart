@@ -77,6 +77,7 @@ class DisclaimerView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: _mobileGutter).copyWith(
         top: context.contentTopPadding,
         // Below the terms the consent bar takes the system bar itself.
+        // Ниже условий панель согласия занимает системную панель сама.
         bottom: 32 + (requireConsent ? 0 : context.bottomInset),
       ),
       children: terms,
@@ -375,7 +376,7 @@ enum _Restatement {
     if (value.text.trim() == statement) {
       return complete;
     }
-    // Pinyin или kana, которые еще composés, еще не часть пересказа.
+    // Pinyin или kana, которые еще набираются, еще не часть пересказа.
     final composing = value.composing;
     final committed = value.isComposingRangeValid
         ? composing.textBefore(value.text) + composing.textAfter(value.text)

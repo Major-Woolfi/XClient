@@ -9,10 +9,10 @@ final proxy = system.isDesktop && !safeModeBuild ? Proxy() : null;
 
 final systemProxyQueue = proxy == null ? null : SystemProxyQueue(proxy!);
 
-/// Exit's stop goes through the same queue as every other change, so a start
-/// still waiting behind a slow call cannot turn the proxy back on after it.
-/// A stop also clears settings someone else made, so it only undoes a start
-/// of this run.
+/// Остановка при выходе проходит через ту же очередь, что и любое другое изменение, поэтому запуск,
+/// всё ещё ожидающий за медленным вызовом, не сможет включить прокси после него.
+/// Остановка также очищает настройки, сделанные кем-то ещё, поэтому она отменяет только запуск
+/// этого прогона.
 class SystemProxyQueue {
   final Proxy _proxy;
   Future<void> _tail = Future.value();

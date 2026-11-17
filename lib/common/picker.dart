@@ -44,8 +44,8 @@ class Picker {
     if (xFile == null) {
       return null;
     }
-    // Not through a throwaway MobileScannerController: disposing one clears
-    // the platform scan window of a scanner page that is still open.
+    // Не через одноразовый MobileScannerController: утиль один из них очищает
+    // окно сканирования платформы страницы сканера, которая всё ещё открыта.
     final capture = await MobileScannerPlatform.instance.analyzeImage(
       xFile.path,
       formats: const [BarcodeFormat.qrCode],

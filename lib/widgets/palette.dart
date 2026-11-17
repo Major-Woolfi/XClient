@@ -11,13 +11,12 @@ const _trackHeight = 20.0;
 const _thumbRadius = 14.0;
 const _thumbRingWidth = 3.0;
 
-// The corner follows the grid's cells, which a larger one would cut away.
+// Угол следует за ячейками сетки, и больший бы их обрезал.
 const _padCorner = AppCorner.sm;
 
 enum _PaletteMode { grid, spectrum, sliders }
 
-/// Picks a color as iOS's color picker does: from a grid, a spectrum of hue
-/// and lightness, or hue, saturation and brightness sliders.
+/// Подбирает цвет, как цветовой выбор iOS: из сетки, спектра оттенка и яркости, или ползунков оттенка, насыщенности и яркости.
 class Palette extends StatefulWidget {
   const Palette({super.key, required this.controller});
 
@@ -53,8 +52,7 @@ class _PaletteState extends State<Palette> {
     super.dispose();
   }
 
-  // A gray drops its hue and black its saturation; the sliders keep the ones
-  // they were dragged to until the color comes from elsewhere.
+// Серый теряет оттенок, а черный насыщенность; ползутки сохраняют те, до которых их перетащили, пока цвет не придет извне.
   void _syncHsv() {
     if (_hsv.toColor() != widget.controller.value) {
       setState(() => _hsv = HSVColor.fromColor(widget.controller.value));
@@ -109,8 +107,7 @@ class _PaletteState extends State<Palette> {
 class _ColorGrid extends StatelessWidget {
   const _ColorGrid({required this.color, required this.onPicked});
 
-  // iOS's columns run from sky blue round through red to green, skipping the
-  // teals between green and sky.
+// Столбцы iOS идут от небесно-голубого через красный к зеленому, пропуская сине-зеленые между зеленым и небесно-голубым.
   static const _hues = [
     230.0,
     262.0,
@@ -176,8 +173,7 @@ class _GridPainter extends CustomPainter {
         const Radius.circular(_padCorner),
       ),
     );
-    // Without anti-aliasing the cells meet on whole pixels, with no seam of
-    // the page between them.
+// Без сглаживания ячейки соприкасаются на целых пикселях, без шва страницы между ними.
     final paint = Paint()..isAntiAlias = false;
     Rect? selectedCell;
     for (var row = 0; row < rows.length; row++) {
@@ -228,8 +224,7 @@ class _Spectrum extends StatefulWidget {
 }
 
 class _SpectrumState extends State<_Spectrum> {
-  // White and black carry no hue, so the thumb stays where it was dragged
-  // rather than jumping to the red end.
+// У белого и черного нет оттенка, поэтому палец остается там, где его перетащили, вместо того чтобы прыгнуть к красному концу.
   ({Offset position, Color color})? _picked;
 
   Offset _positionOf(Color color) {
@@ -295,8 +290,7 @@ class _SpectrumPainter extends CustomPainter {
       shape,
       Paint()..shader = LinearGradient(colors: _hues).createShader(rect),
     );
-    // Mixing the pure hue with white above the middle and black below is
-    // exactly HSL lightness at full saturation, which picking reads back.
+// Смешивание чистого оттенка с белым посередине и черным ниже — это в точности HSL светлота при полной насыщенности, которую подбор считывает обратно.
     canvas.drawRSuperellipse(
       shape,
       Paint()
@@ -325,8 +319,7 @@ class _SpectrumPainter extends CustomPainter {
       oldDelegate.color != color || oldDelegate.position != position;
 }
 
-/// Claims the pointer on contact, so a drag that starts on the pad picks
-/// colors instead of moving the sheet or the list around it.
+/// Захватывает указатель при касании, так что перетаскивание, начатое на подушке, подбирает цвета вместо того, чтобы двигать лист или список вокруг него.
 class _ImmediatePanGestureRecognizer extends PanGestureRecognizer {
   _ImmediatePanGestureRecognizer({super.debugOwner});
 
@@ -541,7 +534,7 @@ class _GradientSliderShape extends SliderShape {
   @override
   double get height => _thumbRadius * 2;
 
-  // The thumb travels between the pill's end caps so it never overhangs them.
+  // Палец путешествует между ограничителями таблетки, чтобы никогда не выходить за них.
   @override
   double get thumbInset => _thumbRadius;
 

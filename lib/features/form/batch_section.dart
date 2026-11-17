@@ -2,7 +2,7 @@ import 'package:xclient/common/common.dart';
 import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 
-/// A form's batch mode: one field of lines, and how many of them it adds.
+/// Режим пакета формы: одно поле из строк и сколько из них оно добавляет.
 class BatchSection<T> extends StatelessWidget {
   final BatchInput<T> batch;
   final TextEditingController controller;

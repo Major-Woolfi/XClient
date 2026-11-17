@@ -8,8 +8,8 @@ class StoreAction extends _$StoreAction {
   void build() {}
 
   Future<void> shakingStore() async {
-    // The lists leave out rows they cannot read, whose files must survive, and
-    // the tables may not hold an optimistic write yet.
+    // Списки пропускают строки, которые не могут прочитать, а их файлы должны
+    // сохраниться, и таблицы могут ещё не содержать оптимистичной записи.
     final profileIds = {
       ...ref.read(profilesProvider).map((item) => item.id),
       ...await database.profilesDao.ids().get(),

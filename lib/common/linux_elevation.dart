@@ -13,9 +13,9 @@ typedef InputProcessRunner =
 
 typedef PasswordPrompt = Future<String?> Function();
 
-/// pkexec exits 127 when it cannot obtain an authorization at all, which is
-/// what happens without a polkit agent, as under many tiling window managers;
-/// 126 is the user dismissing the dialog and is final.
+/// pkexec завершается с кодом 127, когда не может получить авторизацию вообще,
+/// что происходит без агента polkit, как под многими тайлинговыми оконными менеджерами;
+/// 126 — это когда пользователь отклонил диалог, и это окончательно.
 const _pkexecNotAuthorized = 127;
 
 class LinuxElevation {

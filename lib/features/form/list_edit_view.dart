@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'list_editor_page.dart';
 import 'quick_edit.dart';
 
-/// Public for `MapEditView`, whose entries are entered in a form.
+/// Публично для `MapEditView`, чьи записи вводятся в форме.
 abstract class EditViewState<W extends ConsumerStatefulWidget, T>
     extends ConsumerState<W> {
   List<T> _entries = [];
@@ -36,7 +36,7 @@ abstract class EditViewState<W extends ConsumerStatefulWidget, T>
   @protected
   List<T> get entries => _entries;
 
-  /// Adds when [entry] is null and edits it otherwise.
+  /// Добавляет, когда [entry] null, и редактирует его иначе.
   Future<T?> showEntryEditor(T? entry);
 
   Future<void> showQuickEdit(List<T> entries, ValueChanged<List<T>> onChanged);

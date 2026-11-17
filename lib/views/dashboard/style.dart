@@ -60,9 +60,7 @@ class DashboardColors {
   final Color onWarnContainer;
 }
 
-/// Values are the design's CSS shadows. A CSS blur is twice its sigma while
-/// Flutter turns a blur radius r into a sigma of 0.577 r + 0.5, so each one
-/// goes through [_blur] or it renders a third heavier.
+/// Значения — это CSS-тени дизайна. CSS-размытие в два раза больше сигмы, а Flutter превращает радиус размытия r в сигму 0.577r + 0.5, поэтому каждое проходит через [_blur], иначе отрисовывается на треть тяжелее.
 abstract final class DashboardShadows {
   static List<BoxShadow> e1(BuildContext context) =>
       context.colorScheme.brightness == Brightness.dark ? _e1Dark : _e1Light;
@@ -115,8 +113,7 @@ abstract final class DashboardCorner {
 
 final _groupedFormat = NumberFormat.decimalPattern('en');
 
-/// Grouped digits, as the design shows them, until they outgrow a third of a
-/// phone's width.
+/// Сгруппированные цифры, как их показывает дизайн, пока они не вырастут до трети ширины телефона.
 String dashboardCount(int count) =>
     count < 100000 ? _groupedFormat.format(count) : count.compact;
 
@@ -125,7 +122,7 @@ String dashboardTraffic(num bytes) {
   return '${show.value} ${show.unit}';
 }
 
-/// The dashboard's text roles; every figure reads in tabular digits.
+/// Текстовые роли панели; каждая цифра читается табличными цифрами.
 abstract final class DashboardText {
   static TextStyle cardTitle(BuildContext context) => AppTextStyle.footnote
       .of(context, emphasized: true)

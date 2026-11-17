@@ -12,8 +12,7 @@ import 'package:flutter_svg/svg.dart';
 
 const _maxCachedIconBytes = 16 << 20;
 
-// The precache and the widget must resolve equal providers to share one
-// ImageCache entry; 192 physical pixels cover a 48 dp icon box at 4x.
+// Прекэш и виджет должны разрешать одинаковые провайдеры, чтобы делить одну запись ImageCache; 192 физических пикселя покрывают 48 dp ячейку иконки при 4x.
 const _iconDecodeExtent = 192;
 
 ImageProvider _iconImage(Uint8List bytes) {

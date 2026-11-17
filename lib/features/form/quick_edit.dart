@@ -29,12 +29,12 @@ IconButtonData customSaveAction(
   );
 }
 
-/// Thrown by an `apply` the user called off, which keeps the editor open.
+/// Выбрасывается `apply`, которую пользователь отменил, что оставляет редактор открытым.
 class QuickEditCancelled implements Exception {
   const QuickEditCancelled();
 }
 
-/// Edits a list as text; a [FormatException] from [apply] reads as
+/// Редактирует список как текст; [FormatException] из [apply] читается как
 /// [invalidMessage].
 Future<void> showQuickEdit(
   BuildContext context, {
@@ -102,7 +102,7 @@ void _throwIssues<T>(
   );
 }
 
-/// One item a line.
+/// Один элемент в строке.
 Future<void> showListQuickEdit(
   BuildContext context, {
   required String title,
@@ -140,8 +140,8 @@ Future<void> showListQuickEdit(
   );
 }
 
-/// One `key: value` a line. [reservedKeys] belong to other fields, so an
-/// entry may not take one.
+/// Один `ключ: значение` в строке. [reservedKeys] относятся к другим полям,
+/// поэтому запись не может взять один из них.
 Future<void> showMapQuickEdit(
   BuildContext context, {
   required String title,

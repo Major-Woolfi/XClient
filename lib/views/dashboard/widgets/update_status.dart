@@ -88,7 +88,7 @@ class _UpdateStatusSlotState extends ConsumerState<UpdateStatusSlot>
     if (download == null) {
       return const SizedBox.shrink();
     }
-    // Not SizeTransition: its clip would cut the card's shadow at rest.
+// Не SizeTransition: его обрезание отрезало бы тень карточки в покое.
     return AnimatedBuilder(
       animation: _curve,
       builder: (_, child) => Align(
@@ -170,7 +170,7 @@ class _UpdateStatusCard extends ConsumerWidget {
   }
 }
 
-/// The desktop dashboard's bar button while an update downloads or waits.
+/// Кнопка панели рабочего стола во время скачивания или ожидания обновления.
 class UpdateStatusButton extends ConsumerWidget {
   const UpdateStatusButton({super.key});
 

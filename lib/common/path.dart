@@ -89,8 +89,8 @@ class AppPath {
     return join(mTempDir.path, 'temp$uniqueId');
   }
 
-  /// On Android the app's external downloads directory, the one the system
-  /// download manager can write to.
+  /// На Android это внешний каталог загрузок приложения, в который системный
+  /// менеджер загрузок может записывать.
   Future<String> get updateDirPath async {
     final directory = system.isAndroid
         ? await downloadDirPath

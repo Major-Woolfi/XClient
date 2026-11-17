@@ -9,9 +9,9 @@ import 'package:shared_preferences_platform_interface/types.dart';
 
 const _defaultPrefix = 'flutter.';
 
-/// Stands in for the Windows and Linux stores, which truncate the file before
-/// writing it (flutter/flutter#89211): same file and format, but each save
-/// replaces it with a flushed sibling.
+/// Замещает хранилища Windows и Linux, которые обрезают файл перед
+/// записью (flutter/flutter#89211): тот же файл и формат, но каждое сохранение
+/// заменяет его flushed-однолистником.
 class AtomicFilePreferencesStore extends SharedPreferencesStorePlatform {
   AtomicFilePreferencesStore(this._path);
 

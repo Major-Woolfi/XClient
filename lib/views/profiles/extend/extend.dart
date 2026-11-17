@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'script.dart';
 import 'standard.dart';
 
-/// Long enough that a quick apply still reads as one, not as a flicker.
+/// Достаточно долго, чтобы быстрое применение считалось одним, а не мерцанием.
 const _minApplyingDuration = Duration(milliseconds: 600);
 
 class ExtendView extends ConsumerStatefulWidget {

@@ -4,9 +4,8 @@ import 'package:collection/collection.dart';
 
 import 'clash_schema.dart';
 
-/// Runs [read] on [content] and, when that throws, once more on
-/// [relaxYaml]'s rewrite of it; the error of the text as written stands when
-/// the rewrite fails too.
+/// Запускает [read] по [content] и, если тот кидает исключение, ещё раз по
+/// перезаписи [relaxYaml]; ошибка текста, как написано, остаётся, если перезапись тоже не удалась.
 T readRelaxed<T>(
   String content,
   EditorSchema schema,
@@ -20,17 +19,16 @@ T readRelaxed<T>(
       try {
         return read(relaxed);
       } catch (_) {
-        // The rewrite's own error would point at lines the user never wrote.
+        // Ошибка перезаписи могла бы указывать на строки, которых пользователь никогда не писал.
       }
     }
     rethrow;
   }
 }
 
-/// Nests each key [schema] knows under the map that holds it whatever its
-/// indentation, drops a `dns:`-style header around the whole document, and
-/// turns a list written on one line, comma separated, into block entries.
-/// Null when [schema] is not a map.
+/// Вкладывает каждый ключ, который знает [schema], под мапу, которая его hält, независимо от отступа,
+/// оборачивает весь документ заголовком в стиле `dns:`, и превращает список, записанный в одну строку через запятую,
+/// в блочные записи. Null, когда [schema] не является мапой.
 String? relaxYaml(String content, EditorSchema schema) {
   final root = schema.root;
   if (root.kind != YamlKind.map) {
@@ -133,7 +131,7 @@ class _Relaxer {
     }
   }
 
-  /// A key the schema does not know still nests by its indentation.
+  /// Ключ, который схема не знает, всё равно вкладывается по своему отступу.
   bool _keyLine(int indent, String text, {bool knownOnly = false}) {
     final named = _namedKeyPattern.firstMatch(text);
     if (named != null) {
@@ -161,8 +159,8 @@ class _Relaxer {
     return true;
   }
 
-  /// The innermost of [candidates] whose keys sit at [indent], then the
-  /// innermost [indent] could still be inside.
+  /// Самый внутренний из [candidates], ключи которого находятся на [indent],
+  /// затем самый внутренний [indent], который всё ещё может быть внутри.
   int _pick(List<int> candidates, int indent) {
     bool within(int index) {
       final frame = _frames[index];
@@ -245,7 +243,7 @@ class _Relaxer {
   static bool _isScalarList(YamlSchema schema) =>
       schema.kind == YamlKind.list && schema.entry!.kind == YamlKind.scalar;
 
-  /// [loose] also takes `-entry`, which YAML reads as a plain scalar.
+  /// [loise] также принимает `-entry`, который YAML читает как простой скаляр.
   static String? _itemOf(String text, {bool loose = false}) {
     if (!text.startsWith('-')) {
       return null;

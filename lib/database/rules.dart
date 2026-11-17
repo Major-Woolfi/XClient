@@ -73,7 +73,7 @@ class RulesDao extends DatabaseAccessor<Database> with _$RulesDaoMixin {
     return query.map((row) => row.read(disabledRules.ruleId)!);
   }
 
-  /// The profile's own rules come before the global ones it keeps.
+  /// Сначала идут собственные правила профиля, затем глобальные, которые он сохраняет.
   Selectable<Rule> queryAddedRules(int profileId) {
     final disabledIds = selectOnly(disabledRules)
       ..addColumns([disabledRules.ruleId])
@@ -204,7 +204,7 @@ class RulesDao extends DatabaseAccessor<Database> with _$RulesDaoMixin {
     return renamed;
   }
 
-  /// A superset of the logic rules nesting [name], narrowed in Dart.
+  /// Супермножество логики правил, гнездящих [name], суженное в Dart.
   Expression<bool> _nestingRuleSet($RulesTable t, String name) =>
       t.ruleAction.isInValues([
         for (final action in RuleAction.values)
@@ -212,8 +212,8 @@ class RulesDao extends DatabaseAccessor<Database> with _$RulesDaoMixin {
       ]) &
       t.content.like('%$name%');
 
-  /// App-level rule sets are offered to custom profiles only, so a standard
-  /// extension naming one means its subscription's own set.
+  /// На уровне приложения наборы правил предлагаются только кастомным профилям,
+  /// поэтому стандартное расширение, называющее одно, означает набор своей подписки.
   Future<Set<int>> profileIdsUsingRuleProvider(String provider) async {
     final query =
         selectOnly(rules, distinct: true).join([
@@ -246,7 +246,7 @@ class RulesDao extends DatabaseAccessor<Database> with _$RulesDaoMixin {
     };
   }
 
-  /// Re-keys [rules] in the order given, since a legacy config's have no key.
+  /// Переключает ключи [rules] в заданном порядке, так как у конфига старой сборки их нет.
   void putAllWithBatch(
     Batch batch,
     Iterable<Rule> rules,

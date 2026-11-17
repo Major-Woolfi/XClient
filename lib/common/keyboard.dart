@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 
 import 'system.dart';
 
-/// Mirrors `PRIMARY_MODIFIERS` in `plugins/rust_api/rust/src/hotkey/keys.rs`:
-/// a global hotkey carrying none of these is refused by the OS layer.
+/// Зеркалит `PRIMARY_MODIFIERS` в `plugins/rust_api/rust/src/hotkey/keys.rs`:
+/// глобальная горячая клавиша без одного из этих модификаторов отвергается уровнем ОС.
 const primaryHotKeyModifiers = {
   KeyboardModifier.control,
   KeyboardModifier.alt,

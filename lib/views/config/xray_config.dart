@@ -8,10 +8,10 @@ import 'package:xclient/common/common.dart';
 import 'package:xclient/ui/ui.dart';
 import 'package:xclient/widgets/widgets.dart';
 
-/// Beautiful, simple XRay core configuration screen.
+/// Простой и красивый экран настройки ядра XRay.
 ///
-/// Sections: listen port, log level, DNS servers, routing rules, outbounds.
-/// Changes are applied to the XRay config when the user taps Save.
+/// Разделы: порт прослушивания, уровень логирования, DNS-серверы, правила маршрутизации, аутбаунды.
+/// Изменения применяются к конфигу XRay при нажатии Save.
 class XRayConfigView extends ConsumerStatefulWidget {
   const XRayConfigView({super.key});
 
@@ -223,7 +223,7 @@ class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
   }
 }
 
-/// Card with a title and divider.
+/// Карточка с заголовком и разделителем.
 class _SectionCard extends StatelessWidget {
   const _SectionCard({required this.title, required this.child});
 
@@ -258,7 +258,7 @@ class _SectionCard extends StatelessWidget {
   }
 }
 
-/// Text input field with label.
+/// Поле ввода текста с меткой.
 class _ConfigTextField extends StatelessWidget {
   const _ConfigTextField({
     required this.label,
@@ -333,7 +333,7 @@ class _ConfigTextField extends StatelessWidget {
   }
 }
 
-/// Dropdown select field with label.
+/// Выпадающее поле выбора с меткой.
 class _ConfigDropdown<T> extends StatelessWidget {
   const _ConfigDropdown({
     required this.label,

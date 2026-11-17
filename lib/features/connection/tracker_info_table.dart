@@ -17,7 +17,7 @@ List<RecordColumn<TrackerInfo>> trackerInfoColumns(
 }) {
   final appLocalizations = context.appLocalizations;
   final wide = width >= recordWideTableWidth;
-  // A live table spends its first extra width on the totals.
+  // Живая таблица тратит свою первую дополнительную ширину на итоги.
   final detailed = wide && (!isLive || width >= _fullLiveTableWidth);
   double totalWidth(String label) => max(88, recordHeaderWidth(context, label));
   return [

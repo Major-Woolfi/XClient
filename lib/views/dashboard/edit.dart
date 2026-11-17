@@ -29,8 +29,7 @@ const _appearDuration = Duration(milliseconds: 200);
 const _appearScale = 0.92;
 const _liftGrowth = 0.03;
 
-/// Edits the shown cards where they stand: each sways, a removable one wears
-/// a remove badge, and a held card drags to a new place.
+/// Редактирует показанные карточки на месте: каждая колыхается, удаляемая носит значок удаления, а зажатая перетаскивается на новое место.
 class DashboardEditor extends ConsumerStatefulWidget {
   const DashboardEditor({
     super.key,
@@ -204,8 +203,7 @@ class _DashboardEditorState extends ConsumerState<DashboardEditor>
                   ),
                 );
               },
-              // The held card rides in the overlay, outside the density scope,
-              // and takes its key along while the list leaves its place empty.
+// Зажатая карточка едет в оверлее, за пределами области плотности, унося свой ключ, пока список оставляет её место пустым.
               proxyDecorator: (_, index, animation) => DashboardDensityScope(
                 density: DashboardDensity.mobile,
                 scale: scale,
@@ -244,9 +242,7 @@ class _DashboardEditorState extends ConsumerState<DashboardEditor>
   }
 }
 
-/// Brings an added card in once its room has opened and scrolled into view,
-/// and takes a removed one out before closing its room, so the cards around
-/// it slide instead of jumping.
+/// Вносит добавленную карточку, когда её место открылось и прокрутилось в вид, и выводит удаляемую перед закрытием её места, так что соседние карточки скользят, а не скачут.
 class _Presence extends StatefulWidget {
   const _Presence({
     super.key,
@@ -350,8 +346,7 @@ class _PresenceState extends State<_Presence>
     if ((to - from).abs() < precisionErrorTolerance) {
       return;
     }
-    // Moved once each frame has laid the grown room out: a jump past the old
-    // scroll end would send the position bouncing back to it.
+// Сдвигается один раз после того, как каждый кадр разложил выросшее место: прыжок за старый конец скролла вернул бы позицию обратно.
     void follow() {
       final room = _room.value;
       WidgetsBinding.instance.addPostFrameCallback((_) {

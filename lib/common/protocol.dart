@@ -26,9 +26,9 @@ class ProtocolRegistrationPlan {
   String get command => '"$executable" "%1"';
 }
 
-/// A user-level desktop entry that claims the schemes for the running binary,
-/// so an AppImage or a development build is reachable without a packaged
-/// .desktop file. Rewritten on every launch, like the Windows registry keys.
+/// Пользовательская desktop-запись на рабочем столе, которая претендует на схемы для запущенного бинарного файла,
+/// так что AppImage или сборка разработки доступна без упакованного .desktop файла. Перезаписывается при каждом запуске,
+/// как ключи реестра Windows.
 class LinuxProtocolRegistrationPlan {
   final List<String> schemes;
   final String executable;

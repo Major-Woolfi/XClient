@@ -10,8 +10,8 @@ enum MitmBodyKind { text, image, binary }
 
 enum MitmBodyFormat { plain, protobuf }
 
-/// A captured body made ready to show: text, indented when it is JSON, or the
-/// bytes of an image or of anything that does not read as text.
+/// Захваченное тело, готовое к показу: текст, отформатированный как JSON, или
+/// байты изображения или чего-то другого, что не читается как текст.
 class MitmBodyContent {
   const MitmBodyContent({
     required this.kind,
@@ -29,14 +29,14 @@ class MitmBodyContent {
   final Uint8List bytes;
   final String text;
 
-  /// The start of [text] a detail page shows in place.
+  /// Начало [text], которое страница деталей показывает на его месте.
   final String preview;
   final Language language;
   final bool truncated;
   final String encoding;
   final MitmBodyFormat format;
 
-  /// A charset the text is declared in, which only Rust can read.
+  /// Кодировка текста, которая объявлена в тексте, которую может прочитать только Rust.
   final String charset;
 
   bool get isCut => preview.length < text.length;

@@ -13,12 +13,12 @@ import 'package:xclient/plugins/app.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:path/path.dart';
 
-/// The name of the leaf the Core signs for a trust store to verify.
+/// Имя листа, который Core подписывает для проверки trust store.
 const mitmCheckHost = 'mitm-check.XClient.invalid';
 
 const mitmCertificateFileName = 'XClient CA.crt';
 
-/// Named by the CA, so that a renewed one saved beside it is told apart.
+/// Названо по CA, чтобы обновлённая, сохранённая рядом, можно было отличить.
 String mitmSavedFileName(MitmCertificate ca) => '${ca.subject}.crt';
 
 class MitmTrustCheck {
@@ -37,18 +37,18 @@ class MitmTrustCheck {
 
   final bool rootAvailable;
 
-  /// Linux: the browsers whose databases still lack the CA, by name.
+  /// Linux: браузеры, чьи базы данных всё ещё не содержат CA, по имени.
   final List<String> missingStores;
 
-  /// Linux: the command that installs certutil, which those databases need.
+  /// Linux: команда, которая устанавливает certutil, который эти базы данных нуждаются.
   final String? certutilInstall;
 }
 
-/// A platform's trust store, asked as the user the app runs as: a Core run as
-/// root or SYSTEM would read another account's trust settings.
+/// Trust store платформы, спрашиваемый от имени пользователя, от которого запущено приложение:
+/// Core, запущенный как root или SYSTEM, прочитает настройки доверия другого аккаунта.
 abstract interface class MitmTrustStore {
-  /// [issueLeaf] signs a leaf for [mitmCheckHost], for a store that can only
-  /// verify a chain.
+  /// [issueLeaf] подписывает лист для [mitmCheckHost], для хранилища, которое может
+  /// проверять только цепочку.
   Future<MitmTrustCheck> check(
     MitmCertificate ca,
     Future<String> Function() issueLeaf,
@@ -56,8 +56,8 @@ abstract interface class MitmTrustStore {
 
   Future<MitmInstallOutcome> install(MitmCertificate ca);
 
-  /// Takes [ca] out of the store before a new CA replaces it. False where
-  /// only the user can, in the system's settings.
+  /// Извлекает [ca] из хранилища перед тем, как новый CA заменит его. Ложь, где
+  /// только пользователь может, в настройках системы.
   Future<bool> remove(MitmCertificate ca);
 }
 

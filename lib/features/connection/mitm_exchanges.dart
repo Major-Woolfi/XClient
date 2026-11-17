@@ -62,7 +62,7 @@ String _phaseLabel(AppLocalizations appLocalizations, String phase) {
   };
 }
 
-/// The requests captured on a decrypted connection.
+/// Запросы, захваченные на расшифрованном соединении.
 class MitmExchangesView extends ConsumerWidget {
   final TrackerInfo trackerInfo;
 
@@ -293,7 +293,7 @@ class _MitmExchangeDetail extends StatelessWidget {
   }
 }
 
-/// One side of a request: its headers, then its body once the request ends.
+/// Одна сторона запроса: её заголовки, затем тело после окончания запроса.
 class _MitmSideView extends ConsumerWidget {
   final MitmExchange exchange;
   final bool response;

@@ -1,5 +1,5 @@
-/// `test/models/references_test.dart` fails when the core reads a rule set or
-/// proxy name somewhere this file does not.
+/// `test/models/references_test.dart` не проходит, когда ядро читает набор правил или
+/// имя прокси где-то, где этого файла нет.
 library;
 
 import 'package:collection/collection.dart';
@@ -32,9 +32,9 @@ const _proxyHostSchemes = {'ts', 'tailscale', 'et', 'easytier'};
   return (start, end < 0 ? head.length : end);
 }
 
-/// Mirrors mihomo's parseNameServer, which decodes the fragment before it
-/// splits it: the last part without `=` names the proxy a server dials
-/// through, and a ts or et server's host is a proxy.
+/// Зеркалит parseNameServer mihomo, который декодирует фрагмент перед тем,
+/// как разделить его: последняя часть без `=` называет прокси, через которую сервер набирает
+/// номер, а хост сервера ts или et — это прокси.
 List<String> dnsServerProxies(String server) {
   final hash = server.indexOf('#');
   final head = hash < 0 ? server : server.substring(0, hash);
@@ -53,8 +53,8 @@ List<String> dnsServerProxies(String server) {
   ];
 }
 
-/// The app splits a policy's servers on these and mihomo decodes them back.
-/// It splits on `&` and `=` only after decoding, so no escape keeps those.
+/// Приложение разделяет серверы политики на эти, а mihomo декодирует их обратно.
+/// Оно делит на `&` и `=` только после декодирования, так что никакое экранирование не сохраняет их.
 String _fragmentName(String name) => name
     .replaceAll('%', '%25')
     .replaceAll(' ', '%20')
@@ -102,8 +102,8 @@ String _renamedPolicyServers(String value, Map<String, String> names) {
 
 const _ruleSetPrefix = 'rule-set:';
 
-/// mihomo reads `rule-set:a,b` up to a second colon, the prefix in any case,
-/// except a policy key naming one set, which it takes whole.
+/// mihomo читает `rule-set:a,b` до второго двоеточия, префикс в любом регистре,
+/// за исключением ключа политики, называющего один набор, который он берет целиком.
 (int, int)? _ruleSetRange(String entry, {bool policyKey = false}) {
   if (!entry.toLowerCase().startsWith(_ruleSetPrefix)) {
     return null;
@@ -161,7 +161,7 @@ String _renamedRuleText(String text, Map<String, String> names) {
 }
 
 extension RuleReferences on Rule {
-  /// mihomo's ProviderNames: an undeclared one rejects the whole config.
+  /// Имена провайдеров mihomo: не объявленный один отвергает весь конфиг.
   List<String> get ruleSets => switch (ruleAction) {
     RuleAction.RULE_SET => [?ruleProvider],
     _ when ruleAction.nestsRules => [
@@ -222,7 +222,7 @@ extension ProfileOverridesReferences on ProfileOverrides {
     (SnifferOverrideKey.skipDstAddress, sniffer.skipDstAddress),
   ];
 
-  /// mihomo refuses the whole config for a rule set it lacks.
+  /// mihomo отвергает весь конфиг за набор правил, которого у него нет.
   Set<String> get ruleSets {
     final filterAsRules =
         dnsOverrideKeys.contains(DnsOverrideKey.fakeIpFilterMode) &&
@@ -317,8 +317,8 @@ extension ProfileOverridesReferences on ProfileOverrides {
 }
 
 extension ProfileReferences on Profile {
-  /// A pick follows only where the group's own list in [members] names it,
-  /// since a provider can bring a proxy of the same name.
+  /// Выбор следует только там, где собственный список группы в [members] называет его,
+  /// поскольку провайдер может принести прокси с тем же именем.
   Profile renamedPicks(
     Map<String, String> names, {
     required Map<String, List<String>> members,

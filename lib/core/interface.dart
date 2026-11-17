@@ -79,8 +79,8 @@ abstract class CoreHandlerInterface {
     await _call(method, arguments: arguments, timeout: timeout);
   }
 
-  /// For calls whose callers never wait on them, so a Core that is gone or
-  /// restarting cannot surface as an unhandled asynchronous error.
+  /// Для вызовов, чьи вызывающие никогда не ждут их, так что ядро, которое ушло
+  /// или перезапускается, не может всплыть как необработанная асинхронная ошибка.
   Future<void> _commandUnobserved(CoreMethod method) async {
     try {
       await _call(method);
@@ -406,7 +406,7 @@ abstract class CoreHandlerInterface {
     );
   }
 
-  /// Null once the Core no longer keeps the request.
+  /// Null, пока ядро больше не хранит запрос.
   Future<MitmExchange?> getMitmExchange(int id) {
     return _find(
       CoreMethod.mitmExchange,
@@ -415,7 +415,7 @@ abstract class CoreHandlerInterface {
     );
   }
 
-  /// Null once the Core no longer keeps the request.
+  /// Null, пока ядро больше не хранит запрос.
   Future<MitmBody?> getMitmBody(int id, {required bool response}) {
     return _find(
       CoreMethod.mitmBody,
@@ -424,7 +424,7 @@ abstract class CoreHandlerInterface {
     );
   }
 
-  /// The Core holds the run to the script's own timeout, up to an hour.
+  /// Ядро держит запуск до собственного таймаута скрипта, до часа.
   Future<MitmScriptOutput> runMitmScript(String name) {
     return _query(
       CoreMethod.mitmRunScript,

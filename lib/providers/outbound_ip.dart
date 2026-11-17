@@ -37,7 +37,7 @@ class OutboundIpProbe extends _$OutboundIpProbe
         routeVersion: result.routeVersion,
         hits: result.hits,
       ),
-      // Узел выходит через один и тот же адрес,whatever его спросишь.
+      // Узел выходит через один и тот же адрес, его спросишь.
       if (value != null && exit != null && exit != target)
         exit: ProbeAnswer(
           value: value,

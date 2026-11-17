@@ -20,7 +20,7 @@ class _RunRequest {
   final bool running;
   final bool initialize;
 
-  /// Adopts a run the Android service has, config and groups alike.
+  /// Принимает запуск, который имеет Android-сервис, конфиг и группы пополам.
   final bool resume;
   final DateTime? previousStartTime;
 
@@ -68,7 +68,7 @@ class SetupAction extends _$SetupAction {
     options: ref.read(coreOptionsProvider),
   );
 
-  // The selection reaches the Core through changeProxy, not through an apply.
+  // Выбор доходит до Core через changeProxy, а не через apply.
   SetupParams get _appliedParams =>
       _setupParams.copyWith(selectedMap: const {});
 
@@ -241,7 +241,7 @@ class SetupAction extends _$SetupAction {
     resetCoreTraffic();
     ref.read(trafficsProvider.notifier).clear();
     ref.read(totalTrafficProvider.notifier).value = const Traffic();
-    // A silent Core is gone or hung; running again would proxy traffic to it.
+    // Молчаливый Core пропал или завис; повторный запуск проксировал бы трафик на него.
     if (unanswered case (final error, final stackTrace)) {
       Error.throwWithStackTrace(error, stackTrace);
     }
@@ -278,7 +278,7 @@ class SetupAction extends _$SetupAction {
       isUnansweredCoreError(error) ||
       error is CoreMethodException && error.code == 'service_refused';
 
-  /// An excluded SSID parks the listener without ending the run.
+  /// Исключённый SSID паркует слушатель без окончания запуска.
   void syncSuspend() {
     debouncer.call(FunctionTag.suspend, () {
       return _listenerScheduler.run(() async {
@@ -350,8 +350,7 @@ class SetupAction extends _$SetupAction {
   @protected
   Duration get minApplyDebounce => const Duration(seconds: 2);
 
-  /// A push held up by a rule-set download or a Core timeout says little
-  /// about the load, yet would hold back every apply after it.
+  /// Push, задерживаемый скачиванием набора правил или таймаутом Core, мало говорит о нагрузке, но задержит каждый последующий apply.
   @protected
   Duration get maxApplyDebounce => const Duration(seconds: 10);
 
@@ -385,8 +384,7 @@ class SetupAction extends _$SetupAction {
     }
   }
 
-  /// For leaving an editor: a profile whose inputs match the config the Core
-  /// already runs is not rebuilt, which on a large profile takes a while.
+  /// Для выхода из редактора: профиль, чьи входные данные совпадают с конфигом, который уже запускает Core, не перестраивается, что на большом профиле занимает время.
   void autoApplyProfile() {
     runAfterFrame(() async {
       if (!await inputsApplied()) {
@@ -405,7 +403,7 @@ class SetupAction extends _$SetupAction {
     applyProfileDebounce(silence: true);
   }
 
-  /// Whether the Core runs what the current profile and settings make now.
+  /// Запускает ли Core то, что делают текущий профиль и настройки прямо сейчас.
   Future<bool> inputsApplied() async {
     final applied = _appliedInputs;
     if (applied == null) {
@@ -427,10 +425,10 @@ class SetupAction extends _$SetupAction {
         );
   }
 
-  // False means building the profile, the config write, or the Core setup
-  // step failed; a profile that fails to build is still pushed to the Core
-  // as the empty config so it never keeps serving the previous one.
-  // authorizeCore failures still throw.
+  // Ложь означает, что сборка профиля, запись конфига или этап настройки Core
+  // не удалась; профиль, который не удалось собрать, всё равно отправляется в Core
+  // как пустой конфиг, чтобы он никогда не продолжал обслуживать предыдущий.
+  // Сбои authorizeCore всё ещё бросают исключение.
   Future<bool> applyProfile({
     bool silence = false,
     bool force = false,
@@ -463,7 +461,7 @@ class SetupAction extends _$SetupAction {
     if (result != _SetupTaskResult.handoffToCoreRestart) {
       return result;
     }
-    // Release the current serial task before restartCore reapplies the profile.
+    // Освободить текущую последовательную задачу до того, как restartCore повторно применит профиль.
     final restarted = await _restartCoreAfterAuthorization();
     return restarted ? _SetupTaskResult.completed : _SetupTaskResult.failed;
   }
@@ -478,7 +476,7 @@ class SetupAction extends _$SetupAction {
     }
   }
 
-  /// With a base, [BuiltProfile.yaml] is only the overlay the Core applies.
+  /// С базой [BuiltProfile.yaml] — это только наложение, которое применяет Core.
   Future<BuiltProfile> getProfile({
     required SetupState setupState,
     required PatchClashConfig patchConfig,
@@ -569,8 +567,7 @@ class SetupAction extends _$SetupAction {
     );
   }
 
-  /// Only what the custom profile actually references is injected, so an
-  /// app-level provider costs nothing in the profiles that never name it.
+  /// Внедряется только то, на что ссылается кастомный профиль, поэтому провайдер уровня приложения не стоит ничего в профилях, которые никогда его не называют.
   Future<({Map<String, dynamic> proxies, Map<String, dynamic> rules})>
   _resolveInjectedProviders(
     SetupState setupState, {
@@ -699,8 +696,7 @@ class SetupAction extends _$SetupAction {
     }
   }
 
-  /// An empty profile list is left alone: it is the first-run state, and it is
-  /// what the profile stream holds before its first emission.
+  /// Пустой список профилей не трогают: это состояние первого запуска, и то, что профиль поток держит перед своим первым испусканием.
   @visibleForTesting
   Profile? recoverMissingProfile() {
     final profileId = ref.read(currentProfileIdProvider);
@@ -723,7 +719,7 @@ class SetupAction extends _$SetupAction {
     FutureOr Function()? onUpdated,
   }) async {
     var profile = ref.read(currentProfileProvider) ?? recoverMissingProfile();
-    // A refresh failure is surfaced by safeRun; setup keeps the old profile.
+    // Сбой обновления всплывает через safeRun; настройка оставляет старый профиль.
     final nextProfile = await globalState.safeRun(
       () => profile?.checkAndUpdateAndCopy(
         validate: (path, key) => _core.validateProfile(path, key),
@@ -767,8 +763,7 @@ class SetupAction extends _$SetupAction {
       await preloadInvoke?.call();
       return _SetupTaskResult.completed;
     }
-    // Go answers a config it rejects by running its built-in default, which
-    // has no proxies, so until this push succeeds no applied config is known.
+    // Go отвечает на конфиг, который он отвергает, запуском встроенного по умолчанию, у которого нет прокси, так что пока этот push не удастся, применённый конфиг неизвестен.
     _appliedInputs = null;
     globalState.lastConfigMd5 = null;
     globalState.lastConfigCounts = null;
@@ -777,7 +772,7 @@ class SetupAction extends _$SetupAction {
       await preferences.saveShareState(ref.read(sharedStateProvider));
       await preferences.saveAppliedConfigMd5(null);
     }
-    // Recaptured so _start's catch can roll back after safeRun swallows it.
+    // Перехват повторно, чтобы catch _start'а мог откатить после того, как safeRun проглотит.
     (Object, StackTrace)? handoffFailure;
     var setupFailed = false;
     await globalState.loadingRun(
@@ -789,8 +784,7 @@ class SetupAction extends _$SetupAction {
           }
           final profileId = profile?.id;
           if (profileId != null) {
-            // A Core that ran elevated may have left these root-owned; it
-            // reclaims them once it runs elevated again, so the config goes on.
+            // Core, который запускался с повышенными правами, мог оставить эти root-владения; он возвращает их, когда снова запустится с повышенными правами, поэтому конфиг продолжается.
             try {
               await appPath.ensureProviderDirs(profileId);
             } on FileSystemException catch (error) {
@@ -801,7 +795,7 @@ class SetupAction extends _$SetupAction {
             }
           }
           try {
-            // Auto-detect core type from profile config and switch if needed.
+            // Автоопределить тип ядра по конфигу профиля и переключить при необходимости.
             if (profileId != null) {
               final profilePath =
                   await appPath.getProfilePath(profileId.toString());

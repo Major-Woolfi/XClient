@@ -16,8 +16,7 @@ import 'widget_registry.dart';
 import 'widgets/core_status_button.dart';
 import 'widgets/widgets.dart';
 
-// Narrower columns leave a pair of service cells too tight for a status, so
-// the grid stacks them in one.
+// Узкие колонки оставляют паре служебных ячеек слишком мало места для статуса, поэтому сетка складывает их в одну.
 const _servicePairColumnMin = 290.0;
 
 const _maxColumnWidth = 440.0;
@@ -81,7 +80,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
             onPressed: () => _setEditing(true),
           ),
       ],
-      // The providers learn a resize a frame late, too late for the cards.
+// Провайдеры узнают об изменении размера с опозданием на кадр, слишком поздно для карточек.
       body: LayoutBuilder(
         builder: (context, constraints) {
           final room = constraints.biggest / scale;
@@ -109,9 +108,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   }
 }
 
-/// Four columns fill the window, the tables taking what the rows above them
-/// leave. A window too short for the tables, and every two column one, gets
-/// the summary cards instead, so no list scrolls inside a page that scrolls.
+/// Четыре колонки заполняют окно, таблицы занимают то, что оставили строки над ними. Окно слишком низкое для таблиц, и каждая вторая колонка получает сводные карточки, так что список не скроллится внутри страницы, которая сама скроллится.
 class _DesktopDashboard extends StatelessWidget {
   const _DesktopDashboard({
     required this.platform,
@@ -313,7 +310,7 @@ class _MobileDashboard extends ConsumerWidget {
     final top = context.contentTopPadding;
     final bottom = 16 + context.bottomInset;
     return CustomScrollView(
-      // A viewport per card lays them all out and holds the scroll end still.
+// Один вьюпорт на карточку раскладывает их все и удерживает конец скролла на месте.
       scrollCacheExtent: editing
           ? ScrollCacheExtent.viewport(DashboardWidget.values.length.toDouble())
           : null,
@@ -337,8 +334,7 @@ class _MobileDashboard extends ConsumerWidget {
             }
             return SliverPadding(
               padding: EdgeInsets.fromLTRB(side, top, side, bottom),
-              // A lazy list estimates the cards it has not laid out from the
-              // ones it has; cards this uneven move the scroll end as it goes.
+// Ленивый список оценивает карточки, которые ещё не раскладывал, по уже раскладенным; такие неровные карточки сдвигают конец скролла по ходу дела.
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

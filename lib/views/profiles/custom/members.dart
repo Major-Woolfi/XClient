@@ -9,11 +9,7 @@ import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// `proxies` names a group's proxies, `use` its providers, `use-position` where
-/// those sit among the proxies, and `filter` what of the providers' proxies it
-/// takes. `exclude-filter` drops whatever matches it, named members too.
-/// The include-all keys take in only the local proxies and providers some group
-/// of the profile names, since the config declares no others.
+  /// `proxies` называет прокси группы, `use` — её провайдеры, `use-position` — где те сидят среди прокси, а `filter` — каких из прокси провайдеров она берет. `exclude-filter` отбрасывает всё совпадающее, и именованные члены тоже. Ключи include-all принимают только локальные прокси и провайдеры, которых группа профиля называет, так как конфиг не объявляет других.
 enum _MemberKind {
   proxy,
   provider,
@@ -66,7 +62,7 @@ const _everyName = '*';
 List<String> _everyOf(bool? includeAll) =>
     includeAll == true ? const [_everyName] : const [];
 
-/// The form state of type [M] whose [kinds] of members are listed.
+  /// Состояние формы типа [M], члены [kinds] которой перечислены.
 abstract class _MemberHost<M> {
   const _MemberHost();
 
@@ -88,7 +84,7 @@ abstract class _MemberHost<M> {
 
   M withLayout(M model, List<String>? layout);
 
-  /// What the picker no longer offers as a [kind].
+  /// То, что пикер больше не предлагает как [kind].
   Set<String> takenIn(M model, _MemberKind kind) => {...namesOf(model, kind)};
 
   Iterable<_MemberKind> get _runs => {for (final kind in kinds) kind.run};
@@ -97,8 +93,7 @@ abstract class _MemberHost<M> {
     for (final name in namesOf(model, run)) (kind: run, name: name),
   ];
 
-  /// The core reads each run's own order only, so the rows take a run each
-  /// as [layoutOf] names it, and the rest follow run by run.
+  /// Ядро читает только порядок каждого запуска самим по себе, так что строки берут по запуску, как называет [layoutOf], а остальные идут запуск за запуском.
   List<_Member> membersOf(M model) {
     final runs = {
       for (final run in _runs) run.name: runOf(model, run).iterator,
@@ -136,7 +131,7 @@ abstract class _MemberHost<M> {
     return withLayout(next, layout);
   }
 
-  /// Leaves out the trailing rows [membersOf] would put there anyway.
+  /// Опускает хвостовые строки, которые [membersOf] и так поставил бы там.
   List<String>? _layoutOf(Iterable<_Member> members) {
     final order = _runs.toList();
     final runs = [for (final member in members) order.indexOf(member.kind.run)];
@@ -368,7 +363,7 @@ class _MembersSliverState<M> extends ConsumerState<_MembersSliver<M>>
   );
   late var _members = _host.membersOf(ref.read(_host.state));
 
-  /// [_members] with the removed ones still collapsing.
+  /// [_members] с удаленными, которые еще сворачиваются.
   late var _entries = _members;
 
   @override
@@ -424,7 +419,7 @@ class _MembersSliverState<M> extends ConsumerState<_MembersSliver<M>>
         );
   }
 
-  /// [oldIndex] and [newIndex] count the rows still collapsing too.
+  /// [oldIndex] и [newIndex] считают строки, которые еще сворачиваются тоже.
   void _handleReorder(int oldIndex, int newIndex) {
     final rest = [..._entries];
     final moved = rest.removeAt(oldIndex);
@@ -637,9 +632,7 @@ class _MemberPicker<M> extends ConsumerStatefulWidget {
 class _MemberPickerState<M> extends ConsumerState<_MemberPicker<M>> {
   late final _host = widget.host;
 
-  /// Picks go into the form as they are made, since closing the sheet from
-  /// here saves the form without popping this page first; the list keeps to
-  /// the form as it was, so a pick stays there to be undone.
+  /// Выбор попадает в форму по мере его создания, так как закрытие листа отсюда сохраняет форму, не всплывая эту страницу сначала; список держится к форме как она была, так что выбор остается там, чтобы его отменить.
   late final _origin = ref.read(_host.state);
   var _selected = <_Member>[];
   var _query = SearchQuery('');

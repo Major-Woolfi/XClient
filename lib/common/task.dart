@@ -26,7 +26,7 @@ Future<String> _encodeYaml<T>(T content) async {
   return yaml.encode(content);
 }
 
-/// Throws [FormatException] when the file is not UTF-8.
+/// Выбрасывает [FormatException], когда файл не в кодировке UTF-8.
 Future<String?> readTextFileTask(String path) {
   return compute(_readTextFile, path);
 }
@@ -142,7 +142,7 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
       if (provider is! Map || provider['type'] == 'inline') {
         continue;
       }
-      // Two providers may share a URL and differ only by header.
+      // Два провайдера могут делить URL и отличаться только заголовком.
       final url = provider['url'];
       final hasUrl = url is String && url.isNotEmpty;
       final path = getProvidersFilePathInner(
@@ -164,8 +164,8 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
       ? ''
       : realPatchConfig.externalController.value;
   rawConfig['secret'] = realPatchConfig.secret;
-  // mihomo serves the unix and pipe controllers without a secret, and the unix
-  // one unlinks whatever sits at its path before opening it to everyone.
+      // mihomo обслуживает unix и pipe контроллеры без секрета, а unix
+      // удаляет то, что сидит по его пути, перед открытием для всех.
   rawConfig['external-controller-tls'] = '';
   rawConfig['external-controller-unix'] = '';
   rawConfig['external-controller-pipe'] = '';
@@ -201,16 +201,16 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
   rawConfig['tproxy-port'] = realPatchConfig.tproxyPort;
   rawConfig['find-process-mode'] = realPatchConfig.findProcessMode.name;
   rawConfig['allow-lan'] = realPatchConfig.allowLan;
-  // The app owns local inbound authentication; a profile-provided
-  // skip-auth-prefixes could silently exempt loopback and defeat it.
+  // Приложение владеет локальной аутентификацией входящих подключений;
+  // skip-auth-prefixes, предоставленный профилем, может тихо освободить loopback и сломать это.
   rawConfig['authentication'] = data.authentication;
   rawConfig['skip-auth-prefixes'] = [];
   rawConfig['mode'] = realPatchConfig.mode.name;
-  // auto-route is always on, so without auto-detect-interface the core sends
-  // its own outbound back into the TUN unless interface-name binds it, and
-  // interface-name wins over the detected interface anyway. A profile's own
-  // dns-hijack may leave queries to other resolvers unhijacked, so only a
-  // picked key replaces any:53.
+  // auto-route всегда включён, поэтому без auto-detect-interface ядро направляет
+  // свой исходящий трафик обратно в TUN, пока interface-name не привяжет его, и
+  // interface-name всё равно побеждает обнаруженный интерфейс. Собственный
+  // dns-hijack профиля может оставить запросы к другим резолверам неперенаправленными,
+  // поэтому только выбранный ключ заменяет любой any:53.
   final tun = {
     if (rawConfig['tun'] is Map) ...rawConfig['tun'] as Map,
     'dns-hijack': defaultDnsHijack,
@@ -460,8 +460,8 @@ List<String> shakeOrphanFiles({
   return targets;
 }
 
-// Best-effort: a legacy url shared by two providers, or any rename failure,
-// just leaves the file to be re-downloaded under the new path.
+// Лучшие усилия: устаревший URL, разделяемый двумя провайдерами, или любая ошибка переименования,
+// просто оставляет файл для повторной загрузки по новому пути.
 void _migrateLegacyProviderFile({
   required String legacyPath,
   required String newPath,

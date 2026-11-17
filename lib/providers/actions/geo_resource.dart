@@ -2,7 +2,7 @@ part of '../action.dart';
 
 @Riverpod(keepAlive: true)
 class GeoResourceAction extends _$GeoResourceAction {
-  /// Whether each manual update announces a success; a failure always shows.
+  /// Каждое ручное обновление объявляет об успехе; неудача всегда показывается.
   final _manualUpdates = <GeoResource, bool>{};
   final _operations = <GeoResource, int>{};
 
@@ -38,11 +38,10 @@ class GeoResourceAction extends _$GeoResourceAction {
         .stop(geoResource.updatingKey, current);
   }
 
-  /// Completes once the Core has accepted the update, not once it finishes.
-  /// Completion arrives as a geo-update event through [handleCoreUpdate];
-  /// callers that need it watch [isUpdatingProvider] for the key to clear.
-  /// A request the Core turns down leaves an update already running as it
-  /// was.
+  /// Завершается, когда Core принял обновление, а не когда оно закончилось.
+  /// Завершение приходит как событие geo-update через [handleCoreUpdate];
+  /// звёнувшие вызовы следят за очисткой ключа в [isUpdatingProvider].
+  /// Запрос, который Core отклонил, оставляет уже запущенное обновление как было.
   Future<void> updateGeoResource(
     GeoResource geoResource, {
     bool announceSuccess = true,

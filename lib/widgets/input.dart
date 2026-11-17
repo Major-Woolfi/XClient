@@ -32,7 +32,7 @@ class BatchInput<T> {
         .join('\n');
   }
 
-  /// [issuesOf], or once a save was [attempted], that nothing was entered.
+  /// [issuesOf], или как только сохранение было [попыткой], а ничего не введено.
   String? errorOf(
     AppLocalizations appLocalizations,
     ParsedInput<T>? parsed, {

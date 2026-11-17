@@ -63,8 +63,7 @@ class _DetailTabsState extends State<DetailTabs> {
   }
 }
 
-/// Scrolled rows stop short of the control; a tab at rest starts on its first
-/// header's own gap, which is wider, so nothing at rest is cut.
+/// Прокрученные строки останавливаются перед элементом управления; вкладка в покое начинается со своего собственного зазора заголовка, который шире, так что ничего в покое не обрезается.
 class _BelowClearance extends CustomClipper<Rect> {
   const _BelowClearance();
 

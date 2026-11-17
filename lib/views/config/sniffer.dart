@@ -161,7 +161,7 @@ class _SniffField extends OverrideField<Sniffer> {
       model.withSniff(overrideKey, defaults.sniffOf(overrideKey));
 }
 
-/// mihomo sniffs a protocol listed without ports on its standard port.
+/// mihomo sniffит протокол, указанный без портов, на его стандартном порту.
 String _portsText(AppLocalizations l, List<String> ports) {
   return ports.isEmpty ? l.defaultText : l.itemsCount(ports.length);
 }
@@ -196,7 +196,7 @@ class _SniffItem extends ConsumerWidget {
   }
 }
 
-/// A protocol without its own `override-destination` follows the sniffer's.
+/// Протокол без своего `override-destination` следует настройкам сниффера.
 enum _SniffDestination {
   inherit(null),
   enabled(true),

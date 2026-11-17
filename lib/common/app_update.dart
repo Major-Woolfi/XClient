@@ -24,7 +24,7 @@ final class UpdateDownloading extends UpdateDownload {
 
   final int received;
 
-  /// Zero until the server reports a length.
+  /// Ноль, пока сервер не сообщит длину.
   final int total;
 }
 
@@ -42,7 +42,7 @@ String? Function() resolveSelfUpdateSuffix = () => selfUpdateAssetSuffix(
 
 String? get selfUpdateSuffix => resolveSelfUpdateSuffix();
 
-// The names follow the release matrix in .github/workflows/build.yaml.
+// Имена следуют матрице релизов в .github/workflows/build.yaml.
 String? selfUpdateAssetSuffix(Abi abi, {required bool windowsInstalled}) {
   return switch (abi) {
     Abi.androidArm64 => 'android-arm64-v8a.apk',
@@ -82,7 +82,7 @@ Future<String> fileSha256(String path) {
   });
 }
 
-// The installer that relaunched the app may still hold its file open.
+// Инсталлятор, перезапустивший приложение, может ещё удерживать его файл открытым.
 Future<void> clearUpdateDownloads() async {
   try {
     await app?.clearDownloads();
@@ -100,12 +100,12 @@ Future<void> clearUpdateDownloads() async {
   }
 }
 
-// Inno Setup writes unins000.exe beside the app; the portable zip has none.
+// Inno Setup пишет unins000.exe рядом с приложением; в переносном архиве его нет.
 bool get isInstalledWindowsBuild {
   return File(join(appPath.executableDirPath, 'unins000.exe')).existsSync();
 }
 
-// inno_setup.iss waits for `updatefrom` to exit, then relaunches the app.
+// inno_setup.iss ждёт выхода `updatefrom`, затем перезапускает приложение.
 String windowsUpdateArguments(int pid) {
   return '/SILENT /SUPPRESSMSGBOXES /NORESTART /SP- /updatefrom=$pid';
 }

@@ -20,13 +20,9 @@ class _SpeedSample {
   });
 }
 
-/// Derives per-connection speed from successive cumulative snapshots and
-/// orders connections by it without reshuffling the list every poll. A
-/// connection that did not change comes back as the same instance, so its
-/// row is not rebuilt.
+/// Выводит скорость на соединение из последовательных накопленных снимков и упорядочивает соединения по ней без перетасовки списка при каждом опросе. Соединение, которое не изменилось, возвращается как тот же экземпляр, поэтому его строка не перестраивается.
 class TrackerSpeedRanker {
-  // Closing a connection triggers an out-of-band refresh; a delta over a few
-  // milliseconds would read as a spike, so such samples keep the last speed.
+  // Закрытие соединения вызывает обновление вне очереди; дельта за несколько миллисекунд читалась бы как всплеск, поэтому такие образцы сохраняют последнюю скорость.
   static const _minSampleGap = Duration(milliseconds: 500);
   static const _smoothing = 0.5;
 

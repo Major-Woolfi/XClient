@@ -33,9 +33,9 @@ String? networkErrorMessage(Object error, AppLocalizations appLocalizations) {
   return failure == null ? null : _messageOf(failure, appLocalizations);
 }
 
-/// Bare socket and timeout exceptions are left alone: outside an HTTP request
-/// they come from the local Core or Helper channel, where "check your network"
-/// would send the user the wrong way.
+/// Проблемные сокет и исключения тайм-аута оставляются в покое: за пределами HTTP-запроса
+/// они приходят из локального канала Core или Helper, где "проверьте сеть"
+/// отправило бы пользователя не тем путём.
 _Failure? _failureOf(Object error) {
   return switch (error) {
     DioException() => _fromDio(error),

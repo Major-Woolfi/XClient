@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-/// The fonts XClient bundles, declared in its `pubspec.yaml`.
+/// Шрифты, которые поставляет XClient, объявленные в его `pubspec.yaml`.
 enum FontFamily {
   twEmoji('Twemoji'),
   jetBrainsMono('JetBrainsMono');

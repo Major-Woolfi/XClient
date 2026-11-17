@@ -27,8 +27,7 @@ String _emptyFallbackOf(ProxyGroup group) => switch (group.emptyFallback) {
 
 const _inUserHashKey = 'in-user';
 
-/// What a group leaves to the core until it is added, starting from the
-/// core's own default.
+  /// То, что группа оставляет ядру до своего добавления, начиная с собственного значения по умолчанию ядра.
 enum _GroupOption {
   emptyFallback,
   url,
@@ -140,8 +139,7 @@ enum _GroupOption {
 
 double get _groupRowExtent => globalState.measure.listTwoLineRowHeight;
 
-/// Keeps the actions on the groups in their own header, off the page bar,
-/// which belongs to the whole profile.
+  /// Держит действия с группами в их собственном заголовке, вне панели страницы, которая принадлежит всему профилю.
 class CustomProxyGroupsSection extends ConsumerStatefulWidget {
   final int profileId;
 
@@ -449,8 +447,7 @@ class _ProxyGroupItem extends ConsumerWidget {
   }
 }
 
-/// A missing member is left to the list to flag, since it usually appears when
-/// the profile updates; these the core refuses whatever the profile holds.
+  /// Пропущенный член оставлен списку для пометки, так как обычно появляется при обновлении профиля; ядро отвергает их независимо от того, что содержит профиль.
 bool _blocksSave(CustomIssue issue) => switch (issue) {
   EmptyNameIssue() ||
   ReservedNameIssue() ||
@@ -493,7 +490,7 @@ Future<bool> _handleSaveProxyGroup(BuildContext context, WidgetRef ref) async {
   if (!context.mounted) {
     return false;
   }
-  // The form stays editable while the core checks the filters.
+  // Форма остается редактируемой, пока ядро проверяет фильтры.
   if (!identical(ref.read(proxyGroupProvider), proxyGroup)) {
     return _handleSaveProxyGroup(context, ref);
   }
@@ -520,8 +517,7 @@ Future<bool> _handleSaveProxyGroup(BuildContext context, WidgetRef ref) async {
     );
     return false;
   }
-  // The closing form would otherwise take its stored copy for another group
-  // with its name.
+  // Иначе закрывающая форма взяла бы свою сохраненную копию за другую группу с таким именем.
   ref.read(proxyGroupProvider.notifier).value = newProxyGroup;
   return true;
 }
@@ -596,7 +592,7 @@ class _EditProxyGroupViewState extends ConsumerState<EditProxyGroupView> {
       });
       return;
     }
-    // Reached from a provider read inside another widget's build.
+    // Достигнуто из чтения провайдера во время построения другого виджета.
     _groupIssues = issues;
     scheduler.addPostFrameCallback((_) {
       if (mounted) {
@@ -1023,7 +1019,7 @@ class _EditProxyGroupViewState extends ConsumerState<EditProxyGroupView> {
 
   Widget _buildLazyItem(bool? lazy, Widget leading) {
     final appLocalizations = context.appLocalizations;
-    // The core defaults lazy to true, so an untouched group already tests lazily.
+    // Ядро по умолчанию ставит lazy в true, так что не тронутая группа уже тестируется лениво.
     final value = lazy ?? true;
     void handleChangeLazy() {
       ref
@@ -1077,8 +1073,7 @@ class _EditProxyGroupViewState extends ConsumerState<EditProxyGroupView> {
     );
   }
 
-  /// A removed option is cleared at once, so while its row collapses it shows
-  /// the value it had rather than the cleared one.
+  /// Удаленная опция очищается сразу, так что пока ее строка сворачивается, она показывает то значение, которое имела, а не очищенное.
   Widget _optionField<S>(
     _GroupOption option,
     S Function(ProxyGroup state) selector,

@@ -399,7 +399,7 @@ class CoreController {
   CoreType _detectCoreType(String content) {
     final trimmed = content.trim();
     if (trimmed.isEmpty) return CoreType.clash;
-    // JSON-based configs are XRay.
+    // JSON-конфиги — это XRay.
     if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
       try {
         jsonDecode(trimmed);
@@ -408,7 +408,7 @@ class CoreController {
         return CoreType.clash;
       }
     }
-    // YAML-based: check for Clash vs XRay keys using CoreType.acceptsConfig.
+    // YAML-базис: проверка ключей Clash vs XRay через CoreType.acceptsConfig.
     final clashScore = CoreType.clash.acceptsConfig(content) ? 1 : 0;
     final xrayScore = CoreType.xray.acceptsConfig(content) ? 1 : 0;
     if (xrayScore > clashScore) return CoreType.xray;
@@ -430,8 +430,8 @@ class CoreController {
     return validateConfig(path);
   }
 
-  /// An age-encrypted config is rewritten in place into its plaintext, and a
-  /// share-link list into a config of its proxies.
+  /// Конфиг, зашифрованный через age, перезаписывается на месте в plaintext, а
+  /// список share-ссылок — в конфиг из его прокси.
   Future<String?> validateProfile(
     String path, [
     String ageSecretKey = '',

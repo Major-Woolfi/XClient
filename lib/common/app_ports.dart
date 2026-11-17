@@ -6,8 +6,8 @@ import 'package:xclient/models/models.dart';
 abstract interface class WindowPort {
   Future<WindowProps?> captureNormalGeometry(WindowProps current);
 
-  /// Returns the opacity the sidebar keeps its own color at over the backdrop
-  /// now drawn behind the content, or null when none is drawn.
+  /// Возвращает непрозрачность, при которой боковая панель сохраняет свой цвет поверх фона,
+  /// который теперь отрисован за контентом, или null, если фон не рисуется.
   Future<double?> setBlur({
     required bool enabled,
     required Brightness brightness,

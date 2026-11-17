@@ -64,7 +64,7 @@ enum GroupType {
     };
   }
 
-  /// The core refuses a relay group, so it stays parseable but unofferable.
+  /// Ядро отвергает группу relay, поэтому она остаётся распознаваемой, но не предлагаемой.
   static List<GroupType> get selectableValues =>
       values.where((item) => item != Relay).toList();
 }
@@ -276,8 +276,8 @@ enum DnsOverrideKey with OverrideKey {
 
   static const fallbackFilterSection = 'fallback-filter';
 
-  /// What a subscription or file profile may override: nothing that names its
-  /// groups or rule sets, which change with every update.
+  /// То, что может переопределить подписка или файл профиля: ничего, что называет
+  /// свои группы или наборы правил, которые меняются с каждым обновлением.
   static const normalProfileKeys = {
     listen,
     ipv6,
@@ -330,8 +330,8 @@ enum SnifferOverrideKey with OverrideKey {
   static const sniffSection = 'sniff';
 }
 
-/// Written over the profile's `tun` section, which Android's VPN never reads,
-/// so these apply on desktop only, beside the keys of `Tun.coreJson`.
+  /// Пишется поверх секции `tun` профиля, которую VPN Android никогда не читает,
+  /// поэтому эти ключи применяются только на desktop, рядом с ключами `Tun.coreJson`.
 @JsonEnum(valueField: 'path')
 enum TunOverrideKey with OverrideKey {
   mtu('mtu'),
@@ -356,8 +356,8 @@ enum TunOverrideKey with OverrideKey {
   final String path;
 }
 
-/// Top-level profile keys, except `test-url`: the Core takes that one apart
-/// as the URL of every group and provider that names none.
+  /// Ключи верхнего уровня профиля, кроме `test-url`: ядро разбирает его как
+  /// URL каждой группы и провайдера, которые не называют свой.
 @JsonEnum(valueField: 'path')
 enum GeneralOverrideKey with OverrideKey {
   testUrl('test-url'),
@@ -667,8 +667,8 @@ extension RuleActionExt on RuleAction {
 
 enum ProxyFieldKind { text, secret, number, toggle, choice, list, map }
 
-/// A key of a proxy definition the form edits, at [path] since the core reads
-/// transport, TLS and plugin settings from maps of their own.
+  /// Ключ определения прокси, который редактирует форма, по [path], так как ядро
+  /// читает транспорт, TLS и настройки плагина из собственных мап.
 enum ProxyField {
   username(['username']),
   password(['password'], ProxyFieldKind.secret),
@@ -801,8 +801,8 @@ enum RuleTarget {
 
   static final Set<String> baseTargets = Set.unmodifiable(baseTargetNames);
 
-  /// The core adds GLOBAL only after it parses the groups, so a rule, a dialer
-  /// or a DNS server may name it while a group may not.
+  /// Ядро добавляет GLOBAL только после того, как распарсит группы, поэтому правило,
+  /// диалер или DNS-сервер могут называть его, а группа — нет.
   static final List<String> ruleTargetNames = List.unmodifiable([
     ...baseTargetNames,
     GroupName.GLOBAL.name,
@@ -841,7 +841,7 @@ enum LoadingTag {
   mitm,
 }
 
-/// The lists of `Mitm`, named by the Core's JSON keys.
+  /// Списки `Mitm`, названные ключами JSON ядра.
 enum MitmList {
   hostname('hostname'),
   urlRewrite('url-rewrite'),

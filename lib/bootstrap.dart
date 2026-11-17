@@ -30,7 +30,7 @@ class Bootstrap {
 
   factory Bootstrap() {
     _instance ??= Bootstrap._internal();
-    // Register core implementations: Clash.Meta (default) and Xray-core.
+    // Зарегистрировать реализации ядер: Clash.Meta (по умолчанию) и Xray-core.
     coreRegistry.register(CoreType.clash, system.isAndroid ? coreLib! : coreService!);
     coreRegistry.register(CoreType.xray, XRayCoreHandler());
     return _instance!;
@@ -76,8 +76,8 @@ class Bootstrap {
     );
   }
 
-  /// Runs before migration and the database: a copy started from another
-  /// install path gets past the platform's single-instance hand-off.
+  /// Выполняется до миграции и базы данных: копия, запущенная из другого
+  /// пути установки, проходит через передачу одного экземпляра платформы.
   Future<void> _claimDataDirectory() async {
     if (!system.isDesktop || await singleInstanceLock.acquire()) {
       return;
@@ -226,14 +226,14 @@ class Bootstrap {
     await _container.read(systemActionProvider.notifier).handleExit(false);
   }
 
-  /// Unattended desktop installs, such as a container nobody watches, accept
-  /// up front: the core only starts after the disclaimer is accepted.
+  /// Незаконные установки рабочего стола, такие как контейнер, за которым никто не наблюдает, принимают
+  /// заранее: ядро запускается только после того, как дискаймер принят.
   bool get _isDisclaimerAcceptedByEnvironment =>
       system.isDesktop &&
       Platform.environment['XClient_ACCEPT_DISCLAIMER'] == '1';
 
-  /// Android's exit only finishes the activity, so Dart keeps running after
-  /// [SystemAction.handleExit] returns and must not go on to start the app.
+  /// Выход Android только завершает активность, поэтому Dart продолжает работать после
+  /// того, как [SystemAction.handleExit] возвращает управление, и не должен переходить к запуску приложения.
   Future<bool> _handlerDisclaimer() async {
     final acceptedVersion = _container.read(
       appSettingProvider.select((state) => state.acceptedDisclaimerVersion),

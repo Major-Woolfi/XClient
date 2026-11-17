@@ -10,7 +10,7 @@ import 'clash_config.dart';
 part 'generated/profile.freezed.dart';
 part 'generated/profile.g.dart';
 
-/// Why the config at the path cannot be used, or null.
+/// Почему конфиг по пути не может быть использован, или null.
 typedef ValidateConfig =
     Future<String?> Function(String path, String ageSecretKey);
 
@@ -111,7 +111,7 @@ abstract class Profile with _$Profile {
   }
 }
 
-/// A profile leaving out one of the global rules its extension would add.
+/// Профиль, опускающий одно из глобальных правил, которые его расширение добавило бы.
 @freezed
 abstract class DisabledRule with _$DisabledRule {
   const factory DisabledRule({required int profileId, required int ruleId}) =

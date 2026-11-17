@@ -61,7 +61,7 @@ class ProxyGroupsDao extends DatabaseAccessor<Database>
     );
   }
 
-  /// In Dart, as a SQL replace on the JSON list breaks on quotes and commas.
+  /// В Dart, так как SQL-замена на JSON-списке ломается на кавычках и запятых.
   Future<void> rewrite(
     Iterable<ProxyGroup> groups,
     ProxyGroup Function(ProxyGroup group) rewrite,

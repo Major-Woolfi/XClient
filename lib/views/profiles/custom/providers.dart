@@ -226,8 +226,7 @@ class _RuleProviderItemState extends State<_RuleProviderItem> {
   }
 }
 
-/// What a provider leaves to the core until it is added, starting from the
-/// core's own default; an override starts from the value it is added to set.
+  /// То, что провайдер оставляет ядру до своего добавления, начиная с собственного значения по умолчанию ядра; переопределение начинается со значения, с которым оно добавлено, чтобы установить.
 enum _ProviderOption {
   url,
   interval,

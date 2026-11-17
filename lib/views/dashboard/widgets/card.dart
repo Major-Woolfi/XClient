@@ -45,11 +45,10 @@ class DashboardCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? semanticLabel;
 
-  /// Drawn over the content, which may bleed to the card's edge.
+  /// Рисуется поверх содержимого, которое может выходить за край карточки.
   final BorderSide side;
 
-  /// Off by default so a control swelling under an [ElasticPress] can paint
-  /// past the card's edge; only a card whose own content bleeds clips.
+  /// Выключено по умолчанию, чтобы элемент управления, раздуваемый под [ElasticPress], мог рисовать за край карточки; только карточка, чьё содержимое samo выходит за край, обрезается.
   final Clip clipBehavior;
   final Widget child;
 
@@ -105,7 +104,7 @@ class DashboardCardHeader extends StatelessWidget {
   final Glyph? glyph;
   final String title;
 
-  /// Sits right after the title, before the space that pushes [trailing] out.
+  /// Располагается сразу после заголовка, до места, которое толкает [trailing] наружу.
   final List<Widget> leading;
   final List<Widget> trailing;
   final bool chevron;
@@ -167,7 +166,7 @@ class DashboardCardHeader extends StatelessWidget {
   }
 }
 
-/// Cut short past [_minScale]: an IPv6 address shrunk any further is unreadable.
+/// Обрезается после [_minScale]: адрес IPv6, сжатый ещё сильнее, становится нечитаемым.
 class DashboardFitText extends StatelessWidget {
   const DashboardFitText(this.text, {super.key, required this.style});
 
@@ -203,9 +202,7 @@ class DashboardFitText extends StatelessWidget {
   }
 }
 
-/// Lays [end] out first at its own width, up to [share] of the row and scaled
-/// down past that, so long translations or large text never overflow; [start]
-/// takes what is left.
+/// Сначала раскладывает [end] своей шириной, до [share] строки и масштабируется дальше, так что длинные переводы или большой текст никогда не вылезают; [start] берёт то, что осталось.
 class DashboardCappedRow extends StatelessWidget {
   const DashboardCappedRow({
     super.key,
@@ -250,7 +247,7 @@ class DashboardCappedRow extends StatelessWidget {
 
 const _connectedSelectDuration = Duration(milliseconds: 240);
 
-/// A row of [DashboardConnectedButton]s; the one pressed last paints on top.
+/// Ряд [DashboardConnectedButton]ов; последняя нажатая рисуется поверх.
 class DashboardConnectedGroup extends StatelessWidget {
   const DashboardConnectedGroup({
     super.key,
@@ -351,9 +348,7 @@ class _RenderRaisedRow extends RenderFlex {
   }
 }
 
-/// M3 Expressive connected buttons: the ends round off the group, the inner
-/// corners stay tight, and the selected one turns into a full pill. Each one
-/// swells under a press.
+/// Подключённые кнопки M3 Expressive: концы округляют группу, внутренние углы остаются плотными, выбранная превращается в полную таблетку. Каждая раздувается под нажатием.
 class DashboardConnectedButton extends StatelessWidget {
   const DashboardConnectedButton({
     super.key,
@@ -486,7 +481,7 @@ class DashboardChip extends StatelessWidget {
   }
 }
 
-/// A block inside a card, one tone off the card itself.
+/// Блок внутри карточки, на один тон отличный от самой карточки.
 class DashboardBlock extends StatelessWidget {
   const DashboardBlock({
     super.key,
@@ -527,7 +522,7 @@ class DashboardBlock extends StatelessWidget {
   }
 }
 
-/// An M3 Expressive shape, filled, with [child] centered on it.
+/// Форма M3 Expressive, заполненная, с [child], центрированным на ней.
 class ShapeBadge extends StatelessWidget {
   const ShapeBadge({
     super.key,
@@ -543,7 +538,7 @@ class ShapeBadge extends StatelessWidget {
   final Color color;
   final double size;
 
-  /// Turns the shape alone, leaving [child] upright.
+  /// Поворачивает саму форму, оставляя [child] прямым.
   final double rotation;
   final BorderSide? ring;
   final Widget? child;
@@ -569,8 +564,7 @@ final _shapePaths = Expando<Path>();
 
 Path shapePathOf(RoundedPolygon shape) => _shapePaths[shape] ??= shape.toPath();
 
-/// Paints a path laid out in the unit square, the space [MaterialShapes]
-/// are normalized to.
+/// Рисует путь, выложенный в единичном квадрате, пространство которого [MaterialShapes] нормализовано.
 class ShapePainter extends CustomPainter {
   const ShapePainter({
     required this.path,
@@ -607,8 +601,7 @@ class ShapePainter extends CustomPainter {
       oldDelegate.ring != ring;
 }
 
-/// Strokes [side] along a unit-square [path] drawn at [extent], placing it by
-/// [BorderSide.strokeAlign] with a scale about the center rather than an offset.
+/// Проводит [side] вдоль единичного квадрата [path], нарисованного в [extent], располагая его через [BorderSide.strokeAlign] с масштабом относительно центра, а не смещением.
 void strokeUnitShape(Canvas canvas, Path path, double extent, BorderSide side) {
   final scale = 1 + side.width * side.strokeAlign / extent;
   canvas
@@ -632,7 +625,7 @@ class DashboardSwitch extends StatelessWidget {
   final ValueChanged<bool>? onChanged;
   final String? semanticLabel;
 
-  /// A switch lays out past its track, which would set every row's height.
+  /// Переключатель выкладывается за свою дорожку, что задало бы высоту каждой строки.
   static const trackWidth = Switch.trackWidth;
 
   @override
@@ -653,8 +646,7 @@ class DashboardSwitch extends StatelessWidget {
   }
 }
 
-/// A row holding one setting behind a switch: a cookie-6 icon container while
-/// it is on, a plain circle while it is off.
+/// Ряд, держащий одну настройку за переключателем: контейнер иконки cookie-6, когда включён, и простой круг, когда выключен.
 class DashboardSwitchRow extends StatelessWidget {
   const DashboardSwitchRow({
     super.key,
@@ -685,8 +677,7 @@ class DashboardSwitchRow extends StatelessWidget {
 
   static const _gap = 12.0;
 
-  /// Whether each of [titles] fits beside the icon in rows [width] wide, so
-  /// sibling rows can drop their icons together before a title is cut short.
+  /// Умещается ли каждый из [titles] рядом с иконкой в строках шириной [width], чтобы姉妹ные строки могли одновременно убрать свои иконки, прежде чем заголовок обрежется.
   static bool iconFits(
     BuildContext context, {
     required double width,
@@ -783,8 +774,7 @@ class DashboardSwitchRow extends StatelessWidget {
   }
 }
 
-/// The last [height] dp of a list that runs past its card fade out instead of
-/// showing a scroll bar.
+/// Последние [height] dp списка, выбегающего за свою карточку, затухают вместо показа полосы скролла.
 class DashboardFadeOut extends StatelessWidget {
   const DashboardFadeOut({super.key, required this.child});
 
@@ -832,7 +822,7 @@ class DashboardIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // A 24 tall card header would otherwise squeeze the circle into a pill.
+    // Заголовок карточки в 24 dp иначе сдавил бы круг в таблетку.
     return SizedBox(
       width: size,
       child: OverflowBox(

@@ -18,8 +18,8 @@ const defaultSniffer = Sniffer();
 const defaultProfileTun = ProfileTun();
 const defaultMitm = Mitm();
 
-/// What a profile that brings no DNS section of its own is given, so the core
-/// always resolves. The user's own override set starts empty.
+/// Профилю, который не приносит собственную секцию DNS, даётся это, поэтому ядро
+/// всегда резолвит. Набор переопределений пользователя начинается пустым.
 const baselineDnsOverrideKeys = {
   DnsOverrideKey.enable,
   DnsOverrideKey.enhancedMode,
@@ -109,8 +109,8 @@ abstract class ProxyGroup with _$ProxyGroup {
     String? icon,
     String? order,
 
-    /// Where the members list shows the filters among the proxies, which no
-    /// config carries, as `ProxyGroupMembersSliver` writes it.
+    /// Где список членов показывает фильтры среди прокси, которых не несет ни одна
+    /// конфигурация, как пишет `ProxyGroupMembersSliver`.
     List<String>? memberLayout,
   }) = _ProxyGroup;
 
@@ -119,8 +119,8 @@ abstract class ProxyGroup with _$ProxyGroup {
 }
 
 extension ProxyGroupExt on ProxyGroup {
-  /// Only what `GroupCommonOption` and the per-type option structs read, so the
-  /// generated config carries no XClient bookkeeping and no null placeholders.
+  /// Только то, что читают `GroupCommonOption` и структуры опций по типам, поэтому
+  /// сгенерированный конфиг не несет бухгалтерию XClient и нет заполнителей null.
   Map<String, dynamic> get definition {
     return {
       'name': name,
@@ -149,7 +149,7 @@ extension ProxyGroupExt on ProxyGroup {
         'default-selected': defaultSelected,
       if (type == GroupType.LoadBalance && strategy != null)
         'strategy': strategy!.value,
-      // The core refuses a round-robin group that sets one.
+      // Ядро отвергает группу round-robin, которая устанавливает один.
       if (type == GroupType.LoadBalance &&
           strategy != LoadBalanceStrategy.roundRobin &&
           hashKey?.isNotEmpty == true)
@@ -170,8 +170,8 @@ extension ProxyGroupExt on ProxyGroup {
 
   String get definitionYaml => yaml.encode(definition);
 
-  /// What [definitionYaml] leaves out, such as an option added without a
-  /// value, was never there to remove, so it stays.
+  /// Что [definitionYaml] оставляет за пределами, например, опцию, добавленную без
+  /// значения, которой никогда не было, чтобы убрать, так что она остается.
   ProxyGroup withDefinitionYaml(String content) {
     final document = _plainYaml(loadYaml(content));
     if (document is! Map<String, Object?> ||
@@ -238,7 +238,7 @@ extension ProxyExt on Proxy {
   List<String> get searchFields => [name, type];
 }
 
-/// The `type` values `adapter.ParseProxy` accepts, in its own order.
+/// Значения `type`, которые принимает `adapter.ParseProxy`, в его собственном порядке.
 const customProxyTypes = [
   'ss',
   'ssr',
@@ -270,8 +270,8 @@ const customProxyTypes = [
   'easytier',
 ];
 
-/// The standard methods of sing-shadowsocks2, which mihomo's ss adapter
-/// creates its cipher with.
+/// Стандартные методы sing-shadowsocks2, с помощью которых адаптер ss mihomo
+/// создает свой шифр.
 const _ssCiphers = [
   'aes-128-gcm',
   'aes-192-gcm',
@@ -294,7 +294,7 @@ const _ssCiphers = [
   'none',
 ];
 
-/// ShadowsocksR takes stream ciphers only.
+/// ShadowsocksR принимает только stream шифры.
 const _ssrCiphers = [
   'aes-128-ctr',
   'aes-192-ctr',
@@ -311,7 +311,7 @@ const _ssrCiphers = [
 
 const _choiceEquality = ListEquality<String>();
 
-/// mihomo matches struct keys, like HTTP header names, in any case.
+/// mihomo сопоставляет ключи структур, например имена заголовков HTTP, в любом регистре.
 Object? _keyIn(Map map, String key) {
   if (map.containsKey(key)) {
     return key;
@@ -347,8 +347,8 @@ Map<String, dynamic> _withPath(Map map, List<String> path, Object? value) {
   return next;
 }
 
-/// One app-level proxy, kept as the raw mapping the core parses, since each
-/// proxy type reads its own set of keys.
+/// Один прокси уровня приложения, хранящийся как необработанное отображение, которое парсит ядро,
+/// так как каждый тип прокси читает свой собственный набор ключей.
 @freezed
 abstract class CustomProxy with _$CustomProxy {
   const factory CustomProxy({
@@ -356,8 +356,8 @@ abstract class CustomProxy with _$CustomProxy {
     @Default({}) Map<String, dynamic> definition,
     String? order,
 
-    /// Options the form lists with no value yet, which [definition] cannot
-    /// hold since the core reads every key in it.
+    /// Опции, которые форма перечисляет без значения, которые [definition] не может
+    /// удерживать, поскольку ядро читает каждый ключ в нем.
     @Default({}) Set<ProxyField> emptyOptions,
   }) = _CustomProxy;
 
@@ -421,7 +421,7 @@ extension CustomProxyExt on CustomProxy {
     _ => const {},
   };
 
-  /// The rows the form always shows: the credentials and [requiredKeys].
+  /// Строки, которые форма всегда показывает: учетные данные и [requiredKeys].
   List<ProxyField> get fields => switch (type) {
     'ss' => const [ProxyField.cipher, ProxyField.password],
     'ssr' => const [
@@ -454,8 +454,8 @@ extension CustomProxyExt on CustomProxy {
     _ => const [],
   };
 
-  /// The username, password and UUID among [fields], which tell one account
-  /// on a server from another.
+  /// Имя пользователя, пароль и UUID среди [fields], которые сообщают об одной учетной записи
+  /// на сервере от другой.
   List<ProxyField> get credentials => [
     for (final field in fields)
       if (const {
@@ -466,8 +466,8 @@ extension CustomProxyExt on CustomProxy {
         field,
   ];
 
-  /// What tells one account on a server from another, in a type that has no
-  /// [credentials] the key it signs in with.
+  /// Что сообщает об одной учетной записи на сервере от другой, в типе, у которого нет
+  /// [credentials], ключ, которым он входит.
   List<ProxyField> get accountKeys => [
     for (final field in fields)
       if (const {
@@ -482,8 +482,8 @@ extension CustomProxyExt on CustomProxy {
         field,
   ];
 
-  /// The keys the form adds one at a time, each left to the core's default
-  /// until then.
+  /// Ключи, которые форма добавляет по одному, каждый оставляется значением по умолчанию ядра
+  /// до тех пор.
   List<ProxyField> get options {
     final fields = this.fields;
     return [
@@ -682,7 +682,7 @@ extension CustomProxyExt on CustomProxy {
       valueOf(ProxyField.network) == network &&
       choicesOf(ProxyField.network).contains(network);
 
-  /// The values the core accepts, in the order the form lists them.
+  /// Значения, которые принимает ядро, в порядке, в котором их перечисляет форма.
   List<String> choicesOf(ProxyField field) => switch (field) {
     ProxyField.cipher => switch (type) {
       'ss' => _ssCiphers,
@@ -806,8 +806,8 @@ extension CustomProxyExt on CustomProxy {
     return value;
   }
 
-  /// Drops the key on an empty [value], with any map left empty and the
-  /// options only the old value made available.
+  /// Сбрасывает ключ на пустом [value], с любой картой, оставшейся пустой, и
+  /// опциями, доступными только с имеющимся ранее значением.
   CustomProxy withField(ProxyField field, Object? value) {
     final offered = options;
     var next = copyWith(definition: _withPath(definition, field.path, value));
@@ -822,8 +822,8 @@ extension CustomProxyExt on CustomProxy {
     return next;
   }
 
-  /// Keeps the values the new type reads alike and fills the ones nearly
-  /// every server of it takes.
+  /// Сохраняет значения, которые новый тип читает одинаково, и заполняет те, которые
+  /// принимает почти каждый сервер этого типа.
   CustomProxy withType(String type) {
     if (type == this.type) {
       return this;
@@ -862,8 +862,8 @@ extension CustomProxyExt on CustomProxy {
     _ => const [],
   };
 
-  /// The entries of [field]'s map less the keys other fields edit, as
-  /// WebSocket Host, with a list of values shown as one line.
+  /// Записи карты [field], за исключением ключей, которые редактируют другие поля, например
+  /// хост WebSocket, со списком значений, показанным как одна строка.
   Map<String, String> stringMapOf(ProxyField field) {
     final owned = {for (final key in ownedKeysOf(field)) key.toLowerCase()};
     return switch (valueOf(field)) {
@@ -879,8 +879,8 @@ extension CustomProxyExt on CustomProxy {
     };
   }
 
-  /// Keeps the keys other fields edit, and each value [entries] leaves as
-  /// [stringMapOf] showed it, so a list of values survives editing the rest.
+  /// Сохраняет ключи, которые редактируют другие поля, и каждое значение [entries], которое
+  /// [stringMapOf] показало, поэтому список значений сохраняется при редактировании остального.
   CustomProxy withEntries(ProxyField field, Map<String, String> entries) {
     final previous = switch (valueOf(field)) {
       final Map map => map,
@@ -902,7 +902,7 @@ extension CustomProxyExt on CustomProxy {
     });
   }
 
-  /// The keys of [field]'s map that fields of their own edit.
+  /// Ключи карты [field], которые редактируют поля собственного типа.
   Set<String> ownedKeysOf(ProxyField field) {
     final path = field.path;
     return {
@@ -919,7 +919,7 @@ extension CustomProxyExt on CustomProxy {
       copyWith(definition: _withPath(definition, path, value));
 }
 
-/// Per profile, since [target] names a proxy or group that profile defines.
+/// На профиль, так как [target] называет прокси или группу, которые определяет профиль.
 @freezed
 abstract class ProxyDialer with _$ProxyDialer {
   const factory ProxyDialer({
@@ -1002,7 +1002,7 @@ extension CustomProfileDataExt on CustomProfileData {
         if (proxies.contains(name)) name,
   });
 
-  /// A local proxy reaches the config only when a group names it.
+  /// Локальный прокси попадает в конфиг только тогда, когда группу называет им.
   bool isRuleTarget(String? name) =>
       ruleTargets.contains(name) ||
       name == GroupName.GLOBAL.name ||
@@ -1095,8 +1095,8 @@ extension SnifferOverrideExt on Sniffer {
   }
 }
 
-/// mihomo matches sniff protocols case-insensitively, so an overridden
-/// protocol replaces the profile's entry whatever its case.
+/// mihomo сопоставляет протоколы sniff без учета регистра, поэтому переопределенный
+/// протокол заменяет запись профиля независимо от регистра.
 Map<String, dynamic> mergeSnifferOverride(
   Map<String, dynamic> raw,
   Map<String, Object?> override,
@@ -1119,8 +1119,8 @@ Map<String, dynamic> mergeSnifferOverride(
   return merged;
 }
 
-/// mihomo reads the deprecated `sniffing` list only while `sniff` is empty, so
-/// its protocols are carried into `sniff` before an override fills it.
+/// mihomo читает устаревший список `sniffing` только пока `sniff` пуст, поэтому
+/// его протоколы переносятся в `sniff` до того, как заполнит переопределение.
 Map<Object?, Object?> _rawSniff(Map<String, dynamic> raw) {
   final sniff = raw[SnifferOverrideKey.sniffSection];
   if (sniff is Map && sniff.isNotEmpty) {
@@ -1137,7 +1137,7 @@ Map<Object?, Object?> _rawSniff(Map<String, dynamic> raw) {
   };
 }
 
-/// The desktop TUN takes only [TunExt.coreJson]; Android's VPN starts from all.
+/// Настольный TUN берет только [TunExt.coreJson]; VPN Android начинается со всего.
 @freezed
 abstract class Tun with _$Tun {
   const factory Tun({
@@ -1289,8 +1289,8 @@ Set<DnsOverrideKey> _dnsOverrideKeysFromJson(List<Object?> json) => {
     ?DnsOverrideKey.values.firstWhereOrNull((key) => key.path == path),
 };
 
-/// Configs saved before the key set existed overrode the whole DNS section as
-/// the model held it then.
+/// Конфиги, сохраненные до появления набора ключей, переопределяли всю секцию DNS,
+/// как модель удерживала ее тогда.
 const _legacyDnsOverrideKeys = {
   DnsOverrideKey.enable,
   DnsOverrideKey.listen,
@@ -1340,7 +1340,7 @@ extension DnsOverrideExt on Dns {
     return json;
   }
 
-  /// [keepEmpty] writes emptied keys, but the core refuses an empty nameserver.
+  /// [keepEmpty] записывает очищенные ключи, но ядро отвергает пустой nameserver.
   Map<String, Object?> overrideJson(
     Set<DnsOverrideKey> keys, {
     bool keepEmpty = false,
@@ -1420,11 +1420,11 @@ bool _isUnset(Object? value) => switch (value) {
   _ => false,
 };
 
-/// Reads an edited override document into [json] and returns the keys it
-/// names, which become the override set, or null for an empty document.
-/// Throws on a key [values] does not hold; the caller's decode throws on a
-/// value the model cannot hold. [normalizeField] spells a nested field the way
-/// its key path does.
+/// Читает отредактированный документ переопределения в [json] и возвращает ключи, которые оно
+/// называет, которые становятся набором переопределений, или null для пустого документа.
+/// Выбрасывает исключение на ключ, который [values] не содержит; декод вызывающего выбрасывает на
+/// значение, которое модель не может удержать. [normalizeField] записывает вложенное поле так,
+/// как делает его ключевой путь.
 Set<K>? _applyOverrideYaml<K extends OverrideKey>(
   String content, {
   required Map<String, Object?> json,
@@ -1714,8 +1714,8 @@ abstract class ProviderOverride with _$ProviderOverride {
       _$ProviderOverrideFromJson(json);
 }
 
-/// Keyed in a custom profile's overrides by the provider's name. The update
-/// interval stays with the app, which keeps the file the provider reads.
+/// Ключ в переопределениях кастомного профиля по имени провайдера. Интервал обновления
+/// остается с приложением, которое удерживает файл, который читает провайдер.
 @freezed
 abstract class ProxyProviderOptions with _$ProxyProviderOptions {
   const factory ProxyProviderOptions({
@@ -1728,8 +1728,8 @@ abstract class ProxyProviderOptions with _$ProxyProviderOptions {
     @JsonKey(name: 'override')
     ProviderOverride proxyOverride,
 
-    /// Where the filters list shows the exclude filters among the filters,
-    /// which no config carries, as `ProxyProviderFiltersSliver` writes it.
+    /// Где список фильтров показывает исключающие фильтры среди фильтров,
+    /// которых не несет ни одна конфигурация, как пишет `ProxyProviderFiltersSliver`.
     List<String>? memberLayout,
   }) = _ProxyProviderOptions;
 
@@ -1738,8 +1738,8 @@ abstract class ProxyProviderOptions with _$ProxyProviderOptions {
 }
 
 extension ProxyProviderOptionsExt on ProxyProviderOptions {
-  /// A health check without a url never runs, so one always carries a url.
-  /// A text option added but left empty stays in the form and out of here.
+  /// Проверка работоспособности без url никогда не запускается, поэтому одна всегда несет url.
+  /// Текстовая опция, добавленная, но оставленная пустой, остается в форме и не попадает сюда.
   Map<String, Object?> get definition {
     String? text(String? value) => value?.isNotEmpty == true ? value : null;
     final healthCheck = this.healthCheck.copyWith(
@@ -1775,9 +1775,9 @@ extension ProxyProviderOptionsExt on ProxyProviderOptions {
 }
 
 extension ProfileOverridesExt on ProfileOverrides {
-  /// A custom profile brings no DNS section of its own, so it runs on
-  /// [baselineDnsOverrideKeys], which turn DNS on, unless its own `enable`
-  /// turns it off.
+  /// Кастомный профиль не приносит своей собственной секции DNS, поэтому он работает на
+  /// [baselineDnsOverrideKeys], которые включают DNS, пока его собственный `enable`
+  /// не выключает его.
   bool get customDnsEnabled =>
       !dnsOverrideKeys.contains(DnsOverrideKey.enable) || dns.enable;
 
@@ -1901,8 +1901,8 @@ extension RuleExt on Rule {
     };
   }
 
-  /// The core rejects the whole config over one of these, taking the profile
-  /// down with it, so they are caught before the rule can be saved.
+  /// Ядро отвергает весь конфиг из-за одного из них, забирая профиль с ним,
+  /// поэтому они ловятся до того, как правило можно сохранить.
   RulePayloadError? get payloadError {
     final payload = realContent?.trim() ?? '';
     if (payload.isEmpty) {
@@ -2017,7 +2017,7 @@ Rule _ruleAt(String value, int line, Map<String, List<int>> unusedIds) {
   return ids == null || ids.isEmpty ? rule : rule.copyWith(id: ids.removeAt(0));
 }
 
-/// Mirrors mihomo's newIntRanges: `80`, `80-90`, and `/` or `,` between them.
+/// Зеркалит newIntRanges mihomo: `80`, `80-90`, и `/` или `,` между ними.
 List<int>? _parseRanges(String payload) {
   if (payload == '*') {
     return null;
@@ -2104,7 +2104,7 @@ Set<GeneralOverrideKey> _generalOverrideKeysFromJson(List<Object?> json) => {
     ?GeneralOverrideKey.values.firstWhereOrNull((key) => key.path == path),
 };
 
-/// Forced over every profile until they became optional overrides.
+/// Принудительно над каждым профилем до тех пор, пока они не стали необязательными переопределениями.
 const _legacyForcedGeneralKeys = [
   GeneralOverrideKey.unifiedDelay,
   GeneralOverrideKey.tcpConcurrent,
@@ -2211,7 +2211,7 @@ abstract class PatchClashConfig with _$PatchClashConfig {
   }
 }
 
-/// Written over every profile's `mitm` section, so only the app turns it on.
+/// Переписывается над секцией `mitm` каждого профиля, поэтому только приложение включает это.
 @freezed
 abstract class Mitm with _$Mitm {
   const factory Mitm({
@@ -2231,7 +2231,7 @@ abstract class Mitm with _$Mitm {
   factory Mitm.fromJson(Map<String, Object?> json) => _$MitmFromJson(json);
 }
 
-/// A body rewrite holds about ten times the body, a script on JSON twenty.
+/// Перезапись тела хранит примерно в десять раз больше тела, скрипт на JSON в двадцать.
 const _desktopMitmLimits = {
   'max-body-size': 4 << 20,
   'body-buffer': 32 << 20,
@@ -2253,7 +2253,7 @@ const _androidMitmLimits = {
   'capture-bytes': 16 << 20,
 };
 
-/// Past the top option the byte limit drops records before the count does.
+/// За лучшим вариантом лимит байтов отсекает записи раньше, чем количество.
 const _desktopMitmCaptureOptions = [500, 1000, 2000, 5000, 10000, 20000];
 const _androidMitmCaptureOptions = [200, 500, 1000, 2000, 5000];
 
@@ -2274,7 +2274,7 @@ extension MitmExt on Mitm {
       captureEntries ??
       _mitmLimits(isAndroid: isAndroid)['capture-entries']! as int;
 
-  /// Ahead of the list, since the first match decides.
+  /// Впереди списка, так как первое совпадение решает.
   Mitm decryptingHost(String host) => copyWith(
     hostname: [
       host,
@@ -2283,7 +2283,7 @@ extension MitmExt on Mitm {
     ],
   );
 
-  /// Ahead of the list, since the first match decides.
+  /// Впереди списка, так как первое совпадение решает.
   Mitm excludingHost(String host) => copyWith(
     hostname: [
       '-$host',
@@ -2292,7 +2292,7 @@ extension MitmExt on Mitm {
     ],
   );
 
-  /// The hostnames come from [rules] alone, which the user's own lead.
+  /// Имена хостов приходят из правил, которые ведет пользователь.
   Map<String, Object?> coreJson(MitmRules rules) {
     final json = toJson()
       ..remove('hostname')
@@ -2378,8 +2378,8 @@ extension PatchClashConfigExt on PatchClashConfig {
     );
   }
 
-  /// Resets every field [toUpdateParams] patches live, leaving what only a
-  /// full setup hands the Core.
+  /// Сбрасывает каждое поле, которое [toUpdateParams] патчит вживую, оставляя то, что
+  /// только полная настройка передает Ядру.
   PatchClashConfig get setupOnly => copyWith(
     tun: defaultClashConfig.tun,
     mixedPort: defaultClashConfig.mixedPort,

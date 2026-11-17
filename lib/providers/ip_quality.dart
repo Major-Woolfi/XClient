@@ -18,7 +18,7 @@ Duration ipQualityFailureCooldown(Ref ref) => const Duration(minutes: 5);
 @Riverpod(keepAlive: true)
 Duration ipQualityMaxAge(Ref ref) => const Duration(days: 3);
 
-/// Invalidating skips the stored record and asks the sources again.
+/// Инвалидация пропускает сохранённую запись и снова опрашивает источники.
 @Riverpod(retry: _noRetry)
 Future<IpQuality> ipQuality(Ref ref, String ip) async {
   final maxAge = ref.read(ipQualityMaxAgeProvider);

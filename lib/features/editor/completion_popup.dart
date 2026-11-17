@@ -36,8 +36,8 @@ class _EditorCompletionPopupState extends State<EditorCompletionPopup> {
   double get _itemExtent =>
       (widget.textStyle.fontSize ?? 14) * 2 + _suggestionItemGap;
 
-  // The list pads its ends by the inset less half a gap, so the first and
-  // last highlight sit as far from the edge as from the sides.
+  // Список подбивает свои концы инсетом за вычетом половины зазора, так что первая и
+  // последняя подсветка сидят так же далеко от края, как и от сторон.
   static const _listPadding = _suggestionInset - _suggestionItemGap / 2;
 
   @override

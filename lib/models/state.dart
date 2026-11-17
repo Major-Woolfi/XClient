@@ -161,7 +161,7 @@ abstract class SelectedProxyState with _$SelectedProxyState {
 @freezed
 abstract class SharedState with _$SharedState {
   const factory SharedState({
-    // Gson's JsonObject adapter rejects a JSON null, which would drop the sync.
+    // Адаптер JsonObject Gson отвергает JSON null, что spowodет сброс синхронизации.
     @JsonKey(includeIfNull: false) SetupParams? setupParams,
     VpnOptions? vpnOptions,
     required String stopTip,
@@ -202,7 +202,7 @@ abstract class MakeRealProfileState with _$MakeRealProfileState {
     @Default(ProfileOverrides()) ProfileOverrides overrides,
     @Default(false) bool bypassPrivateRoute,
 
-    /// Set for a subscription, whose own DNS values an emptied entry replaces.
+    /// Установлено для подписки, чьи собственные значения DNS заменяет очищенная запись.
     @Default(false) bool keepEmptyDnsOverrides,
     required bool appendSystemDns,
     required List<ProxyGroup> proxyGroups,

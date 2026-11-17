@@ -35,8 +35,7 @@ class MemorySnapshot {
 
   int get coreOther => max(0, coreTotal - (core?.runtimeTotal ?? 0));
 
-  /// On Android the Core shares the app process, so its runtime accounting is
-  /// carved out of the process RSS instead of added on top of it.
+  /// На Android Core делит процесс приложения, поэтому его учёт времени выполнения вырезается из RSS процесса, а не добавляется поверх него.
   static MemorySnapshot resolve({
     required int rss,
     required CoreMemoryStats? core,
@@ -122,8 +121,7 @@ class _MemoryInfoState extends ConsumerState<MemoryInfo>
     _memoryStateNotifier.value = memory;
   }
 
-  // The sheet outlives the card when a resize swaps the dashboard layout, so it
-  // reads on its own and the card rests until it closes.
+// Лист переживает карточку, когда изменение размера переключает макет панели, поэтому он читает сам, а карточка отдыхает до его закрытия.
   Future<void> _showDetail() async {
     if (_detailOpen) {
       return;
@@ -494,7 +492,7 @@ class _MemorySection extends StatelessWidget {
 class _MemoryOverview extends StatelessWidget {
   const _MemoryOverview({required this.snapshot});
 
-  /// The optical edge of the xl-radius cards, not their geometric one.
+  /// Оптический край карточек с xl-радиусом, а не их геометрический.
   static const _inset = 5.0;
 
   final MemorySnapshot snapshot;
@@ -596,8 +594,7 @@ class _MemoryBar extends StatelessWidget {
                             ? _gap
                             : 0,
                       ),
-                    // Whole percents, so the drift between two polls does not
-                    // replay the animation every time.
+                    // Целые проценты, чтобы дрейф между двумя опросами не перепроигрывал анимацию каждый раз.
                     TweenAnimationBuilder<double>(
                       tween: Tween(
                         end: (max(0, segment.bytes) * 100 / total)

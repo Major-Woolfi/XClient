@@ -26,9 +26,7 @@ const _RowMetrics _cardRowMetrics = (
   subtitle: true,
 );
 
-/// A tile's icon and switch sit as far in from its ends as from its edges, so
-/// a full pill keeps both concentric with its corners. Without the icon, the
-/// title lines up with the content of the cards above and below.
+/// Иконка и переключатель плитки сидят так далеко от её концов, как и от её краёв, поэтому полная таблетка сохраняет оба концентрическими с углами. Без иконки заголовок выравнивается с содержимым карточек над и под ней.
 _RowMetrics _tileMetricsOf(DashboardDensity density) => density.isCompact
     ? (
         padding: const EdgeInsets.fromLTRB(10, 0, 12, 0),
@@ -111,7 +109,7 @@ String _titleOf(BuildContext context, TakeoverSwitch kind) => switch (kind) {
   TakeoverSwitch.tun => context.appLocalizations.tun,
 };
 
-/// Both switches in one card, for the card list of a narrow window.
+/// Оба переключателя в одной карточке, для списка карточек узкого окна.
 class NetworkTakeoverCard extends StatelessWidget {
   const NetworkTakeoverCard({super.key});
 
@@ -161,7 +159,7 @@ class NetworkTakeoverCard extends StatelessWidget {
   }
 }
 
-/// One switch as a card of its own, in the desktop's control row.
+/// Один переключатель как отдельная карточка, в строке управления рабочего стола.
 class NetworkTakeoverTile extends StatelessWidget {
   const NetworkTakeoverTile(this.kind, {super.key});
 
@@ -196,7 +194,7 @@ void _setVpn(WidgetRef ref, bool value) => ref
     .read(vpnSettingProvider.notifier)
     .update((state) => state.copyWith(enable: value));
 
-/// The VPN switch in the grid's control row, in place of the takeover tiles.
+/// Переключатель VPN в строке управления сетью, вместо плиток перехвата.
 class VpnTile extends ConsumerWidget {
   const VpnTile({super.key});
 

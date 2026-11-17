@@ -9,7 +9,7 @@ Future<void> clearAppData() async {
   try {
     await database.close();
   } catch (error) {
-    // Drift rethrows a failed open from close; that file still has to go.
+    // Drift пробрасывает неудачное открытие из close; этот файл всё равно нужно удалить.
     commonPrint.log(
       'close database failed: $error',
       logLevel: LogLevel.warning,

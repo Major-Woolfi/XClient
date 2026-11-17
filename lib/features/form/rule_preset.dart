@@ -13,7 +13,7 @@ enum RulePreset {
     'AND,((NETWORK,UDP),(DST-PORT,3478/19302)),REJECT-DROP',
   ]),
   blockDot(AppGlyphs.dns, ['DST-PORT,853,REJECT']),
-  // Connecting to 0.0.0.0 or :: also reaches a local listener.
+  // Подключение к 0.0.0.0 или :: тоже достигает локального слушателя.
   blockLoopback(AppGlyphs.sync, [
     'IP-CIDR,127.0.0.0/8,REJECT,no-resolve',
     'IP-CIDR,0.0.0.0/32,REJECT,no-resolve',

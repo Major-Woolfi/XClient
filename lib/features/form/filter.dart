@@ -4,8 +4,8 @@ import 'package:xclient/ui/ui.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// What mihomo's regexp2, asked through the core, rejects in each filter, by
-/// index, or null when the core cannot be asked.
+/// Что regexp2 mihomo, спрошенного через ядро, отвергает в каждом фильтре, по
+/// индексу, или null, когда ядро нельзя спросить.
 Future<Map<int, String>?> checkFilters(
   WidgetRef ref,
   List<String> filters,
@@ -20,8 +20,8 @@ Future<Map<int, String>?> checkFilters(
   }
 }
 
-// mihomo splits `filter` and `exclude-filter` on backticks and matches each
-// part as its own regex, so a filter is applied by adding its parts.
+// mihomo разделяет `filter` и `exclude-filter` на обратные кавычки и сопоставляет каждую
+// часть как свое eigenes regex, поэтому фильтр применяется добавлением его частей.
 const _filterSeparator = '`';
 
 List<String> filterParts(String? value) => [

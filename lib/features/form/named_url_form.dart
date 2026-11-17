@@ -32,7 +32,7 @@ Future<NamedUrl?> showNamedUrlForm(
   return res?.single;
 }
 
-/// A batch skips the urls in [existingUrls].
+/// Пакет пропускает URL из [existingUrls].
 Future<List<NamedUrl>?> showNamedUrlsForm(
   BuildContext context, {
   required String title,
@@ -60,8 +60,8 @@ Future<List<NamedUrl>?> showNamedUrlsForm(
 
 enum _NamedUrlField { label, url }
 
-/// The url below the name holds the focus, as the one field that must be filled.
-/// Pops a list so a single url and a batch return through the same path.
+/// URL ниже имени удерживает фокус, как единственное поле, которое нужно заполнить.
+/// Возвращает список, так как один URL и пакет возвращаются через один и тот же путь.
 class NamedUrlForm extends StatefulWidget {
   final String title;
   final String label;

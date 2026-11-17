@@ -25,8 +25,8 @@ class _SourceFailure implements Exception {
 
 typedef _Answer = ({IpQuality quality, bool inferred});
 
-/// A later wave only starts while the earlier ones are still unanswered, so
-/// the sources with the tightest free quotas are asked last and rarely.
+/// Следующая волна начинается, пока предыдущие ещё не ответили, поэтому
+/// источники с самыми жёсткими бесплатными квотами запрашиваются последними и редко.
 const _waves = [
   [IpQualitySource.identMe, IpQualitySource.ipApiCom, IpQualitySource.ipQuery],
   [IpQualitySource.ipLocate],
@@ -329,8 +329,8 @@ _Answer? _fromIpApiIs(String ip, Map<String, dynamic> json) {
   );
 }
 
-/// An inferred type is the source's silence about hosting and mobile taken
-/// as residential; it only stands in when no source states a type.
+/// Выведённый тип — это молчание источника о хостинге и мобильном, принятое
+/// заresidential; он подставляется только если ни один источник не указывает тип.
 _Answer? _quality(
   String ip,
   IpQualitySource source,

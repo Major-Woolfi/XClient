@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 const directOutbound = 'DIRECT';
 const routedOutbound = '';
 
-/// [id] must match the checker name registered in core/service_check.go.
+/// [id] должен совпадать с именем проверки, зарегистрированным в core/service_check.go.
 enum ServiceTarget {
   google('google', 'Google', 'google'),
   github('github', 'GitHub', 'github'),

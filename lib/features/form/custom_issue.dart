@@ -41,8 +41,8 @@ extension CustomIssueExt on CustomIssue {
     };
   }
 
-  /// A new form has these only because it is not filled in yet, so it holds
-  /// them back until the first save rather than opening already in error.
+  /// У новой формы они есть только потому, что она ещё не заполнена, поэтому она держит
+  /// их обратно до первого сохранения, вместо того чтобы открываться уже с ошибкой.
   bool get isIncomplete => switch (this) {
     EmptyNameIssue() || NoProxySourceIssue() || CoreRejectedIssue() => true,
     _ => false,
@@ -105,7 +105,7 @@ class SliverCustomIssuesBanner extends StatelessWidget {
   }
 }
 
-/// Opens a page of sections, keeping the gap above it that they keep.
+/// Открывает страницу секций, оставляя зазор над ними, который они держат.
 class ErrorBanner extends StatelessWidget {
   final String? message;
 

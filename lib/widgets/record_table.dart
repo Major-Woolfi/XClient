@@ -48,7 +48,7 @@ class RecordSorter<T> {
   RecordSort? _sortedBy;
   List<T> _sorted = const [];
 
-  /// [reverse] marks a list shown bottom up, its last item on top.
+  /// [reverse] помечает список, показываемый снизу вверх, его последний элемент наверху.
   List<T> sort(
     List<T> items,
     List<RecordColumn<T>> columns,
@@ -69,8 +69,7 @@ class RecordSorter<T> {
     final shown = reverse ? items.reversed.toList() : items;
     final keys = [for (final item in shown) sortKey(item)];
     final direction = sort.descending ? -1 : 1;
-    // Sorting indexes keeps ties in their shown order; collection's
-    // mergeSort is stable too but measured over ten times slower.
+    // Сортировка индексов сохраняет связи в их показанном порядке; mergeSort коллекции тоже стабилен, но измерен более чем в десять раз медленнее.
     final order = List.generate(shown.length, (index) => index)
       ..sort((a, b) {
         final compared = keys[a].compareTo(keys[b]);
@@ -83,8 +82,7 @@ class RecordSorter<T> {
   }
 }
 
-/// Holds the widths a table's columns are dragged to and keeps them in the
-/// app settings once a drag ends.
+/// Хранит ширины, до которых перетащили колонки таблицы, и держит их в настройках приложения после окончания перетаскивания.
 mixin TableColumnWidthsMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
   String get tableId;
@@ -145,14 +143,12 @@ class RecordTable<T> {
   ];
 }
 
-/// Builds a record list as a table once it is wide enough, with the column
-/// header held above the rows, sorting them by the column tapped and resizing
-/// columns by their edges.
+/// Строит список записей как таблицу, как только он достаточно широк, с заголовком колонки над строками, сортируя их по tapped колонке и изменяя размер колонок по их краям.
 class RecordTableFrame<T> extends ConsumerStatefulWidget {
   final String tableId;
   final List<T> items;
 
-  /// Whether the list shows [items] bottom up, its last item on top.
+  /// Показывает ли список [items] снизу вверх, его последний элемент наверху.
   final bool reverse;
   final List<RecordColumn<T>> Function(double width) columnsOf;
   final Widget Function(
@@ -193,7 +189,7 @@ class _RecordTableFrameState<T> extends ConsumerState<RecordTableFrame<T>>
     final rowHeight =
         MediaQuery.textScalerOf(context).scale(_recordCellLineHeight) +
         _recordRowPadding * 2;
-    // Rows are memoized on the table, so a refresh must get the same one.
+    // Строки мемоизированы на таблице, поэтому обновление должно получить ту же.
     final inputs = (
       width,
       columnWidths,
@@ -361,7 +357,7 @@ class RecordHeaderCell extends StatelessWidget {
   final TextStyle style;
   final double inset;
 
-  /// Null unless the rows are sorted by this column.
+  /// Null, если строки не отсортированы по этой колонке.
   final bool? descending;
   final VoidCallback? onTap;
 

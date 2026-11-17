@@ -70,7 +70,7 @@ class Scaffold extends StatefulWidget {
   /// Показано при поиске и никогда не складывается; первые две делят группу кнопок, а все после них стоят по отдельности.
   final List<IconButtonData> selectionActions;
 
-  /// Removable chips under the bar, kept by the page that filters by them.
+  /// Съемные чипы под баром, которые хранит страница, фильтрующая по ним.
   final ValueListenable<List<ScaffoldKeyword>>? keywords;
   final bool? resizeToAvoidBottomInset;
   final VoidCallback? backAction;
@@ -299,7 +299,7 @@ class ScaffoldState extends State<Scaffold>
     _searchFocusNode.unfocus();
     _updateSearchState((state) => state?.withQuery(null));
     _moveSearch(open: false);
-    // The covered bar, search button included, returns with the next frame.
+    // Покрытый бар, включая кнопку поиска, возвращается со следующим кадром.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _searchOrigin.value =

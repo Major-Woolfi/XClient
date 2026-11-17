@@ -51,15 +51,15 @@ final _whitespace = RegExp(r'\s');
 final _whitespaces = RegExp(r'\s+');
 final _ruleTypes = {for (final action in RuleAction.values) action.value};
 
-/// fake-ip-filter in rule mode takes whole rules such as
-/// `DOMAIN-SUFFIX,lan,real-ip`, so their commas never split a line.
+/// fake-ip-filter в режиме правил берёт целые правила вроде
+/// `DOMAIN-SUFFIX,lan,real-ip`, поэтому их запятые nunca не делят строку.
 bool _isRule(String value) {
   final comma = value.indexOf(',');
   return comma > 0 &&
       _ruleTypes.contains(value.substring(0, comma).trim().toUpperCase());
 }
 
-/// Lines copied out of a YAML sequence keep their `- ` marker and quotes.
+/// Строки, скопированные из последовательности YAML, сохраняют маркер `- ` и кавычки.
 String _stripLineMarkup(String line) {
   var value = line.trim();
   if (value.startsWith('- ')) {
@@ -82,7 +82,7 @@ String _unquote(String value) {
   return value;
 }
 
-/// Keeps each line whole: a rewrite rule's commas and quotes are its own.
+/// Сохраняет каждую строку целой: запятые и кавычки правила перезаписи — его собственные.
 ParsedInput<String> parseLineInput(
   String text, {
   Set<String> existing = const {},
@@ -165,7 +165,7 @@ ParsedInput<String> parseListInput(
   );
 }
 
-/// A url never carries whitespace, so any run of it separates two.
+/// URL nunca не содержит пробелов, поэтому любая их последовательность разделяет два.
 ParsedInput<String> parseUrlInput(
   String text, {
   required bool Function(String url) isValid,
@@ -210,10 +210,10 @@ ParsedInput<String> parseUrlInput(
   );
 }
 
-/// Keys never carry whitespace and values may carry `:` (`geosite:cn`,
-/// `tls://1.1.1.1:853`, IPv6), so the first run of whitespace splits a line
-/// and a bare `:` never does. A key may end in `:` or `=` and a value may
-/// start with `=` so YAML and `key=value` lines parse without cleanup.
+/// Ключи nunca не содержат пробелов, а значения могут содержать `:` (`geosite:cn`,
+/// `tls://1.1.1.1:853`, IPv6), поэтому первая последовательность пробелов делит строку,
+/// а голый `:` nunca не делает этого. Ключ может заканчиваться на `:` или `=`, а значение
+/// может начинаться с `=`, поэтому строки YAML и `key=value` парсятся без очистки.
 MapEntry<String, String>? _splitMapLine(String line) {
   final whitespaceIndex = line.indexOf(_whitespace);
   String key;

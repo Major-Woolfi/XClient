@@ -114,8 +114,9 @@ class CoreLib extends CoreHandlerInterface {
     return _stop(allowClosed: true);
   }
 
-  // The service opens and closes the Core's listeners itself and reports a run
-  // that ends, so once it takes the command the Core's own answer is moot.
+  // Сервис сам открывает и закрывает слушатели Core и сообщает о запуске,
+  // который заканчивается, так что после того, как он берет команду на себя,
+  // ответ самого ядра не имеет значения.
   @override
   Future<void> startListener() async {
     await _ignoreUnanswered(super.startListener);

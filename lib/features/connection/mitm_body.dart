@@ -121,8 +121,7 @@ class MitmBodySection extends StatelessWidget {
   }
 }
 
-/// Every byte of a body. Lines are formatted as they scroll in, at as many
-/// bytes a line, in fours, as the width holds.
+/// Каждый байт тела. Строки форматируются по мере прокрутки, столько байтов в строке, сколько шириной позволяет, по quattro.
 class _MitmHexView extends StatelessWidget {
   final String title;
   final MitmBodyContent content;

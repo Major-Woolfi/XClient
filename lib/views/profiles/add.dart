@@ -11,7 +11,7 @@ import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// The ways to add a profile, in a menu out of the control [builder] makes.
+/// Способы добавления профиля в меню вне управления, которое [builder] создает.
 class AddProfileMenu extends ConsumerWidget {
   const AddProfileMenu({super.key, required this.builder});
 

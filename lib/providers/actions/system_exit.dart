@@ -41,9 +41,9 @@ final class SystemExitCoordinator {
       }
     }
 
-    // Watchdog covers cleanup and window close only. Core shutdown
-    // (closeCore) must complete before the process exits, otherwise
-    // child core processes (Xray, Clash) are left orphaned.
+    // Watchdog покрывает только очистку и закрытие окна. Завершение ядра
+    // (closeCore) должно закончиться до выхода процесса, иначе дочерние
+    // процессы ядра (Xray, Clash) останутся сиротами.
     final watchdog = Timer(watchdogDuration, () {
       unawaited(_exitApplicationOnce().catchError((_) {}));
     });

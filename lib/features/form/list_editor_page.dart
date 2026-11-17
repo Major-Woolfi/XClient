@@ -261,7 +261,7 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
     24 + context.bottomInset,
   );
 
-  /// Reuses each row it builds, so the list settling on its own rebuilds none.
+  /// Переиспользует каждую строку, которую строит, так как список, оседая при своей же перестройке, не перестраивает ни одной.
   Widget Function(int index) _rowsOf(
     BuildContext context,
     List<T> items,
@@ -298,8 +298,8 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
     );
   }
 
-  // Indices here are positions among the matches, which onReorder cannot
-  // map back onto the full list, so a filtered list is not reorderable.
+  // Индексы здесь — позиции среди совпадений, которые onReorder не может
+  // отобразить обратно на полный список, поэтому отфильтрованный список не переупорядочивается.
   Widget _buildSearchResults(
     BuildContext context,
     List<T> items,

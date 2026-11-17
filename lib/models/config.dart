@@ -122,8 +122,8 @@ const List<DashboardWidget> defaultDashboardWidgets = [
   DashboardWidget.connectionStats,
 ];
 
-/// A phone starts without the VPN switch and the diagnostic cards, which stay
-/// addable. The field default keeps the shared list because it must be const.
+  /// Телефон начинается без переключателя VPN и диагностических карт, которые остаются
+  /// добавляемыми. Поле по умолчанию сохраняет общий список, так как оно должно быть const.
 final List<DashboardWidget> platformDefaultDashboardWidgets = system.isAndroid
     ? const [
         DashboardWidget.currentOutbound,
@@ -144,8 +144,8 @@ const _legacyDefaultDashboardWidgets = {
   'intranetIp',
 };
 
-/// The run time has no replacement: it moved onto the current outbound card,
-/// as did the outbound IP, whose card became the intranet one.
+  /// Время работы не имеет замены: оно переместилось на карту текущего исходящего,
+  /// как и исходящий IP, чья карта стала внутрисетевой.
 const _legacyDashboardWidgets = {
   'networkDetection': DashboardWidget.intranetIp,
   'outboundModeV2': DashboardWidget.outboundMode,
@@ -163,7 +163,7 @@ const _retiredDashboardWidgets = {
   'overrideNtpButton',
 };
 
-/// The current outbound card cannot be removed: a list without it predates it.
+  /// Карту текущего исходящего нельзя удалить: список без нее предшествует ей.
 List<DashboardWidget> dashboardWidgetsFromJson(
   List<dynamic>? dashboardWidgets,
 ) {
@@ -396,9 +396,8 @@ abstract class NetworkProps with _$NetworkProps {
       json == null ? const NetworkProps() : _$NetworkPropsFromJson(json);
 }
 
-/// Reads the styles named `standard`, `icon` and `none` before they became
-/// [ProxiesIconStyle.filled], [ProxiesIconStyle.plain] and
-/// [ProxiesIconStyle.hidden].
+  /// Читает стили, названные `standard`, `icon` и `none`, до тех пор, пока они не стали
+  /// [ProxiesIconStyle.filled], [ProxiesIconStyle.plain] и [ProxiesIconStyle.hidden].
 ProxiesIconStyle proxiesIconStyleSafeFromJson(Object? iconStyle) {
   return switch (iconStyle) {
     'filled' || 'standard' => ProxiesIconStyle.filled,
@@ -484,8 +483,8 @@ abstract class ThemeProps with _$ThemeProps {
     @JsonKey(readValue: _readLiquidGlass)
     LiquidGlassMode liquidGlass,
     @Default(TextScale()) TextScale textScale,
-    // `fontFamily` held the names of a removed enum, which old configs may
-    // still carry.
+    // `fontFamily` хранил имена удаленного перечисления, которые старые конфиги
+    // могут еще нести.
     @JsonKey(name: 'systemFontFamily') String? fontFamily,
   }) = _ThemeProps;
 
@@ -546,7 +545,7 @@ abstract class Config with _$Config {
 
 const _legacyOverrideDnsKey = 'overrideDns';
 
-/// An off `overrideDns` left a profile's own DNS section alone.
+  /// Выключенный `overrideDns` оставил секцию DNS профиля в покое.
 Config _withLegacyOverrideDns(Config config, Map<String, Object?> json) {
   if (!json.containsKey(_legacyOverrideDnsKey)) {
     return config;
@@ -559,7 +558,7 @@ Config _withLegacyOverrideDns(Config config, Map<String, Object?> json) {
   return config.copyWith.patchClashConfig(dnsOverrideKeys: keys);
 }
 
-/// The test URL moved from the app settings into the general overrides.
+  /// Тестовый URL переместился из настроек приложения в общие переопределения.
 Map<String, Object?> _withLegacyTestUrl(Map<String, Object?> json) {
   final app = json['appSettingProps'];
   final testUrl = app is Map ? app['testUrl'] : null;

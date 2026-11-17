@@ -57,7 +57,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     return next;
   }
 
-  /// Downloads outlast edits, so a result lands on the set as it is by then.
+  /// Загрузки переживают правки, поэтому результат попадает в набор в том виде, в каком он будет к тому времени.
   Future<ClashProvider?> _stored(int id) async {
     final rows =
         ref.read(clashProvidersProvider).value ??
@@ -69,7 +69,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     ClashProvider provider, {
     bool download = false,
   }) async {
-    // Made here, or a Core running as root would create it as its own.
+    // Создан здесь, иначе Core, работающий от root, создал бы его от своего имени.
     await File(await provider.path).parent.create(recursive: true);
     final info = await _core.compileRuleSet(
       provider.fileName,
@@ -104,7 +104,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     }
   }
 
-  /// A subscription's set can share the name, so match by path.
+  /// Набор подписки может совпадать по имени, поэтому совпадение ищут по пути.
   Future<ClashProvider?> remoteProviderOf(ExternalProvider external) async {
     final path = external.path;
     if (external.type != 'Rule' ||
@@ -120,7 +120,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     return null;
   }
 
-  /// Returns false when the set changed shape, which only a reapply loads.
+  /// Возвращает false, когда набор изменил форму — перезагрузить его может только повторное применение.
   Future<bool> syncRemote(ClashProvider provider) async {
     final next = await _compile(provider, download: true);
     if (next == provider) {
@@ -131,7 +131,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     return false;
   }
 
-  /// Backups leave remote sets out and older sets have no mrs yet.
+  /// Бэкапы исключают удалённые наборы, а у старых ещё нет mrs.
   Future<ClashProvider> prepare(ClashProvider provider) async {
     if (await File(await provider.corePath).exists()) {
       return provider;
@@ -213,8 +213,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     };
   }
 
-  /// [force] reapplies a provider whose content changed under the same path,
-  /// which leaves the generated config unchanged.
+  /// [force] повторно применяет провайдер, содержимое которого изменилось под тем же путём; сгенерированный конфиг при этом не меняется.
   Future<void> applyIfReferenced(
     ProviderKind kind,
     Set<String> labels, {
@@ -241,7 +240,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
         .applyProfileDebounce(silence: true, force: force);
   }
 
-  /// A reapply would close every connection and reset the route.
+  /// Повторное применение закрыло бы каждое соединение и сбросило бы маршрут.
   Future<void> _reloadIfReferenced(ClashProvider provider) async {
     if (!await _currentUses(
       (profileId) =>

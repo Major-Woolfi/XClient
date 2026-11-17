@@ -15,8 +15,8 @@ typedef LinkReceiverTexts = ({
   String invalid,
 });
 
-/// Serves a one-page form on the local network so a phone that scans [address]
-/// can hand a link to a device that has no way to type one.
+/// Одностраничная форма в локальной сети, чтобы телефон, отсканировав [address],
+/// мог передать ссылку устройству, у которого нет возможности ввести её вручную.
 class LinkReceiver {
   static const _maxBodyBytes = 16 * 1024;
 
@@ -35,7 +35,7 @@ class LinkReceiver {
         path: '/$_token',
       );
 
-  /// The first valid link a phone sends, or null if [close] comes first.
+  /// Первая валидная ссылка от телефона, или null, если [close] наступила первым.
   Future<String?> get link => _link.future;
 
   static final _preferredInterface = RegExp(

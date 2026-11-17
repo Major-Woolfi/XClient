@@ -14,7 +14,7 @@ class SearchQuery {
 
   bool get isNotEmpty => terms.isNotEmpty;
 
-  // Terms hold no whitespace, so the newline keeps one from spanning fields.
+  // Термы не содержат пробелов, поэтому перевод строки не даёт одному из них охватывать поля.
   static String textOf(Iterable<String?> fields) {
     return fields.nonNulls.join('\n').toLowerCase();
   }
@@ -30,7 +30,7 @@ class SearchQuery {
 }
 
 extension SearchIterableExt<T> on Iterable<T> {
-  /// [texts] caches each item's text by identity, so it serves one [fieldsOf].
+  /// [texts] кэширует текст каждого элемента по идентичности, поэтому обслуживает один [fieldsOf].
   Iterable<T> whereMatches(
     SearchQuery query,
     Iterable<String?> Function(T item) fieldsOf, {

@@ -34,7 +34,7 @@ class IpQualitiesDao extends DatabaseAccessor<Database>
         .getSingleOrNull();
   }
 
-  /// Also drops every record older than [maxAge].
+  /// Также удаляет каждую запись старше [maxAge].
   Future<void> put(IpQuality quality, DateTime checkedAt, Duration maxAge) {
     return transaction(() async {
       await ipQualities.remove((t) => _checkedWithin(t, maxAge).not());
