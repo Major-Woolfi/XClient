@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -47,8 +45,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -63,8 +59,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -82,8 +76,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -112,8 +104,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -143,8 +133,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -162,6 +150,9 @@ jobs:
         with:
           toolchain: stable
 
+      - name: Install Inno Setup
+        run: choco install innosetup -y
+
       - name: Flutter build Windows debug
         run: flutter build windows --debug
 
@@ -169,8 +160,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -195,8 +184,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
@@ -213,8 +200,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
