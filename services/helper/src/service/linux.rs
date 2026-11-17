@@ -421,4 +421,3 @@ mod tests {
         assert_eq!(installed_owner_uid("[Unit]\n"), None);
     }
 }
-

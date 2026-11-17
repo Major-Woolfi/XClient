@@ -1532,4 +1532,3 @@ mod tests {
             .any(|entry| entry == "helper still logs after poisoning"));
     }
 }
-
