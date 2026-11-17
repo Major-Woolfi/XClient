@@ -28,8 +28,8 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // A desktop build started to the tray mounts while hidden, and a paused
-    // render never runs a post-frame callback.
+    // Десктопная сборка, запущенная в трей, монтируется скрытой, и приостановленный
+    // рендер никогда не вызывает post-frame колбэк.
     scheduleMicrotask(() {
       if (mounted) {
         _updateVisible(WidgetsBinding.instance.lifecycleState);
@@ -90,7 +90,7 @@ class _AppStateManagerState extends ConsumerState<AppStateManager>
     _updateVisible(state);
     if (state == AppLifecycleState.resumed) {
       unawaited(ref.read(locationPermissionsProvider.notifier).refresh());
-      // A certificate removed meanwhile stops decryption before the next start.
+      // Сертификат, удалённый тем временем, останавливает дешифровку перед следующим стартом.
       if (mitmFeature && ref.read(patchClashConfigProvider).mitm.enable) {
         unawaited(ref.read(mitmTrustStateProvider.notifier).refresh());
       }

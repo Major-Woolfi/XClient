@@ -22,7 +22,7 @@ Widget _sheet(BuildContext context, ScrollController? controller) {
     body: ListView.builder(
       controller: controller,
       itemCount: 60,
-      // Past the floating header, so it can be tapped.
+// За плавающей шапкой, чтобы её можно было потапать.
       itemBuilder: (context, index) => index == 3
           ? TextButton(
               onPressed: () => Navigator.of(context).pop('done'),
@@ -562,7 +562,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(sheetTop(tester), closeTo(expanded, 1));
-    // The content keeps under the finger while it still floats a little.
+// Контент остаётся под пальцем, пока лист ещё немного плавает.
     expect(contentOffset(tester), closeTo(300 - kDragSlopDefault, 4));
 
     await close(tester);

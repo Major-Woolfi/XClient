@@ -216,7 +216,7 @@ class ListItem<T> extends StatelessWidget {
     Widget? leading,
   }) {
     if (position != null) {
-      // OpenContainer reparents the closed tile out of the section's provider.
+      // OpenContainer переродит закрытую плитку из провайдера секции.
       return ItemPositionProvider(
         position: position,
         child: DecorationListItem(
@@ -301,8 +301,7 @@ class ListItem<T> extends StatelessWidget {
         return _buildRow(
           context,
           position: position,
-          // As an iOS pop-up row does, a tap anywhere on the row opens the
-          // menu out of its value.
+          // Как строка выплывающего меню iOS, тап где угодно по строке открывает меню из ее значения.
           onTap: () => openMenu?.call(),
           trailing: PopupAnchor(
             targetBuilder: (open) {

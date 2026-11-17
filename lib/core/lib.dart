@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:xclient/common/common.dart';
 import 'package:xclient/plugins/service.dart';
@@ -12,8 +11,8 @@ import 'interface.dart';
 import 'method.dart';
 import 'spill.dart';
 
-/// Android implementation of [CoreHandlerInterface] that bridges to the Android
-/// `:core` module via gomobile.
+/// Реализация [CoreHandlerInterface] для Android, мостит к модулю `:core`
+/// через gomobile.
 class CoreLib extends CoreHandlerInterface {
   static CoreLib? _instance;
 

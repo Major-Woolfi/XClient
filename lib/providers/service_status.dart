@@ -45,8 +45,8 @@ class ServiceStatus extends _$ServiceStatus
   }
 }
 
-/// How many of [enabledServiceTargets] the dashboard card has room for, which
-/// its sheet marks as shown there.
+/// Сколько из [enabledServiceTargets] dashboard-карта размещает, что её
+/// лист отмечает как показанное там.
 @Riverpod(keepAlive: true)
 class ShownServiceCount extends _$ShownServiceCount
     with AutoDisposeNotifierMixin {

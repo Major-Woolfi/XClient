@@ -384,8 +384,8 @@ class _AccessViewState extends ConsumerState<AccessView>
     };
     final needsInstalledAppsPermission =
         packages.isEmpty && !_installedAppsPermissionGranted;
-    // Only a choice of the user's changes the bar: a list still loading or
-    // filtered empty disables select all instead of taking it away.
+    // Только выбор пользователя меняет панель: список, который еще загружается
+    // или отфильтрован пуст, отключает «выбрать все» вместо того, чтобы убирать его.
     final selectAllAction =
         accessControl.enable && !needsInstalledAppsPermission
         ? _buildSelectAllAction(

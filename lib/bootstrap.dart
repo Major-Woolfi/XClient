@@ -9,7 +9,6 @@ import 'package:xclient/common/migration.dart';
 import 'package:xclient/common/tray.dart';
 import 'package:xclient/common/window.dart';
 import 'package:xclient/core/core.dart';
-import 'package:xclient/core/xray/xray_core_handler.dart';
 import 'package:xclient/database/database.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/l10n/l10n.dart';

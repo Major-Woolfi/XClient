@@ -10,9 +10,8 @@ final _scrollbarPaint = find.byWidgetPredicate(
 ScrollbarPainter scrollbarPainter(WidgetTester tester) =>
     tester.widget<CustomPaint>(_scrollbarPaint.first).foregroundPainter!
         as ScrollbarPainter;
-
-/// Nudges [scrollable] so its faded-out bar shows, and returns the global
-/// center of the thumb, which only takes a pointer while visible.
+/// Подталкивает [scrollable], чтобы его потускневшая полоса показалась, и возвращает
+/// глобальный центр большого пальца, который забирает указатель только пока видим.
 Future<Offset> revealScrollbarThumb(
   WidgetTester tester, {
   Finder? scrollable,
@@ -43,3 +42,4 @@ Future<Offset> revealScrollbarThumb(
   expect(top, isNotNull, reason: 'no visible scrollbar thumb');
   return box.localToGlobal(Offset(x, (top! + bottom!) / 2));
 }
+

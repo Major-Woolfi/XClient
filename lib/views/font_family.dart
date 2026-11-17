@@ -103,9 +103,9 @@ class _FontFamilyViewState extends ConsumerState<FontFamilyView> {
   }
 }
 
-/// Laying out a family for the first time loads it on the UI thread, longer
-/// for a large CJK one, so each name switches to its family on a frame of its
-/// own and none while the list or the route moves.
+/// Разметка шрифта в первый раз грузит его в UI-поток, дольше для большого CJK,
+/// поэтому каждое имя переключается к своей семье на своем кадре, и ни одного,
+/// пока список или маршрут движутся.
 class _FontLabel extends StatefulWidget {
   const _FontLabel({required this.family, required this.child});
 
@@ -165,12 +165,12 @@ class _FontLabelState extends State<_FontLabel> {
     final next = _waiting.firstOrNull;
     if (next != null && next.mounted) {
       if (isRouteMoving(next.context)) {
-        // The frames of the motion carry the queue until it stops.
+        // Кадры движения тащат очередь, пока она не остановится.
         SchedulerBinding.instance.addPostFrameCallback(_showNext);
         return;
       }
       final scrollPosition = Scrollable.maybeOf(next.context)?.position;
-      // A scroll can end without another frame to carry the queue.
+      // Скролл может закончиться без другого кадра, чтобы тащить очередь.
       if (scrollPosition?.isScrollingNotifier.value ?? false) {
         SchedulerBinding.instance
           ..addPostFrameCallback(_showNext)

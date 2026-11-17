@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:xclient/common/common.dart';
 import 'package:xclient/core/core.dart';
-import 'package:xclient/core/interface.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/models.dart';
 
@@ -123,7 +122,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
     try {
       _process?.kill();
-      await _process?.exitCode.timeout(const Duration(seconds: 10));
+      await _process?.exitCode.timeout(const Duration(seconds: 3));
     } catch (_) {
       _process?.kill();
     }

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:flutter/widgets.dart';
 
-/// Pinned to English so every locale reads K and M, never 万 or тыс.
+/// Пinned to English так, чтобы каждый локаль читал K и M, никогда не 万 или тыс.
 final _compactFormat = NumberFormat.compact(locale: 'en');
 
 extension NumExt on num {

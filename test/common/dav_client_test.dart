@@ -37,9 +37,8 @@ typedef _ScriptedResponse = ({
   int status,
   Map<String, String> headers,
 });
-
-/// A stand-in WebDAV origin: the tests drive the real client against a real
-/// socket, so status handling, auth and redirects are exercised end to end.
+/// Заглушка WebDAV-оржини: тесты управляют реальным клиентом против реального
+/// сокета, поэтому обработка статуса, аутентификации и перенаправлений проверяются сквозь всё.
 class _TestServer {
   _TestServer(this._server) {
     unawaited(_serve());
@@ -211,8 +210,8 @@ void main() {
     });
 
     setUp(() async {
-      // The widget test binding installs an override that answers every
-      // request with 400 instead of opening a socket.
+// Привязка виджета теста устанавливает переопределение, которое отвечает на каждый
+/// запрос с 400 вместо открытия сокета.
       testOverrides = HttpOverrides.current;
       HttpOverrides.global = null;
       server = await _TestServer.start();
@@ -354,5 +353,6 @@ void main() {
     });
   });
 }
+
 
 

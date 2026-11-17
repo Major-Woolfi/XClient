@@ -6,8 +6,8 @@ import 'models.dart';
 import 'parser.dart';
 import 'render.dart';
 
-/// Versions up to and including this tag are frozen: they predate the
-/// structured pipeline and are kept verbatim at the bottom of `CHANGELOG.md`.
+/// Версии до и включая этот тег заморожены: они предшествуют структурированному
+/// конвейеру и хранятся буквально внизу `CHANGELOG.md`.
 const frozenBoundaryTag = 'v0.8.96';
 
 const changelogDataPath = 'changelog.json';
@@ -38,9 +38,10 @@ class ChangelogBuildResult {
   final Changelog changelog;
   final List<String> warnings;
 
-  /// Short hashes of every commit that fed each version, including the ones
-  /// that produced no entry. `verify` uses it to allow hand written entries as
-  /// long as they point at a commit that really is in the version's range.
+  /// Короткие хеши каждого коммита, подпитавшего каждую версию, включая те,
+  /// что не дали записи. `verify` использует это, чтобы разрешить записи,
+  /// написанные вручную, если они указывают на коммит, который действительно
+  /// в диапазоне версии.
   final Map<String, Set<String>> commitIdsByTag;
 }
 
@@ -107,9 +108,10 @@ class ChangelogBuilder {
 
 final _frozenComment = RegExp(r'\s*<!--.*?-->', dotAll: true);
 
-/// End of the generated head: the frozen marker plus whatever comment lines
-/// follow it. Matching comments by shape rather than by text means the note can
-/// be reworded without stranding the previous wording in the frozen tail.
+/// Конец сгенерированной головы: маркер заморозки плюс любые комментарии,
+/// следующие за ним. Сопоставление комментариев по форме, а не по тексту
+/// означает, что примечание можно переформулировать, не оставляя предыдущую
+/// формулировку в замороженном хвосте.
 int _frozenBoundary(String content) {
   final markerIndex = content.indexOf(changelogFrozenMarker);
   if (markerIndex < 0) {
@@ -142,13 +144,13 @@ String markdownHead(String content) {
   return boundary < 0 ? content : content.substring(0, boundary);
 }
 
-/// Tags [derived] has a version for that [recorded] never wrote down.
+/// Теги [derived] имеют версию, которую [recorded] никогда не записал.
 ///
-/// This is what catches a release tagged without running `release` first. The
-/// entry-by-entry checks in `verify` only look at versions both sides have, so
-/// a version missing from `changelog.json` outright would otherwise pass and
-/// only surface at the end of the release, when `render` finds no notes for the
-/// tag being published.
+/// Именно это ловит релиз, помеченный без запуска `release` сначала.
+/// Проверки записи-записи в `verify` смотрят только на версии, которые есть
+/// с обеих сторон, поэтому версия, отсутствующая в `changelog.json` совсем,
+/// иначе прошла бы и проявилась только в конце релиза, когда `render` не
+/// найдёт заметок для публикуемого тега.
 List<String> missingReleaseTags(Changelog recorded, Changelog derived) {
   final known = <String>{for (final version in recorded.versions) version.tag};
   return <String>[
@@ -188,3 +190,4 @@ File resolve(String root, String path) {
   }
   return File('$root$separator$path');
 }
+

@@ -12,9 +12,9 @@ const _stripInset = 16.0;
 const _tabSpacing = 8.0;
 const _tabPadding = 16.0;
 
-/// The group chips over the proxies tab view. Only the chips in view are
-/// built: each chip's width comes from its label, so the strip can scroll to
-/// one it has not built.
+/// Групповые чипы над видом табов прокси. Строятся только чипы в виду:
+/// ширина каждого чипа берется из его надписи, поэтому полоса может прокрутить
+/// к тому, что еще не построила.
 class GroupTabs extends StatefulWidget {
   const GroupTabs({super.key, required this.controller, required this.groups});
 
@@ -28,7 +28,7 @@ class GroupTabs extends StatefulWidget {
 class _GroupTabsState extends State<GroupTabs> {
   static const _fadeExtent = 24.0;
 
-  // A sheet's controller would hand the strip's drags to the sheet.
+  // Контроллер листа отдал бы перетаскивания полосы листу.
   final _scrollController = ScrollController();
   final _hasMore = ValueNotifier(false);
   final _fade = ValueNotifier(0.0);
@@ -66,7 +66,7 @@ class _GroupTabsState extends State<GroupTabs> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(jump: true));
   }
 
-  // A tap animates across every tab between; only a swipe's passes count.
+  // Клик анимирует через каждый таб между; считаются только проходы свайпа.
   void _handleAnimation() {
     final controller = widget.controller;
     final index = controller.indexIsChanging
@@ -236,8 +236,8 @@ class _GroupTabsState extends State<GroupTabs> {
   }
 }
 
-/// The width each chip lays its label out at, worked out the way a
-/// [Card]'s button sizes itself.
+/// Ширина, которую чип отводит под надпись, высчитанная так, как
+/// [Card] подгоняет размер своей кнопки.
 class _TabExtents {
   _TabExtents._(this._key, this.widths) : starts = _startsOf(widths);
 
@@ -292,8 +292,8 @@ class _TabExtents {
   }
 }
 
-/// Reports the strip's whole extent, which a list of varied extents would
-/// otherwise extrapolate from the chips it has built.
+/// Сообщает всю длину полосы, которую список с разными экстентами в противном
+/// случае экстраполировал бы из построенных чипов.
 class _TabsDelegate extends SliverChildBuilderDelegate {
   _TabsDelegate(
     super.builder, {
@@ -325,8 +325,8 @@ class _NamesKey {
   int get hashCode => stringListEquality.hash(names);
 }
 
-/// Rebuilds only when it gains or loses the selection, so a swipe across
-/// hundreds of groups rebuilds two tabs per step instead of the strip.
+/// Перестраивается только при получении или потере выбора, так что свайп через
+/// сотни групп перестраивает два таба на шаг вместо всей полосы.
 class _GroupTab extends StatefulWidget {
   const _GroupTab({
     required this.name,

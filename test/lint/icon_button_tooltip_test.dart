@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'sources.dart';
-
-/// The one button that carries its label on an enclosing [Tooltip] instead of
-/// its own `tooltip:`. Nesting a second tooltip inside would fight it.
+/// Единственная кнопка, которая несёт свою метку на заключающем [Tooltip] вместо
+/// своего `tooltip:`. Вложение второго Tooltip внутрь воюет бы с ним.
 const _wrappedInTooltip = 'lib/views/dashboard/widgets/core_status_button.dart';
 
 final _iconButton = RegExp(r'\bCommonIconButton(?:\.filled)?\(');
@@ -50,7 +49,7 @@ void main() {
       for (final match in _iconButton.allMatches(source)) {
         final arguments = _arguments(source, match.end);
         if (RegExp(r'\btooltip\s*:').hasMatch(arguments)) continue;
-        // An icon slot holding text is already its own visible label.
+// Слот иконки, держащий текст, уже сам по себе видимая метка.
         if (RegExp(r'icon:\s*Text\(').hasMatch(arguments)) continue;
 
         final line = '\n'.allMatches(source.substring(0, match.start)).length;
@@ -78,3 +77,4 @@ void main() {
     );
   });
 }
+

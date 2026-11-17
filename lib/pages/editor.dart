@@ -39,12 +39,11 @@ export 'package:code_forge/code_forge.dart' show CodeForgeDocument;
 export 'package:xclient/features/editor/editor.dart'
     show EditorSchema, readRelaxed;
 
-/// Whether `main` initialised `RustLib`, which a test that needs it missing
-/// cannot undo once another test in its isolate has.
+/// Инициализирован ли `main` `RustLib`, который тест, которому он не хватает, не может отменить, пока другой тест в его изоляте не имеет его.
 @visibleForTesting
 bool Function() editorNativeReady = () => isRustLibInitialized;
 
-/// Opens [path] off the UI isolate, or [ifMissing] when nothing is there.
+/// Открывает [path] вне изолята UI, или [ifMissing], когда там ничего нет.
 Future<CodeForgeDocument> openEditorFile(
   String path, {
   String ifMissing = '',
@@ -56,7 +55,7 @@ Future<CodeForgeDocument> openEditorFile(
   }
 }
 
-/// The edited text, read off the UI isolate when it is long.
+/// Редактируемый текст, прочитанный вне изолята UI, когда он длинный.
 abstract interface class EditorContent {
   @visibleForTesting
   const factory EditorContent.text(String text) = _TextContent;
@@ -90,7 +89,7 @@ class _TextContent implements EditorContent {
   Future<Uint8List> readBytes() async => utf8.encode(_text);
 }
 
-/// [load] runs as the page mounts; open files in it with [openEditorFile].
+/// [load] запускается, когда страница монтируется; открывайте файлы в нем с помощью [openEditorFile].
 class EditorPage extends ConsumerStatefulWidget {
   final String title;
   final String? content;
@@ -98,11 +97,10 @@ class EditorPage extends ConsumerStatefulWidget {
   final Language language;
   final bool titleEditable;
 
-  /// Applied to what opens as one edit, which leaves it to save and undo.
+  /// Применяется к тому, что открывается как одна правка, оставляя сохранение и отмену на него.
   final String Function(String text)? edit;
 
-  /// A returned future is the save still running: until it completes the
-  /// page takes no second save and no pointer.
+  /// Возвращенное будущее — это еще запущенное сохранение: до его завершения страница не берет второе сохранение и никакой указатель.
   final FutureOr<void> Function(
     BuildContext context,
     String title,
@@ -110,7 +108,7 @@ class EditorPage extends ConsumerStatefulWidget {
   )?
   onSave;
 
-  /// Asked only when the text or the title has changed.
+  /// Спрашивается только когда текст или заголовок изменились.
   final Future<bool> Function(
     BuildContext context,
     String title,
@@ -459,9 +457,7 @@ class _EditorPageState extends ConsumerState<EditorPage>
   }
 }
 
-/// The code editor without page chrome, so it can fill a page or one pane
-/// of it. It shows its unavailable state when `main` did not initialise
-/// `RustLib`.
+/// Редактор кода без хрома страницы, так что он может заполнить страницу или одну панель из нее. Он показывает свое состояние недоступности, когда `main` не инициализировал `RustLib`.
 class EditorView extends ConsumerStatefulWidget {
   final CodeForgeDocument? document;
   final Language language;
@@ -515,9 +511,7 @@ class EditorViewState extends ConsumerState<EditorView> {
     }
   }
 
-  // The first document fills the controller before CodeForge mounts, which
-  // spares it laying out an empty one. A later one waits for the frame,
-  // since loading notifies the page, which no build in progress may set.
+  // Первый документ заполняет контроллер до того, как CodeForge монтируется, что сберегает его от раскладки пустого. Поздний ждет кадр, так как загрузка уведомляет страницу, которой нет сборки в прогрессе, которая может установить.
   void _show(CodeForgeDocument? document) {
     if (document == null) {
       return;
@@ -680,8 +674,7 @@ class _CodeEditor extends ConsumerStatefulWidget {
 }
 
 class _CodeEditorState extends ConsumerState<_CodeEditor> {
-  // CodeForge compares these by identity and rebuilds its whole layout and
-  // highlighter on any change, so each is rebuilt only when its inputs change.
+  // CodeForge сравнивает их по идентичности и перестраивает всю свою раскладку и хайлайтер на любое изменение, так что каждый перестраивается только когда меняются его входы.
   ColorScheme? _colorScheme;
   Map<String, TextStyle> _editorTheme = const {};
   CodeSelectionStyle? _selectionStyle;
@@ -735,8 +728,7 @@ class _CodeEditorState extends ConsumerState<_CodeEditor> {
     }
   }
 
-  // The bar floats over the text, which scrolls under it from a first line
-  // held clear of it; an open find panel takes that clearance instead.
+  // Панель плавает над текстом, который скроллится под ней от первой строки, gehouden чистой перед ней; открытая панель поиска берет это зазор вместо нее.
   void _updateInnerPadding(BuildContext context) {
     final padding = EdgeInsets.only(
       top: _findActive ? _findRowGap : context.appBarInset,
@@ -891,7 +883,7 @@ class _CodeEditorState extends ConsumerState<_CodeEditor> {
     final composition = controller.imeComposition;
     final focusNode = controller.focusNode;
     final hadFocus = focusNode?.hasFocus ?? false;
-    // Typing or a focus change reaches the editor with no pointer down.
+    // Набор или смена фокуса достигает редактора без нажатия указателя.
     void closeOnceOutdated() {
       if (selectingAll) return;
       final outdated =
@@ -978,7 +970,7 @@ class _CodeEditorState extends ConsumerState<_CodeEditor> {
   }
 }
 
-// The app's desktop behavior would also pan the view on a mouse drag-select.
+// Поведение рабочего стола приложения также бы переместило бы вид при перетаскивании мышью для выделения.
 class _NoMouseDragScroll extends StatelessWidget {
   const _NoMouseDragScroll({required this.child});
 
@@ -996,9 +988,7 @@ class _NoMouseDragScroll extends StatelessWidget {
   }
 }
 
-// atom-one colours keys and numbers alike and has no entry for several scopes
-// highlight.js emits, which then render as plain text. Mapping them onto the
-// palette gives each kind of token one colour in every language.
+// atom-one окрашивает ключи и числа одинаково и не имеет записи для нескольких областей, которые highlight.js излучает, которые затем отрисовываются как простой текст. Отображение их на палитру дает каждому типу токена один цвет на каждом языке.
 Map<String, TextStyle> _highlightTheme(
   ColorScheme colorScheme,
   Language language,
@@ -1014,7 +1004,7 @@ Map<String, TextStyle> _highlightTheme(
     'title.class': palette['title.class_']!,
     'title.class.inherited': palette['title.class_']!,
     'variable.language': palette['built_in']!,
-    // The JSON grammar nests `true`, `false` and `null` as keywords in a literal.
+    // Грамматика JSON вкладывает `true`, `false` и `null` как ключевые слова в литерал.
     if (language == Language.json) 'keyword': palette['literal']!,
     'root': TextStyle(
       color: colorScheme.onSurface,
@@ -1081,9 +1071,7 @@ class FindPanel extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  // A table, so the replace field lines up with the find field above it
-  // whatever width the localized replace labels take. Too narrow for the
-  // buttons beside the field, they move under it.
+  // Таблица, так что поле замены выравнивается с полем поиска над ней, какую бы ширину ни取 локализованные надписи замены. Слишком узко для кнопок рядом с полем, они едут под него.
   Widget _buildRows(BuildContext context, BoxConstraints constraints) {
     final appLocalizations = context.appLocalizations;
     final hasMatches = controller.matchCount > 0;

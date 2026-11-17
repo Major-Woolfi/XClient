@@ -1096,7 +1096,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.getRect(find.byTooltip('Sync2')), rectMoreOrLessEquals(rest));
 
-    // A group the lift laid out at its shrunken size overflowed.
+// Группа, которую лифт разложил в своем сжатом размере, переполнилась.
     pages.push(
       PagedSheetRoute<void>(builder: (_) => sheetPage(3, group: true)),
     );

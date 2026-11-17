@@ -10,7 +10,7 @@ const _mobileMaxWidth = 560.0;
 
 int dashboardColumnsOf(double width) => width < _minFourColumnWidth ? 2 : 4;
 
-/// The mobile cards and their editor share one centered column.
+/// Мобильные карточки и их редактор делят одну центрированную колонку.
 double dashboardMobileSideOf(double width) =>
     math.max(16, (width - _mobileMaxWidth) / 2);
 

@@ -40,8 +40,7 @@ class ExpireChip extends StatelessWidget {
   }
 }
 
-/// A title followed by an optional count chip and an expiry chip. The expiry
-/// chip gives way before it would squeeze the title below half the row.
+/// Заголовок с необязательным чипом счетчика и чипом истечения. Чип истечения уступает, прежде чем сдавит заголовок ниже половины строки.
 class ChipTitle extends StatelessWidget {
   final String title;
   final String? chip;

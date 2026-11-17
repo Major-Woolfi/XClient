@@ -16,7 +16,7 @@ class XClientHttpOverrides extends HttpOverrides {
   static const _coreRootsAsset =
       'core/Clash.Meta/component/ca/ca-certificates.crt';
 
-  /// The bundle the core embeds; only release CI fills it.
+  /// Бандл, который встроен ядром; только релизная CI заполняет его.
   static Future<void> trustCoreRoots() async {
     try {
       final data = await rootBundle.load(_coreRootsAsset);

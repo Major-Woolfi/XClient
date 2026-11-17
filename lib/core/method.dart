@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:xclient/enum/enum.dart';
 
-/// A Core method by its wire name, `area.verb` as `core/protocol.go` names it.
+/// Метод ядра по его wire name, `area.verb` как в core/protocol.go.
 enum CoreMethod {
   coreInit('core.init'),
   coreInitialized('core.initialized'),
@@ -61,7 +61,7 @@ enum CoreMethod {
   mitmExchange('mitm.exchange'),
   mitmBody('mitm.body'),
 
-  /// The envelope of the Core's event batches, never called.
+  /// Конверт пакетов событий ядра, никогда не вызывается.
   message('message');
 
   final String wireName;
@@ -134,7 +134,7 @@ class CoreMethodResponse {
   final Object? result;
   final CoreMethodError? error;
 
-  /// Where the Core wrote the whole response instead; see `spill.dart`.
+  /// Куда ядро записало весь ответ вместо этого; см. `spill.dart`.
   final String? file;
 
   const CoreMethodResponse({this.id, this.result, this.error, this.file});
@@ -194,7 +194,7 @@ class CoreMethodException implements Exception {
   String toString() => 'CoreMethodException($code, $message, $details)';
 }
 
-/// A Core that never answered, as opposed to one that answered with an error.
+/// Ядро вообще не ответило, в отличие от ответа с ошибкой.
 bool isUnansweredCoreError(Object? error) => switch (error) {
   TimeoutException() => true,
   CoreMethodException(:final code) =>

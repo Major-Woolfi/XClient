@@ -42,7 +42,7 @@ void main() {
     if (home.existsSync()) home.deleteSync(recursive: true);
   });
 
-  // `getFileInfo` stats the file on the real event loop, outside fake-async.
+// `getFileInfo` статистирует файл на реальном	event-цикле, вне fake-async.
   Future<void> settle(WidgetTester tester, {int rounds = 1}) async {
     for (var i = 0; i < rounds; i++) {
       await tester.runAsync(

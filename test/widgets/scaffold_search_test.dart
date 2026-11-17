@@ -408,7 +408,7 @@ void main() {
     );
 
     FocusManager.instance.primaryFocus?.unfocus();
-    // The field folds back once the focus change lands, a frame on.
+// Поле сворачивается обратно, как только изменение фокуса прилагается, кадр спустя.
     await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 250));

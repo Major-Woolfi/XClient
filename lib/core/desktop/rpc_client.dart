@@ -11,8 +11,8 @@ import 'package:flutter/foundation.dart' show visibleForTesting;
 
 import 'transport.dart';
 
-/// How many timeout windows a request may be extended across while Core keeps
-/// answering other requests, before it fails regardless.
+/// Сколько окон таймаута запрос может быть продлён, пока ядро отвечает на
+/// другие запросы, прежде чем он упадёт в любом случае.
 const _maxTimeoutExtension = 3;
 
 const _maxExtensionGrace = Duration(seconds: 30);
@@ -43,11 +43,11 @@ final class CoreRpcClient implements CoreRpcChannel {
   int _methodCallId = 0;
   Future<void>? _closeOperation;
 
-  /// Time since Core last answered any request. A method timeout is a liveness
-  /// guard for a stalled link (a restart mid-flight, a stream that stopped
-  /// carrying data), not a budget for how long a single method may take - so a
-  /// request that is still waiting while Core demonstrably keeps replying to
-  /// its siblings gets its window re-armed instead of being failed.
+  /// Время с последнего ответа ядра на любой запрос. Таймаут метода — это
+  /// сторожевой зависшего канала (перезапуск на ходу, поток, который перестал
+  /// таскать данные), а не бюджет на то, сколько может длиться один метод —
+  /// поэтому запрос, который всё ещё ждёт, пока ядро демонстративно отвечает
+  /// на свои «соседние» запросы, получает продлённое окно вместо отказа.
   final Stopwatch _sinceLastResponse = Stopwatch()..start();
 
   CoreRpcClient(
@@ -125,12 +125,12 @@ final class CoreRpcClient implements CoreRpcChannel {
     }
   }
 
-  /// Waits for [completer], re-arming the window every time Core proves the
-  /// link is still alive by answering some other request, so a slow method is
-  /// not failed on behalf of a healthy link. Two things still end the wait:
-  /// [idleTimeout] of silence, and a hard deadline set by whichever of
-  /// [_maxTimeoutExtension] windows and [extensionGrace] on top binds first -
-  /// a Core answering everything except this request has to surface as well.
+  /// Ждёт [completer], переarmeедное окно каждый раз, когда ядро доказывает,
+  /// что канал ещё жив, отвечая на другой запрос, поэтому медленный метод не
+  /// обрывается из-за здорового канала. Две вещи всё равно завершают ожидание:
+  /// [idleTimeout] молчания и жесткий дедлайн, что срабатывает раньше из окон
+  /// [_maxTimeoutExtension] и [extensionGrace] сверху — ядро, отвечающее на всё,
+  /// кроме этого запроса, всё равно всплывёт.
   Future<Object?> _awaitResponse({
     required CoreMethod method,
     required Completer<Object?> completer,
@@ -142,8 +142,8 @@ final class CoreRpcClient implements CoreRpcChannel {
       idleTimeout + extensionGrace,
     );
     while (true) {
-      // Silence is measured from the last response or from this request's own
-      // start, whichever is later: an idle app must not shorten a fresh window.
+      // Тишина меряется от последнего ответа или от начала этого же запроса —
+      // whichever позже: бездействующее приложение не должно сокращать свежее окно.
       final silence = _shorter(_sinceLastResponse.elapsed, elapsed.elapsed);
       final remaining = _shorter(
         idleTimeout - silence,
@@ -203,8 +203,8 @@ final class CoreRpcClient implements CoreRpcChannel {
   }
 
   void _handleResponse(CoreMethodResponse response) {
-    // Proof of life for every pending request, including a late response whose
-    // own caller already gave up.
+    // Доказательство жизни для каждого ожидающего запроса, включая поздний
+    // ответ, чей вызывающий уже сдался.
     _sinceLastResponse
       ..reset()
       ..start();

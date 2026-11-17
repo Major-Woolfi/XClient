@@ -63,8 +63,7 @@ class TestApp extends StatelessWidget {
         : app;
   }
 }
-
-/// The scopes ThemeManager adds under PrismApp's.
+/// Области, которые добавляет ThemeManager под PrismApp's.
 Widget wrapViewScopes(BuildContext context, Widget child) {
   globalState.measure = MeasureScope.of(context);
   final hasProviders =
@@ -72,8 +71,7 @@ Widget wrapViewScopes(BuildContext context, Widget child) {
       null;
   return hasProviders ? AppViewScope(child: child) : child;
 }
-
-/// The scopes PrismApp and ThemeManager provide, for a test with its own
+/// Области, которые предоставляют PrismApp и ThemeManager, для теста со своим
 /// HostApp.
 Widget wrapAppScopes(BuildContext context, Widget child) {
   return MeasureScope(
@@ -85,8 +83,7 @@ Widget wrapAppScopes(BuildContext context, Widget child) {
     ),
   );
 }
-
-/// An app with only what a widget test asks of it, on the real PrismApp.
+/// Приложение с тем, о чём просит виджет-тест, на реальном PrismApp.
 class HostApp extends StatelessWidget {
   const HostApp({
     super.key,
@@ -135,8 +132,7 @@ class HostApp extends StatelessWidget {
     );
   }
 }
-
-/// A plain page route with a fade, for a test about what is under or over it.
+/// Обычный страничный маршрут с затуханием, для теста о том, что под или над ним.
 class HostPageRoute<T> extends PageRoute<T> {
   HostPageRoute({
     required this.builder,
@@ -173,8 +169,7 @@ class HostPageRoute<T> extends PageRoute<T> {
     Widget child,
   ) => FadeTransition(opacity: animation, child: child);
 }
-
-/// A plain modal with a dim, for a test about what lies under one.
+/// Обычный модальный диалог с затемнением, для теста о том, что лежит под ним.
 Future<T?> showDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
@@ -189,5 +184,6 @@ Future<T?> showDialog<T>({
   transitionBuilder: (_, animation, _, child) =>
       FadeTransition(opacity: animation, child: child),
 );
+
 
 

@@ -67,8 +67,8 @@ HotKeyAction? _conflictOf(List<HotKeyAction> actions, HotKeyAction binding) {
   return null;
 }
 
-/// Stores [binding] for its action, or clears the action when it has no key.
-/// Another action holding the same combination loses it.
+/// Сохраняет [binding] для его действия, или очищает действие, когда у него нет ключа.
+/// Другое действие, удерживающее то же сочетание, теряет его.
 List<HotKeyAction> _withBinding(
   List<HotKeyAction> actions,
   HotKeyAction binding,

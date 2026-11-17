@@ -26,9 +26,7 @@ String _readyTip(AppLocalizations appLocalizations) => system.isWindows
     ? '${appLocalizations.updateReadyTip}\n${appLocalizations.updateRestartTip}'
     : appLocalizations.updateReadyTip;
 
-/// The phone dashboard's top card while an update downloads or waits. It keeps
-/// the last download on screen as it leaves, and takes its own gap so the cards
-/// below close up with it.
+/// Верхняя карточка панели телефона, пока обновление скачивается или ждет. Она держит последнюю загрузку на экране, пока уходит, и берет свой собственный зазор, так что карточки ниже закрываются с ней.
 class UpdateStatusSlot extends ConsumerStatefulWidget {
   const UpdateStatusSlot({super.key, required this.gap});
 

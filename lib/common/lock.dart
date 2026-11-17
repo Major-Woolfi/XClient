@@ -4,9 +4,9 @@ import 'package:xclient/common/common.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:flutter/foundation.dart';
 
-/// Keeps two processes off one data directory. Raising the running window is
-/// the platform's job: LaunchServices reopen, GApplication activation, or the
-/// app_links hand-off in the Windows runner.
+/// Не даёт двум процессам работать с одной директорией данных. Поднятие окна
+/// запущенного приложения — задача платформы: повторное открытие LaunchServices,
+/// активация GApplication или передача app_links в Windows-раннере.
 class SingleInstanceLock {
   static SingleInstanceLock? _instance;
   RandomAccessFile? _accessFile;

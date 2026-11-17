@@ -41,17 +41,22 @@ final class SystemExitCoordinator {
       }
     }
 
+    // Watchdog covers cleanup and window close only. Core shutdown
+    // (closeCore) must complete before the process exits, otherwise
+    // child core processes (Xray, Clash) are left orphaned.
     final watchdog = Timer(watchdogDuration, () {
       unawaited(_exitApplicationOnce().catchError((_) {}));
     });
     try {
       await runStep(cleanup);
       await runStep(closeWindow);
-      await runStep(closeCore);
     } finally {
       watchdog.cancel();
-      await runStep(_exitApplicationOnce);
     }
+
+    await runStep(closeCore);
+    await runStep(_exitApplicationOnce);
+
     final error = firstError;
     if (error != null) {
       Error.throwWithStackTrace(error, firstStackTrace!);

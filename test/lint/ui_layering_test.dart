@@ -30,9 +30,8 @@ bool _staysInUi(String path) =>
     !path.startsWith('lib/') ||
     path.startsWith('lib/ui/') ||
     (path.startsWith('lib/common/') && path != 'lib/common/common.dart');
-
-/// The chain of files from [root] to the first one outside the UI layer, or
-/// null when every file [root] reaches stays in it.
+/// Цепочка файлов от [root] до первого, вне UI-слоя, или
+/// null, когда каждый файл, которого [root] достигает, остаётся в нём.
 List<String>? _escape(String root) {
   final parents = <String, String>{};
   final queue = [root];
@@ -82,6 +81,7 @@ void main() {
     );
   });
 }
+
 
 
 

@@ -11,7 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/state.dart';
 
-/// A rebuilt ThemeData never equals the last, and ThemeCrossFade fades on that.
+/// Пересобранный ThemeData никогда не равен последнему, и ThemeCrossFade затухает на этом.
 final _appThemes = <Brightness, ({Object inputs, ThemeData theme})>{};
 
 ThemeData watchAppTheme(WidgetRef ref, Brightness brightness) {
@@ -74,8 +74,8 @@ class ThemeManager extends ConsumerWidget {
             systemNavigationBarIconBrightness: iconBrightness,
             systemNavigationBarColor: Colors.transparent,
             systemNavigationBarDividerColor: Colors.transparent,
-            // Pages scroll under the navigation bar. Android scrims only a
-            // three-button bar for it; the gesture handle stays clear.
+            // Страницы скроллятся под навигационной панелью. Android затемняет только
+            // трехкнопочную панель для неё; жестовая ручка остается свободной.
             systemNavigationBarContrastEnforced: true,
           ),
           sized: false,
@@ -90,9 +90,8 @@ class ThemeManager extends ConsumerWidget {
     globalState.measure = MeasureScope.of(context);
     return AppViewScope(
       child: _AppMediaQuery(
-        // Every rebuild outside a nearer LayoutBuilder, a route transition's
-        // on each of its frames, relays this one out; the boundaries keep
-        // that from repainting the app from the root.
+        // Каждая перестройка вне ближайшего LayoutBuilder, переход роута на каждом
+        // своем кадре, перекладывает это наружу; границы предотвращают перерисовку приложения от корня.
         child: RepaintBoundary(
           child: LayoutBuilder(
             builder: (_, constraints) {

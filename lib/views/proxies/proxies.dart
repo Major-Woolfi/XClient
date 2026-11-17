@@ -13,8 +13,7 @@ import 'tab.dart';
 class ProxiesView extends ConsumerStatefulWidget {
   const ProxiesView({super.key, this.picker = false});
 
-  /// Leaves the bar only its search and delay test, for picking a proxy from a
-  /// sheet.
+  /// Оставляет на панели только поиск и тест задержки, для выбора прокси из листа.
   final bool picker;
 
   @override
@@ -24,8 +23,8 @@ class ProxiesView extends ConsumerStatefulWidget {
 class _ProxiesViewState extends ConsumerState<ProxiesView> {
   final GlobalKey<ProxiesTabViewState> _proxiesTabKey = GlobalKey();
 
-  // The same instance on every build, so the bar changing with the current
-  // group or its delay test leaves the page alone.
+  // Тот же экземпляр на каждой сборке, поэтому изменение панели с текущей группой
+  // или ее тестом задержки не трогает страницу.
   late final _tabView = ProxiesTabView(key: _proxiesTabKey);
   bool _isTab = false;
 

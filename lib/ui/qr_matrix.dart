@@ -42,15 +42,14 @@ const _formatGenerator = 0x537;
 const _formatMask = 0x5412;
 const _versionGenerator = 0x1F25;
 
-/// The modules of a QR code holding a string in byte mode at error correction
-/// level M.
+/// Модули QR-кода, хранящие строку в байтовом режиме на уровне исправления ошибок M.
 final class QrMatrix {
   final int size;
   final Uint8List _modules;
 
   QrMatrix._(this.size, this._modules);
 
-  /// Null when [data] does not fit the largest code.
+  /// Null когда [data] не вписывается в наибольший код.
   static QrMatrix? encode(String data) {
     final bytes = utf8.encode(data);
     final eci = data.codeUnits.any((unit) => unit > 255);
@@ -489,8 +488,8 @@ const _alignmentPositions = <List<int>>[
   [6, 30, 58, 86, 114, 142, 170],
 ];
 
-// Per version: block count, codewords and data codewords of the first group,
-// then of the second where there is one.
+// На версию: количество блоков, кодовые слова и данные кодовых слов первой группы,
+// затем второй, где он есть.
 const _blocks = <List<int>>[
   [1, 26, 16],
   [1, 44, 28],

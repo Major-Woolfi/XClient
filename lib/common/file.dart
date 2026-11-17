@@ -3,7 +3,7 @@ import 'dart:io';
 const _replaceAttempts = 10;
 const _replaceRetryDelay = Duration(milliseconds: 50);
 
-/// The prefix mihomo's `age.DecryptBytes` tells an encrypted config by.
+/// Префикс, по которому `age.DecryptBytes` из mihomo узнаёт зашифрованный конфиг.
 const _ageArmorHeader = '-----BEGIN AGE ENCRYPTED FILE-----';
 
 extension FileExt on File {
@@ -41,7 +41,7 @@ extension FileExt on File {
     return writeAsBytes(bytes);
   }
 
-  /// Writes to one file must not overlap: they share the temporary sibling.
+  /// Запись в один файл не должна перекрываться: они делят временный однолеток.
   Future<void> writeAsStringAtomically(String content) async {
     final temp = File('$path.$pid.tmp');
     try {

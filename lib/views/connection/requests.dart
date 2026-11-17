@@ -90,7 +90,7 @@ class _RequestsViewState extends ConsumerState<RequestsView>
     if (feed == _feed) {
       return;
     }
-    // Offered before the feed mounts: a build below this page can't notify it.
+    // Предложено перед монтированием фида: сборка ниже этой страницы не может уведомить его.
     if (feed == RequestFeed.recent) {
       _showLatestRequests();
     }
@@ -337,7 +337,7 @@ class _LiveFeedState extends ConsumerState<_LiveFeed>
   final _speedRanker = TrackerSpeedRanker();
   late final ScrollController _scrollController;
   var _loaded = false;
-  // A sheet's one controller opens where the recent feed reads, its far end.
+  // Контроллер листа открывается там, где читает недавний фид, на его дальнем конце.
   late var _startsAtFarEnd = widget.scrollController != null;
 
   @override
@@ -392,7 +392,7 @@ class _LiveFeedState extends ConsumerState<_LiveFeed>
     if (!_loaded) {
       showFirstContent(() {
         setState(() => _loaded = true);
-        // A failed read must not leave the controller's list from the last visit.
+        // Неудачное чтение не должно оставить список контроллера от последнего визита.
         _applyConnections(trackerInfos ?? const [], readAt);
       });
       return;

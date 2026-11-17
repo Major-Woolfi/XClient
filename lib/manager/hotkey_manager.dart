@@ -158,8 +158,8 @@ class _HotKeyManagerState extends ConsumerState<HotKeyManager> {
     }
   }
 
-  /// While the recorder is open nothing is registered, so the OS hands the
-  /// recorder a combination that is already bound instead of running it.
+  /// Покарекorder открыт, ничего не регистрируется, поэтому ОС отдает рекордеру
+  /// сочетание, которое уже привязано, вместо запуска.
   Future<void> _updateHotKeys() async {
     if (!mounted) {
       return;

@@ -3,7 +3,7 @@ import 'package:code_forge/code_forge.dart'
 
 const _maxSuggestions = 60;
 
-/// A prefix beats a segment prefix, which beats the letters in order.
+/// Префикс битьет сегмент-префикс, который битьет буквы по порядку.
 int? completionScore(String candidate, String typed) {
   if (typed.isEmpty) {
     return 0;

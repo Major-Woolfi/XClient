@@ -218,8 +218,7 @@ void main() {
     );
     await tester.pump();
   }
-
-  /// The option sheet pages over the form, as it does in the app.
+/// Лист опций листает поверх формы, как это делает в приложении.
   Future<void> pumpGroupSheet(WidgetTester tester) async {
     await pumpEditView(
       tester,
@@ -487,7 +486,7 @@ void main() {
             .descendant(of: picker, matching: find.byType(Scrollable))
             .first,
       );
-      // Clears the docked search, which floats over the end of the list.
+// Очищает прикреплённый поиск, который плавает над концом списка.
       await Scrollable.ensureVisible(
         tester.element(offered(_hongKong.label)),
         alignment: 0.5,
@@ -1035,5 +1034,6 @@ void main() {
     });
   });
 }
+
 
 

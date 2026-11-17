@@ -223,7 +223,7 @@ class XrayLink {
 XrayLink decodeXrayLink(String link) {
   final uri = Uri.tryParse(link);
   if (uri == null) {
-    return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 
   final scheme = uri.scheme.toLowerCase();
@@ -249,7 +249,7 @@ XrayLink decodeXrayLink(String link) {
     case XrayLinkType.ssconf:
       return _decodeSsconf(link);
     case XrayLinkType.unknown:
-      return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 }
 
@@ -261,7 +261,7 @@ XrayLink _decodeVmess(String link, Uri uri) {
     final padded = encoded + '=' * padding;
     jsonStr = utf8.decode(base64Url.decode(padded));
   } catch (e) {
-    return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 
   try {
@@ -285,7 +285,7 @@ XrayLink _decodeVmess(String link, Uri uri) {
       extra: config,
     );
   } catch (e) {
-    return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 }
 
@@ -332,12 +332,12 @@ XrayLink _decodeTrojan(Uri uri) {
 XrayLink _decodeShadowsocks(Uri uri) {
   try {
     final encoded = uri.userInfo;
-    if (encoded.isEmpty) return XrayLink(type: XrayLinkType.unknown);
+    if (encoded.isEmpty) return const XrayLink(type: XrayLinkType.unknown);
     final padding = (4 - encoded.length % 4) % 4;
     final padded = encoded + '=' * padding;
     final decoded = utf8.decode(base64Url.decode(padded));
     final parts = decoded.split(':');
-    if (parts.length < 2) return XrayLink(type: XrayLinkType.unknown);
+    if (parts.length < 2) return const XrayLink(type: XrayLinkType.unknown);
 
     return XrayLink(
       type: XrayLinkType.shadowsocks,
@@ -350,7 +350,7 @@ XrayLink _decodeShadowsocks(Uri uri) {
       extra: uri.queryParameters,
     );
   } catch (e) {
-    return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 }
 
@@ -362,7 +362,7 @@ XrayLink _decodeSsconf(String link) {
     final decoded = utf8.decode(base64Url.decode(padded));
     return decodeXrayLink(decoded);
   } catch (e) {
-    return XrayLink(type: XrayLinkType.unknown);
+    return const XrayLink(type: XrayLinkType.unknown);
   }
 }
 

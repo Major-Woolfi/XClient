@@ -1,5 +1,4 @@
-/// Emoji in a string: flags, keycaps, and pictographs with their modifiers,
-/// presentation selectors, tags and joined parts.
+/// Эмодзи в строке: флаги, ключи и пиктографы с их модификаторами, селекторы презентации, теги и соединенные части.
 final emojiPattern = RegExp(
   // ignore: valid_regexps
   r'\p{RI}\p{RI}'

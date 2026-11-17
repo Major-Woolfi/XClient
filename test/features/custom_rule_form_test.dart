@@ -65,8 +65,7 @@ class _TestClashProviders extends ClashProviders {
       ),
   ]);
 }
-
-/// The list of the open selection sheet, not the search field docked below it.
+/// Список открытого листа выбора, не поля поиска, пристыкованного ниже.
 final _selectionList = find
     .descendant(
       of: find.byWidgetPredicate((widget) => widget is SelectionSheet),
@@ -485,5 +484,6 @@ void main() {
     expect(field.right, lessThanOrEqualTo(sheet.right));
   });
 }
+
 
 

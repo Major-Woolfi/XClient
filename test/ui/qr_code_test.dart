@@ -134,9 +134,8 @@ int _bchRemainder(int data, int generator, int degree) {
   }
   return remainder;
 }
-
-/// A decoder that shares nothing with `QrMatrix`, so a wrong table or module
-/// placement there cannot cancel itself out in a round trip.
+/// Декодер, который ничего не разделяет с `QrMatrix`, так что неправильная таблица или размещение модуля
+/// там не могутネтрализовать друг друга в круговом поезде.
 final class _Decoded {
   final int version;
   final int mask;
@@ -492,5 +491,6 @@ void main() {
     });
   });
 }
+
 
 

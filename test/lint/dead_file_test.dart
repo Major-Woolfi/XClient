@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 const _entryPoints = ['lib/main.dart'];
-
-/// Types, and the top level names a file publishes alongside them - the
-/// `final appPath = AppPath()` singleton pattern is how most of `lib/common`
-/// is actually consumed.
+/// Типы, и верхние имена, которые файл публикует рядом с ними — паттерн
+/// синглтона `final appPath = AppPath()` так большая часть `lib/common`
+/// на самом деле потребляется.
 final _declaration = RegExp(
   r'^(?:abstract |sealed |final |base |mixin )*'
   r'(?:(?:class|enum|mixin)\s+([A-Za-z]\w*)'
@@ -45,8 +44,8 @@ bool _isBarrel(String source) {
 
 void main() {
   test('every file under lib declares something used outside itself', () {
-    // Generated code counts as a consumer but never as a declarer: a riverpod
-    // notifier is reached through the provider its annotation generates.
+// Сгенерированный код считается потребителем, но никогда декларатором: notifier
+/// riverpod alcanцируется через провайдер, который порождает его аннотация.
     final consumers = {
       for (final file in _dartFiles(includeGenerated: true))
         file.path: file.readAsStringSync(),
@@ -69,9 +68,9 @@ void main() {
       if (barrels.contains(path) || _entryPoints.contains(path)) continue;
       if (path.startsWith('lib/l10n/')) continue;
 
-      // Extensions and typedefs are reached through the types they attach to,
-      // never by name, so a file that publishes only those cannot be measured
-      // this way.
+// Расширения и typedef alcanцируются через типы, к которым они привязаны,
+/// никогда не по имени, так что файл, публикующий только их, не может быть
+/// измерен таким образом.
       final names = _declaration
           .allMatches(source)
           .map((match) => match.group(1) ?? match.group(2)!)
@@ -94,3 +93,4 @@ void main() {
     expect(orphans, isEmpty, reason: orphans.join('\n'));
   });
 }
+

@@ -16,9 +16,8 @@ import '../helpers/app_paths.dart';
 import '../helpers/test_app.dart';
 import '../helpers/test_profiles.dart';
 import '../helpers/host_scaffold.dart';
-
-/// The edit page disposes the profile by scheduling an auto-apply; keep that a
-/// no-op so the setup machinery never runs in a widget test.
+/// Страница редактирования утилизирует профиль, планируя авто-применение; держите это
+/// no-op, чтобы механизм настройки никогда не запускался в виджет-тесте.
 class _NoopSetupAction extends SetupAction {
   @override
   void autoApplyProfile() {}
@@ -26,9 +25,8 @@ class _NoopSetupAction extends SetupAction {
 
 Profile _urlProfile() =>
     Profile.normal(label: 'test', url: 'https://example.com/sub');
-
-/// Pumps [EditProfileView] inside a page route (as `showExtend` does), with an
-/// outside focus node so escape behavior can be asserted.
+/// Накачивает [EditProfileView] внутри страничного маршрута (как делает `showExtend`), с
+/// внешним узлом фокуса, чтобы поведение эскейпа можно было утверждать.
 Future<FocusNode> pumpEditProfile(
   WidgetTester tester, {
   Profile? profile,
@@ -46,9 +44,9 @@ Future<FocusNode> pumpEditProfile(
     ],
   );
   addTearDown(container.dispose);
-  // Unmount the widget tree before the container is disposed so State.dispose
-  // (which reads a provider) runs against a live container. Teardowns run LIFO,
-  // so this must be registered after `container.dispose`.
+// Размонтируйте дерево виджетов перед утилизацией контейнера, чтобы State.dispose
+/// (который читает провайдер) запускался против живого контейнера. Teardowns запускаются LIFO,
+/// так что это должно быть зарегистрировано после `container.dispose`.
   addTearDown(() async {
     await tester.pumpWidget(const SizedBox());
   });
@@ -198,5 +196,6 @@ void main() {
     expect(saved.autoUpdateDuration, profile.autoUpdateDuration);
   });
 }
+
 
 

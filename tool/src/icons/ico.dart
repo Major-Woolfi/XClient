@@ -9,11 +9,10 @@ final class IcoEntry {
 
 const _headerSize = 6;
 const _directoryEntrySize = 16;
-
-/// Every size the Windows shell requests, so no glyph is resampled from a far neighbour.
+/// Каждый размер, который запрашивает оболочка Windows, так что никакой глиф не
+/// передискретизируется от далёкого соседа.
 const icoSizes = [16, 20, 24, 32, 40, 48, 64, 96, 128, 256];
-
-/// The tray only ever asks for `SM_CXSMICON` (16..32) plus a 2x headroom.
+/// Панель задач только когда-либо просит `SM_CXSMICON` (16..32) плюс 2x запас.
 const trayIcoSizes = [16, 20, 24, 32, 40, 48, 64];
 
 Uint8List buildIco(List<IcoEntry> entries) {
@@ -51,3 +50,4 @@ Uint8List _uint16(int value) {
 Uint8List _uint32(int value) {
   return (ByteData(4)..setUint32(0, value, Endian.little)).buffer.asUint8List();
 }
+

@@ -59,10 +59,10 @@ void _reportOptimisticFailure(Object error, StackTrace stackTrace) {
   );
 }
 
-/// Read-backs landing while a write is in flight can predate the write and
-/// would briefly undo its optimistic value, so they wait for [idle]. One
-/// turned away may carry a write made outside the notifier, so the rows are
-/// read again once the writes settle.
+/// Читы-обратные, приземлившиеся пока запись в полёте, могут предшествовать записи
+/// и на короткое время отменить её оптимистичное значение, поэтому они ждут [idle].
+/// Один отогнанный может нести запись, сделанную вне нотификатора, поэтому строки
+/// читаются заново, когда записи затихают.
 class _Writes {
   final void Function() _reread;
   var _pending = 0;
@@ -167,8 +167,8 @@ class Profiles extends _$Profiles {
 
   var _queue = Future<void>.value();
 
-  /// Writes run in turn and each writes the rows as the state holds them then,
-  /// so a put issued before a rewrite landed writes it along, not over it.
+  /// Записи идут по очереди и каждая пишет строки, какими состояние их держит тогда,
+  /// так что put, выпущенный до того, как перезапись приземлилась, пишет их вместе, а не поверх.
   Future<void> _serial(Future<void> Function() write) {
     final run = _queue.then((_) => write());
     _queue = run.then<void>((_) {}, onError: (Object _) {});
@@ -200,13 +200,13 @@ class Profiles extends _$Profiles {
 
   Profile labeled(Profile profile) => state.optimizeLabel(profile);
 
-  /// A new provider label follows into custom profiles whatever path set it.
+  /// Новый ярлык провайдера следует в кастомные профили, каким бы путём его ни задал.
   void put(Profile profile) {
     final newProfile = labeled(profile);
     final previous = state.getProfile(profile.id);
     final previousLabel = previous?.realLabel;
-    // A new profile goes where the query sorts it, so the read-back after the
-    // write does not move it.
+    // Новый профиль идёт туда, куда сортирует запрос, поэтому чтение-обратное после
+    // записи не двигает его.
     var next = previous == null
         ? ([...state]..insert(
             lowerBound(state, newProfile, compare: ProfilesDao.compare),
@@ -247,8 +247,8 @@ class Profiles extends _$Profiles {
     );
   }
 
-  /// Applies the changes [body] returns to the state too, so a put landing
-  /// before the rows read back writes them rather than the profile as it was.
+  /// Применяет изменения, которые возвращает [body], и к состоянию тоже, так чтобы put,
+  /// приземлившийся до чтения-обратного строк, записал их, а не профиль, каким он был.
   Future<void> rewriteCustom(
     Future<Map<int, Profile Function(Profile profile)>> Function() body,
   ) {
@@ -995,7 +995,7 @@ class CustomProxies extends _$CustomProxies
     );
   }
 
-  /// Upserts the kept rows, since a deleted one takes its dialers with it.
+  /// Upserts kept rows, так как удалённая забирает с собой свои диаллеры.
   void setAll(List<CustomProxy> proxies) {
     final orders = indexing.generateNKeys(proxies.length);
     final next = [

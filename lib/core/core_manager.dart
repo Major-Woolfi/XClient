@@ -249,7 +249,7 @@ class CoreBinaryManager {
         dir,
         '${type.binaryName}${appPath.executableExtension}',
       );
-      final tempPath = binaryPath + '.tmp';
+      final tempPath = '$binaryPath.tmp';
 
       // Скачиваем
       commonPrint.log(

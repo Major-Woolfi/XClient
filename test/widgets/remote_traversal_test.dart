@@ -23,8 +23,8 @@ Widget _at(double left, double top, String label) {
   return Positioned(left: left, top: top, child: _button(label));
 }
 
-// Mirrors the desktop home: a sidebar beside a page that sits in a navigator of
-// its own, which [showPage] can build late.
+// Зеркалит домашний экран рабочего стола: сайдбар рядом со страницей, которая сидит в
+/// навигаторе своего собственного, который [showPage] может построить поздно.
 Widget _buildApp({
   required bool remote,
   required Widget page,
@@ -242,5 +242,6 @@ void main() {
     expect(controller.offset, 160);
   });
 }
+
 
 

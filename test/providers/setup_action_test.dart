@@ -31,8 +31,8 @@ import '../helpers/test_profiles.dart';
 
 class _MockCoreHandlerInterface extends Mock implements CoreHandlerInterface {}
 
-// checkAndUpdateAndCopy checks the file system before it refreshes, so its
-// failure tests need appPath to resolve to a real, writable directory.
+// checkAndUpdateAndCopy проверяет файловую систему перед обновлением, поэтому
+/// его тесты неудачи требуют, чтобы appPath разрешался в реальный, записываемый каталог.
 class _ListenerHandoffFailureSetupAction extends SetupAction {
   final List<bool> coreRunningCalls = [];
 
@@ -364,8 +364,8 @@ void main() {
           profilesProvider.overrideWith(TestProfiles.new),
           setupActionProvider.overrideWith(TestSetupAction.new),
           commonActionProvider.overrideWith(TestCommonAction.new),
-          // Bypassing private addresses computes the routes in Isolate.run, which
-          // the fake clock never lets finish.
+// Обход частных адресов вычисляет маршруты в Isolate.run, которые
+/// поддельные часы никогда не дают завершить.
           networkSettingProvider.overrideWithBuild(
             (_, _) => const NetworkProps(bypassPrivateRoute: false),
           ),
@@ -2059,6 +2059,7 @@ void main() {
     );
   });
 }
+
 
 
 

@@ -18,8 +18,7 @@ class HomePage extends ConsumerWidget {
     final hasViewSize = ref.watch(
       viewSizeProvider.select((size) => !size.isEmpty),
     );
-    // The window is revealed on this frame; under the Windows sidebar
-    // material an unpainted body shows black until the next frame lands.
+    // Окно открывается на этом кадре; под боковым макетом Windows неокрашенное тело показывает черное, пока не приземлится следующий кадр.
     if (!hasViewSize) {
       return ColoredBox(color: SurfaceLevel.page.colorOf(context.colorScheme));
     }
@@ -193,8 +192,7 @@ class _NavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The global key lives here, not on the view: the same view also opens as
-    // a pushed page, which may overlap a pop of itself.
+    // Глобальный ключ живет здесь, а не на представлении: то же представление также открывается как вытесненная страница, которая может перекрыть pop самого себя.
     final scopedView = PageFocusScope(
       child: KeyedSubtree(key: GlobalObjectKey(item.label), child: view),
     );
@@ -213,8 +211,7 @@ class _NavigationPage extends StatelessWidget {
         final isActive = ref.watch(
           shownPageLabelProvider.select((label) => label == item.label),
         );
-        // A kept-alive page off screen still ticks its animations, and
-        // each tick asks for a frame.
+        // Страница, хранимая за экраном, всё ещё тикает своими анимациями, и каждый тик просит кадр.
         return PageActivityScope(
           isActive: isActive,
           child: TickerMode(
@@ -310,7 +307,7 @@ class _HomePageViewState extends ConsumerState<_HomePageView> {
       _pageController.jumpToPage(index);
       return;
     }
-    // As TabBarView does, so no page between is built and painted on the way.
+    // Как TabBarView, так что между страницами не строится и не рисуется ни одна по пути.
     if ((index - current).abs() > 1) {
       final adjacent = index > current ? index - 1 : index + 1;
       setState(() {
@@ -384,9 +381,8 @@ class _HomePageViewState extends ConsumerState<_HomePageView> {
 
 const _restingDelta = 0.001;
 
-/// Cancels the page view's slide so a tab switch cross-fades in place, and
-/// wraps every page even when off so switching the setting keeps their state.
-/// A page off its resting place is drawn from a snapshot, as a moving route is.
+/// Отменяет скольжение PageView, чтобы переключение вкладки перекрестно затухало на месте, и оборачивает каждую страницу даже когда она выключена, так что переключение настройки сохраняет их состояние.
+/// Страница вне своего места покоя рисуется со снимка, как вытесняемый маршрут.
 class _FadeTabPage extends StatefulWidget {
   const _FadeTabPage({
     super.key,
@@ -414,8 +410,7 @@ class _FadeTabPageState extends State<_FadeTabPage> {
     super.dispose();
   }
 
-  // Not controller.page: it clamps to the extent of the last layout, which a
-  // page inserted before the current one outgrows before the next layout.
+  // Не controller.page: он прижимается к экстенту последней раскладки, которую страница, вставленная перед текущей, перерастает до следующей раскладки.
   double get _delta {
     final controller = widget.controller;
     if (!controller.hasClients) {

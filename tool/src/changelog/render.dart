@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'models.dart';
 
 const changelogTitle = '# Changelog';
-
-/// Everything below this marker predates the structured pipeline and is kept
-/// verbatim. The generator never writes past it.
+/// Всё ниже этого маркера предшествует структурированному конвейеру и хранится
+/// буквально. Генератор никогда не пишет за ним.
 const changelogFrozenMarker = '<!-- changelog:frozen -->';
 
 const changelogFrozenNote =
@@ -14,10 +13,9 @@ const changelogFrozenNote =
 
 const releaseBeginMarker = '<!-- XClient:changelog:begin -->';
 const releaseEndMarker = '<!-- XClient:changelog:end -->';
-
-/// Opens the HTML comment that carries the structured entries to the app. The
-/// update dialog reads them from the release GitHub already returns, so the
-/// notes cost no request of their own and stay invisible on the release page.
+/// Открывает HTML-комментарий, несущий структурированные записи в приложение.
+/// Диалог обновления читает их из релиза, который GitHub уже возвращает, поэтому
+/// заметки не стоят своего собственного запроса и остаются невидимыми на странице релиза.
 const releaseJsonBeginMarker = '<!-- XClient:changelog:json';
 const releaseJsonEndMarker = '-->';
 
@@ -73,31 +71,30 @@ String renderRelease(ChangelogVersion version) {
     ..write(renderReleaseJson(version));
   return buffer.toString();
 }
-
-/// The same version as machine readable JSON, wrapped in an HTML comment so it
-/// travels with the release body without showing up on the release page.
+/// та же версия как машиночитаемый JSON, обёрнутый в HTML-комментарий, чтобы он
+/// путешествовал с телом релиза, не показываясь на странице релиза.
 ///
-/// `>` is escaped so no entry can close the comment early, which keeps a
-/// changelog line containing `-->` from truncating the payload.
+/// `>` экранируется, чтобы никакая запись не закрыла комментарий раньше
+/// времени, что удерживает строку changelog, содержащая `-->`, от обрезания
+/// полезной нагрузки.
 String renderReleaseJson(ChangelogVersion version) {
   final payload = jsonEncode(
     Changelog(versions: <ChangelogVersion>[version]).toJson(),
   ).replaceAll('>', r'\u003e');
   return '$releaseJsonBeginMarker\n$payload\n$releaseJsonEndMarker\n';
 }
-
-/// The caption is sent with a parse mode, so entry text is markup, not text: a
-/// commit subject carrying a `<` is a malformed tag and Telegram rejects the
-/// whole upload. HTML rather than Markdown because it is the one
-/// Telegram parse mode with a defined escape - legacy Markdown has none, and a
-/// subject containing a lone `*` or `_` cannot be made safe in it.
+/// Подпись отправляется с режимом разбора, поэтому текст записи — это разметка,
+/// не текст: тема коммита, несущая `<`, — некорректный тег, и Telegram отклоняет
+/// всю загрузку. HTML, а не Markdown, потому что это единственный режим разбора
+/// Telegram с определённым экранированием - унаследованный Markdown не имеет
+/// ни одного, а тема, содержащая одиночный `*` или `_`, не может быть сделана
+/// безопасной в нём.
 String escapeTelegramHtml(String value) => value
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
-
-/// Telegram captions are capped at 1024 characters, so the text is truncated
-/// with a pointer to the full notes instead of failing the upload.
+/// Подписи Telegram ограничены 1024 символами, поэтому текст обрезается с
+/// ссылкой на полные заметки вместо того, чтобы провалить загрузку.
 String renderTelegram(ChangelogVersion version, {String? moreUrl}) {
   final buffer = StringBuffer();
   if (version.isEmpty) {
@@ -131,12 +128,12 @@ int _telegramVisibleLength(String markup) => markup
     .replaceAll(RegExp('<[^>]*>'), '')
     .replaceAll(RegExp('&[a-z]+;'), '&')
     .length;
-
-/// Version headings stay the only `##` level; groups are bold lines because a
-/// release carries a handful of entries and an `###` per group outweighs them.
+/// Заголовки версий остаются единственным уровнем `##`; группы — жирные строки,
+/// потому что релиз несет горсть записей, а `###` на группу перевешивает их.
 String _heading(ChangelogVersion version) => version.date.isEmpty
     ? '## ${version.tag}'
     : '## ${version.tag} (${version.date})';
 
 String _prefix(ChangelogEntry entry) =>
     entry.scope == null ? '' : '**${entry.scope}** ';
+

@@ -15,15 +15,14 @@ const _disposableTypes = {
   'TextEditingController',
   'ValueNotifier',
 };
-
-/// Fields the analyzer would flag that are deliberately never released, keyed by
-/// `<path>#<field>`. Everything here has to outlive the process, not a widget.
+/// Поля, которые анализатор бы пометил, но умышленно никогда не освобождаются, ключевые по
+/// `<path>#<field>`. Всё здесь должно пережить процесс, а не виджет.
 const _allowed = {
-  // `CoreEventManager` is a private-constructor singleton that fans core events
-  // out for the whole run; closing its controller would end event delivery.
+// `CoreEventManager` — синглтон с приватным конструктором, который распространяет
+/// ядерные события на всём протяжении прогона; закрытие его контроллера ukonчит доставку событий.
   'lib/core/event.dart#_controller',
-  // `App` is the process-wide Android plugin; the notifier relays keyboard
-  // state from the platform channel for the whole run.
+// `App` — Android-плагин на весь процесс; notifier retransлирует состояние
+/// клавиатуры с канала платформы на всём протяжении прогона.
   'lib/plugins/app.dart#floatingKeyboard',
 };
 
@@ -33,11 +32,10 @@ final _declaration = RegExp(
   '(${_disposableTypes.join('|')})'
   r'\b',
 );
-
-/// A `late` field declared without an initialiser, which the pattern above
-/// cannot see because there is no constructor call on the line. These are
-/// built in `initState` and owned just the same - `pages/editor.dart` kept a
-/// `late TextEditingController` alive for the process this way.
+/// Поле `late`, объявленное без инициализатора, которое паттерн выше не может
+/// увидеть, потому что на строке нет вызова конструктора. Они строятся в `initState`
+/// и владеются так же — `pages/editor.dart` держал `late TextEditingController`
+/// живым для процесса таким образом.
 final _lateDeclaration = RegExp(
   '^\\s+late\\s+(?:final\\s+)?(${_disposableTypes.join('|')})'
   r'(?:<[\w<>,\s?]*>)?\??\s+(_?[A-Za-z]\w*)\s*;',
@@ -113,3 +111,4 @@ void main() {
     }
   });
 }
+

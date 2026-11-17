@@ -1529,7 +1529,7 @@ void main() {
         matching: _glyph(glyph),
       );
 
-      // Visit another page so its content stays alive in the PageView cache.
+// Посетите другую страницу, чтобы её контент остался жив в кэше PageView.
       await tester.tap(railIcon(AppGlyphs.profiles));
       await tester.pumpAndSettle();
       expect(container.read(currentPageLabelProvider), PageLabel.profiles);

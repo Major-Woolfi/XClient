@@ -1,9 +1,12 @@
+# ============================================================================
 # Miscellaneous
+# ============================================================================
 *.class
 *.log
 *.pyc
 *.swp
 .DS_Store
+Thumbs.db
 .atom/
 .build/
 .buildlog/
@@ -12,22 +15,37 @@
 .swiftpm/
 migrate_working_dir/
 
-# IntelliJ related
+# ============================================================================
+# IntelliJ / JetBrains IDEs
+# ============================================================================
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# ============================================================================
+# VS Code (user-specific settings only)
+# ============================================================================
 .vscode/
 
-# Flutter/Dart/Pub related
+# ============================================================================
+# Visual Studio (Windows)
+# ============================================================================
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+x64/
+x86/
+*.[Cc]ache
+!*.[Cc]ache/
+
+# ============================================================================
+# Flutter/Dart/Pub
+# ============================================================================
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
-/.widget_preview/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
@@ -35,22 +53,30 @@ migrate_working_dir/
 .pub/
 /build/
 /dist/
+flutter/ephemeral/
+**/Flutter/ephemeral/
 
-# Symbolication related
+# ============================================================================
+# Symbolication / Obfuscation
+# ============================================================================
 app.*.symbols
-
-# Obfuscation related
 app.*.map.json
 
-# Claude Code - ignore user-specific settings only
+# ============================================================================
+# Claude Code
+# ============================================================================
 .claude/settings.local.json
 .claude/worktrees/
+/plugins/rust_api/.claude/
 
+# ============================================================================
 # Documentation (generated/planning artifacts)
+# ============================================================================
 docs/
 
-
-# Android Studio will place build artifacts here
+# ============================================================================
+# Android
+# ============================================================================
 /android/app/debug
 /android/app/profile
 /android/app/release
@@ -58,24 +84,84 @@ docs/
 /android/**/build
 /android/common/**/.**/
 /android/common/local.*
-# Left in place by builds from before the gomobile Core.
 /android/core/**/includes/
 /android/core/**/cmake-build-*/
 /android/core/**/jniLibs/
-
-#XClient
 /libclash/
 /android/app/src/main/jniLibs/
-/services/helper/target
+/gradle-wrapper.jar
+/.gradle
+/captures/
+/gradlew
+/gradlew.bat
+/local.properties
+GeneratedPluginRegistrant.java
+key.properties
+**/*.keystore
+**/*.jks
+
+# ============================================================================
+# macOS
+# ============================================================================
 /macos/**/Package.resolved
 /macos/build/
+/**/dgph
+/**/xcuserdata/
+
+# ============================================================================
+# Windows
+# ============================================================================
+/windows/flutter/ephemeral/
+
+# ============================================================================
+# XClient specific
+# ============================================================================
+/services/helper/target
 /env.json
 /core_sha256.json
-/plugins/rust_api/.claude/
 /issue-triage/
 devtools_options.yaml
 
+# ============================================================================
 # FVM Version Cache
+# ============================================================================
 .fvm/
 .fvmrc
+
+# ============================================================================
+# Coverage
+# ============================================================================
 /coverage/lcov.info
+
+# ============================================================================
+# Go (Clash.Meta core)
+# ============================================================================
+__pycache__
+venv
+mihomo.egg-info
+*.ipynb
+/core/Clash.Meta/build
+
+# ============================================================================
+# Rust
+# ============================================================================
+/plugins/rust_api/rust/target
+
+# ============================================================================
+# Plugin pubspec.lock (libraries should not commit lockfiles)
+# ============================================================================
+/plugins/setup/pubspec.lock
+/plugins/rust_api/pubspec.lock
+/plugins/code_forge/pubspec.lock
+/plugins/prism_ui/pubspec.lock
+/plugins/window/pubspec.lock
+/plugins/wifi_ssid/pubspec.lock
+/plugins/tray/pubspec.lock
+/plugins/proxy/pubspec.lock
+
+# ============================================================================
+# Proxy plugin (Windows)
+# ============================================================================
+/plugins/proxy/windows/flutter/
+/plugins/proxy/windows/x64/
+/plugins/proxy/windows/x86/

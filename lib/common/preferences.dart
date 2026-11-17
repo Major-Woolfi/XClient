@@ -61,8 +61,8 @@ class Preferences {
     await preferences?.setString('sharedState', json.encode(shareState));
   }
 
-  /// The md5 of the config.yaml the Core last accepted, which is also what
-  /// the Android service applies when it starts without Flutter.
+  /// MD5 последнего config.yaml, принятого ядром, также то, что применяет
+  /// Android-сервис при запуске без Flutter.
   Future<String?> getAppliedConfigMd5() async {
     final preferences = await _store.value;
     return preferences?.getString(appliedConfigMd5Key);
@@ -193,7 +193,7 @@ class Preferences {
   }
 
   /// Прямой доступ к хранилищу (для специфических случаев, например CoreManager).
-  Future<SharedPreferences?> get store async => await _store.value;
+  Future<SharedPreferences?> get store => _store.value;
 }
 
 final preferences = Preferences();

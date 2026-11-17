@@ -393,7 +393,7 @@ void main() {
       for (final press in presses) {
         final box = press.renderObject! as RenderBox;
         final rest = box.localToGlobal(Offset.zero) & box.size;
-        // A press swells an eighth of the button and pulls 7/32 further.
+// Нажатие опухает на восьмую кнопки и тянет ещё 7/32.
         final swell = rest.inflate(rest.shortestSide * 11 / 32);
         for (final clip in _clipsAbove(box)) {
           expect(clip.expandToInclude(swell), clip);

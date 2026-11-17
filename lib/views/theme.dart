@@ -306,7 +306,7 @@ class _ColorSwatches extends ConsumerWidget {
 
   static const double _minGap = 6;
 
-  // Lines the dots, not their selection rings, up with the rows' text.
+  // Выстраивает точки, а не их кольца выделения, с текстом строк.
   static const double _inset = 16 - (_ColorSwatch.size - _ColorSwatch.dot) / 2;
 
   final List<int?> colors;
@@ -399,7 +399,7 @@ class _ColorSwatch extends StatelessWidget {
 
   static const double _badge = 20;
 
-  /// Null follows the system's accent color, [systemColor].
+  /// Null следует за акцентным цветом системы, [systemColor].
   final Color? color;
   final Color systemColor;
   final bool isSelected;
@@ -708,8 +708,8 @@ class _LiquidGlassItem extends ConsumerWidget {
       themeSettingProvider.select((state) => state.liquidGlass),
     );
     final colorScheme = context.colorScheme;
-    // Floating either way, as a docked bar stays a fill, over the list page,
-    // whose rows run on under the bar where glass shows them.
+    // Плавающий в любом случае, так как пристыкованная панель остается заливкой,
+    // поверх страницы списка, чьи строки бегут под панелью, где стекло их показывает.
     Widget preview(bool liquidGlass) => MiniScreenThumb(
       screen: MiniScreen(
         colorScheme: colorScheme,
@@ -1070,7 +1070,7 @@ class _CustomColorSheet extends StatefulWidget {
 
   final Color initialColor;
 
-  /// Runs once the sheet has closed, so retheming every page cannot stall it.
+  /// Выполняется после закрытия листа, поэтому перекрашивание каждой страницы не может задержать его.
   final ValueChanged<int> onConfirmed;
 
   @override
@@ -1098,7 +1098,7 @@ class _CustomColorSheetState extends State<_CustomColorSheet> {
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
-    // Clears Android's edge back-swipe zone; exclusion rects stop at 200 dp.
+    // Чистит зону жестового возврата на краю Android; прямоугольники исключения останавливаются на 200 dp.
     final gestureInsets = MediaQuery.systemGestureInsetsOf(context);
     return Scaffold(
       title: appLocalizations.customColor,

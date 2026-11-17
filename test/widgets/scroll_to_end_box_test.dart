@@ -83,7 +83,7 @@ void main() {
     );
   }
 
-  // The viewport is 600 tall and a row is 100, so six rows fill a screen.
+// Окно просмотра имеет высоту 600, а строка — 100, так что шесть строк заполняют экран.
   Future<void> pumpAtEnd(WidgetTester tester, {bool enable = true}) async {
     await pump(tester, itemCount: 20, enable: enable);
     controller.jumpTo(controller.position.maxScrollExtent);

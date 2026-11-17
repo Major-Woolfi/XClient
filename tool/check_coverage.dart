@@ -9,14 +9,14 @@ const _excludedPatterns = [
   '.freezed.dart',
 ];
 
-// Every measured group needs a floor. A group that only answers to the total
-// floor can rot for free, because a large well-covered group pays for it: that
-// is how `pages`, `plugins` and `lib` reached 20-50% while the total stayed
-// green. Adding a top-level directory under `lib/` therefore means adding its
-// floor here, and `main()` fails the run until you do.
+// Каждой измеряемой группе нужен порог. Группа, которая отвечает только общему
+// полу, может гнить бесплатно, потому что большая хорошо покрытая группа
+// оплачивает это: так `pages`, `plugins` и `lib` достигли 20-50%, пока общий
+// оставался зелёным. Добавление каталога верхнего уровня под `lib/` значит
+// добавить его полор здесь, и `main()` прогонит прогоны, пока не сделаете.
 //
-// Floors ratchet up only. Raise one when new tests lift a group; never lower
-// one to make a run pass.
+// Положения только затягиваются вверх. Поднимайте одно, когда новые тесты
+// поднимают группу; никогда не снижайте, чтобы прогон прошёл.
 const _groupFloors = <String, double>{
   'core': 76.0,
   'database': 81.0,
@@ -48,11 +48,10 @@ bool _isExcluded(String path) {
 
 String _group(String path) {
   final normalized = path.replaceAll(r'\', '/');
-  // Anchor on the project's own `lib/`, which is the last one on the path. The
-  // first match is not it whenever the report carries absolute paths and
-  // something above the checkout is called `lib` - a clone under `~/dev/lib/`,
-  // a pub cache entry - and every file then lands in whatever directory
-  // happened to follow that one.
+  // Якорь на собственном `lib/` проекта, который последний в пути. Первое
+  // совпадение не оно, когда отчёт несёт абсолютные пути и нечто выше
+  //チェкаута называется `lib` - клон в `~/dev/lib/`, запись кэша pub - и каждый
+  // файл тогда попадает в каталог, который поведовал за тем.
   final int start;
   if (normalized.startsWith('lib/')) {
     start = 4;
@@ -72,8 +71,8 @@ void main(List<String> arguments) {
   final reportPath = arguments.isNotEmpty ? arguments.first : _defaultReport;
   var minimum = 0.0;
   if (arguments.length > 1) {
-    // A typo would otherwise surface as an unhandled FormatException and a Dart
-    // stack trace, which reads as a broken tool rather than a wrong argument.
+    // Опечатка иначе вылезла бы как необработанное FormatException и стек-трейс
+    // Dart, что читается как сломанный инструмент, а не неверный аргумент.
     final parsed = double.tryParse(arguments[1]);
     if (parsed == null) {
       stderr.writeln(

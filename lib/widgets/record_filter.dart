@@ -134,7 +134,7 @@ class RecordFilterController<T> extends ValueNotifier<RecordFilterState> {
     onGroupingChanged?.call(grouping);
   }
 
-  /// Offers the values [items] take, read before any filter narrows them.
+  /// Предлагает значения, которые принимают [items], читаются до того, как любой фильтр сузит их.
   void offer(Iterable<T> items) {
     final next = <RecordFacetKind, List<String>>{};
     for (final facet in facets) {

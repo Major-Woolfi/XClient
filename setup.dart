@@ -128,7 +128,7 @@ Map<String, String> createBuildEnvironment(String env) {
   return {'APP_ENV': env};
 }
 
-/// Packages whose build hook `pubspec.yaml` turns into a no-op.
+/// Пакеты, чей хук сборки `pubspec.yaml` становится no-op.
 List<String> packagesNotBuildingAssets(String pubspec) {
   final document = loadYaml(pubspec);
   if (document is! Map) return const [];
@@ -340,7 +340,7 @@ String appImageToolArch(String arch) {
   return arch == 'arm64' ? 'aarch64' : 'x86_64';
 }
 
-/// Ubuntu 24.04 ships libfuse2 under its time64 name, which `dpkg -s libfuse2` cannot see.
+/// Ubuntu 24.04 поставляет libfuse2 под именем time64, которое `dpkg -s libfuse2` не видит.
 const _debianPackageAliases = <String, List<String>>{
   'libfuse2': ['libfuse2t64'],
 };

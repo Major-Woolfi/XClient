@@ -20,7 +20,7 @@ String? validateCidr(String? value, AppLocalizations appLocalizations) {
   return isCidr(value ?? '') ? null : appLocalizations.invalidCidrContent;
 }
 
-/// The sniffer's address lists also take mihomo's geoip: and rule-set: items.
+/// Списки адресов сниффера также берут элементы mihomo geoip: и rule-set:.
 String? validateIpMatcher(String? value, AppLocalizations appLocalizations) {
   final lower = value?.toLowerCase() ?? '';
   if (lower.startsWith('geoip:') || lower.startsWith('rule-set:')) {

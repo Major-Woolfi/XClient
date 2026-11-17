@@ -371,12 +371,12 @@ void main() {
     expect(find.bySemanticsLabel('Tap to authorize'), findsNothing);
   });
 }
-
-/// The view keys its shared selection notifier by [UniqueKeyStateMixin.key], so
-/// a test has to read the same id off the mounted state.
+/// Представление ключится своим общим уведомлением выбора по [UniqueKeyStateMixin.key], поэтому
+/// тест должен прочитать тот же id сmontированного состояния.
 String _viewKey(WidgetTester tester) {
   final state = tester.state(find.byType(OnDemandView)) as dynamic;
   return state.key as String;
 }
+
 
 

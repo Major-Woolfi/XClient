@@ -137,8 +137,8 @@ class _Renderer {
     return output.readAsBytes();
   }
 
-  // librsvg only follows image references inside the SVG's own directory, so
-  // the raster is copied next to its wrapper before rendering.
+  // librsvg следует только ссылкам на изображения внутри собственного каталога
+  // SVG, поэтому растр копируется рядом с его обёрткой перед рендерингом.
   Future<File> wrapRaster(File raster) async {
     final copy = await raster.copy('${tempDir.path}/${_basename(raster)}');
     final wrapper = File('${tempDir.path}/${_basename(raster)}.svg');

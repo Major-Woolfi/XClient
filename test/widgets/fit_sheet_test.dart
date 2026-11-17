@@ -227,7 +227,7 @@ void main() {
   Future<void> raiseKeyboard(WidgetTester tester, double height) async {
     for (final inset in [height / 4, height / 2, height * 3 / 4, height]) {
       tester.view.viewInsets = FakeViewPadding(bottom: inset);
-      // The engine takes the keyboard out of the padding.
+// Движок забирает клавиатуру из обтяжки.
       tester.view.padding = FakeViewPadding.zero;
       await tester.pump();
     }
@@ -325,9 +325,8 @@ void main() {
     }
     return tops;
   }
-
-  /// A keyboard moving at a steady speed never jolts the sheet: its speed
-  /// changes by a small part of the keyboard's from one frame to the next.
+/// Клавиатура, движущаяся с постоянной скоростью, никогда не дёргает лист: её скорость
+/// меняется на малую часть от своей от кадра к кадру.
   void expectEased(List<double> tops, double step) {
     for (var index = 2; index < tops.length; index++) {
       final speed = tops[index] - tops[index - 1];
@@ -738,5 +737,6 @@ class _RenderCounted extends RenderProxyBox {
     super.paint(context, offset);
   }
 }
+
 
 

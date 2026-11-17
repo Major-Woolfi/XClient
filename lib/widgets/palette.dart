@@ -619,8 +619,7 @@ void _paintColorThumb(
   canvas.drawCircle(center, radius - _thumbRingWidth, Paint()..color = color);
 }
 
-/// The six hex digits of an sRGB color, kept in step with [color] while
-/// the reader is not halfway through typing one.
+/// Шесть шестнадцатеричных цифр sRGB-цвета, держатся в шаге с [color], пока читатель не на полпути к вводу одного.
 class HexColorField extends StatefulWidget {
   const HexColorField({
     super.key,

@@ -10,9 +10,9 @@ final _plainController = RegExp(r'\bScrollController\(');
 final _primaryOptOut = RegExp(r'\bprimary:\s*false\b');
 
 const _allowed = {
-  // A drag on the editor's completion overlay must never move a sheet.
+  // Перетаскивание на overlay завершения редактора никогда не должно двигать лист.
   'lib/features/editor/completion_popup.dart',
-  // Nor a drag along the proxies group chips, which run across the sheet.
+  // Ни перетаскивание вдоль чипов группы прокси, которые проходят через лист.
   'lib/views/proxies/group_tabs.dart',
 };
 

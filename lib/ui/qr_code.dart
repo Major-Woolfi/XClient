@@ -3,8 +3,7 @@ import 'package:prism_ui/prism_ui.dart';
 
 import 'qr_matrix.dart';
 
-/// Dark modules on white whatever the theme: camera apps read an inverted code
-/// poorly, and the quiet zone the standard asks for is part of the white.
+/// Темные модули на белом независимо от темы: приложения камеры плохо читают инвертированный код, а тихая зона, о которой просит стандарт, является частью белого.
 class QrCodeView extends StatelessWidget {
   final String data;
   final double size;

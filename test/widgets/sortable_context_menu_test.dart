@@ -85,9 +85,8 @@ Future<List<String>> _pump(
   await tester.pumpAndSettle();
   return pressed;
 }
-
-/// A row whose sync withdraws its menu, as a row does while its item updates,
-/// rebuilding the app above the navigator with it.
+/// Строка, чья синхронизация убирает её меню, как строка делает, пока её элемент обновляется,
+/// перестраивая приложение над навигатором с ним.
 Future<ValueNotifier<bool>> _pumpSyncing(WidgetTester tester) async {
   final syncing = ValueNotifier(false);
   addTearDown(syncing.dispose);
@@ -487,5 +486,6 @@ void main() {
     expect(_order(tester, ['a', 'b', 'c']), ['b', 'c', 'a']);
   });
 }
+
 
 

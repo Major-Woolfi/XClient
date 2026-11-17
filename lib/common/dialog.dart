@@ -9,9 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 class Dialogs {
   Dialogs._();
 
-  // Focus sits in the route the user acts in, so an alert raised from a form
-  // sheet, or a page pushed inside one, opens over it, beside the navigation
-  // as the sheet sits.
+  // Фокус находится в том роуте, где действует пользователь, поэтому алерт,
+  // поднятый из формы или страницы, открытой внутри одного листа, поверх него,
+  // рядом с навигацией, где сидит лист.
   BuildContext get _context {
     var context = FocusManager.instance.primaryFocus?.context;
     while (context != null) {
@@ -61,8 +61,8 @@ class Dialogs {
     );
   }
 
-  /// Asked on leaving with unsaved changes: true saves, false leaves without
-  /// saving, and null, the alert dismissed, stays.
+  /// Спрашивает при выходе с несохранёнными изменениями: true — сохранить,
+  /// false — уйти без сохранения, null (альерт отклонён) — остаться.
   Future<bool?> showSaveChanges({String? title}) {
     return showMessage(
       title: title,
@@ -70,7 +70,7 @@ class Dialogs {
     );
   }
 
-  /// A message with nothing to decide, acknowledged with a single button.
+  /// Сообщение без выбора, подтверждаемое одной кнопкой.
   Future<void> showAlert({
     required InlineSpan message,
     String? title,

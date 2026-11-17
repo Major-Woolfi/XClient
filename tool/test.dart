@@ -21,16 +21,16 @@ listed, since they depend on or are broken by state another file left. A
 failure in a file that already ran on its own, or one the report ties to no
 file, fails the run whatever the rerun finds.''';
 
-// Fixed, so a commit groups its files the same way on every machine.
+// Фиксировано, чтобы коммит группировал свои файлы одинаково на каждой машине.
 const _bundleCount = 32;
 const _bundleDir = '.dart_tool/test_bundles';
 const _reportPath = '$_bundleDir/report.json';
 
 final _annotation = RegExp(r'^@(TestOn|Tags|Timeout|Skip|OnPlatform)\b');
 
-// Options of `flutter test` the rerun drops: it only decides pass or fail, and
-// would otherwise overwrite the coverage of the whole run.
-// Sharding its few files anew would skip the test that failed.
+// Опции `flutter test`, которые отбрасывает перезапуск: он только решает проход
+// или провал, и иначе перезаписал бы покрытие всего прогона.
+// Переразбивка его нескольких файлов пропустила бы тест, который провалился.
 const _rerunDropsWithValue = {
   '--coverage-path',
   '--coverage-package',
@@ -165,8 +165,8 @@ bool _hasAnnotation(String file) {
   return false;
 }
 
-/// Hands each file, largest first, to the bundle with the least code so far;
-/// size stands in for run time.
+/// Каждому файлу, по убыванию размера, в пучок с наименьшим кодом на данный
+/// момент; размер замещает время выполнения.
 List<({String path, List<String> files})> _writeBundles(List<String> files) {
   final directory = Directory(_bundleDir);
   if (directory.existsSync()) directory.deleteSync(recursive: true);
@@ -222,8 +222,8 @@ String _writeBundle(Directory directory, int index, List<String> files) {
 
 String _posix(String path) => p.posix.joinAll(p.split(path));
 
-/// The files behind every failed test in the JSON report; a bundle that failed
-/// to load stands for all of its files.
+/// Файлы за каждым проваленным тестом в JSON-отчёте; пучок, не удавшийся
+/// загрузить, стоит за всеми своими файлами.
 ({List<String> files, bool failsOutsideBundles}) _failures(
   List<({String path, List<String> files})> bundles,
 ) {

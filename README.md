@@ -1,6 +1,6 @@
 # XClient
 
-Кроссплатформенный VPN-клиент на базе **Clash.Meta** и **Xray-core**.  
+Кроссплатформенный VPN-клиент на базе **Clash.Meta** и **Xray-core**.
 Windows · macOS · Linux · Android. Без рекламы, без трекинга, с открытым исходным кодом.
 
 [![GitHub release](https://img.shields.io/github/v/release/Major-Woolfi/XClient?include_prereleases&label=Latest)](https://github.com/Major-Woolfi/XClient/releases/latest)
@@ -19,7 +19,7 @@ Windows · macOS · Linux · Android. Без рекламы, без трекин
 👉 **[Последний релиз на GitHub](https://github.com/Major-Woolfi/XClient/releases/latest)**
 
 | Платформа | Файл |
-|:----------|:-----|
+| --------- | ---- |
 | **Windows** | `XClient-Setup.exe` (инсталлятор) / `.zip` (портативная версия) |
 | **macOS** | `.dmg` (Apple Silicon и Intel) |
 | **Linux** | `.AppImage` / `.tar.gz` |

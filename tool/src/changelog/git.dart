@@ -7,11 +7,11 @@ final _tagPattern = RegExp(r'^v(\d+)\.(\d+)\.(\d+)(?:-pre\.(\d+))?$');
 const _fieldSeparator = '\u001f';
 const _recordSeparator = '\u001e';
 
-/// A release tag that matches the `vMAJOR.MINOR.PATCH[-pre.N]` contract.
+/// Тег релиза, соответствующий контракту `vMAJOR.MINOR.PATCH[-pre.N]`.
 ///
-/// Every other tag in the repository is ignored on purpose: `backup-pre-squash-*`
-/// and similar bookkeeping tags would otherwise show up in the generated
-/// changelog as fake version sections.
+/// Каждый другой тег в репозитории игнорируется умышленно: `backup-pre-squash-*`
+/// и аналогичные теги учёта иначе появились бы в сгенерированном changelog как
+/// поддельные разделы версий.
 class VersionTag implements Comparable<VersionTag> {
   const VersionTag({
     required this.name,
@@ -107,11 +107,11 @@ class Git {
   bool tagExists(String name) =>
       _run(['tag', '--list', name]).trim().isNotEmpty;
 
-  /// Whether [name] is one of the tags [versionTags] would return.
+  /// Является ли [name] одним из тегов, которые вернёт [versionTags].
   ///
-  /// [tagExists] answers a different question - a tag on another branch exists
-  /// but is not derivable here - so callers comparing against a built changelog
-  /// want this one.
+  /// [tagExists] отвечает на другой вопрос — тег в другой ветке существует,
+  /// но не выводится здесь — поэтому вызывающие, сравнивающие со сборным
+  /// changelog, хотят этот.
   bool tagIsReachable(String name, {String revision = 'HEAD'}) =>
       _run(['tag', '--merged', revision, '--list', name]).trim().isNotEmpty;
 

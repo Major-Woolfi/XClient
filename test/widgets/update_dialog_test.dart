@@ -69,8 +69,8 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, {Locale? locale}) async {
   final container = ProviderContainer();
   addTearDown(container.dispose);
   globalState.container = container;
-  // appSettingProvider is autoDispose; in the app `configProvider` keeps it
-  // alive, so the test has to hold a listener or edits are dropped.
+// appSettingProvider — autoDispose; в приложении `configProvider` держит его
+/// живым, поэтому тест должен держать слушателя, или правки отбрасываются.
   container.listen(appSettingProvider, (_, _) {}, fireImmediately: true);
   container
       .read(viewSizeProvider.notifier)
@@ -88,9 +88,8 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, {Locale? locale}) async {
   await tester.pump();
   return container;
 }
-
-/// The dialog blocks until the user answers, so tests must close it before
-/// awaiting the call that opened it.
+/// Диалог блокирует, пока пользователь не ответит, поэтому тесты должны закрыть его
+/// до ожидания вызова, который его открыл.
 Future<void> tapCancel(WidgetTester tester) async {
   await tester.tap(find.byType(TextButton).first);
   await tester.pumpAndSettle();
@@ -194,9 +193,8 @@ void main() {
       request.releaseDio.httpClientAdapter = adapter;
       await home.delete(recursive: true);
     });
-
-    /// Downloading touches the disk and an isolate, which only make progress
-    /// outside the fake-async zone.
+/// Загрузка трогает диск и изолят, которые только продвигаются
+/// за пределами зоны fake-async.
     Future<void> settleUntil(WidgetTester tester, bool Function() done) async {
       for (var i = 0; i < 50 && !done(); i++) {
         await tester.runAsync(
@@ -312,6 +310,7 @@ void main() {
     expect(container.read(appSettingProvider).autoCheckUpdate, isTrue);
   });
 }
+
 
 
 

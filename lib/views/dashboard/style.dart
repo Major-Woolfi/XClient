@@ -102,8 +102,7 @@ abstract final class DashboardShadows {
   static final _e2Dark = [_shadow(0x80, 2, 6), _shadow(0xB3, 32, 64, -12)];
 }
 
-/// Off the [AppCorner] scale: a dashboard card is taller than any other
-/// surface in the app and keeps a larger corner than a sheet.
+/// За пределами шкалы [AppCorner]: карточка панели выше любой другой поверхности в приложении и сохраняет более крупный угол, чем у листа.
 abstract final class DashboardCorner {
   static const desktopCard = 32.0;
   static const mobileCard = 34.0;

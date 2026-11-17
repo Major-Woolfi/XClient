@@ -7,7 +7,7 @@ import 'sources.dart';
 
 const _typography = 'package:prism_ui/typography.dart';
 
-// The code editor sizes its text from the editor font-size setting.
+// Редактор кода размеряет свой текст из настройки размера шрифта редактора.
 const _editorSizes = ['lib/pages/editor.dart', 'lib/features/editor/'];
 
 final _textTheme = RegExp(r'\btextTheme\b');

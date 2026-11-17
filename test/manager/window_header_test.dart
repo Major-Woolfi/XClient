@@ -571,8 +571,8 @@ void main() {
   });
 
   group('WindowHeaderBar on macOS', () {
-    // The system draws the traffic lights over the top-left of the window, so
-    // whatever the header paints there is unreachable.
+// Система рисует светофоры поверх верхнего левого угла окна, так что
+/// всё, что заголовок там рисует, недостижимо.
     const trafficLightsWidth = 80.0;
 
     late List<String> events;
@@ -778,5 +778,6 @@ void main() {
     });
   });
 }
+
 
 

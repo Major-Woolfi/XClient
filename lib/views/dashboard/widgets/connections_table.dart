@@ -40,8 +40,7 @@ double _tabInsetOf(DashboardDensity density) =>
 double connectionsTableTop(DashboardDensity density, double scale) =>
     _tabInsetOf(density) + _tabHeightOf(density) * scale + _tableGap;
 
-/// The grid gives the tables a row once they can show their head and a few
-/// connections; shorter, it shows the summary cards.
+/// Сетка дает таблицам строку, когда они могут показать свою голову и несколько соединений; короче, она показывает сводные карточки.
 double connectionsTableMinHeight(DashboardDensity density, double scale) =>
     connectionsTableTop(density, scale) +
     (_headerHeight + _rowHeightOf(density) * _minRows) * scale;

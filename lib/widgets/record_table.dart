@@ -31,8 +31,7 @@ class RecordColumn<T> {
 
 typedef RecordSort = ({String columnId, bool descending});
 
-/// The first tap sorts the way the column reads best, the second flips it and
-/// the third gives the list its own order back.
+/// Первый тап сортирует так, как колонка читается лучше, второй переворачивает его, а третий возвращает списку свой порядок.
 RecordSort? nextRecordSort<T>(RecordSort? sort, RecordColumn<T> column) {
   final first = column.descendingFirst;
   if (sort == null || sort.columnId != column.id) {
@@ -343,7 +342,7 @@ class _RecordTableHeader<T> extends StatelessWidget {
   }
 }
 
-/// The width a fixed column takes to show [label] whole in its header.
+/// Ширина фиксированной колонки, чтобы показать [label] целиком в его заголовке.
 double recordHeaderWidth(BuildContext context, String label) =>
     MeasureScope.of(context)
         .computeTextSize(

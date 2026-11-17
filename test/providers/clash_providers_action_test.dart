@@ -33,8 +33,7 @@ class _RecordingSetupAction extends SetupAction {
     forced.add(force);
   }
 }
-
-/// Only a change the current custom profile can see is worth a reapply.
+/// Только изменение, которое текущий пользовательский профиль может увидеть, стоит повторного применения.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -790,6 +789,7 @@ void main() {
     );
   });
 }
+
 
 
 

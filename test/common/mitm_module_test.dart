@@ -25,7 +25,7 @@ RULE-SET,https://example.com/list,REJECT
 
 [URL Rewrite]
 ^https?://example\.com/old https://example.com/new 302
-// a comment
+
 
 [Header Rewrite]
 http-request ^https://example\.com header-del Cookie

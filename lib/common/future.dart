@@ -39,9 +39,10 @@ extension FutureExt<T> on Future<T> {
   }
 }
 
-/// Resolves once, then hands out the value rather than the future that
-/// resolved it: a completed future still runs its listeners in the zone it was
-/// created in, which under test may be a fake-async zone nothing drives.
+/// Разрешается один раз, затем отдаёт значение, а не будущее, которое его
+/// разрешило: завершённое будущее всё ещё вызывает своих слушателей в зоне,
+/// в которой было создано, что под тестом может быть фейк-async зоной, ничем
+/// не приводимой в действие.
 class ResolveOnce<T> {
   final Future<T> Function() _resolve;
   Future<T>? _pending;
@@ -66,7 +67,7 @@ extension CompleterExt<T> on Completer<T> {
   }
 }
 
-/// One isolate run at a time; [_onResult] gets only the latest input's result.
+/// Один запуск изолята за раз; [_onResult] получает только результат последнего ввода.
 class LatestCompute<I, O> {
   final ComputeCallback<I, O> _task;
   final void Function(O result) _onResult;

@@ -25,7 +25,7 @@ const _maxColumnWidth = 440.0;
 class DashboardView extends ConsumerStatefulWidget {
   const DashboardView({super.key, this.platform});
 
-  /// The host's platform when null.
+  /// Платформа хоста, когда null.
   final SupportPlatform? platform;
 
   @override

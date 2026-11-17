@@ -5,7 +5,7 @@ import 'package:ffi/ffi.dart';
 
 typedef ProcessLivenessProbe = Future<bool> Function(int pid);
 
-/// A recycled pid reads as alive, which delays a confirmation but never fakes one.
+/// Переиспользуемый pid читается как живой, что задерживает подтверждение, но никогда не подделывает его.
 Future<bool> isProcessAlive(int pid) async {
   if (pid <= 0) {
     return false;
@@ -36,8 +36,8 @@ const _processQueryLimitedInformation = 0x1000;
 const _errorInvalidParameter = 87;
 const _stillActive = 259;
 
-// A Helper-spawned Core belongs to SYSTEM; OpenProcess fails with
-// ERROR_INVALID_PARAMETER only when no such process exists.
+// Ядро, порождённое Helper, относится к SYSTEM; OpenProcess падает с
+// ERROR_INVALID_PARAMETER только тогда, когда такого процесса не существует.
 bool _isWindowsProcessAlive(int pid) {
   final kernel32 = DynamicLibrary.open('kernel32.dll');
   final openProcess = kernel32

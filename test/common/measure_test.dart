@@ -33,9 +33,9 @@ void main() {
 
   testWidgets('repeated measurement releases each painter', (tester) async {
     final measure = await _measureIn(tester);
-    // A leaked TextPainter holds a native paragraph; the framework's leak
-    // tracker turns that into an exception here rather than into drift that
-    // only shows up while scrolling a long proxy list.
+// Протекший TextPainter удерживает нативный абзац; трекер утечек фреймворка
+/// превращает это в исключение здесь, а не в дрейф, который проявляется только
+/// при прокрутке длинного списка прокси.
     for (var i = 0; i < 50; i++) {
       measure.computeTextSize(Text('row $i'));
     }
@@ -55,4 +55,5 @@ void main() {
     );
   });
 }
+
 

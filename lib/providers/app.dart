@@ -16,7 +16,7 @@ part 'generated/app.g.dart';
 @Riverpod(keepAlive: true)
 bool safeMode(Ref ref) => safeModeBuild;
 
-/// Android: su is there and granted XClient's last request.
+/// Android: su есть и предоставлен XClient'у последний запрос.
 @Riverpod(keepAlive: true)
 Future<bool> rootAccess(Ref ref) async {
   if (!system.isAndroid || app == null) {
@@ -225,8 +225,8 @@ class RunTime extends _$RunTime with AutoDisposeNotifierMixin {
   }
 }
 
-/// What the running Android service was started with: it builds the tunnel
-/// once, so a later change waits for a restart.
+/// С тем, с чем был запущен работающий Android-сервис: он строит туннель
+/// один раз, поэтому последующее изменение ждёт перезапуска.
 @Riverpod(keepAlive: true)
 class RunningVpnOptions extends _$RunningVpnOptions
     with AutoDisposeNotifierMixin {
@@ -236,8 +236,8 @@ class RunningVpnOptions extends _$RunningVpnOptions
   }
 }
 
-/// False while the window is hidden or the Android activity is in the
-/// background; work that only feeds the UI waits for it to come back.
+/// Пока окно скрыто или Android-активность на фоне; работа, которая только
+/// кормит UI, ждёт его возвращения.
 @Riverpod(keepAlive: true)
 class AppVisible extends _$AppVisible with AutoDisposeNotifierMixin {
   @override
@@ -262,8 +262,8 @@ class SideWidth extends _$SideWidth with AutoDisposeNotifierMixin {
   }
 }
 
-/// The opacity the sidebar keeps its own color at over the backdrop the native
-/// window draws behind the content, or null while it draws none.
+/// Прозрачность, с которой сайдбар сохраняет свой цвет поверх фона, который
+/// нативное окно рисует за контентом, или null, пока оно ничего не рисует.
 @Riverpod(keepAlive: true)
 class WindowBlur extends _$WindowBlur with AutoDisposeNotifierMixin {
   @override
@@ -352,7 +352,7 @@ class DelayDataSource extends _$DelayDataSource with AutoDisposeNotifierMixin {
     setDelays([delay]);
   }
 
-  /// Publishes a live view, so a dependent that keeps the map must copy it.
+  /// Публикует живое представление, поэтому зависимый, который хранит карту, должен скопировать её.
   void setDelays(Iterable<Delay> delays) {
     final delayMap = _ownedDelayMap();
     var changed = false;
@@ -391,8 +391,8 @@ class PendingDelayTests extends _$PendingDelayTests
     return const <String, DelayTestPhase>{};
   }
 
-  /// [finished] keys had started, so they give up their run as well as their
-  /// hold; [released] keys never started.
+  /// Ключи [finished] уже запустились, поэтому они отдают и свой запуск, и удержание;
+  /// ключи [released] никогда не начинались.
   void apply({
     Iterable<String> acquired = const [],
     Iterable<String> started = const [],
@@ -463,8 +463,8 @@ class PendingDelayTests extends _$PendingDelayTests
     }
   }
 
-  // A copy per publish would make a run over n nodes O(n²). The view is live,
-  // so a dependent selects what it needs instead of keeping the map.
+  // Копия на каждый 공개 сделала бы пройти по n узлам O(n²). Представление живое,
+  // поэтому зависимый выбирает, что нужно, вместо хранения карты.
   void _publish() {
     value = UnmodifiableMapView(_phases);
   }

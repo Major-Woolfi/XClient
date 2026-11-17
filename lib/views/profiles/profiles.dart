@@ -30,7 +30,7 @@ double get _profileItemHeight {
 class ProfilesView extends ConsumerStatefulWidget {
   const ProfilesView({super.key, this.picker = false});
 
-  /// Clears the bar and opens at the top, for switching profiles from a sheet.
+  /// Очищает панель и открывается вверху, для переключения профилей из листа.
   final bool picker;
 
   @override
@@ -569,7 +569,7 @@ class _ProfileCardTitle extends StatelessWidget {
   }
 }
 
-/// Square-cornered so a lone digit never reads as a second [SelectionBadge].
+/// С квадратными углами, чтобы отдельная цифра не читалась как второй [SelectionBadge].
 class _GroupsCountChip extends ConsumerWidget {
   const _GroupsCountChip({required this.profileId});
 

@@ -99,7 +99,7 @@ Future<ProviderContainer> _pumpHome(
   return container;
 }
 
-// A press only paints, so its swell shows in the paint transform.
+// Нажатие только рисует, поэтому его опухание показывается в трансформации окраски.
 Rect _painted(WidgetTester tester, RenderObject box, Rect resting) {
   Matrix4? transform;
   expect(
@@ -391,7 +391,7 @@ void main() {
           .descendant(of: bar, matching: find.byType(GlyphIcon))
           .last;
       final resting = tester.getRect(tools);
-      // The lens is drawn first, so the highlight is the last positioned child.
+// Линза рисуется первой, поэтому подсветка — последний дочерний позиционированный элемент.
       final positioned = find.descendant(
         of: bar,
         matching: find.byType(Positioned),

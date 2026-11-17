@@ -1,6 +1,4 @@
-/// Core integration barrel exports.
-///
-/// This file re-exports the public API of the proxy core integration layer.
+// Баррель-экспорт публичного API ядра.
 export 'controller.dart';
 export 'core_type.dart';
 export 'core_manager.dart';

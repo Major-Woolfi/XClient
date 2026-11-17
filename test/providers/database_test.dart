@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:drift/native.dart';
-// `Profiles`, `Scripts` and `ProxyGroups` name both a drift table and a
-// notifier, so the schema side is imported behind a prefix.
+// `Profiles`, `Scripts` и `ProxyGroups` называют и таблицу drift, и нотификатор,
+// поэтому сторона схемы импортируется за префиксом.
 import 'package:xclient/database/database.dart' as db;
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/l10n/l10n.dart';
@@ -12,12 +12,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
 import 'package:flutter_test/flutter_test.dart';
-
-/// Every notifier in `lib/providers/database.dart` writes optimistically: the
-/// in-memory state is mutated first and the row is persisted afterwards through
-/// [withRollback], which restores the pre-mutation snapshot when the write
-/// fails. These tests drive the real drift schema on an in-memory executor so
-/// both halves - the optimistic value and the rollback - are observable.
+/// Каждый нотификатор в `lib/providers/database.dart` пишет оптимистично: состояние в памяти
+/// мутируется сначала, а строка сохраняется afterwards через [withRollback],
+/// который восстанавливает снимок до мутации, когда запись не удаётся. Эти тесты ведут реальную
+/// схему drift на in-memory исполнителе, так что обе половины — оптимистичное значение и откат —
+/// наблюдаемы.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   const profileId = 1;
@@ -44,17 +43,15 @@ void main() {
     container.dispose();
     await testDatabase.close();
   });
-
-  /// Subscribes to [provider] so it survives auto-dispose for the whole test,
-  /// then waits for the backing drift stream to deliver its first row set.
+/// Подписывается на [provider], чтобы пережить авто-утилизацию на весь тест,
+/// затем ждёт, пока подкрепляющий поток drift доставит свой первый набор строк.
   Future<void> keepAlive(ProviderListenable<Object?> provider) async {
     container.listen(provider, (_, _) {});
     await pumpEventQueue();
   }
-
-  /// Most call sites wrap the persist step in `unawaited(...)`, so the failure
-  /// never reaches the caller: the notifier logs it, and only after the
-  /// rollback has already restored the snapshot.
+/// Большинство точек вызова оборачивают шаг сохранения в `unawaited(...)`, так что
+/// неудача никогда не доходит до вызывающего: нотификатор регистрирует это, и только после
+/// того, как откат уже восстановил снимок.
   Future<void> captureWriteFailure(void Function() body) {
     final reported = Completer<void>();
     final print = debugPrint;
@@ -67,10 +64,10 @@ void main() {
     body();
     return reported.future.timeout(const Duration(seconds: 5));
   }
-
-  /// `customStatement` does not raise a drift table-update notification, so the
-  /// streams the notifiers watch keep serving their last good rows - which is
-  /// what lets a test observe the rolled-back state rather than an error state.
+/// `customStatement` не вызывает уведомление об обновлении таблицы drift, так что
+/// потоки, за которыми следят нотификаторы, continuent подавать свои последние
+/// хорошие строки — именно это позволяет тесту наблюдать откаченное состояние, а не
+/// состояние ошибки.
   Future<void> breakTable(String table) =>
       testDatabase.customStatement('DROP TABLE $table');
 
@@ -1319,3 +1316,4 @@ class _GatedProfileRules extends ProfileRules {
     await super.persistRule(rule);
   }
 }
+

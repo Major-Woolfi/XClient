@@ -76,7 +76,7 @@ class CoreController {
     final type = coreBinaryManager.activeCoreType;
     final impl = coreRegistry.get(type);
     if (impl != null) return impl;
-    // Fallback: Android uses CoreLib, desktop uses CoreService.
+    // Фолбэк: Android использует CoreLib, desktop — CoreService.
     return system.isAndroid ? coreLib! : coreService!;
   }
 
@@ -213,16 +213,12 @@ class CoreController {
     return result;
   }
 
-  @override
   Future<CoreLifecycleResult> start() => _active.start();
 
-  @override
   Future<CoreLifecycleResult> restart() => _active.restart();
 
-  @override
   Future<CoreLifecycleResult> stop() => _active.stop();
 
-  @override
   Future<CoreLifecycleResult> close() => _active.close();
 
   Future<Object?> invokeMethod({
@@ -389,7 +385,7 @@ class CoreController {
   Future<CoreType> detectAndSwitchCore(String path) async {
     final file = File(path);
     if (!await file.exists()) {
-      return await activeCoreType;
+      return activeCoreType;
     }
     final content = await file.readAsString();
     final detected = _detectCoreType(content);

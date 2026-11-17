@@ -131,9 +131,7 @@ class _OverflowMenuButton extends StatelessWidget {
   }
 }
 
-/// What the surface asks of this scaffold's search and pop button: it and a
-/// phone page pushed over the one with the tab bar search from a field docked
-/// over their foot instead of a button that takes the bar over.
+/// Что поверхность требует от поиска и кнопки pop этого салфетки: она и телефонная страница, вытесненная над той с поиском бара таба от поля, оформленного у их ног вместо кнопки, которая берет бар над собой.
 class _SheetForm {
   const _SheetForm({
     required this.isCompact,
@@ -177,9 +175,7 @@ class _SheetForm {
   bool get hasDockedSearch => dockedSearch != null;
 }
 
-/// How a sheet's own pop button reads: [useCloseIcon] where it dismisses the
-/// sheet. It leads the bar wherever it is, as SwiftUI places a close in
-/// `.cancellationAction`, unless [atFoot] turns it into a form's cancel.
+/// Как читается propia кнопка pop салфетки: [useCloseIcon], где она отменяет салфетку. Она ведет бар где бы то ни было, как SwiftUI размещает close в `.cancellationAction`, если не [atFoot] превращает его в отмену формы.
 class _SheetPop {
   const _SheetPop({required this.useCloseIcon, required this.atFoot});
 
@@ -215,8 +211,7 @@ class _TitleMenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // No ink: the padding it needs would move the title off its place in the
-    // bar, and a press turns the title into its menu at once.
+    // Нет чернил: отступ, который им нужен, передвинул бы заголовок с его места в баре, и нажатие тут же превращает заголовок в свое меню.
     return PressRegion(
       onTap: onPressed,
       shape: AppShape.sm,

@@ -8,7 +8,7 @@ import 'package:path/path.dart';
 
 import 'method.dart';
 
-/// Mirrors spilledResponseDirName in core/spill.go.
+/// Дублирует coreSpillDirectoryName из core/spill.go.
 const coreSpillDirectoryName = 'responses';
 
 Future<bool> _isSpilled(String file) async {
@@ -16,7 +16,7 @@ Future<bool> _isSpilled(String file) async {
   return equals(dirname(file), directory);
 }
 
-/// Parsed where a transport decodes them, off the UI isolate for a large one.
+/// Пары «метод ядра → функция декодирования ответа», вне UI-изолята.
 const _resultModels = <CoreMethod, Object? Function(Object?)>{
   CoreMethod.connectionList: trackerInfosOf,
 };

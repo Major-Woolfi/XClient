@@ -73,9 +73,8 @@ class _ConnectivityManagerState extends ConsumerState<ConnectivityManager> {
 
   Future<void> _updateSsid() async {
     final requestId = ++_ssidRequestId;
-    // The SSID costs a blocking platform call and a location permission on
-    // Android, macOS and Windows, and nothing reads it until a network is
-    // excluded.
+    // SSID стоит блокирующего вызова платформы и разрешения геолокации на
+    // Android, macOS и Windows, и ничего не читает его до тех пор, пока сеть не будет исключена.
     if (!_onWifi ||
         ref.read(safeModeProvider) ||
         ref.read(excludeSSIDsProvider).isEmpty) {

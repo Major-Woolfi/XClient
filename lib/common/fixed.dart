@@ -58,8 +58,8 @@ class FixedList<T> {
   int get hashCode => Object.hash(identityHashCode(_list), _revision);
 }
 
-/// Restores the head that [latest] trimmed off [current] so a paused view
-/// stays anchored; the result is capped at [limit] from the tail.
+/// Восстанавливает голову, которую [latest] обрезал у [current], чтобы приостановленное
+/// представление осталось привязанным; результат ограничен [limit] с хвоста.
 List<T> retainTrimmedHead<T>(
   List<T> current,
   List<T> latest,

@@ -8,7 +8,7 @@ enum CoreType {
 }
 
 extension CoreTypeExtension on CoreType {
-  ///человекочитаемое название ядра.
+  /// Человекочитаемое название ядра.
   String get label {
     switch (this) {
       case CoreType.clash:

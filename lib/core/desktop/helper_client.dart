@@ -68,8 +68,9 @@ final class HelperClient {
        _expectedHelperPath = expectedHelperPath ?? _defaultHelperPath,
        _readCoreSha256 = readCoreSha256 ?? _readBundledCoreSha256;
 
-  // The bundled manifest.json is a fixed build artifact; a usable value is read
-  // once. An empty result means it is unusable now, so the Helper is skipped.
+  // Встроенный manifest.json — фиксированный артефакт сборки; пригодное значение
+  // читается один раз. Пустой результат означает, что оно сейчас непригодно, и
+  // Helper пропускается.
   Future<String> _readCoreSha256Once() async {
     final cached = _coreSha256Cache;
     if (cached != null) {
@@ -87,9 +88,9 @@ final class HelperClient {
     return coreSha256;
   }
 
-  // The Helper protocol never leaves the machine; never route it through a
-  // proxy. Linux carries it over a Unix socket the systemd unit owns, so the
-  // authority in the URL is a placeholder the connection factory ignores.
+  // Протокол Helper никогда не покидает машину; никогда не маршрутизируйте его
+  // через прокси. Linux несёт его через Unix-сокет, которым владеет systemd, поэтому
+  // authority в URL — заглушка, которую фабрика соединений игнорирует.
   static Dio _createDio() {
     return Dio()
       ..httpClientAdapter = IOHttpClientAdapter(
@@ -120,7 +121,7 @@ final class HelperClient {
         : 'http://$localhost:${_readHelperPort()}';
   }
 
-  /// Helpers installed before the port was published listen on [helperPort].
+  /// Helper, установленные до того, как порт был опубликован, слушают на [helperPort].
   static int _readHelperPort() {
     if (!Platform.isWindows) {
       return helperPort;
@@ -254,13 +255,13 @@ final class HelperClient {
     }
   }
 
-  /// /start hashes the whole Core binary before spawning it, and Smart App
-  /// Control adds a cloud reputation lookup inside CreateProcess; the ping
-  /// budget cut those off as a transport error and hid the Helper's answer.
+  /// /start хэширует весь бинарник ядра перед порождением, и Smart App Control
+  /// добавляет облачную проверку репутации внутри CreateProcess; бюджет ping
+  /// отсекал это как транспортную ошибку и скрывал ответ Helper.
   static const startTimeout = Duration(seconds: 15);
 
-  /// Covers the Helper's graceful-exit wait plus its forced kill, so a Core
-  /// slow to tear down its TUN reports as stopped rather than as a transport error.
+  /// Покрывает ожидание корректного выхода Helper плюс принудительное убийство,
+  /// поэтому ядро, медленно сворачивающее TUN, сообщается как остановленное, а не как транспортная ошибка.
   static const stopTimeout = Duration(seconds: 6);
 
   Future<HelperStartResponse> start({
@@ -433,8 +434,8 @@ final class HelperClient {
       responseType: responseType,
       connectTimeout: const Duration(milliseconds: 300),
       receiveTimeout: receiveTimeout,
-      // The Helper reports readiness via non-2xx (400, 409, ...), so only
-      // transport errors should surface as DioExceptions.
+      // Helper сообщает о готовности через не-2xx (400, 409, ...), поэтому только
+      // транспортные ошибки должны всплывать как DioExceptions.
       validateStatus: acceptAnyStatus ? (_) => true : null,
     );
   }
@@ -477,9 +478,9 @@ final class HelperLauncher implements CoreProcessLauncher {
   }
 }
 
-// The Helper reports these codes before it spawns a Core, and /start releases
-// the previously managed Core first, so no Helper-managed Core is left behind
-// and a direct launch is safe to retry.
+  // Helper возвращает эти коды до того, как породит ядро, и /start сначала
+  // освобождает ранее управляемое ядро, поэтому ядро, управляемое Helper, не
+  // остаётся без присмотра, а прямой запуск безопасно повторяется.
 const _preSpawnHelperErrors = {'coreVerificationFailed', 'processLaunchFailed'};
 
 final class FallbackCoreLauncher implements CoreProcessLauncher {
@@ -575,7 +576,7 @@ final class HelperCoreLease implements CoreProcessLease {
     return nextOperation;
   }
 
-  // A dead Helper takes its Core with it; the OS is then the only witness.
+  // Мёртвый Helper забирает с собой своё ядро; ОС остаётся единственным свидетелем.
   Future<CoreProcessStopResult> _stop() async {
     final HelperStopResponse response;
     try {
@@ -589,7 +590,7 @@ final class HelperCoreLease implements CoreProcessLease {
         'session $sessionId is released',
         logLevel: LogLevel.warning,
       );
-      return const CoreProcessStopResult(stopped: false, exitConfirmed: true);
+      return const CoreProcessStopResult(stopped: false, exitConfirmed: false);
     }
     return CoreProcessStopResult(
       stopped: response.stopped,

@@ -29,8 +29,8 @@ Future<void> offerMitmScripts(WidgetRef ref, MitmModule? module) async {
   }
 }
 
-/// An update that brings new or changed scripts turned the module off, so it
-/// asks to turn it back on.
+/// Обновление, которое привносит новые или измененные скрипты, выключает модуль, поэтому
+/// оно спрашивает, включить ли его обратно.
 Future<void> updateMitmModule(WidgetRef ref, MitmModule module) async {
   final updated = await ref
       .read(mitmModulesActionProvider.notifier)
@@ -43,8 +43,8 @@ Future<void> updateMitmModule(WidgetRef ref, MitmModule module) async {
 String _moduleTemplate(String name) =>
     '#!name=$name\n#!desc=\n\n[URL Rewrite]\n\n[MITM]\nhostname = %APPEND%\n';
 
-/// Opens [module], or a new one, with [edit] applied as a change to save;
-/// [attachments] join the module once it is saved.
+/// Открывает [module], или новый, с [edit], примененным как изменение для сохранения;
+/// [attachments] присоединяются к модулю после сохранения.
 Future<void> openMitmModuleEditor(
   BuildContext context,
   WidgetRef ref, {

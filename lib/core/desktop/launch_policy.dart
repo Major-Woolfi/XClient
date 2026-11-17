@@ -4,7 +4,7 @@ import 'package:xclient/core/desktop/helper_client.dart';
 import 'package:xclient/core/desktop/model.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-/// CreateProcess reports these when a policy, not the file, refused the image:
+/// CreateProcess возвращает эти коды, когда политику (а не файл) запретила образ:
 /// ERROR_VIRUS_INFECTED, ERROR_INVALID_IMAGE_HASH, ERROR_ACCESS_DISABLED_BY_POLICY.
 const policyBlockedOsErrors = {225, 577, 1260};
 
@@ -12,7 +12,7 @@ enum SmartAppControlState { off, on, evaluation, unknown }
 
 typedef SmartAppControlStateReader = SmartAppControlState Function();
 
-/// Swapped out by tests; the real reader needs a Windows registry.
+/// Переопределяется тестами; реальный читатель требует реестр Windows.
 SmartAppControlStateReader smartAppControlStateReader =
     readSmartAppControlState;
 
@@ -39,9 +39,9 @@ SmartAppControlState readSmartAppControlState() {
   }
 }
 
-/// The OS error behind a failed Core launch, whether the Helper spawned it
-/// (the code travels in the response details, older Helpers only in the
-/// message) or the app did (dart:io keeps it on the exception).
+/// Код ошибки ОС за неудачный запуск ядра,无论 Helper породил ядро
+/// (код лежит в деталях ответа, старые Helper — только в сообщении)
+/// или приложение (dart:io хранит её на исключении).
 int? launchOsError(Object? error) {
   return switch (error) {
     DesktopCoreFailure(:final cause) => launchOsError(cause),

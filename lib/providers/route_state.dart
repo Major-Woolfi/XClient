@@ -13,9 +13,8 @@ import 'state.dart';
 
 part 'generated/route_state.g.dart';
 
-/// What a probe answer is judged against. Nothing is fresh until the Core's
-/// counters have been read, otherwise every answer would fail the epoch
-/// check and be asked again forever.
+/// Тем, с чем сверяется ответ пробы. Ничего не свежее, пока счетчики ядра
+/// не прочитаны, иначе каждый ответ бы провал проверку эпок и спрашивался бы вечно.
 @immutable
 class RouteState {
   const RouteState({
@@ -90,8 +89,8 @@ class RouteState {
   );
 }
 
-/// The route a probe answer was produced under: the Core's counters when it
-/// started, the host's when it was sent, and the connections it made.
+/// Маршрут, под которым был создан ответ пробы: счетчики ядра, когда он стартовал,
+/// счетчики хоста, когда был отправлен, и соединения, которые он сделал.
 @immutable
 class RouteStamp {
   const RouteStamp({
@@ -198,8 +197,8 @@ class RouteTracker extends _$RouteTracker {
     }
   }
 
-  /// Reads the Core's counters again; a cache asks for this when an answer
-  /// carries a newer epoch than the state, which means an event was missed.
+  /// Снова читает счетчики ядра; кэш просит об этом, когда ответ несет
+  /// более новую эпоку, чем состояние, что означает пропущенное событие.
   void resync() => _subscribe();
 
   void applySnapshot(RouteSnapshot snapshot) {
@@ -220,8 +219,8 @@ class RouteTracker extends _$RouteTracker {
     state = state.copyWith(resumes: state.resumes + 1);
   }
 
-  /// Deferred because both are computed: unwatched, they go stale, and the
-  /// widget that next reads one recomputes it from initState or build.
+  /// Отложено, потому что оба вычисляются: не watched, они устаревают, и виджет,
+  /// который прочитает один из них в следующий раз, пересчитает из initState или build.
   void _scheduleSyncProxied() {
     scheduleMicrotask(() {
       if (ref.mounted) {
@@ -288,7 +287,7 @@ class RouteTracker extends _$RouteTracker {
     _failures = 0;
   }
 
-  /// Deferred because a widget releases its target from dispose.
+  /// Отложено, потому что виджет освобождает свою цель из dispose.
   void _unsubscribe() {
     _cancelRetry();
     final generation = ++_generation;

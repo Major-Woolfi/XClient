@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:prism_ui/prism_ui.dart';
-
-/// A page to stand a widget on where a test is not about the page.
+/// Страница, чтобы поставить на неё виджет, где тест не о странице.
 class HostScaffold extends StatelessWidget {
   const HostScaffold({
     super.key,
@@ -20,8 +19,7 @@ class HostScaffold extends StatelessWidget {
     );
   }
 }
-
-/// A plain row for a test that only needs something tappable to fill a list.
+/// Обычная строка для теста, которому нужно что-то тапабельное, чтобы заполнить список.
 class TestRow extends StatelessWidget {
   const TestRow({
     super.key,
@@ -57,3 +55,4 @@ class TestRow extends StatelessWidget {
     );
   }
 }
+

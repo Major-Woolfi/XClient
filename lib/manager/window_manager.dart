@@ -18,8 +18,8 @@ const _windowGeometryDelay = Duration(milliseconds: 120);
 class WindowManager extends ConsumerStatefulWidget {
   final Widget child;
 
-  /// A request to quit from outside the window, such as SIGTERM from `kill`
-  /// or the session ending; exits like the tray's quit.
+  /// Запрос на выход извне окна, такой как SIGTERM от `kill`
+  /// или окончание сессии; выход как у выхода из трея.
   final Stream<ProcessSignal>? terminateSignals;
 
   const WindowManager({super.key, this.terminateSignals, required this.child});
@@ -95,7 +95,7 @@ class _WindowContainerState extends ConsumerState<WindowManager>
     super.onWindowClose();
   }
 
-  /// Another launch, or a Dock reopen, asked for the window.
+  /// Другой запуск, или повторное открытие Dock, попросил окно.
   @override
   void onWindowActivate() {
     super.onWindowActivate();
@@ -300,9 +300,9 @@ class WindowCaptionState {
   int get hashCode => Object.hash(isPinned, isMaximized, isFullScreen);
 }
 
-/// Maximize and fullscreen are written only from window events: the window
-/// manager can change both on its own, and on Linux a maximize request is
-/// applied later, so reading the state back right after the call is stale.
+/// Максимизация и полноэкранный режим записываются только из событий окна: менеджер
+/// окон может менять оба сам, и на Linux запрос на максимизацию применяется позже,
+/// поэтому чтение состояния сразу после вызова устарело.
 class WindowCaptionController extends ValueNotifier<WindowCaptionState>
     with WindowListener {
   WindowCaptionController() : super(const WindowCaptionState()) {
@@ -477,7 +477,7 @@ class WindowHeaderBar extends StatelessWidget {
                 bottom: 0,
                 right: 0,
                 child: ButtonTheme(
-                  // Caption buttons answer a pointer as the system's do.
+                  // Кнопки подписи отвечают на указатель, как системные.
                   data: ButtonThemeData(
                     icon: ButtonStyle(
                       tapTargetSize: TapTargetSize.shrinkWrap,

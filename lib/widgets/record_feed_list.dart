@@ -1,14 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:prism_ui/prism_ui.dart';
 
-/// A list of records that a feed keeps adding to and trims at its cap. Its rows
-/// follow their keys and keep their stripes as the head is trimmed, so a refresh
-/// builds only the rows it added, and it builds none ahead while it arrives.
+/// Список записей, которое фид продолжает добавлять и обрезает по своему лимиту. Его строки следуют за своими ключами и сохраняют свои полоски, пока голова обрезается, поэтому обновление строит только те строки, которые добавил, и оно не строит ни одной впереди, пока оно приходит.
 class RecordFeedList<T> extends StatefulWidget {
   final List<T> items;
   final Key Function(T item) keyOf;
 
-  /// [latest] reads the item's current version, for a row kept across versions.
+  /// [latest] читает текущую версию элемента, для строки, хранимой через версии.
   final Widget Function(T item, bool striped, ValueGetter<T> latest)
   itemBuilder;
   final ScrollController? controller;
@@ -45,7 +43,7 @@ class _RecordFeedListState<T> extends State<RecordFeedList<T>>
   var _trimmed = 0;
   var _stripeShift = 0;
 
-  /// Indexes the whole feed only for a change other than a trim at the head.
+  /// Индексирует весь фид только для изменения, отличного от обрезки головы.
   int? _indexOf(Key key) {
     final items = widget.items;
     bool isAt(int? index) =>

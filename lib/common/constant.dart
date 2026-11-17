@@ -32,8 +32,8 @@ const watchExecution = false;
 
 const safeModeBuild = bool.fromEnvironment('SAFE_MODE');
 
-/// The bundled core has no MITM, so this stays off until one that has it ships.
-/// Not const so tests can cover both states.
+/// В собранном ядре нет MITM, поэтому это выключено, пока не выйдет ядро с ним.
+/// Not const, чтобы тесты покрывали оба состояния.
 bool mitmFeature = const bool.fromEnvironment('FEATURE_MITM');
 
 const disclaimerVersion = 1;
@@ -46,16 +46,16 @@ String _randomPipeId() {
   ).join();
 }
 
-/// Depends on [context]'s text scaler, so the caller rebuilds when the system
-/// font scale changes.
+/// Зависит от текстовых масштабов [context], поэтому вызывающий перестраивается при
+/// изменении системного масштаба шрифта.
 double systemTextScaleOf(BuildContext context) {
   MediaQuery.textScalerOf(context);
   return WidgetsBinding.instance.platformDispatcher.textScaleFactor;
 }
 
-/// How long, in milliseconds, the Core may spend on one manual delay test. It
-/// spends this twice in the worst case - once queueing for a slot, once on the
-/// probe itself - so the guard below has to outlast twice the longest option.
+/// Сколько миллисекунд ядро может потратить на один ручной тест задержки. Оно
+/// тратит это дважды в худшем случае — один раз на очередь за слотом, один раз
+/// на саму проверку — поэтому защита ниже должна длиться дольше двух самых длинных вариантов.
 const delayTestTimeoutOptions = [500, 1000, 2000, 5000, 8000];
 
 const defaultDelayTestTimeout = 8000;
@@ -66,37 +66,37 @@ const delayTimedOutValue = -1;
 
 const probeTimeoutDuration = Duration(seconds: 10);
 
-/// Outlasts the Core's one-second pick poll (`routePollInterval` in
-/// core/route.go), so groups re-picking on neighbouring polls cost one route
-/// check.
+/// Переживает опрос выбора ядра раз в секунду (`routePollInterval` в
+/// core/route.go), так что группы, выбирающиеся на соседних опросах, стоят одной
+/// проверки маршрута.
 const probeSettleDuration = Duration(milliseconds: 1500);
 
-/// Spans a config load, whose providers, rule sets and url-test picks land
-/// over a few seconds, so an exit moving with each costs one probe more.
+/// Охватывает загрузку конфига, чьи провайдеры, наборы правил и выбор url-тестов
+/// Landing в течение нескольких секунд, поэтому выход, moving с каждым, стоит одной проверки больше.
 const probeThrottleDuration = Duration(seconds: 5);
 
-/// Covers a start, which moves the route three times within about 150 ms
-/// (`proxied`, then the listeners, then the Android TUN).
+/// Покрывает старт, который двигает маршрут трижды за около 150 мс
+/// (`proxied`, затем слушатели, затем Android TUN).
 const probeMoveSettleDuration = Duration(milliseconds: 300);
 
 const downloadTimeoutDuration = Duration(seconds: 20);
 
-/// A healthy source answers within a second; past this the outbound is down.
+/// Здоровый источник отвечает в течение секунды; после этого аутбаунд считается нерабочим.
 const outboundIpTimeoutDuration = Duration(seconds: 6);
 
-/// The Core may spend a method's own timeout twice, once queueing for a probe
-/// slot and once on the request, before the transport is considered
-/// unresponsive. [budgetFactor] covers methods that spend it more than once.
+/// Ядро может потратить таймаут метода дважды: один раз на очередь за слотом проверки,
+/// один раз на запрос, прежде чем транспорт сочтётся не отвечающим.
+/// [budgetFactor] покрывает методы, которые тратят его более одного раза.
 Duration coreGuardFor(int timeout, {int budgetFactor = 2}) =>
     Duration(milliseconds: timeout * budgetFactor) + const Duration(seconds: 5);
 
-/// Kept in step with serviceSweepBudgetFactor in core/service_check.go.
+/// Синхронизировано с serviceSweepBudgetFactor в core/service_check.go.
 const serviceSweepBudgetFactor = 6;
 
 const coreConnectionWaitDuration = Duration(seconds: 10);
 
-/// Keep at or below the Core's delay-test concurrency (`delayTestConcurrency`
-/// in core/delay.go).
+/// Держать на уровне или ниже параллелизма тестов задержки ядра (`delayTestConcurrency`
+/// в core/delay.go).
 const maxConcurrentDelayTests = 32;
 const maxConcurrentImports = 4;
 const maxConcurrentIconLoads = 8;
@@ -117,7 +117,7 @@ const providersDirectoryName = 'providers';
 const proxiesProviderDirectoryName = 'proxies';
 const rulesProviderDirectoryName = 'rules';
 
-/// The Core reads the CA here, and map-local files only from [mitmResourcesDirectoryName].
+/// Ядро читает CA здесь, а map-локальные файлы только из [mitmResourcesDirectoryName].
 const mitmDirectoryName = 'mitm';
 const mitmModulesDirectoryName = 'modules';
 const mitmResourcesDirectoryName = 'resources';
@@ -153,7 +153,7 @@ const shareLinkSchemes = {
   'mierus',
 };
 
-/// XRay-native link schemes (vmess://, vless://, trojan://, ss://, ssconf://).
+/// Схемы нативных ссылок XRay (vmess://, vless://, trojan://, ss://, ssconf://).
 const xrayLinkSchemes = {'vmess', 'vless', 'trojan', 'shadowsocks', 'ss', 'ssconf'};
 
 const stringListEquality = ListEquality<String>();
@@ -186,8 +186,7 @@ const pausedMaxDnsQueriesLength = maxDnsQueriesLength * 2;
 
 const trafficSampleLength = 30;
 
-// iOS 27's system colors but the deeper blue of earlier iOS, in the order of the
-// macOS accent colors.
+// iOS 27's системные цвета, но более глубокий синий ранних iOS, в порядке акцентных цветов macOS.
 const defaultPrimaryColors = [
   defaultPrimaryColor,
   0xFFCB30E0,

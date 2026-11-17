@@ -22,9 +22,8 @@ String _iconSetJson(String name, List<String> icons) => json.encode({
       {'name': '$icon.png', 'url': 'https://example.com/$icon.png'},
   ],
 });
-
-/// Real downloads over loopback: the test binding answers every request with a
-/// 400, so its override is lifted while a test runs.
+/// Реальные загрузки по loopback: привязка теста отвечает на каждый запрос с
+/// 400, поэтому её переопределение снимается, пока тест запущен.
 void main() {
   late HttpServer server;
   late String body;
@@ -185,6 +184,7 @@ void main() {
     expect(iconSets.single.isRemote, isFalse);
   });
 }
+
 
 
 

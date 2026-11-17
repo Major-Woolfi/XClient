@@ -72,9 +72,8 @@ Future<void> _agreeAndRestate(WidgetTester tester) async {
   await tester.tap(find.text('Confirm'));
   await tester.pumpAndSettle();
 }
-
-/// [PrismApp] mounts the [BannerHost] above its navigator, so
-/// [Dialogs.showBanner] can reach it from `navigatorKey.currentContext`.
+/// [PrismApp] монтирует [BannerHost] над своим навигатором, так что
+/// [Dialogs.showBanner] может alcanцировать его из `navigatorKey.currentContext`.
 Future<void> _pumpBannerHost(WidgetTester tester) async {
   tester.view.physicalSize = const Size(1000, 800);
   tester.view.devicePixelRatio = 1;
@@ -562,5 +561,6 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
+
 
 

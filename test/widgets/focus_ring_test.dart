@@ -40,7 +40,7 @@ Future<List<FocusNode>> _pump(
       ),
     ),
   );
-  // A key press puts focus highlights in the traditional mode a remote uses.
+// Нажатие клавиши ставит выделение фокуса в традиционном режиме, который использует пульт.
   await tester.sendKeyEvent(LogicalKeyboardKey.shift);
   await tester.pumpAndSettle();
   return nodes;

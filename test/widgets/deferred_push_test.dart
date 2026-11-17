@@ -9,7 +9,7 @@ import '../helpers/test_app.dart';
 
 void main() {
   final navigatorKey = GlobalKey<NavigatorState>();
-  // A transition's first tick reads a frame of the 200 ms fade ahead.
+// Первый тик перехода читает кадр затухания 200 мс вперёд.
   const firstFrame = 1 / 60 / 0.2;
 
   Future<void> pumpHome(WidgetTester tester) {

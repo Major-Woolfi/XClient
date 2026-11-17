@@ -378,9 +378,9 @@ const _probeLength = 512;
 
 enum _ProviderFile { text, ruleSet, binary }
 
-// An .mrs rule set is a zstd stream and any other binary file gives itself
-// away with a NUL byte; neither can go through the Core's string side-load,
-// but the Core can dump an .mrs set back to text for reading.
+// .mrs набор правил — это zstd-поток, и любой другой бинарный файл выдает себя
+// байтом NUL; ни один не может пройти через строковую side-load ядра,
+// но ядро может дампнуть .mrs набор обратно в текст для чтения.
 Future<_ProviderFile> _probeProviderFile(String? path) async {
   if (path == null || path.isEmpty) {
     return _ProviderFile.binary;

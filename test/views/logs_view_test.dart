@@ -71,17 +71,17 @@ void main() {
     expect(seedLogs().map((log) => log.dateTime), contains(label.data));
 
     final scrollableRect = tester.getRect(find.byType(Scrollable).first);
-    // The list runs under the bar, so the scrollbar track starts at the
-    // bar's foot. The minimum thumb length is 48, so at the newest end the
-    // thumb center rests 24 dp below the track's top edge.
+// Список работает под баром, так что трек скроллбара начинается у подножия
+/// бара. Минимальная длина большого пальца — 48, так что на новейшем конце центр
+/// большого пальца лежит на 24 dp ниже верхнего края трека.
     final trackTop = tester.getRect(find.byType(AppBar)).bottom;
     expect(tester.getCenter(find.byKey(hintKey)).dy, closeTo(trackTop + 24, 6));
 
     await gesture.moveBy(const Offset(0, 2000));
     await tester.pump();
-    // Nothing floats over the foot, so the pill follows the thumb all the
-    // way down and rests centred on it, the thumb being the track's share of
-    // the content, both less the part under the bar.
+// Ничего не плавает над подножием, так что таблет следует за большим пальцем
+/// до самого низа и отдыхает на нём по центру, большой палец является долей трека
+/// контента, оба меньше части под баром.
     final position = tester
         .widget<Scrollable>(find.byType(Scrollable).first)
         .controller!
@@ -99,8 +99,8 @@ void main() {
     );
 
     await gesture.up();
-    // The pill outlives the gesture briefly so letting go and grabbing again
-    // does not blink it.
+// Таблет переживает жест brevemente, так что отпускание и повторное схватывание
+/// не мигает им.
     await tester.pump(const Duration(milliseconds: 100));
     expect(hintFinder(), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 500));
@@ -225,5 +225,6 @@ void main() {
     expect(built, 1);
   });
 }
+
 
 

@@ -83,9 +83,9 @@ class _FakeScannerPlatform extends MobileScannerPlatform {
   @override
   Future<void> updateScanWindow(Rect? window) async {}
 
-  // Deliberately keeps the streams open: a real camera plugin can still deliver
-  // a frame that was already in flight when teardown began, and the test needs
-  // to be able to model that.
+// Умышленно держит потоки открытыми: настоящий плагин камеры всё ещё может
+/// доставить кадр, который уже был в полёте, когда начался teardown, и тесту нужно
+/// иметь возможность моделировать это.
   @override
   Future<void> dispose() async {
     disposeCalls++;
@@ -123,16 +123,14 @@ void main() {
     MobileScannerPlatform.instance = platform;
     addTearDown(platform.close);
   });
-
-  /// The scan effect repeats for as long as the camera runs, so
-  /// `pumpAndSettle` only returns once the page has been popped or unmounted.
+/// Эффект сканирования повторяется, пока работает камера, так что
+/// `pumpAndSettle` возвращается только после того, как страница была вытолкнута или размонтирована.
   Future<void> pumpFrames(WidgetTester tester) async {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
   }
-
-  /// Pushes the page onto a route so `Navigator.pop` from `_handleBarcode` has
-  /// something to pop, and reports what the page popped with.
+/// Толкает страницу на маршрут, чтобы `Navigator.pop` из `_handleBarcode` имел
+/// что вытолкнуть, и сообщает, с чем страница вытолкнулась.
   Future<void> pushScanPage(
     WidgetTester tester, {
     required void Function(String? result) onPopped,
@@ -200,9 +198,9 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pumpAndSettle();
 
-      // `StatefulElement.unmount` asserts `super.dispose()` already ran. An
-      // `await` before it defers the call past the assert and this fails with
-      // "_ScanPageState.dispose failed to call super.dispose."
+// `StatefulElement.unmount` утверждает, что `super.dispose()` уже запустилось. `await`
+/// до него откладывает вызов мимо утверждения, и это проваливается с
+/// "_ScanPageState.dispose failed to call super.dispose."
       expect(tester.takeException(), isNull);
     });
 
@@ -230,8 +228,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      // Two things stop this: the subscription is cancelled in dispose, and
-      // `_handleBarcode` re-checks `mounted` for anything already dispatched.
+// Две вещи останавливают это: подписка отменяется в dispose, и
+/// `_handleBarcode` повторно проверяет `mounted` на всё уже отправленное.
       expect(popped, isFalse);
       expect(tester.takeException(), isNull);
     });
@@ -554,8 +552,8 @@ void main() {
       var popCount = 0;
       await pumpScanPage(tester, onPopped: (_) => popCount++);
 
-      // Without cancelling first, each resume adds another listener and the
-      // single capture below would be handled once per subscription.
+// Без отмены сначала, каждое возобновление добавляет другого слушателя, и
+/// единичный захват ниже обрабатывался бы один раз на подписку.
       await sendLifecycle(tester, AppLifecycleState.resumed);
       await pumpFrames(tester);
       await sendLifecycle(tester, AppLifecycleState.resumed);
@@ -847,5 +845,6 @@ void main() {
     });
   });
 }
+
 
 

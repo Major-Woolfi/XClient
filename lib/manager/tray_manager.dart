@@ -59,7 +59,7 @@ class _TrayManagerState extends ConsumerState<TrayManager> {
     }
   }
 
-  /// A delay test changes the menu per proxy, so updates in flight coalesce.
+  /// Проба задержки меняет меню на прокси, поэтому обновления в полёте сливаются.
   void _requestUpdate() {
     if (_isUpdating) {
       _hasPendingUpdate = true;

@@ -676,8 +676,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 16));
     }
     await gesture.up(timeStamp: const Duration(milliseconds: 176));
-    // The release spring overshoots past the edge, which takes about 30
-    // frames more to die out.
+// Пружина выпуска переходит мимо края, что занимает около 30
+/// кадров больше, чтобы затухнуть.
     for (var frame = 0; frame < 20; frame++) {
       await tester.pump(const Duration(milliseconds: 16));
     }
@@ -731,3 +731,4 @@ void main() {
     expect(find.text('open'), findsOneWidget);
   });
 }
+

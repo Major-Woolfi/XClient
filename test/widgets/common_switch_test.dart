@@ -59,7 +59,7 @@ void main() {
 
   Finder switchFinder() => find.byType(Switch);
 
-  // The track is drawn first, the thumb over it.
+// Трек рисуется первым, большой палец поверх него.
   Finder thumbFinder() => find
       .descendant(of: switchFinder(), matching: find.byType(DecoratedBox))
       .at(1);

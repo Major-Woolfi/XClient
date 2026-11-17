@@ -58,8 +58,7 @@ class _Processes {
   ) {
     _handlers[executable] = handler;
   }
-
-  /// Answers runs whose command line starts with [prefix].
+/// Отвечает на запуски, чья командная строка начинается с [prefix].
   void stub(String prefix, {int exitCode = 0, String stdout = ''}) {
     _results[prefix] = (exitCode, stdout);
   }
@@ -527,6 +526,7 @@ void main() {
     });
   });
 }
+
 
 
 

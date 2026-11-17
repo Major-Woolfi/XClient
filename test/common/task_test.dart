@@ -280,10 +280,10 @@ void main() {
     },
   );
 
-  // The core re-reads these two keys out of the generated config on every
-  // profile apply and adopts whatever it finds, so a subscription that ships
-  // them would otherwise decide whether GEO databases auto-update - including
-  // switching the updater back on after the user turned it off.
+// Ядро перечитывает эти два ключа из сгенерированного конфига при каждом
+/// применении профиля и принимает то, что находит, так что подписка, которая
+/// их отправляет, иначе решила бы, обновляются ли базы GEO автоматически –
+/// включая включение обновления обратно после того, как пользователь выключил его.
   test(
     'makeRealProfileTask lets the app setting own the geo updater',
     () async {
@@ -314,7 +314,7 @@ void main() {
     },
   );
 
-  // A profile-shipped loopback skip-auth-prefixes would bypass the credentials.
+// Пропуск аутентификации loopback, поставляемый профилем, иначе бы обошёл учётные данные.
   test('makeRealProfileTask lets the app own local authentication', () async {
     final rawConfig = await decodeJSONTask<Map<String, dynamic>>(
       jsonEncode({
@@ -945,3 +945,4 @@ DOMAIN-SUFFIX,ads.example.com,REJECT
     expect(encoded, contains('\n'));
   });
 }
+

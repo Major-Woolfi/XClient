@@ -8,8 +8,8 @@ import 'routed_probe.dart';
 
 part 'generated/outbound_ip.g.dart';
 
-/// Keyed by the outbound a lookup pins: a node name, `DIRECT`, or
-/// [routedOutbound] for whatever the rules pick right now.
+/// Ключован аутбаундом, который закрепляет поиск: имя узла, `DIRECT`, или
+/// [routedOutbound] для того, что правила выбирают прямо сейчас.
 @Riverpod(keepAlive: true)
 class OutboundIpProbe extends _$OutboundIpProbe
     with RoutedProbe<String, IpInfo> {
@@ -37,7 +37,7 @@ class OutboundIpProbe extends _$OutboundIpProbe
         routeVersion: result.routeVersion,
         hits: result.hits,
       ),
-      // A node leaves through the same address whatever it is asked for.
+      // Узел выходит через один и тот же адрес,whatever его спросишь.
       if (value != null && exit != null && exit != target)
         exit: ProbeAnswer(
           value: value,

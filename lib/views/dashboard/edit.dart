@@ -59,7 +59,7 @@ class _DashboardEditorState extends ConsumerState<DashboardEditor>
     with SingleTickerProviderStateMixin {
   late final _sway = AnimationController(vsync: this, duration: _swayLoop);
 
-  /// The saved cards and any removed one still on its way out.
+  /// Сохраненные карточки и любая удаленная, еще в пути наружу.
   late var _cards = widget.widgets;
   final _leaving = <DashboardWidget>{};
   final _entering = <DashboardWidget>{};

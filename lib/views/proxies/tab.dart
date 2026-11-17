@@ -60,8 +60,8 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
     );
   }
 
-  // The page of a dropped group still holds its controller until this frame
-  // unmounts it.
+  // Страница удаленной группы все еще держит свой контроллер, пока этот кадр
+  // не размонтирует его.
   void _pruneScrollControllers(List<Group> groups) {
     final names = {for (final group in groups) group.name};
     final dropped = [
@@ -138,8 +138,8 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
     _tabController = null;
   }
 
-  // An empty group list keeps the previous controller: the outgoing tab bar
-  // still drives it while the empty state animates in.
+  // Пустой список групп хранит предыдущий контроллер: исходящая панель табов
+  // все еще ведет его, пока пустое состояние анимируется.
   void _updateTabController(int length, int index) {
     if (length == 0) {
       return;

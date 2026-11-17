@@ -60,7 +60,7 @@ extension DashboardWidgetView on DashboardWidget {
     };
   }
 
-  /// It holds the start button, which has nowhere else to go.
+  /// Она держит кнопку старта, которой некуда больше деться.
   bool get removable => this != DashboardWidget.currentOutbound;
 }
 

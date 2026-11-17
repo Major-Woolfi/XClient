@@ -84,8 +84,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
     _syncEffect();
   }
 
-  // Android binds and unbinds the camera on the platform thread, which the UI
-  // shares, so the camera runs only between the route's transitions.
+  // Android привязывает и отвязывает камеру на потоке платформы, которым делится UI, поэтому камера работает только между переходами маршрута.
   @override
   void didSettleRoute() {
     unawaited(_start());
@@ -102,8 +101,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
     }
   }
 
-  // The permission dialog makes Android report `inactive` then `resumed` while
-  // the first start is still pending, and a second `start` would throw.
+  // Диалог разрешения заставляет Android сообщить `inactive`, а затем `resumed`, пока первый старт еще ожидает, и второй `start` выбросит исключение.
   Future<void> _start() async {
     final state = _controller.value;
     if (_leaving || !routeSettled || state.isStarting || state.isRunning) {
@@ -126,7 +124,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
     }
   }
 
-  // Pausing, unlike stopping, keeps the preview's last frame.
+  // Пауза, в отличие от остановки, хранит последний кадр предварительного просмотра.
   Future<void> _release() async {
     _leaving = true;
     _effectController.stop();
@@ -181,8 +179,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
     });
   }
 
-  // `pop` takes the top route, which is another one once this page is closing
-  // or a dialog covers it, and a closing page stays mounted until it is gone.
+  // `pop` берет верхний маршрут, который становится другим, когда эта страница закрывается, или диалог прикрывает её, и закрывающая страница остается смонтированной, пока она не уйдет.
   Future<void> _leave([String? url]) async {
     if (_leaving || ModalRoute.isCurrentOf(context) == false) {
       return;
@@ -231,8 +228,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
         if (_picking) {
           return;
         }
-        // Retrying a denied permission on every resume would reopen the
-        // system dialog as soon as the user dismisses it.
+        // Повтор попытки отклоненного разрешения на каждом resumed снова откроет системный диалог, как только пользователь отменит его.
         final denied =
             _controller.value.error?.errorCode ==
             MobileScannerErrorCode.permissionDenied;
@@ -429,9 +425,7 @@ class _ScanPageState extends ConsumerState<ScanPage>
     );
   }
 
-  // `StatefulElement.unmount` asserts that `super.dispose()` already ran by the
-  // time `dispose()` returns, so nothing here may await first: the controller is
-  // torn down in the background instead.
+  // `StatefulElement.unmount` утверждает, что `super.dispose()` уже выполнилось к моменту возврата `dispose()`, так что ничего здесь не может ждать primeiro: контроллер разбирается на фоне вместо этого.
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -465,8 +459,7 @@ class _ScanLayout {
     required this.torch,
   });
 
-  // Short viewports, landscape or split screen, cannot stack the window, its
-  // hint and the torch vertically, so the torch moves beside the window there.
+  // Короткие вьюпорты, ландшафтный или сплит-скрин, не могут сложить окно, его подсказку и факел вертикально, поэтому факел перемещается рядом с окном там.
   factory _ScanLayout({
     required Size size,
     required EdgeInsets padding,
@@ -627,8 +620,7 @@ class _ScannerError extends StatelessWidget {
     final padding =
         MediaQuery.paddingOf(context) +
         const EdgeInsets.only(top: pageToolbarHeight);
-    // `NullStatus` wraps into a second column once its height is bounded
-    // below its content, so a short viewport scrolls it instead.
+    // `NullStatus` оборачивается во второй столбец, когда его высота ограничена ниже своего содержимого, поэтому короткий вьюпорт скроллит его вместо этого.
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         padding: padding,

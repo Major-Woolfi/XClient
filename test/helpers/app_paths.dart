@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:xclient/common/path.dart';
-
-/// Resolves every directory [appPath] hands out to [root].
+/// Разрешает каждый каталог, который [appPath] отдаёт в [root].
 Future<void> useAppPaths(Directory root) {
   Future<Directory> resolve() async => root;
   AppPath.supportDirectory = resolve;
@@ -11,5 +10,6 @@ Future<void> useAppPaths(Directory root) {
   AppPath.downloadDirectory = resolve;
   return appPath.rebind();
 }
+
 
 

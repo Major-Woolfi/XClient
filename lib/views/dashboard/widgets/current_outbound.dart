@@ -32,7 +32,7 @@ const _decorationGrowth = 0.12;
 
 const _decorationTurn = 2 * math.pi / 12;
 
-/// The address the proxied traffic leaves by, next to the start button.
+/// Адрес, через который исходящий прокси-трафик уходит, рядом с кнопкой старта.
 class CurrentOutboundCard extends ConsumerStatefulWidget {
   const CurrentOutboundCard({super.key});
 

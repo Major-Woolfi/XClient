@@ -22,23 +22,24 @@ final _trailerPattern = RegExp(
   r'^(BREAKING[ -]CHANGE|Changelog(?:-[A-Za-z0-9-]+)?|Breaking-[A-Za-z0-9-]+):[ \t]*(.*)$',
 );
 
-/// Any line shaped like a git trailer: a hyphenated key (`Co-authored-by`,
-/// `Signed-off-by`, `Reviewed-by`, `Change-Id`, ...) or one of the known
-/// unhyphenated trailers. Trailers we don't recognize still end the trailer
-/// being accumulated, so e.g. a `Co-authored-by:` line after a `Changelog:`
-/// footer isn't glued onto the changelog text as a continuation line. Plain
-/// prose like `Note: ...` has neither shape and stays a continuation line.
+/// Любая строка, похожая на трейлер git: ключ с дефисом (`Co-authored-by`,
+/// `Signed-off-by`, `Reviewed-by`, `Change-Id`, ...) или один из известных
+/// не-дефисных трейлеров. Трейлеры, которые мы не узнаём, всё равно завершают
+/// накапливаемый трейлер, так например, строка `Co-authored-by:` после
+/// подвала `Changelog:` не приклеивается к тексту changelog как строка
+/// продолжения. Обычная проза вроде `Note: ...` не имеет ни той, ни другой
+/// формы и остаётся строкой продолжения.
 final _genericTrailerPattern = RegExp(
   r'^(?:[A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+|Refs|Fixes|Closes):[ \t]*',
   caseSensitive: false,
 );
 
-/// The only suffixed trailer. The changelog ships English, and anything else
-/// belongs in a post-processing step, not in the commit message.
+/// Единственный трейлер с суффиксом. Changelog поставляется на английском, и
+/// всё остальное относится к шагу пост-обработки, а не к сообщению коммита.
 const _knownSuffixedTrailer = 'Changelog-Type';
 
-/// The parser is pure: it never touches git or the filesystem, so every rule
-/// below is covered by `test/tool/changelog_parser_test.dart`.
+/// Парсер чист: он никогда не трогает git или файловую систему, поэтому каждое
+/// правило ниже покрыто `test/tool/changelog_parser_test.dart`.
 class ChangelogParser {
   final List<String> warnings = <String>[];
 
@@ -125,8 +126,8 @@ class ChangelogParser {
     return trailers.containsKey('Changelog') ? ChangelogType.feat : null;
   }
 
-  /// The trailer wins over the subject, but only when it carries text: an
-  /// empty `Changelog:` falls back to the subject.
+  /// Трейлер побеждает тему, но только когда несёт текст: пустой `Changelog:`
+/// возвращается к теме.
   String _text(String? trailer, String description) =>
       trailer == null || trailer.isEmpty ? _capitalize(description) : trailer;
 
@@ -197,3 +198,4 @@ String _capitalize(String value) {
   }
   return value[0].toUpperCase() + value.substring(1);
 }
+

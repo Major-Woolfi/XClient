@@ -132,8 +132,9 @@ final debouncer = Debouncer();
 
 final throttler = Throttler();
 
-/// Frames stop while the window is hidden, so a post-frame callback alone
-/// would hold tray and hotkey work back until the window is shown again.
+/// Кадры останавливаются, пока окно скрыто, поэтому одного post-frame
+/// колбэка было бы недостаточно — работа трея и горячих клавиш задержится,
+/// пока окно не покажется снова.
 void runAfterFrame(VoidCallback callback) {
   final binding = SchedulerBinding.instance;
   if (!binding.framesEnabled) {

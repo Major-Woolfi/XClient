@@ -102,8 +102,8 @@ void main() {
     addTearDown(container.dispose);
     globalState.container = container;
     container.read(viewSizeProvider.notifier).update((_) => size);
-    // providersProvider is autoDispose; hold a listener so the seeded list
-    // survives until the widget subscribes.
+// providersProvider — autoDispose; держите слушателя, чтобы посеянный список
+/// пережил до того, как виджет подпишется.
     final subscription = container.listen(
       providersProvider,
       (_, _) {},
@@ -139,16 +139,16 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
   }
 
-  // The editor blinks its caret for as long as it is open, so a page holding
-  // it never settles.
+// Редактор мигает своим кареткой, пока он открыт, так что страница, держащая его,
+/// никогда не успокаивается.
   Future<void> pumpTransitions(WidgetTester tester) async {
     for (var i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
   }
 
-  // Reading and writing the provider file runs on the real event loop,
-  // outside fake-async, so pump in rounds until the flow it feeds arrives.
+// Чтение и запись файла провайдера запускаются на реальном	event-цикле,
+/// вне fake-async, так что накачивайте кругами, пока поток, который он кормит, не прибудет.
   Future<void> pumpUntil(
     WidgetTester tester,
     Finder finder, {
@@ -167,7 +167,7 @@ void main() {
     fail('timed out waiting for $finder to be ${found ? 'shown' : 'gone'}');
   }
 
-  // A row probes its file on the real event loop before it offers edit.
+// Строка зондирует свой файл на реальном	event-цикле, прежде чем предложить редактирование.
   Future<void> openMenuWithEdit(WidgetTester tester, String name) async {
     for (var i = 0; i < 100; i++) {
       await openMenu(tester, name);
@@ -576,7 +576,7 @@ void main() {
     await pump(tester, container);
 
     final l10n = currentAppLocalizations;
-    // The text row offering edit proves every row has finished probing.
+// Текстовая строка, предлагающая редактирование, доказывает, что каждая строка закончила зондирование.
     await openMenuWithEdit(tester, 'with-file');
     expect(find.text(l10n.upload), findsOne);
     await closeMenu(tester);
@@ -786,6 +786,7 @@ void main() {
     expect(find.byType(ActivityIndicator), findsNothing);
   });
 }
+
 
 
 

@@ -7,16 +7,16 @@ enum YamlScalar {
   rulePayload,
   policy,
 
-  /// A policy the core looks up once the config is loaded, when GLOBAL exists.
+  /// Политика, которую ядро ищет, когда конфиг загружен, когда существует GLOBAL.
   outbound,
   proxyProvider,
   ruleProvider,
   subRule,
 }
 
-/// The part of the mihomo configuration the editor completes against. A map
-/// lists its [fields], plus [variants] keyed by the value of its `type`; a map
-/// with free keys and a list both describe their members with [entry].
+/// Часть конфигурации mihomo, против которой редактор дополняет. Карта
+/// перечисляет свои [fields], plus [variants], ключевые по значению своего `type`; карта
+/// со свободными ключами и список оба описывают своих членов через [entry].
 class YamlSchema {
   final YamlKind kind;
   final Map<String, YamlSchema> fields;
@@ -66,7 +66,7 @@ class YamlSchema {
     YamlKind.scalar => values.join(' | '),
   };
 
-  /// The fields of a map whose `type` is [type], all variants when unknown.
+  /// Поля карты, чей `type` это [type], все варианты, когда неизвестно.
   Map<String, YamlSchema> fieldsFor(String? type) {
     if (variants.isEmpty) {
       return fields;
@@ -95,8 +95,8 @@ enum EditorSchema {
 
   final YamlSchema root;
 
-  /// The configuration key that holds this part, which a pasted fragment may
-  /// still carry.
+  /// Ключ конфигурации, который держит эту часть, который вставленный фрагмент может
+  /// всё еще нести.
   final String? section;
 
   const EditorSchema(this.root, [this.section]);
@@ -149,7 +149,7 @@ const ruleTypes = {
   'MATCH': '',
 };
 
-/// Rules that take the options after their policy.
+/// Правила, которые берут опции после своей политики.
 const noResolveRuleTypes = {
   'IP-CIDR',
   'IP-CIDR6',
@@ -365,7 +365,7 @@ const _dial = {
   'dialer-proxy': _outbound,
 };
 
-/// Only the types that hand these to their dialer list them.
+/// Только типы, которые передают это своему диаллеру, перечисляют их.
 const _tcpDial = {'tfo': _bool, 'mptcp': _bool, ..._dial};
 
 const _tls = {
@@ -378,8 +378,8 @@ const _tls = {
   'ech-opts': _ech,
 };
 
-/// vmess and vless switch TLS on with `tls` and name the server `servername`,
-/// where the types that always use TLS call it `sni`.
+/// vmess и vless включают TLS с `tls` и называют сервер `servername`,
+/// где типы, которые всегда используют TLS, называют его `sni`.
 const _optionalTls = {
   'tls': _bool,
   'servername': _str,
@@ -587,7 +587,7 @@ const _ssCiphers = [
   ..._streamCiphers,
 ];
 
-/// ShadowsocksR takes stream ciphers only.
+/// ShadowsocksR берет только stream шифры.
 const _streamCiphers = [
   'aes-128-ctr',
   'aes-192-ctr',
@@ -656,7 +656,7 @@ const _tlsMirrorTime = YamlSchema.map({
   'uniform-random-multiplier-nanoseconds': _str,
 });
 
-/// The ss plugins and snell obfs modes shadow-tls, restls and jls read these.
+/// Плагины SS и способы обфускации Snell shadow-tls, restls и jls читают это.
 const _tlsLayerOpts = {
   'username': _str,
   'password': _str,

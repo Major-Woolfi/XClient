@@ -55,23 +55,19 @@ class Scaffold extends StatefulWidget {
 
   final IconButtonData? primaryAction;
 
-  /// Folded into the overflow menu once the bar would hold more than three
-  /// buttons, as [primaryAction] and [menuItems] are; [actions] never fold.
+  /// Складывается в меню переполнения, когда бар вмещает больше трех кнопок, как [primaryAction] и [menuItems]; [actions] никогда не складываются.
   final List<IconButtonData> iconActions;
   final List<PopupMenuItem> menuItems;
 
-  /// Answers a form: last in the bar, and in a form sheet the filled default
-  /// at its foot beside cancel, where SwiftUI sets one on macOS.
+  /// Отвечает на форму: последняя в баре, и в форме листа заполненное значение по умолчанию у ножек рядом с отменой, где SwiftUI ставит одно на macOS.
   final IconButtonData? confirmationAction;
   final AppBarSearchState? searchState;
   final List<IconButtonData> searchActions;
 
-  /// Keeps search a button in the bar on a phone page that would dock it at
-  /// its foot, for one whose foot carries a bar of its own.
+  /// Сохраняет поиск кнопкой в баре на странице телефона, которая оформила бы его у ножек, для той, у которой ножка несет свой бар.
   final bool searchInBar;
 
-  /// Shown searching or not and never folded; the first two share a button
-  /// group and any after them stand alone.
+  /// Показано при поиске и никогда не складывается; первые две делят группу кнопок, а все после них стоят по отдельности.
   final List<IconButtonData> selectionActions;
 
   /// Removable chips under the bar, kept by the page that filters by them.
@@ -79,7 +75,7 @@ class Scaffold extends StatefulWidget {
   final bool? resizeToAvoidBottomInset;
   final VoidCallback? backAction;
 
-  /// Puts the toggle of the sort mode in the bar.
+  /// Ставит переключатель режима сортировки в бар.
   final bool canSort;
 
   const Scaffold({
@@ -210,8 +206,7 @@ class ScaffoldState extends State<Scaffold>
     );
   }
 
-  // A bar's field at its end folds back once left empty, as a toolbar search
-  // field does on macOS; one across the bar waits for its cancel button.
+  // Поле бара в конце сворачивается, когда остается пустым, как поле поиска панели инструментов на macOS; одно через бар ждет кнопку отмены.
   void _handleSearchFocusChange() {
     if (_searchFocusNode.hasFocus ||
         _searchFillsBar ||
@@ -249,7 +244,7 @@ class ScaffoldState extends State<Scaffold>
     return true;
   }
 
-  // Kept-alive pages and pages under another route stay mounted too.
+  // Страницы, хранимая и страницы под другим маршрутом тоже остаются смонтированными.
   bool get _isFrontmost {
     if (!mounted ||
         context.getInheritedWidgetOfExactType<PageActivityScope>()?.isActive ==
@@ -371,7 +366,7 @@ class ScaffoldState extends State<Scaffold>
         right: BottomInsetScope.dockedSearchMargin,
         bottom: BottomInsetScope.dockedSearchMargin,
       ),
-      // A surface of its own, so the list runs under it, not a sheet-wide band.
+      // Поверхность своя, так что список работает под ней, а не полоса-wide полоса листа.
       child: SafeArea(
         left: false,
         top: false,
@@ -385,8 +380,7 @@ class ScaffoldState extends State<Scaffold>
             builder: (context, _) {
               final active =
                   _searchFocusNode.hasFocus || _textController.text.isNotEmpty;
-              // iOS 27 offers the cancel button while its bottom field is in
-              // use, drawn out of the field's end.
+              // iOS 27 предлагает кнопку отмены, пока его нижнее поле в использовании, нарисованное из конца поля.
               return TweenAnimationBuilder<double>(
                 tween: Tween(end: active ? 1 : 0),
                 duration: context.motionDuration(_searchSettleDuration),
@@ -664,8 +658,7 @@ class ScaffoldState extends State<Scaffold>
               IconButtonData(
                 glyph: Glyphs.close,
                 tooltip: UiLocalizations.of(context).cancel,
-                // Not a navigator pop: before BackLayerScope's entry lands,
-                // that would pop the page itself.
+                // Не pop навигатора: до того, как вход BackLayerScope приземлится, это бы вытолкнуло саму страницу.
                 onPressed: _handleExitAppBarLayer,
               ),
             )
@@ -674,7 +667,7 @@ class ScaffoldState extends State<Scaffold>
           ? LiquidGlassStyle.regular(colorScheme)
           : null,
       color: context.raisedSurfaceLevel.colorOf(colorScheme),
-      // The field's own buttons stay off the bar's button fills and glass.
+      // Кнопки поля остаются вне заполнений бара и стекла.
       field: ButtonTheme(
         data: ButtonTheme.of(context),
         child: SearchField(
@@ -738,7 +731,7 @@ class ScaffoldState extends State<Scaffold>
     final titleEndInset = appBarActionInset(
       isCompactBar(context, isMobileView),
     );
-    // Under a sheet the bar drops its actions, so none reads as the sheet's.
+    // Под листом бар выбрасывает свои действия, так что ничтожество читается как листа.
     final uncovered = ReverseAnimation(sheetCoverOf(context));
     return ScaffoldBar(
       isCompact: isCompact,
@@ -783,7 +776,7 @@ class ScaffoldState extends State<Scaffold>
           leading: hidesBar
               ? null
               : underField(searchLeading, _leadingUnderSearch),
-          // The leading slot already trails its button by a margin.
+          // Слот лидирования уже отстает от своей кнопки на отступ.
           titleSpacing: leading == null ? null : 0,
           title: hidesBar
               ? null

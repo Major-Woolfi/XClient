@@ -39,8 +39,8 @@ Future<void> _pumpDeveloperView(
 
 void main() {
   setUpAll(() {
-    // canCrashCore reads appEnv, which only the real app bootstrap populates.
-    // 'dev' also enables the crash-test row.
+// canCrashCore читает appEnv, который только реальный бутстрап приложения
+/// заполняет. 'dev' также включает строку краш-теста.
     globalState.appEnv = 'dev';
   });
 
@@ -102,5 +102,6 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
+
 
 

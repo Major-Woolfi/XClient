@@ -114,10 +114,10 @@ Future<ProviderContainer> _pumpCoreManager(
   return container;
 }
 
-// Loading.stop leaves a minDuration timer (up to 1000ms) pending after
-// setupConfig resolves. Polling on the actual outcome instead of a fixed
-// pump budget avoids racing it, and draining past it here keeps its
-// callback from firing on a disposed container.
+// Loading.stop оставляет таймер minDuration (до 1000мс) ожидающим после
+/// разрешения setupConfig. Опрашивание фактического исхода вместо фиксированного
+/// бюджета pump избегает гонки с ним, и слив мимо него здесь удерживает его
+/// обратный вызов от срабатывания на утилизированном контейнере.
 Future<void> _waitForSetupToSettle(
   WidgetTester tester,
   bool Function() condition,
@@ -627,5 +627,6 @@ void main() {
     );
   });
 }
+
 
 

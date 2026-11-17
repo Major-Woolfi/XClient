@@ -13,17 +13,17 @@ import 'package:path/path.dart';
 
 import '../helpers/app_paths.dart';
 
-/// The public entry points hand their work to a background isolate, which
-/// cannot reach the mocked platform channels, so the tests drive the worker
-/// functions the isolate calls. Those take every path as an argument, so each
-/// test runs against its own temporary tree.
+/// Публичные точки входа передают свою работу в фоновый изолят, который
+/// не может alcanцировать mocked каналы платформы, поэтому тесты ведут рабочие
+/// функции, которые вызывает изолят. Те они принимают каждый путь в качестве
+/// аргумента, так что каждый тест запускается против своего собственного временного дерева.
 void main() {
   late Directory root;
 
   setUpAll(() async {
     root = Directory.systemTemp.createTempSync('backup_task_test');
-    // File.copy does not create parent directories; in production these are the
-    // already-existing temp and cache dirs the platform hands out.
+// File.copy не создаёт родительские каталоги; в продакшене это уже
+/// существующие временные и кэшовые каталоги, которые выдаёт платформа.
     Directory(join(root.path, 'tmp')).createSync(recursive: true);
     Directory(join(root.path, 'archive')).createSync(recursive: true);
     await useAppPaths(root);
@@ -755,5 +755,6 @@ void main() {
     });
   });
 }
+
 
 

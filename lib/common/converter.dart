@@ -17,9 +17,9 @@ T decodeOrRestoreDefault<T>(
   }
 }
 
-/// Decodes [json], or on failure keeps each value [decode] still accepts, so a
-/// value this version cannot read falls back to its own default instead of
-/// discarding its whole section.
+/// Декодирует [json], или при ошибке оставляет каждое значение, которое ещё
+/// принимает [decode], так что значение, которое эта версия не может прочитать,
+/// возвращается к своему дефолту вместо выброса всего раздела.
 T decodeSalvaging<T>(
   String label,
   Map<String, Object?> json,
@@ -53,7 +53,7 @@ typedef _Accepts = bool Function(Object? candidate);
 
 const _dropped = Object();
 
-// Salvaging decodes once per value, and a nested repair would log on each.
+// Salvaging декодирует каждый значение один раз, и вложенный ремонт логировал бы на каждом.
 var _probeDepth = 0;
 
 R _probing<R>(R Function() run) {
@@ -92,8 +92,8 @@ Object? _salvage(
     List<Object?>() => _salvageItems(value, accepts, nestedDropped, path),
     _ => null,
   };
-  // Left empty, a list would read as one the user cleared; its default is
-  // the closer guess.
+  // Оставлен пустым, список был бы прочитан как тот, что пользователь очистил;
+  // дефолт — более точная догадка.
   if (salvaged case Map(isNotEmpty: true) || List(isNotEmpty: true)
       when accepts(salvaged)) {
     dropped.addAll(nestedDropped);

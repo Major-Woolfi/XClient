@@ -395,8 +395,8 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
     );
   }
 
-  /// The card reaches up behind the header's rounded bottom corners, so the
-  /// two read as one while the rows unfold or fold.
+  /// Карта поднимается за скругленный низ заголовка, так что оба читаются как одно
+  /// пока ряды разворачиваются или сворачиваются.
   Widget _buildUnfoldingRows(double extent, ShapeDecoration decoration) {
     final rows = widget.group.all.chunks(widget.columns).toList();
     final visible = min(
@@ -499,11 +499,10 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
     );
   }
 
-  /// Rounds the header and lifts it as its own rows scroll under it, and lets
-  /// the shadow go before the end of the group pushes it out. The page color
-  /// behind its upper half hides the rows that went under it, which would
-  /// otherwise show around its top corners and above it. Every header is laid
-  /// out on every pass, so one beyond the cache area builds nothing.
+  /// Скругляет заголовок и поднимает его, пока свои ряды скроллятся под ним, и пускает
+  /// тень перед концом группы, выталкивающим его. Цвет страницы за верхней половиной
+  /// скрывает ряды, что ушли под него, иначе они бы выглядели вокруг верхних углов и над ним.
+  /// Каждый заголовок ляутится на каждом проходе, так что один за пределами зоны кэша ничего не строит.
   Widget _buildPinnedHeader(
     bool isExpand,
     Widget Function({double floating, double lift}) buildHeader,
@@ -748,8 +747,8 @@ class _GroupIcon extends ConsumerWidget {
           },
         ),
       ),
-      // Lines the title up with the proxy card names below, which sit at the
-      // row inset plus the card padding.
+      // Выравнивает заголовок с именами прокси-карт ниже, которые сидят на
+      // отступе строки плюс отступ карты.
       ProxiesIconStyle.hidden => const SizedBox(width: 4),
     };
   }

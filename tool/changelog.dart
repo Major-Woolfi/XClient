@@ -83,10 +83,9 @@ int _build(String root, ArgResults command) {
       date: today(),
       prerelease: true,
     );
-    // The builder drops a pending version whose tag already exists, which for a
-    // prerelease build is silent and wrong: render then picks the newest
-    // version in the file, and the prerelease ships the previous release's
-    // notes under its own name.
+    // Строитель отбрасывает ожидающую версию, чей тег уже существует, что для
+    // pre-релиза молча и неверно: render затем выбирает новейшую версию в
+    // файле, и pre-релиз отправляет заметки предыдущего релиза под своим именем.
     if (git.tagExists(pending.tag)) {
       _fail(
         'build --unreleased has nothing to collect: ${pending.tag} is already '
@@ -123,8 +122,8 @@ int _render(String root, ArgResults command) {
 
   final output = switch (rest.first) {
     'release' => renderRelease(version),
-    // Only stable builds pass --tag, and only they get a release page; a
-    // prerelease caption already links its workflow run.
+    // Только стабильные сборки передают --tag, и только они получают страницу
+    // релиза; подпись pre-релиза уже ссылается на запуск своего рабочего процесса.
     'telegram' => renderTelegram(
       version,
       moreUrl: tag == null
@@ -211,10 +210,10 @@ int _verify(String root) {
     }
   }
 
-  // A tag git can derive a version for but changelog.json never recorded means
-  // someone tagged a release without running `release` first. Without this the
-  // omission only shows up at the very end of the release, when `render` finds
-  // no notes for the tag being published.
+  // Тег, для которого git может вывести версию, но changelog.json никогда не
+  // записал, означает, что кто-то пометил релиз тегом без запуска `release`
+  // сначала. Без этого пропуск проявится только в самом конце релиза, когда
+  // `render` не найдёт заметок для публикуемого тега.
   for (final tag in missingReleaseTags(changelog, expected.changelog)) {
     problems.add(
       '$tag is tagged in git but missing from $changelogDataPath; '
@@ -240,9 +239,9 @@ int _verify(String root) {
   return 1;
 }
 
-/// Identity of an entry for drift detection: which group it landed in and which
-/// commit it came from. Wording and scope are deliberately excluded so a
-/// maintainer can polish the text of a released version without failing CI.
+/// Идентичность записи для обнаружения дрейфа: в какую группу она попала и из
+/// какого коммита пришла. Формулировка и область умышленно исключены, чтобы
+///支持ка мог отполировать текст выпущенной версии, не провалив CI.
 Set<String> _fingerprint(ChangelogVersion version) => <String>{
   for (final group in version.groups)
     for (final entry in group.entries) '${group.type.id}:${entry.id}',

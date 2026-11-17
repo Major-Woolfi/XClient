@@ -38,8 +38,8 @@ class _CoreContainerState extends ConsumerState<CoreManager>
     super.initState();
     coreEventManager.addListener(this);
     ref.read(updatingActionProvider.notifier);
-    // A rejected profile stays selected on purpose: silently reverting to
-    // the previous one hides the error and looks like the switch was lost.
+    // Отклоненный профиль остается выбранным с PURPOSE: молчаливое возвращение к
+    // предыдущему скрывает ошибку и выглядит так, будто переключение потерялось.
     ref.listenManual(currentProfileIdProvider, (prev, next) {
       if (prev == next) return;
       runAfterFrame(() {
@@ -89,7 +89,7 @@ class _CoreContainerState extends ConsumerState<CoreManager>
         _syncLogStream();
       }
     });
-    // Every Core process starts without a log stream.
+    // Каждый процесс ядра начинается без потока логов.
     ref.listenManual(coreStatusProvider, (prev, next) {
       if (next == CoreStatus.connected && prev != CoreStatus.connected) {
         _syncLogStream();

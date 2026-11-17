@@ -46,7 +46,7 @@ class LinkManager {
   @visibleForTesting
   Stream<Uri> Function() uriLinkStream = () => AppLinks().uriLinkStream;
 
-  /// Linux argv: the gtk plugin hooks GApplication too late to see it.
+  /// Аргументы argv Linux: плагин gtk цепляет GApplication слишком поздно, чтобы его увидеть.
   void seedInitialLink(List<String> args) {
     for (final arg in args) {
       final uri = Uri.tryParse(arg);

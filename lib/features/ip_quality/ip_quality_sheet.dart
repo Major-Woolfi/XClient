@@ -68,7 +68,7 @@ class _HideIpItem extends ConsumerWidget {
 class _IpQualityDetail extends ConsumerWidget {
   const _IpQualityDetail({required this.ip});
 
-  /// The optical edge of the xl-radius cards, as in the memory sheet.
+  /// Оптический край карт с радиусом xl, как в листе памяти.
   static const _tipInset = 5.0;
 
   final String ip;
@@ -140,8 +140,8 @@ class _IpQualityDetail extends ConsumerWidget {
     );
   }
 
-  /// A lookup still running lays out every row it will fill, so the page
-  /// keeps its height when the values arrive.
+  /// Поиск, который еще выполняется, выкладывает каждую строку, которую заполнит, поэтому страница
+  /// сохраняет свою высоту, когда значения приходят.
   List<Widget> _qualityRows(BuildContext context, IpQuality? quality) {
     final localizations = context.appLocalizations;
     if (quality == null) {

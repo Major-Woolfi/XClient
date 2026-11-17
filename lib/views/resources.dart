@@ -377,8 +377,7 @@ class _ResourceItem extends StatelessWidget {
   }
 }
 
-/// An update can rewrite the file without changing [source], so the file is
-/// read again once [updatingKey] settles.
+/// Обновление может переписать файл, не меняя [source], поэтому файл читается заново, как только [updatingKey] установится.
 class _FileInfoBuilder extends ConsumerStatefulWidget {
   final Object source;
   final String updatingKey;
@@ -461,8 +460,8 @@ typedef _FileInfoQuery = ({
   List<int> scriptIds,
 });
 
-/// Rule set file names are md5 hashes, so paths are built off the UI isolate
-/// along with one stat per file.
+/// Имена файлов набора правил — это md5-хеши, поэтому пути строятся вне изолята UI
+/// вместе с одним stat на файл.
 Future<Map<String, FileInfo?>> _loadFileInfos(
   _RemoteResources resources,
 ) async {

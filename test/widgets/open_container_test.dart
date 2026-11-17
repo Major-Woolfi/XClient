@@ -10,7 +10,7 @@ import '../helpers/test_app.dart';
 
 const _viewSize = Size(800, 600);
 
-// iOS shrinks the page below by a width of 34.667 dp.
+// iOS сжимает страницу ниже на ширину 34.667 dp.
 final _recededShrink = 34.667 / _viewSize.width;
 
 void main() {
@@ -114,8 +114,8 @@ void main() {
       Theme.of(tester.element(find.text('Card'))).colorScheme,
     );
 
-    // Opening runs in the page's scale, which the rect's width sets, and
-    // closing in the screen's.
+// Открытие запускается в масштабе страницы, который задаёт ширина прямоугольника, а
+/// закрытие — в масштабе экрана.
     PaintPattern container({required bool opening}) {
       final progress = ModalRoute.of(
         tester.element(find.text('Page', skipOffstage: false)),
@@ -294,7 +294,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 16));
     final opening = clip();
 
-    // The close carries on at the opening's speed, slowing.
+// Закрытие продолжается со скоростью открытия, замедляясь.
     Navigator.of(tester.element(find.text('Page'))).pop();
     await tester.pump(const Duration(milliseconds: 16));
     final closing = clip();
@@ -780,7 +780,7 @@ void main() {
     );
   }
 
-  // The page below dims as it recedes, so the tile only stays red.
+// Страница ниже затемняется, пока отступает, так что плитка остаётся только красной.
   final showsTile = isA<Color>()
       .having((color) => color.r, 'red', greaterThan(0.8))
       .having((color) => color.g, 'green', lessThan(0.1));
@@ -825,7 +825,7 @@ void main() {
     expect(routeProgress(tester, 'Page B'), inExclusiveRange(0, 0.3));
     expect(await colorAt(tester, screen, tileSpot(tester, 'C')), showsTile);
 
-    // A hands its tile back while B, popped too, still covers the page.
+// A возвращает свою плитку назад, пока B, тоже вытолкнутый, всё ещё прикрывает страницу.
     await tester.pump(const Duration(milliseconds: 60));
     Navigator.of(tester.element(find.text('Page B'))).pop();
     while (find.text('Page A', skipOffstage: false).evaluate().isNotEmpty) {
@@ -879,7 +879,7 @@ void main() {
       shrink,
       moreOrLessEquals(0.4 * 80 / (0.6 * _viewSize.width), epsilon: 1e-5),
     );
-    // The point the drag started on stays under the finger.
+// Точка, с которой началось перетаскивание, остаётся под пальцем.
     final startY = (after.top - before.top) / shrink;
     expect(startY, moreOrLessEquals(300, epsilon: 0.1));
 
@@ -982,3 +982,4 @@ void main() {
     expect(find.text('Below'), findsNothing);
   });
 }
+

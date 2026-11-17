@@ -611,8 +611,8 @@ void main() {
             initProvider.overrideWithBuild((_, _) => true),
             commonActionProvider.overrideWith(_RaceCommonAction.new),
             setupActionProvider.overrideWith(_RaceSetupAction.new),
-            // Bypassing private addresses computes the routes in an isolate,
-            // which outlasts the zero delay below.
+            // Обход частных адресов вычисляет маршруты в изоляте, который переживает
+            // нулевую задержку ниже.
             networkSettingProvider.overrideWithBuild(
               (_, _) => const NetworkProps(bypassPrivateRoute: false),
             ),

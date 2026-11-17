@@ -48,7 +48,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(queries, ['wiki']);
-    // The title survives searching, because nothing took the bar over.
+// Заголовок переживает поиск, потому что ничего не захватило бар.
     expect(find.text('title'), findsOneWidget);
   });
 
@@ -263,7 +263,7 @@ void main() {
       tester.widget<TextField>(find.byType(TextField)).decoration!.filled,
       isFalse,
     );
-    // The dock itself paints nothing, so no band spans the sheet behind it.
+// Сама пристань ничего не рисует, так что никакая полоса не простирается за листом за ней.
     final material = tester.widget<Surface>(
       find
           .ancestor(

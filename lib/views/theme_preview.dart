@@ -58,8 +58,7 @@ class PreviewChoiceGroup<T> extends StatelessWidget {
   }
 }
 
-/// The foot of a [MiniScreen], where the options differ, drawn at the size of
-/// an icon.
+/// Низ [MiniScreen], где опции отличаются, нарисованный в размере иконки.
 class MiniScreenThumb extends StatelessWidget {
   const MiniScreenThumb({super.key, required this.screen});
 
@@ -102,8 +101,7 @@ class _ColorSchemeTween extends Tween<ColorScheme> {
   ColorScheme lerp(double t) => ColorScheme.lerp(begin!, end!, t);
 }
 
-/// The home page as the theme settings will draw it; its destinations can be
-/// tapped to try the tab animation.
+/// Домашняя страница, как нарисуют её настройки темы; её пункты можно нажать, чтобы попробовать анимацию вкладки.
 class ThemeLivePreview extends ConsumerStatefulWidget {
   const ThemeLivePreview({super.key});
 
@@ -228,10 +226,10 @@ class _ThemeLivePreviewState extends ConsumerState<ThemeLivePreview>
 
 enum _MiniPage { dashboard, proxies, profiles, tools }
 
-/// A phone-shaped sketch of the home page, drawn in [colorScheme].
+/// Телефонный эскиз домашней страницы, нарисованный в [colorScheme].
 ///
-/// With [previous], the page is caught [progress] of the way through a switch
-/// from it, drawn as [tabAnimation] moves the pages.
+/// С [previous] страница поймана на [progress] пути через переключение
+/// из нее, отрисованная так, как [tabAnimation] двигает страницы.
 class MiniScreen extends StatelessWidget {
   const MiniScreen({
     super.key,
@@ -250,8 +248,7 @@ class MiniScreen extends StatelessWidget {
   final ColorScheme colorScheme;
   final bool floatingBar;
 
-  /// Draws a floating bar as glass; a docked one stays a fill, as the app's
-  /// does.
+  /// Рисует плавающую панель как стекло; пристыкованная остается заливкой, как в приложении.
   final bool liquidGlass;
 
   final int selected;
@@ -478,8 +475,8 @@ class _MiniScreenPainter extends CustomPainter {
     canvas.restore();
   }
 
-  /// The page frosted under a tint, ringed with light and casting its shadow
-  /// only outside, after what [LiquidGlass] does at full size.
+  /// Страница под тоном, обернутая светом и отбрасывающая тень
+  /// только снаружи, после того, как [LiquidGlass] делает это в полный размер.
   void _paintGlassBar(Canvas canvas, _MiniGeometry geometry, BoxShadow shadow) {
     final bar = geometry.bar;
     final unit = geometry.unit;
@@ -498,8 +495,8 @@ class _MiniScreenPainter extends CustomPainter {
       bar.shift(shadow.offset),
       shadow.toPaint(),
     );
-    // Each shape blurs on its own in one pass, where a blurred layer would
-    // cost an offscreen pass per sketch on every frame of the theme page.
+    // Каждая фигура размыта сама по себе за один проход, тогда как размытый слой
+    // стоил бы оффскрин-прогон на эскиз на каждый кадр страницы темы.
     canvas
       ..restore()
       ..save()
@@ -628,8 +625,8 @@ class _MiniScreenPainter extends CustomPainter {
   }
 }
 
-/// One page of a [MiniScreen] after the app's own, laid out in units of a
-/// twentieth of the screen's width from the top left of [content].
+/// Одна страница [MiniScreen] после своей собственной приложения, разложенная в единицах
+/// от двадцатой доли ширины экрана от верхнего левого угла [content].
 class _PageSketch {
   _PageSketch(
     this.canvas,
@@ -705,7 +702,7 @@ class _PageSketch {
     );
   }
 
-  /// The title and the bar's round buttons; returns where the body starts.
+  /// Заголовок и круглые кнопки панели; возвращает, где начинается тело.
   double _header({required int actions}) {
     _pill(0, 0.45, 7, 1.1, text);
     for (var i = 0; i < actions; i++) {

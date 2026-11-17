@@ -50,7 +50,7 @@ void main() {
     await testDatabase.close();
   });
 
-  // AppStateManager's listen keeps the settings alive while a restore awaits.
+// Слушание AppStateManager держит настройки живыми, пока восстановление ожидает.
   ProviderContainer buildContainer() {
     final container = ProviderContainer()..listen(configProvider, (_, _) {});
     addTearDown(container.dispose);

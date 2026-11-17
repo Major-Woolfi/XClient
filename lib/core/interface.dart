@@ -7,8 +7,8 @@ import 'package:xclient/models/models.dart';
 import 'desktop/model.dart';
 import 'method.dart';
 
-/// A method answers its result or throws: a [CoreMethodException] for what the
-/// Core reports or a Core out of reach, a [TimeoutException] for no answer.
+/// Метод возвращает результат или бросает исключение: [CoreMethodException]
+/// за сообщение от ядра или [TimeoutException] при безответном вызове.
 abstract class CoreHandlerInterface {
   Future<CoreLifecycleResult> start();
 

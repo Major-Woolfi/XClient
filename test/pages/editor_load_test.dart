@@ -193,8 +193,8 @@ void main() {
         .pixels;
     final collapsed = sheetTop();
 
-    // A trackpad pan scrolls without the press a touch selects with on the
-    // host, and the sheet measures what it fits only between frames.
+// Панорама тачпада скроллит без нажатия, которое выбирает касание на
+/// хосте, и лист измеряет, что вписывает, только между кадрами.
     Future<void> dragEditor(double dy) async {
       final gesture = await tester.createGesture(
         kind: PointerDeviceKind.trackpad,
@@ -647,5 +647,6 @@ void main() {
     await settle(tester, 8);
   });
 }
+
 
 

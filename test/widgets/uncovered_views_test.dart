@@ -132,8 +132,8 @@ ProviderContainer _containerFor(
 
 void main() {
   setUpAll(() {
-    // AboutView reads globalState.packageInfo, which only the real app bootstrap
-    // populates.
+// AboutView читает globalState.packageInfo, который только реальный бутстрап приложения
+/// заполняет.
     globalState.packageInfo = PackageInfo(
       appName: 'XClient',
       packageName: 'com.xclient',
@@ -696,6 +696,7 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
+
 
 
 

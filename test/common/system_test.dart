@@ -107,8 +107,8 @@ void main() {
   });
 
   tearDownAll(() {
-    // The shared system temp dir is not exclusively ours; another suite running
-    // alongside this one can take the tree out from under the teardown.
+// Общая системная временная папка не исключительно наша; другой набор, запускаемый
+/// рядом, может забрать дерево из-под teardown.
     if (root.existsSync()) {
       root.deleteSync(recursive: true);
     }
@@ -576,6 +576,7 @@ void main() {
     });
   });
 }
+
 
 
 

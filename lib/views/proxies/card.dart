@@ -32,8 +32,8 @@ void selectGroupProxy(
   );
 }
 
-/// Built-ins and groups have no definition, and a custom profile's own proxies
-/// are the local proxies already.
+/// Built-ins и группы не имеют определения, а собственные прокси кастомного профиля
+/// и так уже локальные прокси.
 bool _isAddableToLocal(Proxy proxy, {required bool isCustomProfile}) {
   return (proxy.providerName != null || !isCustomProfile) &&
       !reservedCustomProxyNames.contains(proxy.name) &&

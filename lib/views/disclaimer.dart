@@ -6,7 +6,7 @@ import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// True only after "Agree" and the restatement; any other way out declines.
+/// True только после «Agree» и пересказа; любой другой выход отказывает.
 Future<bool> requestDisclaimerConsent() async {
   return await BaseNavigator.push<bool>(
         rootNavigatorKey.currentContext!,
@@ -375,7 +375,7 @@ enum _Restatement {
     if (value.text.trim() == statement) {
       return complete;
     }
-    // Pinyin or kana still being composed is not part of the restatement yet.
+    // Pinyin или kana, которые еще composés, еще не часть пересказа.
     final composing = value.composing;
     final committed = value.isComposingRangeValid
         ? composing.textBefore(value.text) + composing.textAfter(value.text)
@@ -465,7 +465,7 @@ class _RestateDialogState extends State<_RestateDialog> {
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
     final statement = appLocalizations.disclaimerNoServiceStatement;
-    // Typing the statement out takes hundreds of presses on a remote.
+    // Набор текста утверждения занимает сотни нажатий на пульте.
     if (RemoteFocusAdapter.isEnabledOf(context)) {
       return _buildDialog(
         title: appLocalizations.disclaimerAcknowledgeTitle,
