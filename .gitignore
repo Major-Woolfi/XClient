@@ -158,6 +158,7 @@ mihomo.egg-info
 /plugins/wifi_ssid/pubspec.lock
 /plugins/tray/pubspec.lock
 /plugins/proxy/pubspec.lock
+/plugins/dynamic_color/pubspec.lock
 
 # ============================================================================
 # Proxy plugin (Windows)
