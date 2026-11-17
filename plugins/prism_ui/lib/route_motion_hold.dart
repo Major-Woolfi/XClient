@@ -201,7 +201,6 @@ class _ArrivalCacheExtentBuilderState extends State<ArrivalCacheExtentBuilder>
 /// A list's cache extent: none until its route settles and nothing animates.
 mixin ArrivalCacheExtentMixin<T extends StatefulWidget> on State<T> {
   var _widenScheduled = false;
-  var _widened = false;
 
   @override
   void didChangeDependencies() {
@@ -220,7 +219,7 @@ mixin ArrivalCacheExtentMixin<T extends StatefulWidget> on State<T> {
     }
     await whenNothingAnimates();
     if (mounted) {
-      setState(() => _widened = true);
+      setState(() {});
     }
   }
 }
