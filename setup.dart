@@ -185,8 +185,6 @@ Future<int> _package(
     '-s',
     'git',
     'https://github.com/chen08209/flutter_distributor.git',
-    '--git-ref',
-    'v0.6.11-XClient.4',
     '--git-path',
     'packages/flutter_distributor',
   ]);

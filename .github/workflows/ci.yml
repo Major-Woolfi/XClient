@@ -18,6 +18,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Flutter
+        id: setup-flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.50.0'
@@ -121,6 +122,7 @@ jobs:
           ANDROID_NDK_HOME: ${{ steps.ndk.outputs.ndk-path }}
         run: |
           export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
+          FLUTTER_ROOT=$(dirname $(dirname $(which flutter)))
           {
             echo "flutter.sdk=$FLUTTER_ROOT"
             echo "sdk.dir=$ANDROID_HOME"

@@ -17,7 +17,7 @@ concurrency:
 
 env:
   IS_STABLE: ${{ !contains(github.ref, '-') }}
-  FLUTTER_VERSION: '3.47.6'
+  FLUTTER_VERSION: '3.50.0'
   GO_VERSION: '1.27.1'
   NDK_VERSION: r28c
 
@@ -139,7 +139,12 @@ jobs:
         env:
           ANDROID_NDK_HOME: ${{ steps.build-ndk.outputs.ndk-path }}
           IS_STABLE: ${{ env.IS_STABLE == 'true' && '--env stable' || '' }}
-        run: dart setup.dart ${{ matrix.platform }} ${{ env.IS_STABLE }} -v
+        run: |
+          if [ "${{ env.IS_STABLE }}" == 'true' ]; then
+            dart setup.dart ${{ matrix.platform }} --env stable -v
+          else
+            dart setup.dart ${{ matrix.platform }} -v
+          fi
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -184,7 +189,8 @@ jobs:
 
       - name: Skip native build hooks
         run: |
-          yq -i '.hooks.user_defines.setup.build_assets = false | .hooks.user_defines.rust_api.build_assets = false' pubspec.yaml
+          yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
+          yq -i '.hooks.user_defines.rust_api.build_assets = false' pubspec.yaml
 
       - name: Generate release notes
         shell: bash
