@@ -12,18 +12,27 @@ ProfileOverrides _decode(Map<String, Object?> json) {
 }
 
 void main() {
-  test('every TunOverrideKey is a key of the core TUN section', () {
-    final source = File('core/Clash.Meta/config/config.go').readAsStringSync();
-    final body = RegExp(
-      'type RawTun struct {([^}]*)}',
-    ).firstMatch(source)!.group(1)!;
-    final coreKeys = {
-      for (final match in RegExp(r'yaml:"([^",]+)').allMatches(body))
-        match.group(1)!,
-    };
+  test(
+    'every TunOverrideKey is a key of the core TUN section',
+    skip: !File('core/Clash.Meta/config/config.go').existsSync(),
+    () {
+      final source = File(
+        'core/Clash.Meta/config/config.go',
+      ).readAsStringSync();
+      final body = RegExp(
+        'type RawTun struct {([^}]*)}',
+      ).firstMatch(source)!.group(1)!;
+      final coreKeys = {
+        for (final match in RegExp(r'yaml:"([^",]+)').allMatches(body))
+          match.group(1)!,
+      };
 
-    expect(coreKeys, containsAll(TunOverrideKey.values.map((key) => key.path)));
-  });
+      expect(
+        coreKeys,
+        containsAll(TunOverrideKey.values.map((key) => key.path)),
+      );
+    },
+  );
 
   test('no TunOverrideKey is one the network settings write', () {
     final networkKeys = defaultTun.coreJson.keys.toSet();

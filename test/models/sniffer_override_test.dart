@@ -12,45 +12,59 @@ ProfileOverrides _decode(Map<String, Object?> json) {
 }
 
 void main() {
-  test('SnifferOverrideKey names every current key of the core sniffer', () {
-    final source = File('core/Clash.Meta/config/config.go').readAsStringSync();
-    final body = RegExp(
-      'type RawSniffer struct {([^}]*)}',
-    ).firstMatch(source)!.group(1)!;
-    final protocols = RegExp(r'List = \[\]Type\{([^}]*)\}')
-        .firstMatch(
-          File(
-            'core/Clash.Meta/constant/sniffer/sniffer.go',
-          ).readAsStringSync(),
-        )!
-        .group(1)!
-        .split(',')
-        .map((name) => name.trim());
-    const deprecated = {'sniffing', 'port-whitelist'};
+  test(
+    'SnifferOverrideKey names every current key of the core sniffer',
+    skip:
+        !File('core/Clash.Meta/config/config.go').existsSync() ||
+        !File('core/Clash.Meta/constant/sniffer/sniffer.go').existsSync(),
+    () {
+      final source = File(
+        'core/Clash.Meta/config/config.go',
+      ).readAsStringSync();
+      final body = RegExp(
+        'type RawSniffer struct {([^}]*)}',
+      ).firstMatch(source)!.group(1)!;
+      final protocols = RegExp(r'List = \[\]Type\{([^}]*)\}')
+          .firstMatch(
+            File(
+              'core/Clash.Meta/constant/sniffer/sniffer.go',
+            ).readAsStringSync(),
+          )!
+          .group(1)!
+          .split(',')
+          .map((name) => name.trim());
+      const deprecated = {'sniffing', 'port-whitelist'};
 
-    expect(SnifferOverrideKey.values.map((key) => key.path).toSet(), {
-      for (final match in RegExp(r'yaml:"([^",]+)').allMatches(body))
-        if (!deprecated.contains(match.group(1)) &&
-            match.group(1) != SnifferOverrideKey.sniffSection)
-          match.group(1)!,
-      for (final protocol in protocols)
-        '${SnifferOverrideKey.sniffSection}.$protocol',
-    });
-  });
+      expect(SnifferOverrideKey.values.map((key) => key.path).toSet(), {
+        for (final match in RegExp(r'yaml:"([^",]+)').allMatches(body))
+          if (!deprecated.contains(match.group(1)) &&
+              match.group(1) != SnifferOverrideKey.sniffSection)
+            match.group(1)!,
+        for (final protocol in protocols)
+          '${SnifferOverrideKey.sniffSection}.$protocol',
+      });
+    },
+  );
 
-  test('the model defaults match the ones the core parses', () {
-    final source = File('core/Clash.Meta/config/config.go').readAsStringSync();
-    final body = RegExp(
-      r'Sniffer: RawSniffer\{([\s\S]*?)\n\s*\},',
-    ).firstMatch(source)!.group(1)!;
-    String valueOf(String field) =>
-        RegExp('$field:\\s*(.+),').firstMatch(body)!.group(1)!.trim();
+  test(
+    'the model defaults match the ones the core parses',
+    skip: !File('core/Clash.Meta/config/config.go').existsSync(),
+    () {
+      final source = File(
+        'core/Clash.Meta/config/config.go',
+      ).readAsStringSync();
+      final body = RegExp(
+        r'Sniffer: RawSniffer\{([\s\S]*?)\n\s*\},',
+      ).firstMatch(source)!.group(1)!;
+      String valueOf(String field) =>
+          RegExp('$field:\\s*(.+),').firstMatch(body)!.group(1)!.trim();
 
-    expect(valueOf('Enable'), '${defaultSniffer.enable}');
-    expect(valueOf('OverrideDest'), '${defaultSniffer.overrideDest}');
-    expect(valueOf('ForceDnsMapping'), '${defaultSniffer.forceDnsMapping}');
-    expect(valueOf('ParsePureIp'), '${defaultSniffer.parsePureIp}');
-  });
+      expect(valueOf('Enable'), '${defaultSniffer.enable}');
+      expect(valueOf('OverrideDest'), '${defaultSniffer.overrideDest}');
+      expect(valueOf('ForceDnsMapping'), '${defaultSniffer.forceDnsMapping}');
+      expect(valueOf('ParsePureIp'), '${defaultSniffer.parsePureIp}');
+    },
+  );
 
   group('Sniffer.overrideJson', () {
     test('emits only the selected keys in model order', () {

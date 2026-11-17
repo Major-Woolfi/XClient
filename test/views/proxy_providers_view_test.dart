@@ -169,7 +169,14 @@ void main() {
 
   // Строка зондирует свой файл на реальном	event-цикле, прежде чем предложить редактирование.
   Future<void> openMenuWithEdit(WidgetTester tester, String name) async {
-    for (var i = 0; i < 100; i++) {
+    // Даём провайдеру время завершить _probeFile, иначе пункта «edit» ещё не будет.
+    for (var i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+      if (find.text(currentAppLocalizations.edit).evaluate().isNotEmpty) {
+        break;
+      }
+    }
+    for (var i = 0; i < 50; i++) {
       await openMenu(tester, name);
       if (find.text(currentAppLocalizations.edit).evaluate().isNotEmpty) {
         return;

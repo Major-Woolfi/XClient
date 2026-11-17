@@ -4,12 +4,14 @@ import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/models.dart';
 import 'package:test/test.dart';
 
-final _source = File('core/Clash.Meta/config/config.go').readAsStringSync();
+final _coreSource = File('core/Clash.Meta/config/config.go').existsSync()
+    ? File('core/Clash.Meta/config/config.go').readAsStringSync()
+    : null;
 
-List<String> _firstArguments(String function) => [
+List<String> _firstArguments(String source, String function) => [
   for (final match in RegExp(
     '(?<!func )\\b$function\\(([^,]+),',
-  ).allMatches(_source))
+  ).allMatches(source))
     match[1]!.trim(),
 ];
 
@@ -81,72 +83,90 @@ final _serverSites = {
 
 void main() {
   group('the core reads names only where the references read them', () {
-    test('every function taking the rule sets is one the sites cover', () {
-      expect(
-        {
-          for (final match in RegExp(
-            r'func (\w+)\([^)]*ruleProviders map\[string\]P\.RuleProvider',
-          ).allMatches(_source))
-            match[1]!,
-        },
-        {
-          'parseSubRules',
-          'parseRules',
-          'parseNameServerPolicy',
-          'parseDNS',
-          'parseFakeIPRules',
-          'parseSniffer',
-          'parseIPCIDR',
-          'parseDomain',
-          'parseIPRuleSet',
-          'parseDomainRuleSet',
-        },
-      );
-    });
+    test(
+      'every function taking the rule sets is one the sites cover',
+      skip: _coreSource == null,
+      () {
+        expect(
+          {
+            for (final match in RegExp(
+              r'func (\w+)\([^)]*ruleProviders map\[string\]P\.RuleProvider',
+            ).allMatches(_coreSource!))
+              match[1]!,
+          },
+          {
+            'parseSubRules',
+            'parseRules',
+            'parseNameServerPolicy',
+            'parseDNS',
+            'parseFakeIPRules',
+            'parseSniffer',
+            'parseIPCIDR',
+            'parseDomain',
+            'parseIPRuleSet',
+            'parseDomainRuleSet',
+          },
+        );
+      },
+    );
 
-    test('each place a rule set is read from is one ruleSets reads', () {
-      final sites = {
-        for (final function in [
-          'parseDomain',
-          'parseIPCIDR',
-          'parseNameServerPolicy',
-          'parseFakeIPRules',
-        ])
-          ..._firstArguments(function),
-      };
-      expect(sites, _ruleSetSites.keys.toSet());
-      // Правила несут свои собственные имена RULE-SET; суб-правила пользовательского профиля
-      /// никогда не пишет.
-      expect(_firstArguments('parseRules'), ['rawCfg.Rule', 'rawRules']);
-      for (final MapEntry(key: site, value: overrides)
-          in _ruleSetSites.entries) {
-        expect(overrides.ruleSets, {'x'}, reason: site);
-        expect(overrides.renamedRuleSets({'x': 'y'}).ruleSets, {
-          'y',
-        }, reason: site);
-      }
-    });
+    test(
+      'each place a rule set is read from is one ruleSets reads',
+      skip: _coreSource == null,
+      () {
+        final sites = {
+          for (final function in [
+            'parseDomain',
+            'parseIPCIDR',
+            'parseNameServerPolicy',
+            'parseFakeIPRules',
+          ])
+            ..._firstArguments(_coreSource!, function),
+        };
+        expect(sites, _ruleSetSites.keys.toSet());
+        // Правила несут свои собственные имена RULE-SET; суб-правила пользовательского профиля
+        /// никогда не пишет.
+        expect(_firstArguments(_coreSource!, 'parseRules'), [
+          'rawCfg.Rule',
+          'rawRules',
+        ]);
+        for (final MapEntry(key: site, value: overrides)
+            in _ruleSetSites.entries) {
+          expect(overrides.ruleSets, {'x'}, reason: site);
+          expect(overrides.renamedRuleSets({'x': 'y'}).ruleSets, {
+            'y',
+          }, reason: site);
+        }
+      },
+    );
 
-    test('each server list is one dnsProxies reads, and NTP the only other '
-        'dialer a section names', () {
-      expect(_firstArguments('parseNameServer').toSet(), {
-        ..._serverSites.keys,
-      });
-      for (final MapEntry(key: site, value: overrides)
-          in _serverSites.entries) {
-        expect(overrides.dnsProxies, {'x'}, reason: site);
-        expect(overrides.renamedProxies({'x': 'y'}).dnsProxies, {
-          'y',
-        }, reason: site);
-      }
-      expect(RegExp(r'DialerProxy\s+string').allMatches(_source), hasLength(2));
-      const ntp = ProfileOverrides(
-        ntp: Ntp(dialerProxy: 'x'),
-        ntpOverrideKeys: {NtpOverrideKey.dialerProxy},
-      );
-      expect(ntp.ntpProxy, 'x');
-      expect(ntp.renamedProxies({'x': 'y'}).ntpProxy, 'y');
-    });
+    test(
+      'each server list is one dnsProxies reads, and NTP the only other '
+      'dialer a section names',
+      skip: _coreSource == null,
+      () {
+        expect(_firstArguments(_coreSource!, 'parseNameServer').toSet(), {
+          ..._serverSites.keys,
+        });
+        for (final MapEntry(key: site, value: overrides)
+            in _serverSites.entries) {
+          expect(overrides.dnsProxies, {'x'}, reason: site);
+          expect(overrides.renamedProxies({'x': 'y'}).dnsProxies, {
+            'y',
+          }, reason: site);
+        }
+        expect(
+          RegExp(r'DialerProxy\s+string').allMatches(_coreSource!),
+          hasLength(2),
+        );
+        const ntp = ProfileOverrides(
+          ntp: Ntp(dialerProxy: 'x'),
+          ntpOverrideKeys: {NtpOverrideKey.dialerProxy},
+        );
+        expect(ntp.ntpProxy, 'x');
+        expect(ntp.renamedProxies({'x': 'y'}).ntpProxy, 'y');
+      },
+    );
   });
 
   group('DNS servers', () {

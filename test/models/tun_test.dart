@@ -20,12 +20,16 @@ Set<String> _keysOf(String path, String struct, String tag) {
 void main() {
   final tunKeys = const Tun().toJson().keys.toSet();
 
-  test('every Tun key is a key of the core TUN section', () {
-    expect(
-      _keysOf('core/Clash.Meta/config/config.go', 'RawTun', 'yaml'),
-      containsAll(tunKeys),
-    );
-  });
+  test(
+    'every Tun key is a key of the core TUN section',
+    skip: !File('core/Clash.Meta/config/config.go').existsSync(),
+    () {
+      expect(
+        _keysOf('core/Clash.Meta/config/config.go', 'RawTun', 'yaml'),
+        containsAll(tunKeys),
+      );
+    },
+  );
 
   test('a saved zero MTU or empty congestion control reads as the default', () {
     final tun = Tun.fromJson({'mtu': 0, 'congestion-controller': ''});
