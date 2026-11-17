@@ -284,9 +284,8 @@ class RecordGroupedList<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final other = context.appLocalizations.other;
     return ArrivalCacheExtentBuilder(
-      builder: (cacheExtent) => CustomScrollView(
+      builder: () => CustomScrollView(
         controller: controller,
-        scrollCacheExtent: cacheExtent,
         slivers: [
           SliverPadding(
             padding: padding ?? EdgeInsets.zero,

@@ -112,7 +112,6 @@ class PrismListView extends BoxScrollView {
     super.physics,
     super.shrinkWrap,
     super.padding,
-    super.scrollCacheExtent,
     super.keyboardDismissBehavior,
     super.clipBehavior,
     required this.itemCount,
@@ -188,7 +187,6 @@ class PrismReorderableListView extends StatelessWidget {
   final double estimatedItemExtent;
   final ScrollController? controller;
   final EdgeInsetsGeometry? padding;
-  final ScrollCacheExtent? scrollCacheExtent;
 
   const PrismReorderableListView({
     super.key,
@@ -202,7 +200,6 @@ class PrismReorderableListView extends StatelessWidget {
     this.estimatedItemExtent = SliverPrismList.defaultEstimatedItemExtent,
     this.controller,
     this.padding,
-    this.scrollCacheExtent,
   });
 
   @override
@@ -211,7 +208,6 @@ class PrismReorderableListView extends StatelessWidget {
     final footer = this.footer;
     return CustomScrollView(
       controller: controller,
-      scrollCacheExtent: scrollCacheExtent,
       slivers: [
         SliverPadding(
           padding: padding ?? EdgeInsets.zero,

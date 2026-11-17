@@ -9,10 +9,8 @@ import (
 
 	"github.com/metacubex/mihomo/adapter/inbound"
 	"github.com/metacubex/mihomo/component/resolver"
-	"github.com/metacubex/mihomo/component/updater"
 	"github.com/metacubex/mihomo/config"
 	"github.com/metacubex/mihomo/constant"
-	"github.com/metacubex/mihomo/constant/features"
 	"github.com/metacubex/mihomo/hub/executor"
 	"github.com/metacubex/mihomo/listener"
 	"github.com/metacubex/mihomo/tunnel"
@@ -59,7 +57,6 @@ func handleStopListener() {
 	configMu.Lock()
 	defer configMu.Unlock()
 	setRunning(false)
-	listener.StopListener()
 	resolver.ResetConnection()
 }
 
@@ -84,7 +81,7 @@ func updateListeners(cfg *config.Config) {
 	listener.ReCreateShadowSocks(general.ShadowSocksConfig, tunnel.Tunnel)
 	listener.ReCreateVmess(general.VmessConfig, tunnel.Tunnel)
 	listener.ReCreateTuic(general.TuicServer, tunnel.Tunnel)
-	if !features.Android {
+	if runtime.GOOS != "android" {
 		listener.ReCreateTun(general.Tun, tunnel.Tunnel)
 	}
 }
@@ -95,8 +92,6 @@ func handleShutdown() {
 
 	configMu.Lock()
 	setRunning(false)
-	listener.StopListener()
-	updater.StopGeoUpdater()
 	executor.Shutdown()
 	currentConfig = nil
 	isInit.Store(false)
@@ -106,7 +101,6 @@ func handleShutdown() {
 }
 
 func handleForceGC() {
-	tunnel.InvalidateAllProxies()
 	debug.FreeOSMemory()
 }
 

@@ -326,8 +326,7 @@ class _CustomProfileViewState extends ConsumerState<CustomProfileView> {
               child: ScrollConfiguration(
                 behavior: const ShowBarScrollBehavior(),
                 child: ArrivalCacheExtentBuilder(
-                  builder: (cacheExtent) => CustomScrollView(
-                    scrollCacheExtent: cacheExtent,
+                  builder: () => CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
                         child: SizedBox(height: context.sectionsTopPadding),

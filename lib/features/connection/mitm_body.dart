@@ -171,8 +171,7 @@ class _MitmHexView extends StatelessWidget {
           final bytes = content.bytes;
           final perLine = _perLine(width - _hexPadding * 2, charWidth);
           return ArrivalCacheExtentBuilder(
-            builder: (cacheExtent) => CustomScrollView(
-              scrollCacheExtent: cacheExtent,
+            builder: () => CustomScrollView(
               slivers: [
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: _hexPadding)

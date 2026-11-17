@@ -103,12 +103,10 @@ class _ArrivalList extends StatefulWidget {
   State<_ArrivalList> createState() => _ArrivalListState();
 }
 
-class _ArrivalListState extends State<_ArrivalList>
-    with ArrivalCacheExtentMixin<_ArrivalList> {
+class _ArrivalListState extends State<_ArrivalList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      scrollCacheExtent: arrivalCacheExtent,
       itemExtent: 100,
       itemCount: 50,
       itemBuilder: (_, index) => Text('row $index'),

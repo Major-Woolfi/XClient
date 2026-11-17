@@ -462,12 +462,10 @@ class IconGridScrollView extends StatefulWidget {
   State<IconGridScrollView> createState() => _IconGridScrollViewState();
 }
 
-class _IconGridScrollViewState extends State<IconGridScrollView>
-    with ArrivalCacheExtentMixin<IconGridScrollView> {
+class _IconGridScrollViewState extends State<IconGridScrollView> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      scrollCacheExtent: arrivalCacheExtent,
       slivers: widget.slivers,
     );
   }

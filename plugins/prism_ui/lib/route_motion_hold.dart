@@ -185,7 +185,7 @@ mixin RouteSettledMixin<T extends StatefulWidget> on State<T> {
 class ArrivalCacheExtentBuilder extends StatefulWidget {
   const ArrivalCacheExtentBuilder({super.key, required this.builder});
 
-  final Widget Function(ScrollCacheExtent? cacheExtent) builder;
+  final Widget Function() builder;
 
   @override
   State<ArrivalCacheExtentBuilder> createState() =>
@@ -195,16 +195,13 @@ class ArrivalCacheExtentBuilder extends StatefulWidget {
 class _ArrivalCacheExtentBuilderState extends State<ArrivalCacheExtentBuilder>
     with ArrivalCacheExtentMixin<ArrivalCacheExtentBuilder> {
   @override
-  Widget build(BuildContext context) => widget.builder(arrivalCacheExtent);
+  Widget build(BuildContext context) => widget.builder();
 }
 
 /// A list's cache extent: none until its route settles and nothing animates.
 mixin ArrivalCacheExtentMixin<T extends StatefulWidget> on State<T> {
   var _widenScheduled = false;
   var _widened = false;
-
-  ScrollCacheExtent? get arrivalCacheExtent =>
-      _widened ? null : const ScrollCacheExtent.pixels(0);
 
   @override
   void didChangeDependencies() {
