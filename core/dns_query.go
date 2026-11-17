@@ -4,9 +4,21 @@ import (
 	"strings"
 	"time"
 
-	"github.com/metacubex/mihomo/dns"
 	D "github.com/miekg/dns"
 )
+
+// QueryRecord is a local stand-in for the DNS query result mihomo would report
+// through a query-notify hook. mihomo v1.19.34 does not export such a type or
+// hook, so newDnsQuery and its tests use this local record instead.
+type QueryRecord struct {
+	Question  D.Question
+	Msg       *D.Msg
+	Initiator string
+	Upstream  string
+	Cached    bool
+	Start     time.Time
+	Err       error
+}
 
 type DnsQuery struct {
 	Domain    string    `json:"domain"`
@@ -21,7 +33,7 @@ type DnsQuery struct {
 	Time      time.Time `json:"time"`
 }
 
-func newDnsQuery(record dns.QueryRecord) DnsQuery {
+func newDnsQuery(record QueryRecord) DnsQuery {
 	query := DnsQuery{
 		Domain:    strings.TrimSuffix(record.Question.Name, "."),
 		Type:      D.Type(record.Question.Qtype).String(),

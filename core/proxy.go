@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"maps"
 	"os"
+	"slices"
 	"strings"
 	"sync"
 
@@ -13,7 +14,6 @@ import (
 	"github.com/metacubex/mihomo/adapter/outboundgroup"
 	"github.com/metacubex/mihomo/adapter/provider"
 	"github.com/metacubex/mihomo/common/convert"
-	"github.com/metacubex/mihomo/config"
 	"github.com/metacubex/mihomo/constant"
 	"github.com/metacubex/mihomo/log"
 	"github.com/metacubex/mihomo/tunnel"
@@ -37,7 +37,7 @@ type pickableGroup interface {
 }
 
 func lookupProxy(name string) constant.Proxy {
-	return tunnel.AllProxies()[name]
+	return tunnel.Proxies()[name]
 }
 
 func adapterAs[T any](proxy constant.Proxy) (group T, ok bool) {
@@ -84,9 +84,9 @@ func proxyGroupNames(
 }
 
 func handleGetProxies() ProxiesData {
-	proxies := tunnel.AllProxies()
+	proxies := tunnel.Proxies()
 
-	names := proxyGroupNames(config.GetProxyNameList(), func(name string) (constant.AdapterType, bool) {
+	names := proxyGroupNames(slices.Collect(maps.Keys(proxies)), func(name string) (constant.AdapterType, bool) {
 		p, ok := proxies[name]
 		if !ok || p == nil {
 			return 0, false
@@ -205,7 +205,7 @@ func handleChangeProxy(params *ChangeProxyParams) *ChangeProxyResult {
 func patchSelectGroup(mapping map[string]string) {
 	selectMu.Lock()
 	defer selectMu.Unlock()
-	proxies := tunnel.AllProxies()
+	proxies := tunnel.Proxies()
 	for name, selected := range mapping {
 		if selector, ok := adapterAs[outboundgroup.SelectAble](proxies[name]); ok {
 			selector.ForceSet(selected)
