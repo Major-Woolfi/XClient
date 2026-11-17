@@ -173,5 +173,3 @@ void main() {
     expect(_opacityOf(tester, find.text('Page action')), 0);
   });
 }
-
-

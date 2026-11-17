@@ -104,5 +104,3 @@ void main() {
     expect(find.byType(DecorationListItem), findsNWidgets(3));
   });
 }
-
-

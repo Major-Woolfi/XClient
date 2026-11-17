@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:prism_ui/prism_ui.dart';
+
 /// Страница, чтобы поставить на неё виджет, где тест не о странице.
 class HostScaffold extends StatelessWidget {
   const HostScaffold({
@@ -19,6 +20,7 @@ class HostScaffold extends StatelessWidget {
     );
   }
 }
+
 /// Обычная строка для теста, которому нужно что-то тапабельное, чтобы заполнить список.
 class TestRow extends StatelessWidget {
   const TestRow({
@@ -55,4 +57,3 @@ class TestRow extends StatelessWidget {
     );
   }
 }
-

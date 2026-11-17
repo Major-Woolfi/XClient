@@ -11,5 +11,3 @@ export 'record_filter.dart';
 export 'record_table.dart';
 export 'subscription_info_view.dart';
 export 'package:xclient/ui/ui.dart';
-
-

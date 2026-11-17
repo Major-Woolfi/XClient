@@ -50,9 +50,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(TextField), findsOneWidget);
 
-// Сдвиньте фокус с текстового поля: собственные ярлыки EditableText проглатывают
-/// эскейп на некоторых платформах, поэтому привязка эскейпа применяется вне
-/// текстового ввода. (tap не фокусирует виджеты внутри области в тестах.)
+    // Сдвиньте фокус с текстового поля: собственные ярлыки EditableText проглатывают
+    /// эскейп на некоторых платформах, поэтому привязка эскейпа применяется вне
+    /// текстового ввода. (tap не фокусирует виджеты внутри области в тестах.)
     Focus.of(tester.element(find.text('focus target'))).requestFocus();
     await tester.pump();
     expect(
@@ -157,6 +157,3 @@ class _TestSystemAction extends SystemAction {
     closeCount();
   }
 }
-
-
-

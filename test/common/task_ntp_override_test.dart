@@ -72,6 +72,3 @@ void main() {
     expect(ntp, {'server': 'time.cloudflare.com', 'interval': 60});
   });
 }
-
-
-

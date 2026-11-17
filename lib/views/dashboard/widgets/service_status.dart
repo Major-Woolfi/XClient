@@ -933,5 +933,3 @@ class _ServiceRowStatus extends StatelessWidget {
     );
   }
 }
-
-

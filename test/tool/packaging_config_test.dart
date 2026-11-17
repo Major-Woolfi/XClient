@@ -60,4 +60,3 @@ void main() {
     expect(macros, contains('%global __os_install_post %{nil}'));
   });
 }
-

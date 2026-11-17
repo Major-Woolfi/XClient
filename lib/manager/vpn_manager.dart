@@ -51,5 +51,3 @@ class _VpnContainerState extends ConsumerState<VpnManager> {
     return widget.child;
   }
 }
-
-

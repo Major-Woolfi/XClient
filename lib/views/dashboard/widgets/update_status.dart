@@ -88,7 +88,7 @@ class _UpdateStatusSlotState extends ConsumerState<UpdateStatusSlot>
     if (download == null) {
       return const SizedBox.shrink();
     }
-// Не SizeTransition: его обрезание отрезало бы тень карточки в покое.
+    // Не SizeTransition: его обрезание отрезало бы тень карточки в покое.
     return AnimatedBuilder(
       animation: _curve,
       builder: (_, child) => Align(
@@ -250,5 +250,3 @@ class UpdateStatusButton extends ConsumerWidget {
     );
   }
 }
-
-

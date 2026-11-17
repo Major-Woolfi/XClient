@@ -56,5 +56,3 @@ class Tile {
 }
 
 final tile = system.isAndroid ? Tile.instance : null;
-
-

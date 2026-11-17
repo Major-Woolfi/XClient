@@ -40,5 +40,3 @@ void main() {
     expect(tester.binding.hasScheduledFrame, isFalse);
   });
 }
-
-

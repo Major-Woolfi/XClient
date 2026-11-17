@@ -5,5 +5,3 @@ part 'generated/core.g.dart';
 
 @Riverpod(keepAlive: true)
 CoreController coreHandler(Ref ref) => coreController;
-
-

@@ -214,5 +214,3 @@ class _CoreContainerState extends ConsumerState<CoreManager>
     super.onRouteChanged(snapshot);
   }
 }
-
-

@@ -229,5 +229,3 @@ String generateRandomSecret(int length) {
     ),
   );
 }
-
-

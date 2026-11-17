@@ -18,6 +18,7 @@ ProfileOverrides _dns(Dns dns, DnsOverrideKey key) =>
 
 ProfileOverrides _sniffer(Sniffer sniffer, SnifferOverrideKey key) =>
     ProfileOverrides(sniffer: sniffer, snifferOverrideKeys: {key});
+
 /// Набор правил с именем `x` в каждом месте, где ядро читает один из них.
 final _ruleSetSites = {
   'cfg.NameServerPolicy': _dns(
@@ -114,8 +115,8 @@ void main() {
           ..._firstArguments(function),
       };
       expect(sites, _ruleSetSites.keys.toSet());
-// Правила несут свои собственные имена RULE-SET; суб-правила пользовательского профиля
-/// никогда не пишет.
+      // Правила несут свои собственные имена RULE-SET; суб-правила пользовательского профиля
+      /// никогда не пишет.
       expect(_firstArguments('parseRules'), ['rawCfg.Rule', 'rawRules']);
       for (final MapEntry(key: site, value: overrides)
           in _ruleSetSites.entries) {
@@ -331,6 +332,3 @@ void main() {
     expect(inUse(overrides: _serverSites['cfg.NameServer']!), {'x'});
   });
 }
-
-
-

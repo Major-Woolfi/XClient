@@ -398,5 +398,3 @@ class _ScriptTrailing extends ConsumerWidget {
     );
   }
 }
-
-

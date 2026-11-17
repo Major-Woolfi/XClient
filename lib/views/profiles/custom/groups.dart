@@ -27,7 +27,7 @@ String _emptyFallbackOf(ProxyGroup group) => switch (group.emptyFallback) {
 
 const _inUserHashKey = 'in-user';
 
-  /// То, что группа оставляет ядру до своего добавления, начиная с собственного значения по умолчанию ядра.
+/// То, что группа оставляет ядру до своего добавления, начиная с собственного значения по умолчанию ядра.
 enum _GroupOption {
   emptyFallback,
   url,
@@ -139,7 +139,7 @@ enum _GroupOption {
 
 double get _groupRowExtent => globalState.measure.listTwoLineRowHeight;
 
-  /// Держит действия с группами в их собственном заголовке, вне панели страницы, которая принадлежит всему профилю.
+/// Держит действия с группами в их собственном заголовке, вне панели страницы, которая принадлежит всему профилю.
 class CustomProxyGroupsSection extends ConsumerStatefulWidget {
   final int profileId;
 
@@ -447,7 +447,7 @@ class _ProxyGroupItem extends ConsumerWidget {
   }
 }
 
-  /// Пропущенный член оставлен списку для пометки, так как обычно появляется при обновлении профиля; ядро отвергает их независимо от того, что содержит профиль.
+/// Пропущенный член оставлен списку для пометки, так как обычно появляется при обновлении профиля; ядро отвергает их независимо от того, что содержит профиль.
 bool _blocksSave(CustomIssue issue) => switch (issue) {
   EmptyNameIssue() ||
   ReservedNameIssue() ||
@@ -1442,5 +1442,3 @@ class _EditProxyGroupViewState extends ConsumerState<EditProxyGroupView> {
     );
   }
 }
-
-

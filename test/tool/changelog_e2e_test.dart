@@ -208,4 +208,3 @@ void main() {
     expect(warnings.single, contains('not a conventional commit'));
   });
 }
-

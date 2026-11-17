@@ -834,5 +834,3 @@ void main() {
     await teardownView(tester);
   });
 }
-
-

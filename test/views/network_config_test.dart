@@ -299,5 +299,3 @@ String _interfaceNameModeLabel(InterfaceNameMode mode) {
     InterfaceNameMode.custom => 'Custom',
   };
 }
-
-

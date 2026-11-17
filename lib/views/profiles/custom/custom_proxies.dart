@@ -628,7 +628,7 @@ Future<Map<int, List<Map<String, dynamic>>>> _decodeShareLinks(
   return decoded;
 }
 
-  /// Всплывает с тем, что [read] сделал из ссылки, или ни с чем, когда ссылка осталась как пришла, что только отбросит то, что ссылка не может унести.
+/// Всплывает с тем, что [read] сделал из ссылки, или ни с чем, когда ссылка осталась как пришла, что только отбросит то, что ссылка не может унести.
 class _ShareLinkDialog extends StatefulWidget {
   final String initialLink;
   final Future<Map<String, dynamic>> Function(String link) read;
@@ -1565,7 +1565,7 @@ class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
   }
 }
 
-  /// Пишет каждое изменение прямо в форму, так как кнопка «Назад» страницы листа всплывает без результата.
+/// Пишет каждое изменение прямо в форму, так как кнопка «Назад» страницы листа всплывает без результата.
 class _ProxyValuesView extends ConsumerWidget {
   final String title;
   final List<String> path;
@@ -1658,7 +1658,7 @@ class _ProxyValuesView extends ConsumerWidget {
   }
 }
 
-  /// Парная картам [_ProxyValuesView] запись прямо в форму по той же причине.
+/// Парная картам [_ProxyValuesView] запись прямо в форму по той же причине.
 class _ProxyEntriesView extends ConsumerWidget {
   final String title;
   final ProxyField field;
@@ -1757,5 +1757,3 @@ class _ProxyEntriesView extends ConsumerWidget {
     );
   }
 }
-
-

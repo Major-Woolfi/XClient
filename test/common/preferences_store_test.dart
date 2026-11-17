@@ -159,5 +159,3 @@ void main() {
     expect(reopened.getStringList('list'), ['a']);
   });
 }
-
-

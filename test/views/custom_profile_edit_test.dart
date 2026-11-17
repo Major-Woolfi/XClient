@@ -218,7 +218,8 @@ void main() {
     );
     await tester.pump();
   }
-/// Лист опций листает поверх формы, как это делает в приложении.
+
+  /// Лист опций листает поверх формы, как это делает в приложении.
   Future<void> pumpGroupSheet(WidgetTester tester) async {
     await pumpEditView(
       tester,
@@ -486,7 +487,7 @@ void main() {
             .descendant(of: picker, matching: find.byType(Scrollable))
             .first,
       );
-// Очищает прикреплённый поиск, который плавает над концом списка.
+      // Очищает прикреплённый поиск, который плавает над концом списка.
       await Scrollable.ensureVisible(
         tester.element(offered(_hongKong.label)),
         alignment: 0.5,
@@ -1034,6 +1035,3 @@ void main() {
     });
   });
 }
-
-
-

@@ -371,12 +371,10 @@ void main() {
     expect(find.bySemanticsLabel('Tap to authorize'), findsNothing);
   });
 }
+
 /// Представление ключится своим общим уведомлением выбора по [UniqueKeyStateMixin.key], поэтому
 /// тест должен прочитать тот же id сmontированного состояния.
 String _viewKey(WidgetTester tester) {
   final state = tester.state(find.byType(OnDemandView)) as dynamic;
   return state.key as String;
 }
-
-
-

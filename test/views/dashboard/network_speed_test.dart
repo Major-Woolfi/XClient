@@ -159,5 +159,3 @@ String _traffic(num bytes) {
   final show = bytes.traffic;
   return '${show.value} ${show.unit}';
 }
-
-

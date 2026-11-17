@@ -52,7 +52,7 @@ class _PaletteState extends State<Palette> {
     super.dispose();
   }
 
-// Серый теряет оттенок, а черный насыщенность; ползутки сохраняют те, до которых их перетащили, пока цвет не придет извне.
+  // Серый теряет оттенок, а черный насыщенность; ползутки сохраняют те, до которых их перетащили, пока цвет не придет извне.
   void _syncHsv() {
     if (_hsv.toColor() != widget.controller.value) {
       setState(() => _hsv = HSVColor.fromColor(widget.controller.value));
@@ -107,7 +107,7 @@ class _PaletteState extends State<Palette> {
 class _ColorGrid extends StatelessWidget {
   const _ColorGrid({required this.color, required this.onPicked});
 
-// Столбцы iOS идут от небесно-голубого через красный к зеленому, пропуская сине-зеленые между зеленым и небесно-голубым.
+  // Столбцы iOS идут от небесно-голубого через красный к зеленому, пропуская сине-зеленые между зеленым и небесно-голубым.
   static const _hues = [
     230.0,
     262.0,
@@ -173,7 +173,7 @@ class _GridPainter extends CustomPainter {
         const Radius.circular(_padCorner),
       ),
     );
-// Без сглаживания ячейки соприкасаются на целых пикселях, без шва страницы между ними.
+    // Без сглаживания ячейки соприкасаются на целых пикселях, без шва страницы между ними.
     final paint = Paint()..isAntiAlias = false;
     Rect? selectedCell;
     for (var row = 0; row < rows.length; row++) {
@@ -224,7 +224,7 @@ class _Spectrum extends StatefulWidget {
 }
 
 class _SpectrumState extends State<_Spectrum> {
-// У белого и черного нет оттенка, поэтому палец остается там, где его перетащили, вместо того чтобы прыгнуть к красному концу.
+  // У белого и черного нет оттенка, поэтому палец остается там, где его перетащили, вместо того чтобы прыгнуть к красному концу.
   ({Offset position, Color color})? _picked;
 
   Offset _positionOf(Color color) {
@@ -290,7 +290,7 @@ class _SpectrumPainter extends CustomPainter {
       shape,
       Paint()..shader = LinearGradient(colors: _hues).createShader(rect),
     );
-// Смешивание чистого оттенка с белым посередине и черным ниже — это в точности HSL светлота при полной насыщенности, которую подбор считывает обратно.
+    // Смешивание чистого оттенка с белым посередине и черным ниже — это в точности HSL светлота при полной насыщенности, которую подбор считывает обратно.
     canvas.drawRSuperellipse(
       shape,
       Paint()
@@ -687,5 +687,3 @@ class _HexColorFieldState extends State<HexColorField> {
     );
   }
 }
-
-

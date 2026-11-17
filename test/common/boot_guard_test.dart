@@ -187,5 +187,3 @@ void main() {
     expect(store.record?.stage, BootStage.starting);
   });
 }
-
-

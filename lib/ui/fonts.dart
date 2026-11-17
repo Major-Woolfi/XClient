@@ -14,4 +14,3 @@ extension FontFamilyTextStyle on TextStyle {
   TextStyle get toJetBrainsMono =>
       copyWith(fontFamily: FontFamily.jetBrainsMono.value);
 }
-

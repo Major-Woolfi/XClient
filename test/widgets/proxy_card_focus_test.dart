@@ -148,5 +148,3 @@ void main() {
     expect(_RecordingProxiesAction.tested, ['proxy 0']);
   });
 }
-
-

@@ -305,5 +305,3 @@ void main() {
     expect(_focusedItemKey(), 'item0');
   });
 }
-
-

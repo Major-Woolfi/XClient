@@ -25,8 +25,8 @@ void main() {
   });
 
   group('Profile.saveFile', () {
-// EditProfileView полагается на это, что выбрасывает, а не молча
-/// succeeds, так что try/catch на уровне вызывающего может Surface неудачу.
+    // EditProfileView полагается на это, что выбрасывает, а не молча
+    /// succeeds, так что try/catch на уровне вызывающего может Surface неудачу.
     test('rejects an invalid config without touching the saved file', () async {
       final profile = Profile.normal(label: 'p');
       final bytes = Uint8List.fromList(utf8.encode('bad: ['));
@@ -79,6 +79,3 @@ void main() {
     });
   });
 }
-
-
-

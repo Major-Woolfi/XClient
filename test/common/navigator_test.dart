@@ -67,9 +67,9 @@ void main() {
         matching: find.byType(HostScaffold),
       );
       final progress = ModalRoute.of(tester.element(page))!.animation!.value;
-// Критически затухшая пружина 0.3 с, стартующая в девять раз больше
-/// своего расстояния в секунду, 0.1 с после первого кадра, который она показывает
-/// за кадр.
+      // Критически затухшая пружина 0.3 с, стартующая в девять раз больше
+      /// своего расстояния в секунду, 0.1 с после первого кадра, который она показывает
+      /// за кадр.
       const omega = 2 * math.pi / 0.3;
       const time = 0.1 + 1 / 60;
       final spring = 1 - (1 + (omega - 9) * time) * math.exp(-omega * time);
@@ -544,6 +544,3 @@ Widget _opener(BuildContext context) {
     ),
   );
 }
-
-
-

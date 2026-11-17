@@ -83,7 +83,7 @@ void main() {
     );
   }
 
-// Окно просмотра имеет высоту 600, а строка — 100, так что шесть строк заполняют экран.
+  // Окно просмотра имеет высоту 600, а строка — 100, так что шесть строк заполняют экран.
   Future<void> pumpAtEnd(WidgetTester tester, {bool enable = true}) async {
     await pump(tester, itemCount: 20, enable: enable);
     controller.jumpTo(controller.position.maxScrollExtent);
@@ -206,5 +206,3 @@ void main() {
     expect(controller.offset, controller.position.maxScrollExtent);
   });
 }
-
-

@@ -23,5 +23,3 @@ void main() {
     expect(await isProcessAlive(-1), isFalse);
   });
 }
-
-

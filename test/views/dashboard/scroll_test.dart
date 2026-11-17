@@ -96,5 +96,3 @@ void main() {
     await teardown(tester);
   }, variant: TargetPlatformVariant.only(TargetPlatform.macOS));
 }
-
-

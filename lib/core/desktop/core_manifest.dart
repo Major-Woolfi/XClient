@@ -27,5 +27,3 @@ final class CoreManifest {
     return p.join(p.dirname(Platform.resolvedExecutable), coreManifestName);
   }
 }
-
-

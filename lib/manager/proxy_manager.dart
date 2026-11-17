@@ -28,5 +28,3 @@ class _ProxyManagerState extends ConsumerState<ProxyManager> {
     return widget.child;
   }
 }
-
-

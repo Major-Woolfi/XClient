@@ -127,5 +127,3 @@ class DeveloperView extends ConsumerWidget {
     );
   }
 }
-
-

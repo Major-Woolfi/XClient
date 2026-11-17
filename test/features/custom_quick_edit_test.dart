@@ -71,6 +71,7 @@ void _setViewport(WidgetTester tester) {
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
 }
+
 /// Индикатор загрузки редактора планирует свой следующий морт после размонтирования.
 Future<void> _unmount(WidgetTester tester) async {
   await tester.pumpWidget(const SizedBox.shrink());
@@ -837,6 +838,3 @@ void main() {
     });
   });
 }
-
-
-

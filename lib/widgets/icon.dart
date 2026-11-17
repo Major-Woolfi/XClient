@@ -424,5 +424,3 @@ class _PackageIconState extends State<PackageIcon> {
     );
   }
 }
-
-

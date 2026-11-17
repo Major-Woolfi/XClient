@@ -754,7 +754,3 @@ final class _ResponseAdapter implements HttpClientAdapter {
   @override
   void close({bool force = false}) {}
 }
-
-
-
-

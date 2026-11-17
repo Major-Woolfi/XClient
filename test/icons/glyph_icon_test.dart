@@ -106,5 +106,3 @@ void main() {
     expect(tester.getCenter(paint), tester.getCenter(find.byType(GlyphIcon)));
   });
 }
-
-

@@ -74,5 +74,3 @@ class _BelowClearance extends CustomClipper<Rect> {
   @override
   bool shouldReclip(_BelowClearance oldClipper) => false;
 }
-
-

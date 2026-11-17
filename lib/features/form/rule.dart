@@ -427,5 +427,3 @@ class _RuleFormState extends State<RuleForm> {
     );
   }
 }
-
-

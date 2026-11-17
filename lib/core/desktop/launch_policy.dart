@@ -63,5 +63,3 @@ int? _helperOsError(HelperException error) {
   final match = RegExp(r'os error (\d+)').firstMatch(error.message);
   return match == null ? null : int.tryParse(match.group(1)!);
 }
-
-

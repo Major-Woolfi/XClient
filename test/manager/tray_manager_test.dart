@@ -142,8 +142,8 @@ void main() {
 
     await emitTrayEvent('onIconActivated');
     await tester.pumpAndSettle();
-// Хост macOS вооружает таймер оселения Dock на показе; слейте его, чтобы привязка
-/// завершила тест с отсутствием ожидающего таймера.
+    // Хост macOS вооружает таймер оселения Dock на показе; слейте его, чтобы привязка
+    /// завершила тест с отсутствием ожидающего таймера.
     await tester.pump(const Duration(seconds: 1));
 
     expect(windowCalls, containsAll(<String>['show', 'focus']));
@@ -273,6 +273,3 @@ void main() {
     expect(windowCalls, isEmpty);
   });
 }
-
-
-

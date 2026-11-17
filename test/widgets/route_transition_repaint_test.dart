@@ -120,5 +120,3 @@ void main() {
     expect(repainted.intersection(untapped.toSet()), isEmpty);
   });
 }
-
-

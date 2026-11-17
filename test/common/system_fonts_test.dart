@@ -53,5 +53,3 @@ void main() {
     expect(await loadSystemFontFamilies(), isEmpty);
   });
 }
-
-

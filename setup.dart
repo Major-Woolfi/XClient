@@ -404,5 +404,3 @@ Future<int> _runLinuxDependencyCommand(List<String> command) async {
   }
   return exitCode;
 }
-
-

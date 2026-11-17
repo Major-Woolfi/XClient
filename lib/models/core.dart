@@ -483,5 +483,3 @@ abstract class ProxiesData with _$ProxiesData {
   factory ProxiesData.fromJson(Map<String, Object?> json) =>
       _$ProxiesDataFromJson(json);
 }
-
-

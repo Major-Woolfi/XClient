@@ -208,5 +208,3 @@ class _Content extends ConsumerWidget {
     };
   }
 }
-
-

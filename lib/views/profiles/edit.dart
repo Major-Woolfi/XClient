@@ -601,5 +601,3 @@ class _ProfileFileItem extends StatelessWidget {
     );
   }
 }
-
-

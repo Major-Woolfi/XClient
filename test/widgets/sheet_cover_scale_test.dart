@@ -213,5 +213,3 @@ void main() {
     expect(_rectOf(tester, 'B').top, greaterThan(rest.top));
   });
 }
-
-

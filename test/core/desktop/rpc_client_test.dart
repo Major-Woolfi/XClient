@@ -356,5 +356,3 @@ final class _LoadedListener with CoreEventListener {
     loaded.complete(providerName);
   }
 }
-
-

@@ -162,5 +162,3 @@ DelayState computeProxyDelayState({
   final delay = currentDelayMap[state.proxyName];
   return DelayState(delay: delay ?? 0, group: state.group);
 }
-
-

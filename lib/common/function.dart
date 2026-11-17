@@ -160,5 +160,3 @@ FutureOr<T> handleWatch<T>({
   }
   return await function();
 }
-
-

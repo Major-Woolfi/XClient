@@ -800,5 +800,3 @@ void main() {
     expect(LiquidGlassHost.debugHeldCaptures, held);
   });
 }
-
-

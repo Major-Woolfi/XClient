@@ -44,5 +44,3 @@ class TestProfiles extends Profiles {
     state = profiles;
   }
 }
-
-

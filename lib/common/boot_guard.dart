@@ -104,5 +104,3 @@ class BootGuard {
 }
 
 final bootGuard = BootGuard();
-
-

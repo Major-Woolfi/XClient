@@ -323,5 +323,3 @@ class _NamedUrlFormState extends State<NamedUrlForm> {
     );
   }
 }
-
-

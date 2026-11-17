@@ -135,16 +135,17 @@ jobs:
           curl -fsSL --retry 3 -o "$bundle" "https://curl.se/ca/$CA_BUNDLE"
           echo "$CA_BUNDLE_SHA256  $bundle" | sha256sum -c -
 
-      - name: Setup
+      - name: Setup (stable)
+        if: ${{ env.IS_STABLE == 'true' }}
         env:
           ANDROID_NDK_HOME: ${{ steps.build-ndk.outputs.ndk-path }}
-          IS_STABLE: ${{ env.IS_STABLE == 'true' && '--env stable' || '' }}
-        run: |
-          if [ "${{ env.IS_STABLE }}" == 'true' ]; then
-            dart setup.dart ${{ matrix.platform }} --env stable -v
-          else
-            dart setup.dart ${{ matrix.platform }} -v
-          fi
+        run: dart setup.dart ${{ matrix.platform }} --env stable -v
+
+      - name: Setup (prerelease)
+        if: ${{ env.IS_STABLE != 'true' }}
+        env:
+          ANDROID_NDK_HOME: ${{ steps.build-ndk.outputs.ndk-path }}
+        run: dart setup.dart ${{ matrix.platform }} -v
 
       - name: Upload
         uses: actions/upload-artifact@v4

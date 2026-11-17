@@ -361,5 +361,3 @@ List<String> _fontconfigFamilies() => using((arena) {
     destroyPattern(pattern);
   }
 });
-
-

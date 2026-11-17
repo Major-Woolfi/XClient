@@ -396,5 +396,3 @@ void main() {
     expect(lastBuilt, greaterThan(7));
   });
 }
-
-

@@ -31,7 +31,10 @@ class Bootstrap {
   factory Bootstrap() {
     _instance ??= Bootstrap._internal();
     // Зарегистрировать реализации ядер: Clash.Meta (по умолчанию) и Xray-core.
-    coreRegistry.register(CoreType.clash, system.isAndroid ? coreLib! : coreService!);
+    coreRegistry.register(
+      CoreType.clash,
+      system.isAndroid ? coreLib! : coreService!,
+    );
     coreRegistry.register(CoreType.xray, XRayCoreHandler());
     return _instance!;
   }
@@ -259,6 +262,3 @@ class Bootstrap {
 }
 
 final bootstrap = Bootstrap();
-
-
-

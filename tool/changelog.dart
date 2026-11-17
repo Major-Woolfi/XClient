@@ -280,5 +280,3 @@ Never _fail(String message) {
   stderr.writeln(message);
   exit(64);
 }
-
-

@@ -2158,12 +2158,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreUnknown": MessageLookupByLibrary.simpleMessage("Unknown"),
     "coreNotInstalled": MessageLookupByLibrary.simpleMessage("Not installed"),
     "coreVersions": MessageLookupByLibrary.simpleMessage("Versions"),
-    "coreNoVersions": MessageLookupByLibrary.simpleMessage("No versions available"),
+    "coreNoVersions": MessageLookupByLibrary.simpleMessage(
+      "No versions available",
+    ),
     "coreInstalled": MessageLookupByLibrary.simpleMessage("Installed"),
-    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage("Not installed"),
+    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage(
+      "Not installed",
+    ),
     "preRelease": MessageLookupByLibrary.simpleMessage("Pre-release"),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto-update"),
-    "autoUpdateTip": MessageLookupByLibrary.simpleMessage("Automatically download new core versions"),
+    "autoUpdateTip": MessageLookupByLibrary.simpleMessage(
+      "Automatically download new core versions",
+    ),
     "install": MessageLookupByLibrary.simpleMessage("Install"),
     "installing": MessageLookupByLibrary.simpleMessage("Installing..."),
     "use": MessageLookupByLibrary.simpleMessage("Use"),
@@ -2177,7 +2183,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "xrayOutbounds": MessageLookupByLibrary.simpleMessage("Outbounds"),
     "xraySave": MessageLookupByLibrary.simpleMessage("Save"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("Reset"),
-    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("Apply changes to XRay core config"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
+      "Apply changes to XRay core config",
+    ),
     "kernelManager": MessageLookupByLibrary.simpleMessage("Kernel Manager"),
     "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
     "xray": MessageLookupByLibrary.simpleMessage("XRay"),
@@ -2191,9 +2199,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Auto-update GEO"),
     "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy port"),
     "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
-    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO update interval"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage(
+      "GEO update interval",
+    ),
   };
 }
-
-
-

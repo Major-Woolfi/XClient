@@ -122,8 +122,8 @@ const List<DashboardWidget> defaultDashboardWidgets = [
   DashboardWidget.connectionStats,
 ];
 
-  /// Телефон начинается без переключателя VPN и диагностических карт, которые остаются
-  /// добавляемыми. Поле по умолчанию сохраняет общий список, так как оно должно быть const.
+/// Телефон начинается без переключателя VPN и диагностических карт, которые остаются
+/// добавляемыми. Поле по умолчанию сохраняет общий список, так как оно должно быть const.
 final List<DashboardWidget> platformDefaultDashboardWidgets = system.isAndroid
     ? const [
         DashboardWidget.currentOutbound,
@@ -144,8 +144,8 @@ const _legacyDefaultDashboardWidgets = {
   'intranetIp',
 };
 
-  /// Время работы не имеет замены: оно переместилось на карту текущего исходящего,
-  /// как и исходящий IP, чья карта стала внутрисетевой.
+/// Время работы не имеет замены: оно переместилось на карту текущего исходящего,
+/// как и исходящий IP, чья карта стала внутрисетевой.
 const _legacyDashboardWidgets = {
   'networkDetection': DashboardWidget.intranetIp,
   'outboundModeV2': DashboardWidget.outboundMode,
@@ -163,7 +163,7 @@ const _retiredDashboardWidgets = {
   'overrideNtpButton',
 };
 
-  /// Карту текущего исходящего нельзя удалить: список без нее предшествует ей.
+/// Карту текущего исходящего нельзя удалить: список без нее предшествует ей.
 List<DashboardWidget> dashboardWidgetsFromJson(
   List<dynamic>? dashboardWidgets,
 ) {
@@ -396,8 +396,8 @@ abstract class NetworkProps with _$NetworkProps {
       json == null ? const NetworkProps() : _$NetworkPropsFromJson(json);
 }
 
-  /// Читает стили, названные `standard`, `icon` и `none`, до тех пор, пока они не стали
-  /// [ProxiesIconStyle.filled], [ProxiesIconStyle.plain] и [ProxiesIconStyle.hidden].
+/// Читает стили, названные `standard`, `icon` и `none`, до тех пор, пока они не стали
+/// [ProxiesIconStyle.filled], [ProxiesIconStyle.plain] и [ProxiesIconStyle.hidden].
 ProxiesIconStyle proxiesIconStyleSafeFromJson(Object? iconStyle) {
   return switch (iconStyle) {
     'filled' || 'standard' => ProxiesIconStyle.filled,
@@ -545,7 +545,7 @@ abstract class Config with _$Config {
 
 const _legacyOverrideDnsKey = 'overrideDns';
 
-  /// Выключенный `overrideDns` оставил секцию DNS профиля в покое.
+/// Выключенный `overrideDns` оставил секцию DNS профиля в покое.
 Config _withLegacyOverrideDns(Config config, Map<String, Object?> json) {
   if (!json.containsKey(_legacyOverrideDnsKey)) {
     return config;
@@ -558,7 +558,7 @@ Config _withLegacyOverrideDns(Config config, Map<String, Object?> json) {
   return config.copyWith.patchClashConfig(dnsOverrideKeys: keys);
 }
 
-  /// Тестовый URL переместился из настроек приложения в общие переопределения.
+/// Тестовый URL переместился из настроек приложения в общие переопределения.
 Map<String, Object?> _withLegacyTestUrl(Map<String, Object?> json) {
   final app = json['appSettingProps'];
   final testUrl = app is Map ? app['testUrl'] : null;
@@ -601,5 +601,3 @@ Map<String, Object?> _withLegacyRouteMode(Map<String, Object?> json) {
       },
   };
 }
-
-

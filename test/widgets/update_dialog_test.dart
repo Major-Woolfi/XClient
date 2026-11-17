@@ -69,8 +69,8 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, {Locale? locale}) async {
   final container = ProviderContainer();
   addTearDown(container.dispose);
   globalState.container = container;
-// appSettingProvider — autoDispose; в приложении `configProvider` держит его
-/// живым, поэтому тест должен держать слушателя, или правки отбрасываются.
+  // appSettingProvider — autoDispose; в приложении `configProvider` держит его
+  /// живым, поэтому тест должен держать слушателя, или правки отбрасываются.
   container.listen(appSettingProvider, (_, _) {}, fireImmediately: true);
   container
       .read(viewSizeProvider.notifier)
@@ -88,6 +88,7 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, {Locale? locale}) async {
   await tester.pump();
   return container;
 }
+
 /// Диалог блокирует, пока пользователь не ответит, поэтому тесты должны закрыть его
 /// до ожидания вызова, который его открыл.
 Future<void> tapCancel(WidgetTester tester) async {
@@ -193,8 +194,9 @@ void main() {
       request.releaseDio.httpClientAdapter = adapter;
       await home.delete(recursive: true);
     });
-/// Загрузка трогает диск и изолят, которые только продвигаются
-/// за пределами зоны fake-async.
+
+    /// Загрузка трогает диск и изолят, которые только продвигаются
+    /// за пределами зоны fake-async.
     Future<void> settleUntil(WidgetTester tester, bool Function() done) async {
       for (var i = 0; i < 50 && !done(); i++) {
         await tester.runAsync(
@@ -310,8 +312,3 @@ void main() {
     expect(container.read(appSettingProvider).autoCheckUpdate, isTrue);
   });
 }
-
-
-
-
-

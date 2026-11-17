@@ -428,5 +428,3 @@ class _PolicyItem extends ConsumerWidget {
     );
   }
 }
-
-

@@ -237,5 +237,3 @@ class _HotKeyManagerState extends ConsumerState<HotKeyManager> {
     return _buildCloseShortcuts(widget.child);
   }
 }
-
-

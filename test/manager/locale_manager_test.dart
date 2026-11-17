@@ -59,5 +59,3 @@ void main() {
     expect(container.read(loadedLocaleProvider), const Locale('en'));
   });
 }
-
-

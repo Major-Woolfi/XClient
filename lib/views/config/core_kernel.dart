@@ -66,9 +66,11 @@ class _ActiveCoreCard extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       active?.type.label[0] ?? '?',
-                      style: AppTextStyle.title3.of(context).copyWith(
-                        color: context.colorScheme.onPrimaryContainer,
-                      ),
+                      style: AppTextStyle.title3
+                          .of(context)
+                          .copyWith(
+                            color: context.colorScheme.onPrimaryContainer,
+                          ),
                     ),
                   ),
                 ),
@@ -86,9 +88,11 @@ class _ActiveCoreCard extends ConsumerWidget {
                         active != null
                             ? '${appLocalizations.version}: ${active.spec.versionWithV}'
                             : appLocalizations.coreNotInstalledShort,
-                        style: AppTextStyle.body.of(context).copyWith(
-                          color: context.colorScheme.onSurfaceVariant,
-                        ),
+                        style: AppTextStyle.body
+                            .of(context)
+                            .copyWith(
+                              color: context.colorScheme.onSurfaceVariant,
+                            ),
                       ),
                     ],
                   ),
@@ -112,10 +116,7 @@ class _ActiveCoreCard extends ConsumerWidget {
 
 /// Sekция одного типа ядра.
 class _CoreTypeSection extends ConsumerWidget {
-  const _CoreTypeSection({
-    required this.type,
-    required this.state,
-  });
+  const _CoreTypeSection({required this.type, required this.state});
 
   final CoreType type;
   final CoreKernelState state;
@@ -162,7 +163,9 @@ class _CoreTypeSection extends ConsumerWidget {
                 await ref.read(coreKernelProvider).switchTo(type, spec.version);
               },
               onUninstall: (spec) async {
-                await ref.read(coreKernelProvider).uninstall(type, spec.version);
+                await ref
+                    .read(coreKernelProvider)
+                    .uninstall(type, spec.version);
               },
             ),
           ),
@@ -172,9 +175,9 @@ class _CoreTypeSection extends ConsumerWidget {
               child: Center(
                 child: Text(
                   appLocalizations.coreNoVersions,
-                  style: AppTextStyle.body.of(context).copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyle.body
+                      .of(context)
+                      .copyWith(color: context.colorScheme.onSurfaceVariant),
                 ),
               ),
             ),
@@ -224,9 +227,9 @@ class _KernelVersionRow extends ConsumerWidget {
                   isInstalled
                       ? appLocalizations.coreInstalled
                       : appLocalizations.coreNotInstalledShort,
-                  style: AppTextStyle.body.of(context).copyWith(
-                    color: context.colorScheme.onSurfaceVariant,
-                  ),
+                  style: AppTextStyle.body
+                      .of(context)
+                      .copyWith(color: context.colorScheme.onSurfaceVariant),
                 ),
               ],
             ),
@@ -262,10 +265,7 @@ class _KernelVersionRow extends ConsumerWidget {
 
 /// Карточка секции с заголовком.
 class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.title,
-    required this.child,
-  });
+  const _SectionCard({required this.title, required this.child});
 
   final String title;
   final Widget child;
@@ -285,9 +285,9 @@ class _SectionCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               title,
-              style: AppTextStyle.title3.of(context).copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppTextStyle.title3
+                  .of(context)
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const Divider(height: 1),

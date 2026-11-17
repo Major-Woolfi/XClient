@@ -42,5 +42,3 @@ class IpQualityText extends ConsumerWidget {
     );
   }
 }
-
-

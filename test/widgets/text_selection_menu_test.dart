@@ -160,5 +160,3 @@ void main() {
     expect(find.text('Paste'), findsNothing);
   }, variant: _desktop);
 }
-
-

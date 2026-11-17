@@ -401,5 +401,3 @@ class _GroupTabState extends State<_GroupTab> {
     );
   }
 }
-
-

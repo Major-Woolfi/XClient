@@ -990,6 +990,3 @@ cron {cron} script-path=https://cdn.test/sync.js, timeout=900, tag=Sync
     });
   });
 }
-
-
-

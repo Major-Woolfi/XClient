@@ -348,5 +348,3 @@ Widget _buildTrackerInfoItem(
     latest: latest,
   );
 }
-
-

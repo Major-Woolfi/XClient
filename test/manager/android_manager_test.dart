@@ -41,8 +41,8 @@ void main() {
       overrides: [
         profilesProvider.overrideWith(TestProfiles.new),
         setupActionProvider.overrideWith(_RecordingSetupAction.new),
-// Обход частных адресов вычисляет маршруты в Isolate.run, которые
-/// поддельные часы никогда не дают завершить.
+        // Обход частных адресов вычисляет маршруты в Isolate.run, которые
+        /// поддельные часы никогда не дают завершить.
         networkSettingProvider.overrideWithBuild(
           (_, _) => const NetworkProps(bypassPrivateRoute: false),
         ),
@@ -128,6 +128,3 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
   });
 }
-
-
-

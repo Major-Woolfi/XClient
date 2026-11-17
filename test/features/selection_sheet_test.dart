@@ -193,5 +193,3 @@ void main() {
     expect(tester.widget<CustomScrollView>(list).controller!.offset, 0);
   });
 }
-
-

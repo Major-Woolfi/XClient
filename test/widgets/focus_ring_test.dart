@@ -40,7 +40,7 @@ Future<List<FocusNode>> _pump(
       ),
     ),
   );
-// Нажатие клавиши ставит выделение фокуса в традиционном режиме, который использует пульт.
+  // Нажатие клавиши ставит выделение фокуса в традиционном режиме, который использует пульт.
   await tester.sendKeyEvent(LogicalKeyboardKey.shift);
   await tester.pumpAndSettle();
   return nodes;
@@ -202,5 +202,3 @@ void main() {
     expect(_cardSide(tester, const Key('row')), _ring(standsOff: false));
   });
 }
-
-

@@ -461,9 +461,9 @@ List<Widget> networkOptionsItems({
     if (isDesktop) const TUNItem(),
     if (isMacOS) const AutoSetSystemDnsItem(),
     const TunStackItem(),
-// DefaultSocketHook mihomo игнорирует interface-name на Android
-// (core/lib.go installHooks, vendored dialer.go), поэтому эти строки применяются
-// только на десктопе.
+    // DefaultSocketHook mihomo игнорирует interface-name на Android
+    // (core/lib.go installHooks, vendored dialer.go), поэтому эти строки применяются
+    // только на десктопе.
     if (isDesktop) ...[
       const InterfaceNameModeItem(),
       if (isCustomInterfaceName) const InterfaceNameItem(),
@@ -573,5 +573,3 @@ class NetworkListView extends StatelessWidget {
     );
   }
 }
-
-

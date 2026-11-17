@@ -166,5 +166,3 @@ class Service {
 }
 
 Service? get service => system.isAndroid ? Service() : null;
-
-

@@ -236,5 +236,3 @@ final systemDnsCoordinator = system.isMacOS && !safeModeBuild
         store: const PreferencesSystemDnsStore(),
       )
     : null;
-
-

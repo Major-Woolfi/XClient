@@ -311,5 +311,3 @@ class RecordGroupedList<T> extends StatelessWidget {
     );
   }
 }
-
-

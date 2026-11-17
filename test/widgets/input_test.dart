@@ -798,6 +798,7 @@ Future<({EditorPage editor, BuildContext context})> _openQuickEdit(
     context: tester.element(find.byType(EditorPage)),
   );
 }
+
 /// Индикатор загрузки редактора планирует свой следующий морт после размонтирования.
 Future<void> _unmount(WidgetTester tester) async {
   await tester.pumpWidget(const SizedBox.shrink());
@@ -814,6 +815,3 @@ void _setViewport(WidgetTester tester) {
 double _top(WidgetTester tester, String text) {
   return tester.getTopLeft(find.text(text)).dy;
 }
-
-
-

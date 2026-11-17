@@ -17,6 +17,7 @@ import 'package:path/path.dart';
 import 'package:riverpod/riverpod.dart';
 
 import '../helpers/app_paths.dart';
+
 /// Реальные загрузки по loopback: привязка теста отвечает на каждый запрос с
 /// 400, поэтому её переопределение снимается, пока тест запущен.
 void main() {
@@ -473,8 +474,3 @@ Ads = type=http-response,pattern=$pattern,script-path=${urlOf('/ads.js')}
     expect(await files(appPath.mitmResourcesDirPath), isEmpty);
   });
 }
-
-
-
-
-

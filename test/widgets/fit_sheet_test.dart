@@ -227,7 +227,7 @@ void main() {
   Future<void> raiseKeyboard(WidgetTester tester, double height) async {
     for (final inset in [height / 4, height / 2, height * 3 / 4, height]) {
       tester.view.viewInsets = FakeViewPadding(bottom: inset);
-// Движок забирает клавиатуру из обтяжки.
+      // Движок забирает клавиатуру из обтяжки.
       tester.view.padding = FakeViewPadding.zero;
       await tester.pump();
     }
@@ -325,8 +325,9 @@ void main() {
     }
     return tops;
   }
-/// Клавиатура, движущаяся с постоянной скоростью, никогда не дёргает лист: её скорость
-/// меняется на малую часть от своей от кадра к кадру.
+
+  /// Клавиатура, движущаяся с постоянной скоростью, никогда не дёргает лист: её скорость
+  /// меняется на малую часть от своей от кадра к кадру.
   void expectEased(List<double> tops, double step) {
     for (var index = 2; index < tops.length; index++) {
       final speed = tops[index] - tops[index - 1];
@@ -737,6 +738,3 @@ class _RenderCounted extends RenderProxyBox {
     super.paint(context, offset);
   }
 }
-
-
-

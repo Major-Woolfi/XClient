@@ -186,5 +186,3 @@ class _TickBuilderState extends State<TickBuilder>
     return widget.builder(context, _tick);
   }
 }
-
-

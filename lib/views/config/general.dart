@@ -402,5 +402,3 @@ class GeneralView extends ConsumerWidget {
     );
   }
 }
-
-

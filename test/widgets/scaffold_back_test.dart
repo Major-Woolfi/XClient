@@ -471,5 +471,3 @@ class _PageActivityTestScope extends StatelessWidget {
     );
   }
 }
-
-

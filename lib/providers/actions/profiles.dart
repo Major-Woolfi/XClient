@@ -198,10 +198,7 @@ class ProfilesAction extends _$ProfilesAction {
         _tryParseJson(trimmed) != null;
     final isXrayLink = _isXrayLink(trimmed);
     if (isXrayJson || isXrayLink) {
-      await _importXrayConfig(
-        bytes: bytes,
-        label: platformFile.name,
-      );
+      await _importXrayConfig(bytes: bytes, label: platformFile.name);
       return;
     }
     // Clash profile: ensure Clash core is active.
@@ -264,10 +261,7 @@ class ProfilesAction extends _$ProfilesAction {
         await file.safeDelete();
         return Profile.normal(label: label)
             .copyWith(type: ProfileType.file)
-            .saveFile(
-              bytes,
-              validate: (p, k) => _core.validateProfile(p, k),
-            );
+            .saveFile(bytes, validate: (p, k) => _core.validateProfile(p, k));
       },
       title: appLocalizations.addProfile,
     );
@@ -494,7 +488,6 @@ class ProfilesAction extends _$ProfilesAction {
       throw MessageException(issue);
     }
 
-
     final mFile = await profile.file;
     await tempFile.copy(mFile.path);
     await tempFile.safeDelete();
@@ -584,7 +577,8 @@ class ProfilesAction extends _$ProfilesAction {
         : appLocalizations.proxiesProfileLabel(first, proxies.length);
     await _ensureXrayCoreActive();
     final config = await _core.encodeXrayLinks(proxies);
-    final configText = '{\n  "outbounds": [\n${config.map((l) => '    $l').join(',\n')}\n  ]\n}';
+    final configText =
+        '{\n  "outbounds": [\n${config.map((l) => '    $l').join(',\n')}\n  ]\n}';
     return profile
         .copyWith(label: profile.label.takeFirstValid([label]))
         .saveFile(

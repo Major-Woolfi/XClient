@@ -124,6 +124,3 @@ void main() {
     expect(dns['fallback-filter'], {'geoip': false, 'domain': []});
   });
 }
-
-
-

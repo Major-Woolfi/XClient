@@ -211,5 +211,3 @@ void main() {
     expect(find.byType(ShapeBadge), findsNothing);
   });
 }
-
-

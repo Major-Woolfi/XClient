@@ -3,14 +3,7 @@
 import 'dart:convert';
 
 /// Тип прокси-ссылки XRay.
-enum XrayLinkType {
-  vmess,
-  vless,
-  trojan,
-  shadowsocks,
-  ssconf,
-  unknown,
-}
+enum XrayLinkType { vmess, vless, trojan, shadowsocks, ssconf, unknown }
 
 /// Распарсенная ссылка XRay.
 class XrayLink {
@@ -249,7 +242,7 @@ XrayLink decodeXrayLink(String link) {
     case XrayLinkType.ssconf:
       return _decodeSsconf(link);
     case XrayLinkType.unknown:
-    return const XrayLink(type: XrayLinkType.unknown);
+      return const XrayLink(type: XrayLinkType.unknown);
   }
 }
 
@@ -274,7 +267,9 @@ XrayLink _decodeVmess(String link, Uri uri) {
       uuid: config['id'] as String?,
       method: config['scy'] as String?,
       network: config['net'] as String?,
-      security: config['tls'] == 'tls' || config['tls'] == 'reality' ? 'tls' : 'none',
+      security: config['tls'] == 'tls' || config['tls'] == 'reality'
+          ? 'tls'
+          : 'none',
       sni: config['host'] as String?,
       fingerprint: config['fp'] as String?,
       alpn: config['alpn'] as String?,
@@ -388,11 +383,7 @@ Map<String, dynamic> xrayLinkToOutbound(XrayLink link) {
             'address': link.address,
             'port': link.port,
             'users': [
-              {
-                'id': link.uuid,
-                'alterId': 0,
-                'security': 'auto',
-              },
+              {'id': link.uuid, 'alterId': 0, 'security': 'auto'},
             ],
           },
         ],
@@ -405,11 +396,7 @@ Map<String, dynamic> xrayLinkToOutbound(XrayLink link) {
             'address': link.address,
             'port': link.port,
             'users': [
-              {
-                'id': link.uuid,
-                'encryption': 'none',
-                'flow': link.flow,
-              },
+              {'id': link.uuid, 'encryption': 'none', 'flow': link.flow},
             ],
           },
         ],
@@ -445,10 +432,7 @@ Map<String, dynamic> xrayLinkToOutbound(XrayLink link) {
   final stream = <String, dynamic>{};
   if (link.network != null) stream['network'] = link.network;
   if (link.security != null && link.security != 'none') {
-    final tls = <String, dynamic>{
-      'enabled': true,
-      'serverName': link.sni,
-    };
+    final tls = <String, dynamic>{'enabled': true, 'serverName': link.sni};
     if (link.fingerprint != null) tls['fingerprint'] = link.fingerprint;
     if (link.alpn != null) tls['alpn'] = [link.alpn];
     if (link.publicKey != null) {

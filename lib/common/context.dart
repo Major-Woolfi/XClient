@@ -4,5 +4,3 @@ import 'package:flutter/widgets.dart';
 extension AppContextExtension on BuildContext {
   AppLocalizations get appLocalizations => AppLocalizations.of(this);
 }
-
-

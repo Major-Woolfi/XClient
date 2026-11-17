@@ -46,5 +46,3 @@ class SingleInstanceLock {
 }
 
 final singleInstanceLock = SingleInstanceLock();
-
-

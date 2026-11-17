@@ -405,5 +405,3 @@ class _OnDemandViewState extends ConsumerState<OnDemandView>
     );
   }
 }
-
-

@@ -164,8 +164,8 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
       ? ''
       : realPatchConfig.externalController.value;
   rawConfig['secret'] = realPatchConfig.secret;
-      // mihomo обслуживает unix и pipe контроллеры без секрета, а unix
-      // удаляет то, что сидит по его пути, перед открытием для всех.
+  // mihomo обслуживает unix и pipe контроллеры без секрета, а unix
+  // удаляет то, что сидит по его пути, перед открытием для всех.
   rawConfig['external-controller-tls'] = '';
   rawConfig['external-controller-unix'] = '';
   rawConfig['external-controller-pipe'] = '';
@@ -628,5 +628,3 @@ Future<MigrationData> migrateLegacyConfig({
     disabledRules: disabledRules,
   );
 }
-
-

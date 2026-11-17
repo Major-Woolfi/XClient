@@ -47,5 +47,3 @@ class BatchSection<T> extends StatelessWidget {
     );
   }
 }
-
-

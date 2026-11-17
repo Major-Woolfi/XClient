@@ -698,6 +698,3 @@ class AndroidMitmTrustStore implements MitmTrustStore {
     return !found.user;
   }
 }
-
-
-

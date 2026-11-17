@@ -27,5 +27,3 @@ void main() {
     expect(compactError(StateError('boom')), contains('boom'));
   });
 }
-
-

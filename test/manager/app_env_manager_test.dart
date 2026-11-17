@@ -39,5 +39,3 @@ void main() {
     expect(find.byKey(const Key('child')), findsOneWidget);
   });
 }
-
-

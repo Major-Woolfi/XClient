@@ -149,5 +149,3 @@ class _AppMediaQuery extends StatelessWidget {
     );
   }
 }
-
-

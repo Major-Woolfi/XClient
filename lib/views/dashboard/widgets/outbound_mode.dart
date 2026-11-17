@@ -171,5 +171,3 @@ class OutboundModeBar extends ConsumerWidget {
     );
   }
 }
-
-

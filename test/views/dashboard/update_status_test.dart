@@ -121,6 +121,3 @@ void main() {
     expect(find.text('Downloading update'), findsOneWidget);
   });
 }
-
-
-

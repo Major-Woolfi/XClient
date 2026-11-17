@@ -121,5 +121,3 @@ class _NtpOverrideSpec extends OverrideSpec<NtpOverrideKey, Ntp>
     ),
   };
 }
-
-

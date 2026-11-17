@@ -267,5 +267,3 @@ class _MapEntryFormState extends State<_MapEntryForm> {
     );
   }
 }
-
-

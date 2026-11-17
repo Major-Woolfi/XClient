@@ -330,8 +330,8 @@ enum SnifferOverrideKey with OverrideKey {
   static const sniffSection = 'sniff';
 }
 
-  /// Пишется поверх секции `tun` профиля, которую VPN Android никогда не читает,
-  /// поэтому эти ключи применяются только на desktop, рядом с ключами `Tun.coreJson`.
+/// Пишется поверх секции `tun` профиля, которую VPN Android никогда не читает,
+/// поэтому эти ключи применяются только на desktop, рядом с ключами `Tun.coreJson`.
 @JsonEnum(valueField: 'path')
 enum TunOverrideKey with OverrideKey {
   mtu('mtu'),
@@ -356,8 +356,8 @@ enum TunOverrideKey with OverrideKey {
   final String path;
 }
 
-  /// Ключи верхнего уровня профиля, кроме `test-url`: ядро разбирает его как
-  /// URL каждой группы и провайдера, которые не называют свой.
+/// Ключи верхнего уровня профиля, кроме `test-url`: ядро разбирает его как
+/// URL каждой группы и провайдера, которые не называют свой.
 @JsonEnum(valueField: 'path')
 enum GeneralOverrideKey with OverrideKey {
   testUrl('test-url'),
@@ -667,8 +667,8 @@ extension RuleActionExt on RuleAction {
 
 enum ProxyFieldKind { text, secret, number, toggle, choice, list, map }
 
-  /// Ключ определения прокси, который редактирует форма, по [path], так как ядро
-  /// читает транспорт, TLS и настройки плагина из собственных мап.
+/// Ключ определения прокси, который редактирует форма, по [path], так как ядро
+/// читает транспорт, TLS и настройки плагина из собственных мап.
 enum ProxyField {
   username(['username']),
   password(['password'], ProxyFieldKind.secret),
@@ -841,7 +841,7 @@ enum LoadingTag {
   mitm,
 }
 
-  /// Списки `Mitm`, названные ключами JSON ядра.
+/// Списки `Mitm`, названные ключами JSON ядра.
 enum MitmList {
   hostname('hostname'),
   urlRewrite('url-rewrite'),
@@ -864,5 +864,3 @@ enum CoreStatus { connecting, connected, disconnected }
 enum RequestFeed { recent, live }
 
 enum UpdatingScope { core, local }
-
-

@@ -320,5 +320,3 @@ void main() {
     expect(scope.read(enabledServiceTargetsProvider), ServiceTarget.values);
   });
 }
-
-

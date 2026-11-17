@@ -151,5 +151,3 @@ Locale? getLocaleForString(String? localString) {
   }
   return null;
 }
-
-

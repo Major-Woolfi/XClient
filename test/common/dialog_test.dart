@@ -72,6 +72,7 @@ Future<void> _agreeAndRestate(WidgetTester tester) async {
   await tester.tap(find.text('Confirm'));
   await tester.pumpAndSettle();
 }
+
 /// [PrismApp] монтирует [BannerHost] над своим навигатором, так что
 /// [Dialogs.showBanner] может alcanцировать его из `navigatorKey.currentContext`.
 Future<void> _pumpBannerHost(WidgetTester tester) async {
@@ -561,6 +562,3 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
-
-
-

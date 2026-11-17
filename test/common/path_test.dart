@@ -159,6 +159,3 @@ void main() {
     await expectLater(appPath.ensureProviderDirs(9), completes);
   });
 }
-
-
-

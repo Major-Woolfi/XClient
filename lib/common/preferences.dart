@@ -197,5 +197,3 @@ class Preferences {
 }
 
 final preferences = Preferences();
-
-

@@ -62,8 +62,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('getTextResponseForUrl propagates the typed DioException', () async {
-// Mocked HttpClient flutter_test отвечает на каждый запрос с HTTP 400,
-/// который Dio surfaces как badResponse DioException.
+    // Mocked HttpClient flutter_test отвечает на каждый запрос с HTTP 400,
+    /// который Dio surfaces как badResponse DioException.
     await expectLater(
       request.getTextResponseForUrl('http://127.0.0.1/anything'),
       throwsA(
@@ -272,7 +272,3 @@ void main() {
     await outcome;
   });
 }
-
-
-
-

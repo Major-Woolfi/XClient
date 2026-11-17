@@ -33,6 +33,7 @@ String _nestedBlockAt(List<String> lines, int start) {
   }
   return lines.sublist(start, end).join('\n');
 }
+
 /// Голый `context`, который никакая замыкающая closure или член не декларирует,
 /// это геттер `State`, так что блок, из которого он читается — весь класс.
 String? _declaringBlock(List<String> lines, int line, int column, String name) {
@@ -105,4 +106,3 @@ void main() {
     expect(offenders, isEmpty, reason: offenders.join('\n'));
   });
 }
-

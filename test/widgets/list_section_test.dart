@@ -100,5 +100,3 @@ void main() {
     expect(rowRect(tester, 'row').top, 0);
   });
 }
-
-

@@ -2406,6 +2406,3 @@ extension PatchClashConfigExt on PatchClashConfig {
     return secret.isEmpty ? copyWith(secret: generateRandomSecret(32)) : this;
   }
 }
-
-
-

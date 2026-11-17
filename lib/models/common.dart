@@ -1071,6 +1071,3 @@ abstract class UpdatingMessage with _$UpdatingMessage {
     required String message,
   }) = _UpdatingMessage;
 }
-
-
-

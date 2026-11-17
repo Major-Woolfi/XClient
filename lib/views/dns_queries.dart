@@ -501,5 +501,3 @@ class _ErrorRow extends StatelessWidget {
     );
   }
 }
-
-

@@ -250,6 +250,3 @@ String? getFileNameForDisposition(String? disposition) {
   if (fileNameKey.isEmpty) return null;
   return parameters[fileNameKey];
 }
-
-
-

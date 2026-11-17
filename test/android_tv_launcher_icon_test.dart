@@ -82,7 +82,7 @@ void main() {
       'viewportHeight',
     );
 
-// Консервативные границы текущего логотипа, включая изогнутые колпачки.
+    // Консервативные границы текущего логотипа, включая изогнутые колпачки.
     const logoBounds = ui.Rect.fromLTRB(54, 33, 179, 206.5);
     final transformedBounds = ui.Rect.fromLTRB(
       (logoBounds.left * scaleX + translateX) / viewportWidth * 108,

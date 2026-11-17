@@ -689,6 +689,3 @@ List<Override> buildAppStateOverrides(AppState appState) {
     coreStatusProvider.overrideWithBuild((_, _) => appState.coreStatus),
   ];
 }
-
-
-

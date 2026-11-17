@@ -99,5 +99,3 @@ void main() {
     expect(calls, isEmpty);
   });
 }
-
-

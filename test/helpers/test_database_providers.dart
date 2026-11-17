@@ -45,5 +45,3 @@ class TestMitmModules extends MitmModules {
   @override
   Stream<List<MitmModule>> build() => Stream.value(initial);
 }
-
-

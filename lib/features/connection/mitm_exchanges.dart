@@ -370,5 +370,3 @@ class _MitmSideView extends ConsumerWidget {
     );
   }
 }
-
-

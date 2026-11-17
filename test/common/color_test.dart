@@ -10,6 +10,7 @@ import 'package:prism_ui/hct/material_dynamic_colors.dart';
 import 'package:prism_ui/prism_ui.dart';
 
 Hct _hct(Color color) => Hct.fromInt(color.toARGB32());
+
 /// Нейтральный серый sRGB уже измеряется около 2.8 в HCT, так что роль Material
 /// оставляет серый, как делает монохром, и удерживается на собственном значении Material.
 Matcher _grayish(Color material, double limit) =>
@@ -277,6 +278,3 @@ class _RawRoles {
       _of(MaterialDynamicColors.surfaceContainerLowest);
   Color get surfaceDim => _of(MaterialDynamicColors.surfaceDim);
 }
-
-
-

@@ -473,5 +473,3 @@ class _EditProviderViewState extends ConsumerState<_EditProviderView> {
     );
   }
 }
-
-

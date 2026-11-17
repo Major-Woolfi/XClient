@@ -110,5 +110,3 @@ Future<void> discardSpilledFile(Object? file) async {
     await File(file).delete();
   } on FileSystemException catch (_) {}
 }
-
-

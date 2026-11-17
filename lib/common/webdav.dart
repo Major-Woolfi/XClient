@@ -345,5 +345,3 @@ class _DigestChallenge {
     return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
   }
 }
-
-

@@ -159,5 +159,3 @@ class _CoreStatusButtonState extends ConsumerState<CoreStatusButton> {
     );
   }
 }
-
-

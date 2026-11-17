@@ -742,5 +742,3 @@ class _MitmModuleLinesView extends StatelessWidget {
     );
   }
 }
-
-

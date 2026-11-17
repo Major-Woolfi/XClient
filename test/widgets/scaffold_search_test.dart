@@ -408,7 +408,7 @@ void main() {
     );
 
     FocusManager.instance.primaryFocus?.unfocus();
-// Поле сворачивается обратно, как только изменение фокуса прилагается, кадр спустя.
+    // Поле сворачивается обратно, как только изменение фокуса прилагается, кадр спустя.
     await tester.pump();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 250));
@@ -474,5 +474,3 @@ class _RebuildingSearchPageState extends State<_RebuildingSearchPage> {
     );
   }
 }
-
-

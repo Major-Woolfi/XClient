@@ -44,5 +44,3 @@ void main() {
     expect(page.debugSymmetricPaintCount + page.debugAsymmetricPaintCount, 0);
   });
 }
-
-

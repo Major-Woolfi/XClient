@@ -186,5 +186,3 @@ void main() {
     expect(container.read(patchClashConfigProvider).mode, Mode.global);
   });
 }
-
-

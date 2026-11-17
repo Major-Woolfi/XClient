@@ -323,4 +323,3 @@ String _payloadOf(String body) {
       body.indexOf(releaseJsonBeginMarker) + releaseJsonBeginMarker.length;
   return body.substring(start, body.indexOf(releaseJsonEndMarker, start));
 }
-

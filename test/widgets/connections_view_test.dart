@@ -368,5 +368,3 @@ class _TestApp extends StatelessWidget {
 }
 
 class _MockCoreHandlerInterface extends Mock implements CoreHandlerInterface {}
-
-

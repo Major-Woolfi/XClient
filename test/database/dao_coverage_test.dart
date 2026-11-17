@@ -1163,5 +1163,3 @@ void main() {
     expect(await database.ipQualities.count.getSingle(), 1);
   });
 }
-
-

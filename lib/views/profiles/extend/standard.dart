@@ -394,5 +394,3 @@ class _EditGlobalAddedRulesState extends ConsumerState<_EditGlobalAddedRules> {
     );
   }
 }
-
-

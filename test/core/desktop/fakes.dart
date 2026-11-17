@@ -243,5 +243,3 @@ final class MutableLauncherResolver implements DesktopCoreLauncherResolver {
     return launcher;
   }
 }
-
-

@@ -234,5 +234,3 @@ class ConfigTextItem extends _ConfigItem<String> {
     );
   }
 }
-
-

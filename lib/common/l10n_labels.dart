@@ -166,5 +166,3 @@ extension RecordGroupingL10n on RecordGrouping {
     };
   }
 }
-
-

@@ -69,4 +69,3 @@ class BuildConfig {
     'helper_name': helperName,
   };
 }
-

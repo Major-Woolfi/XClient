@@ -119,5 +119,3 @@ class _TrayManagerState extends ConsumerState<TrayManager> {
     super.dispose();
   }
 }
-
-

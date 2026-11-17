@@ -88,5 +88,3 @@ class _AndroidContainerState extends ConsumerState<AndroidManager>
     return widget.child;
   }
 }
-
-

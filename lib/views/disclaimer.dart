@@ -516,5 +516,3 @@ class _RestateDialogState extends State<_RestateDialog> {
     );
   }
 }
-
-

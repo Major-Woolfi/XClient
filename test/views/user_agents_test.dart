@@ -196,5 +196,3 @@ void main() {
     expect(selected(), 'Legacy/1.0');
   });
 }
-
-

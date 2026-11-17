@@ -114,5 +114,3 @@ class LatestCompute<I, O> {
     }
   }
 }
-
-

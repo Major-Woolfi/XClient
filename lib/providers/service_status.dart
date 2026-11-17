@@ -74,5 +74,3 @@ List<ServiceTarget> enabledServiceTargets(Ref ref) {
   ];
   return enabled.isEmpty ? targets : enabled;
 }
-
-

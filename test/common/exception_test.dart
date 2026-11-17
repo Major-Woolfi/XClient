@@ -32,5 +32,3 @@ void main() {
     expect(stackTrace.toString(), isNotEmpty);
   });
 }
-
-

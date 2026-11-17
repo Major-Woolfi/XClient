@@ -5,7 +5,7 @@ import 'package:xclient/providers/routed_probe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 mixin ProbeStartHold<T extends ConsumerStatefulWidget> on ConsumerState<T> {
-// Собственные пробы запуска часто терпят неудачу; эпоха маршрута, в которую он переходит, спрашивает снова.
+  // Собственные пробы запуска часто терпят неудачу; эпоха маршрута, в которую он переходит, спрашивает снова.
   static const _duration = Duration(seconds: 5);
 
   Timer? _hold;
@@ -41,5 +41,3 @@ mixin ProbeStartHold<T extends ConsumerStatefulWidget> on ConsumerState<T> {
     });
   }
 }
-
-

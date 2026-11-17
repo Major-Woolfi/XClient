@@ -267,5 +267,3 @@ void main() {
     expect(atEnd.offset, atEnd.position.maxScrollExtent);
   });
 }
-
-

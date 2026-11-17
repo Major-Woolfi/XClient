@@ -138,4 +138,3 @@ void main() {
     expect(encoded.menu.single, {'id': 1024, 'type': 'separator'});
   });
 }
-

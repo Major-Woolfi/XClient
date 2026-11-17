@@ -72,6 +72,3 @@ Future<void> _exitAfterInitFailure() async {
   await system.exit();
   window?.forceExit();
 }
-
-
-

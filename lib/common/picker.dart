@@ -67,5 +67,3 @@ extension PlatformFileExt on PlatformFile {
 }
 
 final picker = Picker();
-
-

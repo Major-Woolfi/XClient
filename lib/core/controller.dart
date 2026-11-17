@@ -132,10 +132,7 @@ class CoreController {
       throw StateError('No implementation registered for $type');
     }
     _interface = impl;
-    await impl.init(InitParams(
-      homeDir: await appPath.homeDirPath,
-      version: 0,
-    ));
+    await impl.init(InitParams(homeDir: await appPath.homeDirPath, version: 0));
   }
 
   /// Тип текущего активного ядра.
@@ -164,7 +161,9 @@ class CoreController {
   }
 
   /// Закодировать список прокси в ссылки XRay.
-  Future<List<String>> encodeXrayLinks(List<Map<String, dynamic>> proxies) async {
+  Future<List<String>> encodeXrayLinks(
+    List<Map<String, dynamic>> proxies,
+  ) async {
     if (proxies.isEmpty) {
       return Future.value(const []);
     }
@@ -225,7 +224,11 @@ class CoreController {
     required CoreMethod method,
     Object? arguments,
     Duration? timeout,
-  }) => _active.invokeMethod(method: method, arguments: arguments, timeout: timeout);
+  }) => _active.invokeMethod(
+    method: method,
+    arguments: arguments,
+    timeout: timeout,
+  );
 
   Future<void> init(InitParams params) => _active.init(params);
 
@@ -247,7 +250,8 @@ class CoreController {
     await (_active.setupConfig(params), preloadInvoke()).wait;
   }
 
-  Future<void> updateConfig(UpdateParams params) => _active.updateConfig(params);
+  Future<void> updateConfig(UpdateParams params) =>
+      _active.updateConfig(params);
 
   Future<String?> validateConfig(String path) => _active.validateConfig(path);
 
@@ -275,8 +279,9 @@ class CoreController {
 
   Future<Delay> testDelay(TestDelayParams params) => _active.testDelay(params);
 
-  Future<Map<int, String>> validateProxies(List<Map<String, dynamic>> proxies) =>
-      _active.validateProxies(proxies);
+  Future<Map<int, String>> validateProxies(
+    List<Map<String, dynamic>> proxies,
+  ) => _active.validateProxies(proxies);
 
   Future<List<Map<String, dynamic>>> convertProxies(String path) =>
       _active.convertProxies(path);
@@ -286,8 +291,7 @@ class CoreController {
 
   Future<List<List<Map<String, dynamic>>>> decodeShareLinks(
     List<String> lines,
-  ) =>
-      _active.decodeShareLinks(lines);
+  ) => _active.decodeShareLinks(lines);
 
   Future<Map<int, String>> validateFilters(List<String> filters) =>
       _active.validateFilters(filters);
@@ -305,10 +309,7 @@ class CoreController {
     required String providerName,
     required String data,
   }) =>
-      _active.sideLoadExternalProvider(
-        providerName: providerName,
-        data: data,
-      );
+      _active.sideLoadExternalProvider(providerName: providerName, data: data);
 
   Future<String> dumpRuleSet(String path) => _active.dumpRuleSet(path);
 
@@ -371,8 +372,7 @@ class CoreController {
   Future<MitmExchangeList> getMitmExchanges(String connectionId) =>
       _active.getMitmExchanges(connectionId);
 
-  Future<MitmExchange?> getMitmExchange(int id) =>
-      _active.getMitmExchange(id);
+  Future<MitmExchange?> getMitmExchange(int id) => _active.getMitmExchange(id);
 
   Future<MitmBody?> getMitmBody(int id, {required bool response}) =>
       _active.getMitmBody(id, response: response);
@@ -509,7 +509,9 @@ class CoreController {
     return readSpilledText(await _active.buildProfile(base));
   }
 
-  Future<({ProfileBase base, String path})> getProfileBaseForProfile(int id) async {
+  Future<({ProfileBase base, String path})> getProfileBaseForProfile(
+    int id,
+  ) async {
     final path = await appPath.getProfilePath(id.toString());
     final base = await _active.getProfileBase(path);
     final config = Map<String, dynamic>.from(base.config)..remove('rule');

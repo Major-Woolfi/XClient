@@ -127,7 +127,7 @@ class ChangelogParser {
   }
 
   /// Трейлер побеждает тему, но только когда несёт текст: пустой `Changelog:`
-/// возвращается к теме.
+  /// возвращается к теме.
   String _text(String? trailer, String description) =>
       trailer == null || trailer.isEmpty ? _capitalize(description) : trailer;
 
@@ -198,4 +198,3 @@ String _capitalize(String value) {
   }
   return value[0].toUpperCase() + value.substring(1);
 }
-

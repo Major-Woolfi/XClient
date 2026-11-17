@@ -26,5 +26,3 @@ void main() {
     expect(scaled, closeTo(13, 1e-9));
   });
 }
-
-

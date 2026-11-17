@@ -281,8 +281,3 @@ class _DeveloperModeDetectorState extends State<_DeveloperModeDetector> {
     return GestureDetector(onTap: _handleTap, child: widget.child);
   }
 }
-
-
-
-
-

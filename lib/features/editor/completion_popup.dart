@@ -210,5 +210,3 @@ class _EditorCompletionPopupState extends State<EditorCompletionPopup> {
     );
   }
 }
-
-

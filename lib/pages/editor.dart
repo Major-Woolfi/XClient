@@ -1363,5 +1363,3 @@ class _FindBarButton extends StatelessWidget {
     );
   }
 }
-
-

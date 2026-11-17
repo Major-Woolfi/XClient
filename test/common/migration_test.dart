@@ -469,5 +469,3 @@ class _FakeMigrationStore implements MigrationStore {
     upgradeVersion = version;
   }
 }
-
-

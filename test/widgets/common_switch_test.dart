@@ -59,7 +59,7 @@ void main() {
 
   Finder switchFinder() => find.byType(Switch);
 
-// Трек рисуется первым, большой палец поверх него.
+  // Трек рисуется первым, большой палец поверх него.
   Finder thumbFinder() => find
       .descendant(of: switchFinder(), matching: find.byType(DecoratedBox))
       .at(1);
@@ -249,5 +249,3 @@ void main() {
     await tester.pumpAndSettle();
   });
 }
-
-

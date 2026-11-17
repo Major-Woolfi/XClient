@@ -287,5 +287,3 @@ class _FilterFormState extends State<_FilterForm> {
     );
   }
 }
-
-

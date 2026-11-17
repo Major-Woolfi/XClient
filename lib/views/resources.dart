@@ -690,5 +690,3 @@ class UpdateGeoUrlFormDialog extends StatelessWidget {
     );
   }
 }
-
-

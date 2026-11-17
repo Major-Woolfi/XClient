@@ -443,5 +443,3 @@ class _WavyProgressPainter extends CustomPainter {
       oldDelegate.active != active ||
       oldDelegate.track != track;
 }
-
-

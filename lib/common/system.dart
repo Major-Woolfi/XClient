@@ -593,5 +593,3 @@ class MacOS implements SystemDnsPort {
 }
 
 final macOS = system.isMacOS ? MacOS() : null;
-
-

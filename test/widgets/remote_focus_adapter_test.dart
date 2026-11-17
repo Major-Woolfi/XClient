@@ -576,5 +576,3 @@ void main() {
     expect(tester.testTextInput.isVisible, isTrue);
   });
 }
-
-

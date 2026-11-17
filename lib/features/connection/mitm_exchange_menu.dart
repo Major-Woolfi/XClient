@@ -320,5 +320,3 @@ Future<void> _addRule(
     attachments: attachments,
   );
 }
-
-

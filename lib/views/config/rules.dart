@@ -207,5 +207,3 @@ class _AddedRulesViewState extends ConsumerState<AddedRulesView> {
     );
   }
 }
-
-

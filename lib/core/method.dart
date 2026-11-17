@@ -211,5 +211,3 @@ LogLevel coreFailureLogLevel(Object? error) {
   }
   return error.isCoreUnavailable ? LogLevel.debug : LogLevel.warning;
 }
-
-

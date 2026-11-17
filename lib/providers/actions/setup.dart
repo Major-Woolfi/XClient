@@ -797,8 +797,9 @@ class SetupAction extends _$SetupAction {
           try {
             // Автоопределить тип ядра по конфигу профиля и переключить при необходимости.
             if (profileId != null) {
-              final profilePath =
-                  await appPath.getProfilePath(profileId.toString());
+              final profilePath = await appPath.getProfilePath(
+                profileId.toString(),
+              );
               final profileFile = File(profilePath);
               if (await profileFile.exists()) {
                 await _core.detectAndSwitchCore(profilePath);

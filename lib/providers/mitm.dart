@@ -298,5 +298,3 @@ Future<MitmModuleDetails?> mitmModuleDetails(Ref ref, int id) async {
   );
   return (content: content, issues: await _issuesOf(ref, content.mitm));
 }
-
-

@@ -320,5 +320,3 @@ void main() {
     expect(taps, ['Rename']);
   });
 }
-
-

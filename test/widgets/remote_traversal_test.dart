@@ -242,6 +242,3 @@ void main() {
     expect(controller.offset, 160);
   });
 }
-
-
-

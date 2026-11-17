@@ -51,7 +51,7 @@ String _iconLabel(BuildContext context, IconSetIcon icon) {
   return icon.name.isEmpty ? context.appLocalizations.localImage : icon.label;
 }
 
-  /// Всплывает с выбранной иконкой, пустой строкой, чтобы удалить, или null, когда лист оставлен без выбора.
+/// Всплывает с выбранной иконкой, пустой строкой, чтобы удалить, или null, когда лист оставлен без выбора.
 class IconPickerView extends ConsumerStatefulWidget {
   final String? value;
   final String groupName;
@@ -465,9 +465,7 @@ class IconGridScrollView extends StatefulWidget {
 class _IconGridScrollViewState extends State<IconGridScrollView> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: widget.slivers,
-    );
+    return CustomScrollView(slivers: widget.slivers);
   }
 }
 
@@ -580,5 +578,3 @@ class _IconTile extends StatelessWidget {
     );
   }
 }
-
-

@@ -433,5 +433,3 @@ class TrackerInfoDetailView extends ConsumerWidget {
     );
   }
 }
-
-

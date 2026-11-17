@@ -161,5 +161,3 @@ final class ShortcutLabels {
     return parts(modifiers, key).join(isMacOS ? '' : '+');
   }
 }
-
-

@@ -250,5 +250,3 @@ class _SendFromPhoneDialogState extends State<_SendFromPhoneDialog> {
     );
   }
 }
-
-

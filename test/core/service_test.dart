@@ -110,5 +110,3 @@ final class _CrashListener with CoreEventListener {
     messages.add(message);
   }
 }
-
-

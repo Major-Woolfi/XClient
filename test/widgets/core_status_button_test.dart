@@ -220,5 +220,3 @@ void main() {
     expect(find.byGlyph(AppGlyphs.check), findsOneWidget);
   });
 }
-
-

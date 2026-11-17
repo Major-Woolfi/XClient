@@ -298,5 +298,3 @@ String _previewOf(String text) {
   }
   return text.substring(0, end);
 }
-
-

@@ -103,7 +103,7 @@ void main() {
   });
 
   group('Protobuf', () {
-// 1: 150, 2: "hi", 3 { 1: 2 }
+    // 1: 150, 2: "hi", 3 { 1: 2 }
     const message = [
       0x08,
       0x96,
@@ -234,5 +234,3 @@ void main() {
     expect(mitmHeaderValue({}, 'Content-Type'), '');
   });
 }
-
-

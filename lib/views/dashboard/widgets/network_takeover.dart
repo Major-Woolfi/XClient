@@ -295,5 +295,3 @@ class VpnCard extends ConsumerWidget {
     );
   }
 }
-
-

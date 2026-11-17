@@ -416,5 +416,3 @@ class _ErrorActionBar extends StatelessWidget {
     );
   }
 }
-
-

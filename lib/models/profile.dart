@@ -215,5 +215,3 @@ extension ProfileExtension on Profile {
     return copyWith(lastUpdateDate: DateTime.now());
   }
 }
-
-

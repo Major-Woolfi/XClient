@@ -61,5 +61,3 @@ void main() {
     expect(pool.activeCount, 0);
   });
 }
-
-

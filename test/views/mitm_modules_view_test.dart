@@ -305,5 +305,3 @@ void main() {
     expect(find.text(currentAppLocalizations.mitmNewModule), findsOneWidget);
   });
 }
-
-

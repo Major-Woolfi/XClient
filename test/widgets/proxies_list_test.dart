@@ -371,5 +371,3 @@ void main() {
     expect(find.byType(ActivityIndicator), findsNothing);
   });
 }
-
-

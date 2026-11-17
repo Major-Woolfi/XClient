@@ -719,5 +719,3 @@ class _MitmHostnameView extends ConsumerWidget {
     );
   }
 }
-
-

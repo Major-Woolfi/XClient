@@ -264,5 +264,3 @@ abstract class SetupState with _$SetupState {
     @Default([]) List<MitmModuleSource> mitmModules,
   }) = _SetupState;
 }
-
-

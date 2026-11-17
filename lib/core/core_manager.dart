@@ -89,7 +89,8 @@ class CoreBinaryManager {
     final prefs = await preferences.store;
     await prefs?.setString('active_core_type', type.name);
     _activeCoreType = type;
-    final ver = version ??
+    final ver =
+        version ??
         await getLatestInstalledVersion(type) ??
         _defaultVersion(type);
     await prefs?.setString('core_version_${type.name}', ver);
@@ -156,7 +157,8 @@ class CoreBinaryManager {
 
     for (final t in types) {
       try {
-        final url = 'https://api.github.com/repos/${t.repo}/releases?per_page=20';
+        final url =
+            'https://api.github.com/repos/${t.repo}/releases?per_page=20';
         final response = await _dio.get(url);
         if (response.statusCode != 200) continue;
 
@@ -236,11 +238,14 @@ class CoreBinaryManager {
     final available = getAvailableVersions(type);
     final spec = available.firstWhere(
       (s) => s.version == version,
-      orElse: () => throw Exception('Version $version not available for ${type.label}'),
+      orElse: () =>
+          throw Exception('Version $version not available for ${type.label}'),
     );
 
     if (spec.downloadUrl.isEmpty) {
-      return CoreOperationResult.failure('No download URL for version $version');
+      return CoreOperationResult.failure(
+        'No download URL for version $version',
+      );
     }
 
     try {
@@ -316,13 +321,16 @@ class CoreBinaryManager {
   }
 
   /// Переключиться на другое ядро (без скачивания, если уже установлено).
-  Future<CoreOperationResult> switchCore(CoreType type, {String? version}) async {
-    final ver = version ??
+  Future<CoreOperationResult> switchCore(
+    CoreType type, {
+    String? version,
+  }) async {
+    final ver =
+        version ??
         await getLatestInstalledVersion(type) ??
         _defaultVersion(type);
 
-    if (!_installed.containsKey(type) ||
-        !_installed[type]!.containsKey(ver)) {
+    if (!_installed.containsKey(type) || !_installed[type]!.containsKey(ver)) {
       // Пытаемся установить
       final result = await installCore(type, ver, setActive: true);
       return result;

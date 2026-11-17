@@ -65,6 +65,7 @@ class _TestClashProviders extends ClashProviders {
       ),
   ]);
 }
+
 /// Список открытого листа выбора, не поля поиска, пристыкованного ниже.
 final _selectionList = find
     .descendant(
@@ -484,6 +485,3 @@ void main() {
     expect(field.right, lessThanOrEqualTo(sheet.right));
   });
 }
-
-
-

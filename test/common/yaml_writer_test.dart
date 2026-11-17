@@ -143,5 +143,3 @@ matrix:
 class _Encodable {
   Map<String, Object?> toJson() => {'kind': 'encodable'};
 }
-
-

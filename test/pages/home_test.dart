@@ -1529,7 +1529,7 @@ void main() {
         matching: _glyph(glyph),
       );
 
-// Посетите другую страницу, чтобы её контент остался жив в кэше PageView.
+      // Посетите другую страницу, чтобы её контент остался жив в кэше PageView.
       await tester.tap(railIcon(AppGlyphs.profiles));
       await tester.pumpAndSettle();
       expect(container.read(currentPageLabelProvider), PageLabel.profiles);
@@ -1699,5 +1699,3 @@ class _InitRecorderState extends State<_InitRecorder> {
   @override
   Widget build(BuildContext context) => Text('page:${widget.label.name}');
 }
-
-

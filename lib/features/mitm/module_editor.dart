@@ -102,5 +102,3 @@ Future<void> openMitmModuleEditor(
     ),
   );
 }
-
-

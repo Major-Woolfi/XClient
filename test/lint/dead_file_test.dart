@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 const _entryPoints = ['lib/main.dart'];
+
 /// Типы, и верхние имена, которые файл публикует рядом с ними — паттерн
 /// синглтона `final appPath = AppPath()` так большая часть `lib/common`
 /// на самом деле потребляется.
@@ -44,8 +45,8 @@ bool _isBarrel(String source) {
 
 void main() {
   test('every file under lib declares something used outside itself', () {
-// Сгенерированный код считается потребителем, но никогда декларатором: notifier
-/// riverpod alcanцируется через провайдер, который порождает его аннотация.
+    // Сгенерированный код считается потребителем, но никогда декларатором: notifier
+    /// riverpod alcanцируется через провайдер, который порождает его аннотация.
     final consumers = {
       for (final file in _dartFiles(includeGenerated: true))
         file.path: file.readAsStringSync(),
@@ -68,9 +69,9 @@ void main() {
       if (barrels.contains(path) || _entryPoints.contains(path)) continue;
       if (path.startsWith('lib/l10n/')) continue;
 
-// Расширения и typedef alcanцируются через типы, к которым они привязаны,
-/// никогда не по имени, так что файл, публикующий только их, не может быть
-/// измерен таким образом.
+      // Расширения и typedef alcanцируются через типы, к которым они привязаны,
+      /// никогда не по имени, так что файл, публикующий только их, не может быть
+      /// измерен таким образом.
       final names = _declaration
           .allMatches(source)
           .map((match) => match.group(1) ?? match.group(2)!)
@@ -93,4 +94,3 @@ void main() {
     expect(orphans, isEmpty, reason: orphans.join('\n'));
   });
 }
-

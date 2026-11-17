@@ -558,5 +558,3 @@ class _TestProxyGroups extends ProxyGroups {
   @override
   void order(int oldIndex, int newIndex) {}
 }
-
-

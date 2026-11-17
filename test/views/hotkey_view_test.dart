@@ -33,8 +33,8 @@ ProviderContainer _containerFor(
   addTearDown(container.dispose);
   globalState.container = container;
   container.read(viewSizeProvider.notifier).update((_) => size);
-// hotKeyActionsProvider — autoDispose: без живого слушателя посеянное значение
-/// выбрасывается до того, как утверждения прочитают его обратно.
+  // hotKeyActionsProvider — autoDispose: без живого слушателя посеянное значение
+  /// выбрасывается до того, как утверждения прочитают его обратно.
   final subscription = container.listen(
     hotKeyActionsProvider,
     (_, _) {},
@@ -60,8 +60,8 @@ Future<void> _pumpRecorder(
   ProviderContainer container,
   HotKeyAction action,
 ) async {
-// Толкнуто как маршрут, чтобы у Navigator.pop рекодера было что выталкивать,
-/// соответствующе тому, как вид открывает его как диалог.
+  // Толкнуто как маршрут, чтобы у Navigator.pop рекодера было что выталкивать,
+  /// соответствующе тому, как вид открывает его как диалог.
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: container,
@@ -396,6 +396,3 @@ void main() {
     });
   });
 }
-
-
-

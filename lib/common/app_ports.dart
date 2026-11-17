@@ -42,5 +42,3 @@ abstract interface class NavigationPort {
 WindowPort? windowPort;
 TrayPort? trayPort;
 NavigationPort? navigationPort;
-
-

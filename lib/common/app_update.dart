@@ -109,5 +109,3 @@ bool get isInstalledWindowsBuild {
 String windowsUpdateArguments(int pid) {
   return '/SILENT /SUPPRESSMSGBOXES /NORESTART /SP- /updatefrom=$pid';
 }
-
-

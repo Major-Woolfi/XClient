@@ -654,5 +654,3 @@ class _StatusText extends StatelessWidget {
     );
   }
 }
-
-

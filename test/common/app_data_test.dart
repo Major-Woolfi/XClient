@@ -52,6 +52,3 @@ void main() {
     expect(profilesDir.parent.existsSync(), isFalse);
   });
 }
-
-
-

@@ -85,6 +85,7 @@ Future<List<String>> _pump(
   await tester.pumpAndSettle();
   return pressed;
 }
+
 /// Строка, чья синхронизация убирает её меню, как строка делает, пока её элемент обновляется,
 /// перестраивая приложение над навигатором с ним.
 Future<ValueNotifier<bool>> _pumpSyncing(WidgetTester tester) async {
@@ -486,6 +487,3 @@ void main() {
     expect(_order(tester, ['a', 'b', 'c']), ['b', 'c', 'a']);
   });
 }
-
-
-

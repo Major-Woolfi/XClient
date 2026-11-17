@@ -334,5 +334,3 @@ void main() {
     expect(SystemDnsRecord.fromJson('Wi-Fi'), isNull);
   });
 }
-
-

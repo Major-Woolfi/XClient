@@ -40,5 +40,3 @@ void main() {
     expect(themes[2], isNot(same(themes[1])));
   });
 }
-
-

@@ -65,5 +65,3 @@ extension OffsetExt on Offset {
     return direction == Axis.vertical ? dy : dx;
   }
 }
-
-

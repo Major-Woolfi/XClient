@@ -339,5 +339,3 @@ final class IpcCoreTransport implements DesktopCoreTransport {
     }
   }
 }
-
-

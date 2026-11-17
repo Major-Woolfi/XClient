@@ -604,5 +604,3 @@ class WindowHeaderActions extends StatelessWidget {
     );
   }
 }
-
-

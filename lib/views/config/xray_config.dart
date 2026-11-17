@@ -20,10 +20,10 @@ class XRayConfigView extends ConsumerStatefulWidget {
 }
 
 class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
-  late final m.TextEditingController _portController =
-      m.TextEditingController(text: '10808');
-  late final m.TextEditingController _dnsController =
-      m.TextEditingController();
+  late final m.TextEditingController _portController = m.TextEditingController(
+    text: '10808',
+  );
+  late final m.TextEditingController _dnsController = m.TextEditingController();
   late final m.TextEditingController _routingController =
       m.TextEditingController();
   String _logLevel = 'warning';
@@ -127,9 +127,7 @@ class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
     if (!mounted) return;
     await dialogs.showMessage(
       title: context.appLocalizations.xraySave,
-      message: TextSpan(
-        text: context.appLocalizations.xrayApplyDesc,
-      ),
+      message: TextSpan(text: context.appLocalizations.xrayApplyDesc),
       confirmText: context.appLocalizations.confirm,
     );
   }
@@ -245,9 +243,9 @@ class _SectionCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               title,
-              style: AppTextStyle.title3.of(context).copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppTextStyle.title3
+                  .of(context)
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
           ),
           const Divider(height: 1),
@@ -285,10 +283,12 @@ class _ConfigTextField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyle.body.of(context).copyWith(
-              fontWeight: FontWeight.w500,
-              color: context.colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyle.body
+                .of(context)
+                .copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
           ),
           const SizedBox(height: 8),
           m.TextField(
@@ -298,11 +298,13 @@ class _ConfigTextField extends StatelessWidget {
             onChanged: onChanged,
             decoration: m.InputDecoration(
               hintText: hint,
-              hintStyle: AppTextStyle.body.of(context).copyWith(
-                color: context.colorScheme.onSurfaceVariant.withValues(
-                  alpha: 0.5,
-                ),
-              ),
+              hintStyle: AppTextStyle.body
+                  .of(context)
+                  .copyWith(
+                    color: context.colorScheme.onSurfaceVariant.withValues(
+                      alpha: 0.5,
+                    ),
+                  ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12,
                 vertical: 12,
@@ -321,9 +323,7 @@ class _ConfigTextField extends StatelessWidget {
               ),
               focusedBorder: m.OutlineInputBorder(
                 borderRadius: AppRadius.sm,
-                borderSide: m.BorderSide(
-                  color: context.colorScheme.primary,
-                ),
+                borderSide: m.BorderSide(color: context.colorScheme.primary),
               ),
             ),
           ),
@@ -356,10 +356,12 @@ class _ConfigDropdown<T> extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyle.body.of(context).copyWith(
-              fontWeight: FontWeight.w500,
-              color: context.colorScheme.onSurfaceVariant,
-            ),
+            style: AppTextStyle.body
+                .of(context)
+                .copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: context.colorScheme.onSurfaceVariant,
+                ),
           ),
           const SizedBox(height: 8),
           Container(

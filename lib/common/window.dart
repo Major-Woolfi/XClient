@@ -355,5 +355,3 @@ class WindowVisibilityController {
 }
 
 final window = system.isDesktop ? Window() : null;
-
-

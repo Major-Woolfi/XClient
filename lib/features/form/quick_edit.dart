@@ -194,5 +194,3 @@ Future<void> showMapQuickEdit(
     },
   );
 }
-
-

@@ -202,5 +202,3 @@ class _FontLabelState extends State<_FontLabel> {
     );
   }
 }
-
-

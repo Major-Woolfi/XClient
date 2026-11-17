@@ -127,5 +127,3 @@ void main() {
     expect(listener.calls, isEmpty);
   });
 }
-
-

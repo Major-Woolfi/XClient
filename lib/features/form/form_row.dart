@@ -291,5 +291,3 @@ class _FormRowSecretTextFieldState extends State<FormRowSecretTextField> {
     );
   }
 }
-
-

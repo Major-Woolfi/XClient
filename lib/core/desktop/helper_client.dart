@@ -478,9 +478,9 @@ final class HelperLauncher implements CoreProcessLauncher {
   }
 }
 
-  // Helper возвращает эти коды до того, как породит ядро, и /start сначала
-  // освобождает ранее управляемое ядро, поэтому ядро, управляемое Helper, не
-  // остаётся без присмотра, а прямой запуск безопасно повторяется.
+// Helper возвращает эти коды до того, как породит ядро, и /start сначала
+// освобождает ранее управляемое ядро, поэтому ядро, управляемое Helper, не
+// остаётся без присмотра, а прямой запуск безопасно повторяется.
 const _preSpawnHelperErrors = {'coreVerificationFailed', 'processLaunchFailed'};
 
 final class FallbackCoreLauncher implements CoreProcessLauncher {
@@ -600,5 +600,3 @@ final class HelperCoreLease implements CoreProcessLease {
 }
 
 final helperClient = HelperClient();
-
-

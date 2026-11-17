@@ -38,5 +38,3 @@ class CommonPrint {
 }
 
 final commonPrint = CommonPrint();
-
-

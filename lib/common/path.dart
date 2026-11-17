@@ -198,7 +198,3 @@ String getBackupFileName() {
 String get logFileName {
   return '${appName}_${DateTime.now().show}.log';
 }
-
-
-
-

@@ -134,6 +134,7 @@ int _bchRemainder(int data, int generator, int degree) {
   }
   return remainder;
 }
+
 /// Декодер, который ничего не разделяет с `QrMatrix`, так что неправильная таблица или размещение модуля
 /// там не могутネтрализовать друг друга в круговом поезде.
 final class _Decoded {
@@ -491,6 +492,3 @@ void main() {
     });
   });
 }
-
-
-

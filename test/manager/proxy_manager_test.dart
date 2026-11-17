@@ -108,5 +108,3 @@ void main() {
     expect(suspended.read(proxyStateProvider).isStart, isFalse);
   });
 }
-
-

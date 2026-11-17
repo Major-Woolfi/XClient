@@ -304,5 +304,3 @@ Future<int> _readSchemaVersion(File databaseFile) async {
     await handle.close();
   }
 }
-
-

@@ -50,6 +50,3 @@ enum NullStatusIllustration implements Illustration {
   @override
   bool get isError => this == error;
 }
-
-
-

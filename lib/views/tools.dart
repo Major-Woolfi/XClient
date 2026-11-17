@@ -55,21 +55,15 @@ class _ToolViewState extends ConsumerState<ToolsView> {
       children: [
         generateSection(
           title: context.appLocalizations.kernelManager,
-          items: [
-            const _KernelManagerItem(),
-          ],
+          items: [const _KernelManagerItem()],
         ),
         generateSection(
           title: context.appLocalizations.xray,
-          items: [
-            const _XRayItem(),
-          ],
+          items: [const _XRayItem()],
         ),
         generateSection(
           title: context.appLocalizations.mihomo,
-          items: [
-            const _MihomoItem(),
-          ],
+          items: [const _MihomoItem()],
         ),
         generateSection(
           title: context.appLocalizations.general,
@@ -310,5 +304,3 @@ class _DeveloperItem extends StatelessWidget {
     );
   }
 }
-
-

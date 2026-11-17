@@ -733,5 +733,3 @@ ProviderContainer _containerWith(
   container.read(coreStatusProvider.notifier).value = status;
   return container;
 }
-
-

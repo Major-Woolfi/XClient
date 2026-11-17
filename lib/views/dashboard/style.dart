@@ -156,5 +156,3 @@ abstract final class DashboardText {
   static TextStyle rowTitle(BuildContext context) =>
       AppTextStyle.subheadline.of(context, emphasized: true);
 }
-
-

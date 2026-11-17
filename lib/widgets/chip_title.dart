@@ -113,5 +113,3 @@ class ChipTitle extends StatelessWidget {
     );
   }
 }
-
-

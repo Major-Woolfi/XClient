@@ -115,5 +115,3 @@ void main() {
     expect(find.text(_secretLabel), findsNothing);
   });
 }
-
-

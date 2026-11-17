@@ -365,5 +365,3 @@ class ListEditorAddAction extends StatelessWidget {
     );
   }
 }
-
-

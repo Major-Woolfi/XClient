@@ -94,6 +94,3 @@ class XClientHttpOverrides extends HttpOverrides {
     return client;
   }
 }
-
-
-

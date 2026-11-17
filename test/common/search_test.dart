@@ -86,5 +86,3 @@ class _Named {
 
   _Named(this.name);
 }
-
-

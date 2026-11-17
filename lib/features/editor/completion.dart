@@ -13,5 +13,3 @@ CodeForgeCompletionSource? editorCompletionSource(
   Language.javaScript => ScriptCompletionSource().call,
   Language.json || Language.ini || Language.xml || Language.text => null,
 };
-
-

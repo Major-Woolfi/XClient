@@ -283,5 +283,3 @@ class _LogBody extends StatelessWidget {
     );
   }
 }
-
-

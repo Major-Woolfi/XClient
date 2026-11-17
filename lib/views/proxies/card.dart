@@ -407,5 +407,3 @@ class _DelayTextState extends ConsumerState<_DelayText> {
     );
   }
 }
-
-

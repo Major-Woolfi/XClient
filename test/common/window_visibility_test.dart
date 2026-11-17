@@ -151,5 +151,3 @@ void main() {
     expect(calls, ['hide', 'dock:off', 'show', 'dock:on']);
   });
 }
-
-

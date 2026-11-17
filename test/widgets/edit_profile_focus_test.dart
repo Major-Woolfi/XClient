@@ -16,6 +16,7 @@ import '../helpers/app_paths.dart';
 import '../helpers/test_app.dart';
 import '../helpers/test_profiles.dart';
 import '../helpers/host_scaffold.dart';
+
 /// Страница редактирования утилизирует профиль, планируя авто-применение; держите это
 /// no-op, чтобы механизм настройки никогда не запускался в виджет-тесте.
 class _NoopSetupAction extends SetupAction {
@@ -25,6 +26,7 @@ class _NoopSetupAction extends SetupAction {
 
 Profile _urlProfile() =>
     Profile.normal(label: 'test', url: 'https://example.com/sub');
+
 /// Накачивает [EditProfileView] внутри страничного маршрута (как делает `showExtend`), с
 /// внешним узлом фокуса, чтобы поведение эскейпа можно было утверждать.
 Future<FocusNode> pumpEditProfile(
@@ -44,9 +46,9 @@ Future<FocusNode> pumpEditProfile(
     ],
   );
   addTearDown(container.dispose);
-// Размонтируйте дерево виджетов перед утилизацией контейнера, чтобы State.dispose
-/// (который читает провайдер) запускался против живого контейнера. Teardowns запускаются LIFO,
-/// так что это должно быть зарегистрировано после `container.dispose`.
+  // Размонтируйте дерево виджетов перед утилизацией контейнера, чтобы State.dispose
+  /// (который читает провайдер) запускался против живого контейнера. Teardowns запускаются LIFO,
+  /// так что это должно быть зарегистрировано после `container.dispose`.
   addTearDown(() async {
     await tester.pumpWidget(const SizedBox());
   });
@@ -196,6 +198,3 @@ void main() {
     expect(saved.autoUpdateDuration, profile.autoUpdateDuration);
   });
 }
-
-
-

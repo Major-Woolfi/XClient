@@ -136,5 +136,3 @@ class _EntryDialogState<T> extends State<EntryDialog<T>> {
     );
   }
 }
-
-

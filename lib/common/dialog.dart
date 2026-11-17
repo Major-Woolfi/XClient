@@ -316,5 +316,3 @@ class _FailureDetailsSheet extends StatelessWidget {
 }
 
 final dialogs = Dialogs._();
-
-

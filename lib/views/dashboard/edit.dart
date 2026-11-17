@@ -203,7 +203,7 @@ class _DashboardEditorState extends ConsumerState<DashboardEditor>
                   ),
                 );
               },
-// Зажатая карточка едет в оверлее, за пределами области плотности, унося свой ключ, пока список оставляет её место пустым.
+              // Зажатая карточка едет в оверлее, за пределами области плотности, унося свой ключ, пока список оставляет её место пустым.
               proxyDecorator: (_, index, animation) => DashboardDensityScope(
                 density: DashboardDensity.mobile,
                 scale: scale,
@@ -346,7 +346,7 @@ class _PresenceState extends State<_Presence>
     if ((to - from).abs() < precisionErrorTolerance) {
       return;
     }
-// Сдвигается один раз после того, как каждый кадр разложил выросшее место: прыжок за старый конец скролла вернул бы позицию обратно.
+    // Сдвигается один раз после того, как каждый кадр разложил выросшее место: прыжок за старый конец скролла вернул бы позицию обратно.
     void follow() {
       final room = _room.value;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -631,5 +631,3 @@ class _RoundButton extends StatelessWidget {
     );
   }
 }
-
-

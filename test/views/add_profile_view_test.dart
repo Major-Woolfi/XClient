@@ -198,5 +198,3 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
-
-

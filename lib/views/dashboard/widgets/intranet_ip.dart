@@ -147,5 +147,3 @@ class IntranetIpCard extends ConsumerWidget {
     );
   }
 }
-
-

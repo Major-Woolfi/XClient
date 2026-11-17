@@ -90,5 +90,3 @@ class AdvancedConfigView extends StatelessWidget {
     );
   }
 }
-
-

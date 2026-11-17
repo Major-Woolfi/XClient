@@ -154,7 +154,14 @@ const shareLinkSchemes = {
 };
 
 /// Схемы нативных ссылок XRay (vmess://, vless://, trojan://, ss://, ssconf://).
-const xrayLinkSchemes = {'vmess', 'vless', 'trojan', 'shadowsocks', 'ss', 'ssconf'};
+const xrayLinkSchemes = {
+  'vmess',
+  'vless',
+  'trojan',
+  'shadowsocks',
+  'ss',
+  'ssconf',
+};
 
 const stringListEquality = ListEquality<String>();
 const intListEquality = ListEquality<int>();
@@ -205,9 +212,3 @@ const main = (config) => {
 
 const backupDatabaseName = 'database.sqlite';
 const configJsonName = 'config.json';
-
-
-
-
-
-

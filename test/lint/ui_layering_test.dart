@@ -30,6 +30,7 @@ bool _staysInUi(String path) =>
     !path.startsWith('lib/') ||
     path.startsWith('lib/ui/') ||
     (path.startsWith('lib/common/') && path != 'lib/common/common.dart');
+
 /// Цепочка файлов от [root] до первого, вне UI-слоя, или
 /// null, когда каждый файл, которого [root] достигает, остаётся в нём.
 List<String>? _escape(String root) {
@@ -81,7 +82,3 @@ void main() {
     );
   });
 }
-
-
-
-

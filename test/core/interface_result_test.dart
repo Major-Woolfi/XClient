@@ -145,5 +145,3 @@ class _DisconnectedCore extends _NullCore {
     );
   }
 }
-
-

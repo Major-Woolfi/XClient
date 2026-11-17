@@ -160,5 +160,3 @@ List<Override> buildConfigOverrides(Config config) {
     excludeSSIDsProvider.overrideWithBuild((_, _) => config.excludeSSIDs),
   ];
 }
-
-

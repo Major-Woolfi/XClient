@@ -1876,6 +1876,3 @@ class MessageLookup extends MessageLookupByLibrary {
     "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO更新間隔"),
   };
 }
-
-
-

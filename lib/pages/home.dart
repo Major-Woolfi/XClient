@@ -478,5 +478,3 @@ class HomeBackScopeContainer extends ConsumerWidget {
     );
   }
 }
-
-

@@ -4,6 +4,7 @@ import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
+
 /// Перестраивает [raw] в форму схемы версии 1, которую оставило прошлое: нет
 /// `proxy_groups`, нет `icon_records`, и таблица `rules`, которая всё ещё хранит
 /// всё правило в одном столбце `value`.
@@ -25,30 +26,35 @@ void _downgradeToV1(Database raw) {
   ''');
   raw.execute('PRAGMA user_version = 1');
 }
+
 /// Версия схемы 2 не имела `match_target` на `profiles`.
 void _downgradeToV2(Database raw) {
   _downgradeToV3(raw);
   raw.execute('ALTER TABLE profiles DROP COLUMN match_target');
   raw.execute('PRAGMA user_version = 2');
 }
+
 /// Версия схемы 3 не имела `url` на `scripts`.
 void _downgradeToV3(Database raw) {
   _downgradeToV4(raw);
   raw.execute('ALTER TABLE scripts DROP COLUMN url');
   raw.execute('PRAGMA user_version = 3');
 }
+
 /// Версия схемы 4 не имела `order` на `scripts`.
 void _downgradeToV4(Database raw) {
   _downgradeToV5(raw);
   raw.execute('ALTER TABLE scripts DROP COLUMN "order"');
   raw.execute('PRAGMA user_version = 4');
 }
+
 /// Версия схемы 5 не имела таблицы `clash_providers`.
 void _downgradeToV5(Database raw) {
   _downgradeToV6(raw);
   raw.execute('DROP TABLE IF EXISTS clash_providers');
   raw.execute('PRAGMA user_version = 5');
 }
+
 /// Версия схемы 6 не имела `tolerance` или `strategy` на `proxy_groups`.
 void _downgradeToV6(Database raw) {
   _downgradeToV7(raw);
@@ -56,18 +62,21 @@ void _downgradeToV6(Database raw) {
   raw.execute('ALTER TABLE proxy_groups DROP COLUMN strategy');
   raw.execute('PRAGMA user_version = 6');
 }
+
 /// Версия схемы 9 не имела таблицы `custom_proxies`.
 void _downgradeToV9(Database raw) {
   _downgradeToV10(raw);
   raw.execute('DROP TABLE IF EXISTS custom_proxies');
   raw.execute('PRAGMA user_version = 9');
 }
+
 /// Версия схемы 8 работала с выключенными внешними ключами, поэтому её удаления
 /// оставляли сироты.
 void _downgradeToV8(Database raw) {
   _downgradeToV9(raw);
   raw.execute('PRAGMA user_version = 8');
 }
+
 /// Версия схемы 7 всё ещё несла параметры использования на `clash_providers`.
 void _downgradeToV7(Database raw) {
   _downgradeToV8(raw);
@@ -76,29 +85,34 @@ void _downgradeToV7(Database raw) {
   raw.execute('ALTER TABLE clash_providers ADD COLUMN exclude_filter TEXT');
   raw.execute('PRAGMA user_version = 7');
 }
+
 /// Версия схемы 21 не имела `mitm_modules`.
 void _downgradeToV21(Database raw) {
   raw.execute('DROP TABLE IF EXISTS mitm_modules');
   raw.execute('PRAGMA user_version = 21');
 }
+
 /// Версия схемы 20 не имела `ip_qualities`.
 void _downgradeToV20(Database raw) {
   _downgradeToV21(raw);
   raw.execute('DROP TABLE IF EXISTS ip_qualities');
   raw.execute('PRAGMA user_version = 20');
 }
+
 /// Версия схемы 19 не имела `empty_options` на `custom_proxies`.
 void _downgradeToV19(Database raw) {
   _downgradeToV20(raw);
   raw.execute('ALTER TABLE custom_proxies DROP COLUMN empty_options');
   raw.execute('PRAGMA user_version = 19');
 }
+
 /// Версия схемы 18 не имела `age_secret_key` на `profiles`.
 void _downgradeToV18(Database raw) {
   _downgradeToV19(raw);
   raw.execute('ALTER TABLE profiles DROP COLUMN age_secret_key');
   raw.execute('PRAGMA user_version = 18');
 }
+
 /// Версия схемы 17 держала каждую опцию группы в собственном столбце.
 void _downgradeToV17(Database raw) {
   _downgradeToV18(raw);
@@ -141,6 +155,7 @@ void _downgradeToV17(Database raw) {
   );
   raw.execute('PRAGMA user_version = 17');
 }
+
 /// Версия схемы 10 — форма, которую оставил последний релиз.
 void _downgradeToV10(Database raw) {
   _downgradeToV17(raw);
@@ -972,6 +987,3 @@ void main() {
     expect(_hasTable(raw, 'proxy_groups'), isTrue);
   });
 }
-
-
-

@@ -79,10 +79,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
       _process!.stderr.listen((data) {
         final error = utf8.decode(data);
         if (error.isNotEmpty) {
-          commonPrint.log(
-            'Xray stderr: $error',
-            logLevel: LogLevel.warning,
-          );
+          commonPrint.log('Xray stderr: $error', logLevel: LogLevel.warning);
         }
       });
 
@@ -266,7 +263,9 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
   @override
   Future<String> decryptConfig(String path, String ageSecretKey) async {
-    throw UnimplementedError('Xray-core does not support age-encrypted configs');
+    throw UnimplementedError(
+      'Xray-core does not support age-encrypted configs',
+    );
   }
 
   @override
@@ -280,10 +279,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
   @override
   Future<ProfileBase> getProfileBase(String path) async {
-    return const ProfileBase(
-      config: <String, dynamic>{},
-      digest: '',
-    );
+    return const ProfileBase(config: <String, dynamic>{}, digest: '');
   }
 
   @override
@@ -504,7 +500,13 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
   @override
   Future<OutboundIpResult> outboundIp(OutboundIpParams params) async {
-    return const OutboundIpResult(url: '', body: '', delay: 0, chains: <String>[], nodeHits: <RouteHit>[]);
+    return const OutboundIpResult(
+      url: '',
+      body: '',
+      delay: 0,
+      chains: <String>[],
+      nodeHits: <RouteHit>[],
+    );
   }
 
   @override
@@ -630,17 +632,11 @@ class XRayCoreHandler implements CoreHandlerInterface {
   }
 
   Future<Object?> _handleProxySelect(Object? arguments) async {
-    return {
-      'changed': false,
-      'selected': '',
-    };
+    return {'changed': false, 'selected': ''};
   }
 
   Future<Object?> _handleProxyTestDelay(Object? arguments) async {
-    return {
-      'delay': -1,
-      'alive': false,
-    };
+    return {'delay': -1, 'alive': false};
   }
 
   Future<Object?> _handleShareLinkEncode(Object? arguments) async {
@@ -659,9 +655,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
 
   Future<void> _writeDefaultConfig() async {
     final config = {
-      'log': {
-        'loglevel': 'warning',
-      },
+      'log': {'loglevel': 'warning'},
       'inbounds': [
         {
           'port': 10808,
@@ -677,14 +671,8 @@ class XRayCoreHandler implements CoreHandlerInterface {
         },
       ],
       'outbounds': [
-        {
-          'protocol': 'freedom',
-          'tag': 'direct',
-        },
-        {
-          'protocol': 'blackhole',
-          'tag': 'blocked',
-        },
+        {'protocol': 'freedom', 'tag': 'direct'},
+        {'protocol': 'blackhole', 'tag': 'blocked'},
       ],
       'routing': {
         'rules': [
@@ -696,9 +684,9 @@ class XRayCoreHandler implements CoreHandlerInterface {
         ],
       },
     };
-    await File(_configPath!).writeAsString(
-      const JsonEncoder.withIndent('  ').convert(config),
-    );
+    await File(
+      _configPath!,
+    ).writeAsString(const JsonEncoder.withIndent('  ').convert(config));
   }
 
   Future<void> _writeConfigFromParams(Map<String, dynamic> params) async {
@@ -706,17 +694,22 @@ class XRayCoreHandler implements CoreHandlerInterface {
     final config = <String, dynamic>{};
 
     for (final key in [
-      'log', 'dns', 'inbounds', 'outbounds', 'routing',
-      'transport', 'policy',
+      'log',
+      'dns',
+      'inbounds',
+      'outbounds',
+      'routing',
+      'transport',
+      'policy',
     ]) {
       if (params.containsKey(key)) {
         config[key] = params[key];
       }
     }
 
-    await File(configPath).writeAsString(
-      const JsonEncoder.withIndent('  ').convert(config),
-    );
+    await File(
+      configPath,
+    ).writeAsString(const JsonEncoder.withIndent('  ').convert(config));
   }
 
   Future<void> _ensureGeoFiles(String homeDir) async {
@@ -726,10 +719,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
       if (!await file.exists()) {
         try {
           final data = await rootBundle.load('assets/data/$name');
-          await file.writeAsBytes(
-            data.buffer.asUint8List(),
-            flush: true,
-          );
+          await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
         } catch (_) {
           // Ассет может не существовать; XRay загрузит его по требованию
         }
@@ -748,11 +738,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
   }
 
   Future<Object?> _getTraffic(bool onlyProxy) async {
-    return {
-      'upload': 0,
-      'download': 0,
-      'total': 0,
-    };
+    return {'upload': 0, 'download': 0, 'total': 0};
   }
 
   Future<Object?> _getConnections() async {

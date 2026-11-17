@@ -101,5 +101,3 @@ void main() {
     expect(_RecordingSetupAction.requests, [true]);
   });
 }
-
-

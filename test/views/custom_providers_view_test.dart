@@ -413,5 +413,3 @@ void main() {
     expect(find.text(l.nullTip(l.providers)), findsOneWidget);
   });
 }
-
-

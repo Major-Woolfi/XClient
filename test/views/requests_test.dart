@@ -272,9 +272,9 @@ void main() {
       find.descendant(of: find.byKey(hintKey), matching: find.byType(Text)),
     );
     expect(label.data, requests.last.start.showFull);
-// Подсказка прикреплена к большому пальцу: в самом новом конце центр большого пальца
-/// лежит на 24 dp (половина 48 dp минимального большого пальца) ниже верхнего края трека,
-/// который список, работающий под баром, оставляет у ноги бара.
+    // Подсказка прикреплена к большому пальцу: в самом новом конце центр большого пальца
+    /// лежит на 24 dp (половина 48 dp минимального большого пальца) ниже верхнего края трека,
+    /// который список, работающий под баром, оставляет у ноги бара.
     expect(
       tester.getCenter(find.byKey(hintKey)).dy,
       closeTo(tester.getRect(find.byType(AppBar)).bottom + 24, 6),
@@ -562,8 +562,8 @@ void main() {
     bool following() => tester.widget<ScrollToEndBox>(box).enable;
     expect(following(), isTrue);
 
-// Список обращён, поэтому его голова — конец extent прокрутки, и
-/// перетаскивание вверх удаляется от него.
+    // Список обращён, поэтому его голова — конец extent прокрутки, и
+    /// перетаскивание вверх удаляется от него.
     await tester.drag(box, const Offset(0, -300));
     await tester.pumpAndSettle();
     expect(following(), isFalse);
@@ -823,6 +823,3 @@ void main() {
     });
   });
 }
-
-
-

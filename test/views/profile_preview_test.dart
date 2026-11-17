@@ -42,7 +42,7 @@ void main() {
     globalState.container = container;
   });
 
-// Редактор мигает своим кареткой вечно, так что `pumpAndSettle` никогда не возвращается.
+  // Редактор мигает своим кареткой вечно, так что `pumpAndSettle` никогда не возвращается.
   Future<void> settle(WidgetTester tester) async {
     await tester.pump();
     await tester.pump();
@@ -150,5 +150,3 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 }
-
-

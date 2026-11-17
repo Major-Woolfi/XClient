@@ -169,5 +169,3 @@ void main() {
     expect(selectedScriptId(), isNull);
   });
 }
-
-

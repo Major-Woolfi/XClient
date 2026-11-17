@@ -46,5 +46,3 @@ Map<String, Object?> _plainYamlMap(YamlMap node) {
   }
   return map;
 }
-
-

@@ -144,5 +144,3 @@ List<Object?> _salvageItems(
   }
   return kept;
 }
-
-

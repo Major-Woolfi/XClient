@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show ProviderListenable;
 import 'package:flutter_test/flutter_test.dart';
+
 /// Каждый нотификатор в `lib/providers/database.dart` пишет оптимистично: состояние в памяти
 /// мутируется сначала, а строка сохраняется afterwards через [withRollback],
 /// который восстанавливает снимок до мутации, когда запись не удаётся. Эти тесты ведут реальную
@@ -43,15 +44,17 @@ void main() {
     container.dispose();
     await testDatabase.close();
   });
-/// Подписывается на [provider], чтобы пережить авто-утилизацию на весь тест,
-/// затем ждёт, пока подкрепляющий поток drift доставит свой первый набор строк.
+
+  /// Подписывается на [provider], чтобы пережить авто-утилизацию на весь тест,
+  /// затем ждёт, пока подкрепляющий поток drift доставит свой первый набор строк.
   Future<void> keepAlive(ProviderListenable<Object?> provider) async {
     container.listen(provider, (_, _) {});
     await pumpEventQueue();
   }
-/// Большинство точек вызова оборачивают шаг сохранения в `unawaited(...)`, так что
-/// неудача никогда не доходит до вызывающего: нотификатор регистрирует это, и только после
-/// того, как откат уже восстановил снимок.
+
+  /// Большинство точек вызова оборачивают шаг сохранения в `unawaited(...)`, так что
+  /// неудача никогда не доходит до вызывающего: нотификатор регистрирует это, и только после
+  /// того, как откат уже восстановил снимок.
   Future<void> captureWriteFailure(void Function() body) {
     final reported = Completer<void>();
     final print = debugPrint;
@@ -64,10 +67,11 @@ void main() {
     body();
     return reported.future.timeout(const Duration(seconds: 5));
   }
-/// `customStatement` не вызывает уведомление об обновлении таблицы drift, так что
-/// потоки, за которыми следят нотификаторы, continuent подавать свои последние
-/// хорошие строки — именно это позволяет тесту наблюдать откаченное состояние, а не
-/// состояние ошибки.
+
+  /// `customStatement` не вызывает уведомление об обновлении таблицы drift, так что
+  /// потоки, за которыми следят нотификаторы, continuent подавать свои последние
+  /// хорошие строки — именно это позволяет тесту наблюдать откаченное состояние, а не
+  /// состояние ошибки.
   Future<void> breakTable(String table) =>
       testDatabase.customStatement('DROP TABLE $table');
 
@@ -1316,4 +1320,3 @@ class _GatedProfileRules extends ProfileRules {
     await super.persistRule(rule);
   }
 }
-

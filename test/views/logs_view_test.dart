@@ -71,17 +71,17 @@ void main() {
     expect(seedLogs().map((log) => log.dateTime), contains(label.data));
 
     final scrollableRect = tester.getRect(find.byType(Scrollable).first);
-// Список работает под баром, так что трек скроллбара начинается у подножия
-/// бара. Минимальная длина большого пальца — 48, так что на новейшем конце центр
-/// большого пальца лежит на 24 dp ниже верхнего края трека.
+    // Список работает под баром, так что трек скроллбара начинается у подножия
+    /// бара. Минимальная длина большого пальца — 48, так что на новейшем конце центр
+    /// большого пальца лежит на 24 dp ниже верхнего края трека.
     final trackTop = tester.getRect(find.byType(AppBar)).bottom;
     expect(tester.getCenter(find.byKey(hintKey)).dy, closeTo(trackTop + 24, 6));
 
     await gesture.moveBy(const Offset(0, 2000));
     await tester.pump();
-// Ничего не плавает над подножием, так что таблет следует за большим пальцем
-/// до самого низа и отдыхает на нём по центру, большой палец является долей трека
-/// контента, оба меньше части под баром.
+    // Ничего не плавает над подножием, так что таблет следует за большим пальцем
+    /// до самого низа и отдыхает на нём по центру, большой палец является долей трека
+    /// контента, оба меньше части под баром.
     final position = tester
         .widget<Scrollable>(find.byType(Scrollable).first)
         .controller!
@@ -99,8 +99,8 @@ void main() {
     );
 
     await gesture.up();
-// Таблет переживает жест brevemente, так что отпускание и повторное схватывание
-/// не мигает им.
+    // Таблет переживает жест brevemente, так что отпускание и повторное схватывание
+    /// не мигает им.
     await tester.pump(const Duration(milliseconds: 100));
     expect(hintFinder(), findsOneWidget);
     await tester.pump(const Duration(milliseconds: 500));
@@ -225,6 +225,3 @@ void main() {
     expect(built, 1);
   });
 }
-
-
-

@@ -782,5 +782,3 @@ Future<void> _closeRunning(
   transport.disconnect(generation);
   await close;
 }
-
-

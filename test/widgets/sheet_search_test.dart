@@ -48,7 +48,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(queries, ['wiki']);
-// Заголовок переживает поиск, потому что ничего не захватило бар.
+    // Заголовок переживает поиск, потому что ничего не захватило бар.
     expect(find.text('title'), findsOneWidget);
   });
 
@@ -263,7 +263,7 @@ void main() {
       tester.widget<TextField>(find.byType(TextField)).decoration!.filled,
       isFalse,
     );
-// Сама пристань ничего не рисует, так что никакая полоса не простирается за листом за ней.
+    // Сама пристань ничего не рисует, так что никакая полоса не простирается за листом за ней.
     final material = tester.widget<Surface>(
       find
           .ancestor(
@@ -513,5 +513,3 @@ void main() {
     await tester.pump(const Duration(seconds: 2));
   });
 }
-
-

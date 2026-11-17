@@ -311,4 +311,3 @@ class CodeForgeSuggestionDetails {
     required this.caretRect,
   });
 }
-

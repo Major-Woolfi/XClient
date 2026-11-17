@@ -105,5 +105,3 @@ void main() {
     expect(proxy.calls, ['start 7890', 'stop', 'stop']);
   });
 }
-
-

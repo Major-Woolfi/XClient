@@ -11,9 +11,9 @@ typedef MigrationTransform =
     Future<MigrationData> Function(Map<String, Object?> configMap);
 
 abstract interface class MigrationStore {
-/// Ложь, когда базовое хранилище не удалось открыть вообще, в отличие от
-/// хранилища, которое открылось, но не содержит ничего.
-Future<bool> get isAvailable;
+  /// Ложь, когда базовое хранилище не удалось открыть вообще, в отличие от
+  /// хранилища, которое открылось, но не содержит ничего.
+  Future<bool> get isAvailable;
 
   Future<Map<String, Object?>?> getConfigMap();
 
@@ -89,9 +89,9 @@ class Migration {
 
   static const currentVersion = 1;
 
-/// Одноразовые изменения настроек для обновлений, кроме [currentVersion], которую
-/// носят бэкапы и которую старое приложение отвергает, если она новее своей.
-static const upgradeVersion = 4;
+  /// Одноразовые изменения настроек для обновлений, кроме [currentVersion], которую
+  /// носят бэкапы и которую старое приложение отвергает, если она новее своей.
+  static const upgradeVersion = 4;
 
   static const Map<int, Config Function(Config config)> _upgrades = {
     1: _resetThemeColors,
@@ -251,5 +251,3 @@ String? _getStoredDavPassword(Map<String, Object?>? configMap) {
 }
 
 final migration = Migration(store: const _AppMigrationStore());
-
-

@@ -10,5 +10,3 @@ extension GlyphFinders on CommonFinders {
   Finder widgetWithGlyph(Type widgetType, Glyph glyph) =>
       ancestor(of: byGlyph(glyph), matching: byType(widgetType));
 }
-
-

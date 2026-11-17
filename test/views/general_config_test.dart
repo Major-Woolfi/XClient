@@ -111,5 +111,3 @@ void main() {
     expect(config().testUrl, 'https://probe.test/204');
   });
 }
-
-

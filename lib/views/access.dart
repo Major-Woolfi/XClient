@@ -662,5 +662,3 @@ List<PopupMenuItem> _optionsSection<T>({
       ),
   ];
 }
-
-

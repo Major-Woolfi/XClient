@@ -58,5 +58,3 @@ class FilterRegexText extends StatelessWidget {
     );
   }
 }
-
-

@@ -44,5 +44,3 @@ part 'actions/geo_resource.dart';
 part 'actions/resources.dart';
 part 'actions/updating.dart';
 part 'generated/action.g.dart';
-
-

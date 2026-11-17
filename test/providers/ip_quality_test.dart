@@ -218,5 +218,3 @@ void main() {
     expect(adapter.requests, greaterThan(sent));
   });
 }
-
-

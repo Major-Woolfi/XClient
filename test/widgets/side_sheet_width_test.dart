@@ -115,5 +115,3 @@ void main() {
     expect(sheetRect(tester), const Rect.fromLTWH(1280 - 512, 0, 512, 800));
   });
 }
-
-

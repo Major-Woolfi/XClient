@@ -131,4 +131,3 @@ class Protocol {
 }
 
 final protocol = Protocol();
-

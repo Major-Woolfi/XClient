@@ -325,5 +325,3 @@ class _SpeedTile extends StatelessWidget {
     );
   }
 }
-
-

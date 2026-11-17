@@ -143,5 +143,3 @@ String _httpStatusMessage(int statusCode, AppLocalizations appLocalizations) {
     _ => appLocalizations.networkBadResponseError(statusCode),
   };
 }
-
-

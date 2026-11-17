@@ -35,5 +35,3 @@ extension IpQualityExt on IpQuality {
     };
   }
 }
-
-

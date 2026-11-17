@@ -88,5 +88,3 @@ void main() {
 }
 
 void _noopSave(BuildContext context, String title, EditorContent content) {}
-
-

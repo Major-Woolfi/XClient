@@ -147,5 +147,3 @@ void main() {
     expect(state.proxyDialers, {30: 'Relay'});
   });
 }
-
-

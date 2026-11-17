@@ -88,5 +88,3 @@ int getProfilesColumns(
   final columns = (viewWidth + spacing) / (minItemWidth + spacing);
   return columns.floor().clamp(1, _profilesMaxColumns);
 }
-
-

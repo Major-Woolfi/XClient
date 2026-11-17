@@ -214,4 +214,3 @@ void main() {
     expect(find.text('scale: 1.5'), findsOneWidget);
   });
 }
-

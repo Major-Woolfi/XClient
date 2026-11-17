@@ -364,8 +364,8 @@ void main() {
           profilesProvider.overrideWith(TestProfiles.new),
           setupActionProvider.overrideWith(TestSetupAction.new),
           commonActionProvider.overrideWith(TestCommonAction.new),
-// Обход частных адресов вычисляет маршруты в Isolate.run, которые
-/// поддельные часы никогда не дают завершить.
+          // Обход частных адресов вычисляет маршруты в Isolate.run, которые
+          /// поддельные часы никогда не дают завершить.
           networkSettingProvider.overrideWithBuild(
             (_, _) => const NetworkProps(bypassPrivateRoute: false),
           ),
@@ -2059,8 +2059,3 @@ void main() {
     );
   });
 }
-
-
-
-
-

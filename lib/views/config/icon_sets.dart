@@ -314,5 +314,3 @@ class _IconSetPreviewViewState extends ConsumerState<_IconSetPreviewView> {
     );
   }
 }
-
-

@@ -22,8 +22,8 @@ void main() {
 
   setUpAll(() async {
     root = Directory.systemTemp.createTempSync('backup_task_test');
-// File.copy не создаёт родительские каталоги; в продакшене это уже
-/// существующие временные и кэшовые каталоги, которые выдаёт платформа.
+    // File.copy не создаёт родительские каталоги; в продакшене это уже
+    /// существующие временные и кэшовые каталоги, которые выдаёт платформа.
     Directory(join(root.path, 'tmp')).createSync(recursive: true);
     Directory(join(root.path, 'archive')).createSync(recursive: true);
     await useAppPaths(root);
@@ -755,6 +755,3 @@ void main() {
     });
   });
 }
-
-
-

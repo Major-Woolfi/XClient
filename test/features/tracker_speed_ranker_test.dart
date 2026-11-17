@@ -109,5 +109,3 @@ void main() {
     expect(byId(second, 'active').downloadSpeed, 2000);
   });
 }
-
-

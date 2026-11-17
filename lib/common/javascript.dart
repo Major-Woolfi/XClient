@@ -34,5 +34,3 @@ Future<Map<String, dynamic>> handleEvaluate(
   }
   return decoded;
 }
-
-

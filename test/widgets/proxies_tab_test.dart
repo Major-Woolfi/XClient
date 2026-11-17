@@ -522,5 +522,3 @@ ProxiesTabState _tabState(List<Group> groups, {String current = 'B'}) {
 Group _group(String name) {
   return Group(type: GroupType.Selector, name: name);
 }
-
-

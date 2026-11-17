@@ -295,5 +295,3 @@ class AppTray implements TrayPort {
 }
 
 final appTray = system.isDesktop ? AppTray() : null;
-
-

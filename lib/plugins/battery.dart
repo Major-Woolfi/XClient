@@ -27,5 +27,3 @@ class BatteryOptimization {
 final batteryOptimization = system.isAndroid
     ? BatteryOptimization.instance
     : null;
-
-

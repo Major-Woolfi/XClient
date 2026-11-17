@@ -18,5 +18,3 @@ Future<void> clearAppData() async {
   await File(await appPath.databasePath).safeDelete(recursive: true);
   await Directory(await appPath.profilesPath).safeDelete(recursive: true);
 }
-
-

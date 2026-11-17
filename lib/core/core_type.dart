@@ -79,12 +79,7 @@ extension CoreTypeExtension on CoreType {
       'mixed-port:',
       'dns:',
     ];
-    final xrayKeys = [
-      'inbounds:',
-      'outbounds:',
-      'dns:',
-      'route:',
-    ];
+    final xrayKeys = ['inbounds:', 'outbounds:', 'dns:', 'route:'];
 
     final lines = trimmed.split('\n').take(20).join('\n').toLowerCase();
 
@@ -135,9 +130,9 @@ class CoreSpec {
       downloadUrl: json['download_url'] as String? ?? '',
       sha256: json['sha256'] as String? ?? '',
       size: json['size'] as int? ?? 0,
-      publishedAt: DateTime.tryParse(
-        json['published_at'] as String? ?? '',
-      ) ?? DateTime.now(),
+      publishedAt:
+          DateTime.tryParse(json['published_at'] as String? ?? '') ??
+          DateTime.now(),
       isPrerelease: json['prerelease'] as bool? ?? false,
     );
   }
@@ -171,11 +166,7 @@ class CoreOperationResult {
   final String? error;
   final CoreSpec? spec;
 
-  const CoreOperationResult({
-    required this.success,
-    this.error,
-    this.spec,
-  });
+  const CoreOperationResult({required this.success, this.error, this.spec});
 
   factory CoreOperationResult.failure(String error) {
     return CoreOperationResult(success: false, error: error);

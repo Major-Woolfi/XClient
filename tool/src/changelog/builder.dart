@@ -190,4 +190,3 @@ File resolve(String root, String path) {
   }
   return File('$root$separator$path');
 }
-

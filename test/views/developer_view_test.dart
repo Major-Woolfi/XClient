@@ -39,8 +39,8 @@ Future<void> _pumpDeveloperView(
 
 void main() {
   setUpAll(() {
-// canCrashCore читает appEnv, который только реальный бутстрап приложения
-/// заполняет. 'dev' также включает строку краш-теста.
+    // canCrashCore читает appEnv, который только реальный бутстрап приложения
+    /// заполняет. 'dev' также включает строку краш-теста.
     globalState.appEnv = 'dev';
   });
 
@@ -102,6 +102,3 @@ void main() {
     expect(tester.takeException(), null);
   });
 }
-
-
-

@@ -66,7 +66,11 @@ class CoreService extends CoreHandlerInterface {
     if (path != null && await File(path).exists()) {
       return path;
     }
-    final result = await manager.installCore(CoreType.clash, version, setActive: true);
+    final result = await manager.installCore(
+      CoreType.clash,
+      version,
+      setActive: true,
+    );
     if (result.success) {
       final installed = await manager.getBinaryPath(CoreType.clash, version);
       if (installed != null && await File(installed).exists()) {
@@ -138,5 +142,3 @@ class CoreService extends CoreHandlerInterface {
 }
 
 final coreService = system.isDesktop ? CoreService() : null;
-
-

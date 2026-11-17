@@ -233,5 +233,3 @@ class _UserAgentItem extends StatelessWidget {
     );
   }
 }
-
-

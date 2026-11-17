@@ -426,5 +426,3 @@ void main() {
     expect(config().ntpOverrideKeys, isEmpty);
   });
 }
-
-

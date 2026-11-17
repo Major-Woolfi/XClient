@@ -38,5 +38,3 @@ void main() {
     expect(rules.map((rule) => rule.id), [1, 2, 3, 4]);
   });
 }
-
-

@@ -164,5 +164,3 @@ void main() {
     expect(exitButton.onPressed, isNotNull);
   });
 }
-
-

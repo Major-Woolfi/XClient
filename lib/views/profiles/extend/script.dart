@@ -82,5 +82,3 @@ class _ScriptOption extends StatelessWidget {
     );
   }
 }
-
-

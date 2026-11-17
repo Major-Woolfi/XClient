@@ -137,5 +137,3 @@ class GlobalState {
 }
 
 final globalState = GlobalState();
-
-

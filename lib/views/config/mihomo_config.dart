@@ -44,9 +44,7 @@ class MihomoConfigView extends ConsumerWidget {
           ),
           generateSection(
             title: appLocalizations.mihomoLog,
-            items: [
-              const _LogLevelItem(),
-            ],
+            items: [const _LogLevelItem()],
           ),
           generateSection(
             title: appLocalizations.mihomoNetwork,
@@ -103,9 +101,7 @@ class MihomoConfigView extends ConsumerWidget {
           ),
           generateSection(
             title: appLocalizations.mihomoHosts,
-            items: [
-              const _HostsItem(),
-            ],
+            items: [const _HostsItem()],
           ),
           generateSection(
             title: appLocalizations.mihomoGeo,
@@ -124,16 +120,15 @@ class MihomoConfigView extends ConsumerWidget {
                 ),
                 onChanged: (ref, value) => ref
                     .read(patchClashConfigProvider.notifier)
-                    .update((state) => state.copyWith(geoUpdateInterval: value)),
+                    .update(
+                      (state) => state.copyWith(geoUpdateInterval: value),
+                    ),
               ),
             ],
           ),
           generateSection(
             title: appLocalizations.mihomoDelay,
-            items: [
-              const _DelayTestTimeoutItem(),
-              const _TestUrlItem(),
-            ],
+            items: [const _DelayTestTimeoutItem(), const _TestUrlItem()],
           ),
           if (authentication) ...[
             generateSection(
@@ -154,7 +149,7 @@ class MihomoConfigView extends ConsumerWidget {
     required ConfigLabel title,
     required bool Function(PatchClashConfig state) select,
     required PatchClashConfig Function(PatchClashConfig state, bool value)
-        update,
+    update,
   }) {
     return ConfigToggleItem(
       title: title,
@@ -181,8 +176,11 @@ class _MixedPortItem extends ConsumerWidget {
       keyboardType: TextInputType.number,
       normalize: (value) => value.trim(),
       onChanged: (ref, value) {
-        ref.read(patchClashConfigProvider.notifier).update((state) =>
-            state.copyWith(mixedPort: int.tryParse(value) ?? 0));
+        ref
+            .read(patchClashConfigProvider.notifier)
+            .update(
+              (state) => state.copyWith(mixedPort: int.tryParse(value) ?? 0),
+            );
       },
     );
   }
@@ -203,8 +201,11 @@ class _SocksPortItem extends ConsumerWidget {
       keyboardType: TextInputType.number,
       normalize: (value) => value.trim(),
       onChanged: (ref, value) {
-        ref.read(patchClashConfigProvider.notifier).update((state) =>
-            state.copyWith(socksPort: int.tryParse(value) ?? 0));
+        ref
+            .read(patchClashConfigProvider.notifier)
+            .update(
+              (state) => state.copyWith(socksPort: int.tryParse(value) ?? 0),
+            );
       },
     );
   }
@@ -225,8 +226,11 @@ class _RedirPortItem extends ConsumerWidget {
       keyboardType: TextInputType.number,
       normalize: (value) => value.trim(),
       onChanged: (ref, value) {
-        ref.read(patchClashConfigProvider.notifier).update((state) =>
-            state.copyWith(redirPort: int.tryParse(value) ?? 0));
+        ref
+            .read(patchClashConfigProvider.notifier)
+            .update(
+              (state) => state.copyWith(redirPort: int.tryParse(value) ?? 0),
+            );
       },
     );
   }
@@ -247,8 +251,11 @@ class _TProxyPortItem extends ConsumerWidget {
       keyboardType: TextInputType.number,
       normalize: (value) => value.trim(),
       onChanged: (ref, value) {
-        ref.read(patchClashConfigProvider.notifier).update((state) =>
-            state.copyWith(tproxyPort: int.tryParse(value) ?? 0));
+        ref
+            .read(patchClashConfigProvider.notifier)
+            .update(
+              (state) => state.copyWith(tproxyPort: int.tryParse(value) ?? 0),
+            );
       },
     );
   }

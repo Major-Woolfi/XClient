@@ -90,5 +90,3 @@ class DAVConnectionController extends ValueNotifier<bool?> {
     super.dispose();
   }
 }
-
-

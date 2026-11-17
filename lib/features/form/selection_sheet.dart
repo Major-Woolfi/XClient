@@ -354,5 +354,3 @@ class _SelectionSheetState<T> extends ConsumerState<SelectionSheet<T>>
     );
   }
 }
-
-

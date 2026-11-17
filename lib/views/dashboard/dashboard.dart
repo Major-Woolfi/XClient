@@ -80,7 +80,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
             onPressed: () => _setEditing(true),
           ),
       ],
-// Провайдеры узнают об изменении размера с опозданием на кадр, слишком поздно для карточек.
+      // Провайдеры узнают об изменении размера с опозданием на кадр, слишком поздно для карточек.
       body: LayoutBuilder(
         builder: (context, constraints) {
           final room = constraints.biggest / scale;
@@ -330,7 +330,7 @@ class _MobileDashboard extends ConsumerWidget {
             }
             return SliverPadding(
               padding: EdgeInsets.fromLTRB(side, top, side, bottom),
-// Ленивый список оценивает карточки, которые ещё не раскладывал, по уже раскладенным; такие неровные карточки сдвигают конец скролла по ходу дела.
+              // Ленивый список оценивает карточки, которые ещё не раскладывал, по уже раскладенным; такие неровные карточки сдвигают конец скролла по ходу дела.
               sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -356,5 +356,3 @@ class _MobileDashboard extends ConsumerWidget {
     );
   }
 }
-
-

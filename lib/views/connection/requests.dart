@@ -493,5 +493,3 @@ class _LiveFeedState extends ConsumerState<_LiveFeed>
     );
   }
 }
-
-

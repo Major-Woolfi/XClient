@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'models.dart';
 
 const changelogTitle = '# Changelog';
+
 /// Всё ниже этого маркера предшествует структурированному конвейеру и хранится
 /// буквально. Генератор никогда не пишет за ним.
 const changelogFrozenMarker = '<!-- changelog:frozen -->';
@@ -13,6 +14,7 @@ const changelogFrozenNote =
 
 const releaseBeginMarker = '<!-- XClient:changelog:begin -->';
 const releaseEndMarker = '<!-- XClient:changelog:end -->';
+
 /// Открывает HTML-комментарий, несущий структурированные записи в приложение.
 /// Диалог обновления читает их из релиза, который GitHub уже возвращает, поэтому
 /// заметки не стоят своего собственного запроса и остаются невидимыми на странице релиза.
@@ -71,6 +73,7 @@ String renderRelease(ChangelogVersion version) {
     ..write(renderReleaseJson(version));
   return buffer.toString();
 }
+
 /// та же версия как машиночитаемый JSON, обёрнутый в HTML-комментарий, чтобы он
 /// путешествовал с телом релиза, не показываясь на странице релиза.
 ///
@@ -83,6 +86,7 @@ String renderReleaseJson(ChangelogVersion version) {
   ).replaceAll('>', r'\u003e');
   return '$releaseJsonBeginMarker\n$payload\n$releaseJsonEndMarker\n';
 }
+
 /// Подпись отправляется с режимом разбора, поэтому текст записи — это разметка,
 /// не текст: тема коммита, несущая `<`, — некорректный тег, и Telegram отклоняет
 /// всю загрузку. HTML, а не Markdown, потому что это единственный режим разбора
@@ -93,6 +97,7 @@ String escapeTelegramHtml(String value) => value
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
+
 /// Подписи Telegram ограничены 1024 символами, поэтому текст обрезается с
 /// ссылкой на полные заметки вместо того, чтобы провалить загрузку.
 String renderTelegram(ChangelogVersion version, {String? moreUrl}) {
@@ -128,6 +133,7 @@ int _telegramVisibleLength(String markup) => markup
     .replaceAll(RegExp('<[^>]*>'), '')
     .replaceAll(RegExp('&[a-z]+;'), '&')
     .length;
+
 /// Заголовки версий остаются единственным уровнем `##`; группы — жирные строки,
 /// потому что релиз несет горсть записей, а `###` на группу перевешивает их.
 String _heading(ChangelogVersion version) => version.date.isEmpty
@@ -136,4 +142,3 @@ String _heading(ChangelogVersion version) => version.date.isEmpty
 
 String _prefix(ChangelogEntry entry) =>
     entry.scope == null ? '' : '**${entry.scope}** ';
-

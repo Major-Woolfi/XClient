@@ -78,5 +78,3 @@ void animateScrollTo(ScrollController controller, double offset) {
     curve: Curves.easeOutCubic,
   );
 }
-
-

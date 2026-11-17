@@ -103,5 +103,3 @@ class BatteryOptimizationIgnored extends _$BatteryOptimizationIgnored {
     }
   }
 }
-
-

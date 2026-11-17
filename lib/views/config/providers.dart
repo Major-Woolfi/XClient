@@ -635,5 +635,3 @@ class _ProviderFormState extends State<_ProviderForm> {
     );
   }
 }
-
-

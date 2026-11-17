@@ -121,5 +121,3 @@ class LinuxElevation {
 }
 
 final linuxElevation = LinuxElevation();
-
-

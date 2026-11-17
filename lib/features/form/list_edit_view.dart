@@ -452,5 +452,3 @@ Future<String?> showListEntryDialog(
     ),
   );
 }
-
-

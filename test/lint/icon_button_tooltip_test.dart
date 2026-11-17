@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:test/test.dart';
 
 import 'sources.dart';
+
 /// Единственная кнопка, которая несёт свою метку на заключающем [Tooltip] вместо
 /// своего `tooltip:`. Вложение второго Tooltip внутрь воюет бы с ним.
 const _wrappedInTooltip = 'lib/views/dashboard/widgets/core_status_button.dart';
@@ -49,7 +50,7 @@ void main() {
       for (final match in _iconButton.allMatches(source)) {
         final arguments = _arguments(source, match.end);
         if (RegExp(r'\btooltip\s*:').hasMatch(arguments)) continue;
-// Слот иконки, держащий текст, уже сам по себе видимая метка.
+        // Слот иконки, держащий текст, уже сам по себе видимая метка.
         if (RegExp(r'icon:\s*Text\(').hasMatch(arguments)) continue;
 
         final line = '\n'.allMatches(source.substring(0, match.start)).length;
@@ -77,4 +78,3 @@ void main() {
     );
   });
 }
-

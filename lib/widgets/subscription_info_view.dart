@@ -134,5 +134,3 @@ class SubscriptionInfoDetailView extends StatelessWidget {
     );
   }
 }
-
-

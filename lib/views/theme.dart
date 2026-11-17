@@ -1186,5 +1186,3 @@ class _CustomColorPreview extends ConsumerWidget {
     );
   }
 }
-
-

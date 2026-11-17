@@ -22,6 +22,7 @@ String _iconSetJson(String name, List<String> icons) => json.encode({
       {'name': '$icon.png', 'url': 'https://example.com/$icon.png'},
   ],
 });
+
 /// Реальные загрузки по loopback: привязка теста отвечает на каждый запрос с
 /// 400, поэтому её переопределение снимается, пока тест запущен.
 void main() {
@@ -184,8 +185,3 @@ void main() {
     expect(iconSets.single.isRemote, isFalse);
   });
 }
-
-
-
-
-

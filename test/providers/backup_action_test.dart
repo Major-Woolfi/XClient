@@ -50,7 +50,7 @@ void main() {
     await testDatabase.close();
   });
 
-// Слушание AppStateManager держит настройки живыми, пока восстановление ожидает.
+  // Слушание AppStateManager держит настройки живыми, пока восстановление ожидает.
   ProviderContainer buildContainer() {
     final container = ProviderContainer()..listen(configProvider, (_, _) {});
     addTearDown(container.dispose);
@@ -509,6 +509,3 @@ void main() {
     });
   });
 }
-
-
-

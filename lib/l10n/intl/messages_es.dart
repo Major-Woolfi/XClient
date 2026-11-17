@@ -2333,12 +2333,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreUnknown": MessageLookupByLibrary.simpleMessage("Desconocido"),
     "coreNotInstalled": MessageLookupByLibrary.simpleMessage("No instalado"),
     "coreVersions": MessageLookupByLibrary.simpleMessage("Versiones"),
-    "coreNoVersions": MessageLookupByLibrary.simpleMessage("No hay versiones disponibles"),
+    "coreNoVersions": MessageLookupByLibrary.simpleMessage(
+      "No hay versiones disponibles",
+    ),
     "coreInstalled": MessageLookupByLibrary.simpleMessage("Instalado"),
-    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage("No instalado"),
+    "coreNotInstalledShort": MessageLookupByLibrary.simpleMessage(
+      "No instalado",
+    ),
     "preRelease": MessageLookupByLibrary.simpleMessage("Pre-lanzamiento"),
-    "autoUpdate": MessageLookupByLibrary.simpleMessage("Actualización automática"),
-    "autoUpdateTip": MessageLookupByLibrary.simpleMessage("Descargar automáticamente nuevas versiones del core"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage(
+      "Actualización automática",
+    ),
+    "autoUpdateTip": MessageLookupByLibrary.simpleMessage(
+      "Descargar automáticamente nuevas versiones del core",
+    ),
     "install": MessageLookupByLibrary.simpleMessage("Instalar"),
     "installing": MessageLookupByLibrary.simpleMessage("Instalando..."),
     "use": MessageLookupByLibrary.simpleMessage("Usar"),
@@ -2348,8 +2356,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "xrayListenPort": MessageLookupByLibrary.simpleMessage("Puerto de escucha"),
     "xrayLogLevel": MessageLookupByLibrary.simpleMessage("Nivel de registro"),
     "xrayDnsServers": MessageLookupByLibrary.simpleMessage("Servidores DNS"),
-    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage("Reglas de enrutamiento"),
-    "xrayOutbounds": MessageLookupByLibrary.simpleMessage("Conexiones salientes"),
+    "xrayRoutingRules": MessageLookupByLibrary.simpleMessage(
+      "Reglas de enrutamiento",
+    ),
+    "xrayOutbounds": MessageLookupByLibrary.simpleMessage(
+      "Conexiones salientes",
+    ),
     "xraySave": MessageLookupByLibrary.simpleMessage("Guardar"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("Restablecer"),
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
@@ -2365,12 +2377,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "mihomoHosts": MessageLookupByLibrary.simpleMessage("Hosts"),
     "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
     "mihomoDelay": MessageLookupByLibrary.simpleMessage("Prueba de retardo"),
-    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Actualización automática GEO"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage(
+      "Actualización automática GEO",
+    ),
     "tProxyPort": MessageLookupByLibrary.simpleMessage("Puerto TProxy"),
     "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
-    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("Intervalo de actualización GEO"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage(
+      "Intervalo de actualización GEO",
+    ),
   };
 }
-
-
-

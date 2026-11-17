@@ -33,6 +33,7 @@ class _RecordingSetupAction extends SetupAction {
     forced.add(force);
   }
 }
+
 /// Только изменение, которое текущий пользовательский профиль может увидеть, стоит повторного применения.
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -789,7 +790,3 @@ void main() {
     );
   });
 }
-
-
-
-

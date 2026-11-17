@@ -35,5 +35,3 @@ class _LocaleManagerState extends ConsumerState<LocaleManager> {
     return widget.child;
   }
 }
-
-

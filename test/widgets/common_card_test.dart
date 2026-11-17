@@ -361,5 +361,3 @@ void main() {
     expect(tester.getSize(find.byKey(const Key('content'))), const Size(8, 8));
   });
 }
-
-

@@ -43,5 +43,3 @@ extension AppStateExt on AppState {
 
   bool get isStart => runTime != null;
 }
-
-

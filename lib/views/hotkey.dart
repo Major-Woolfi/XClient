@@ -520,5 +520,3 @@ class _HotKeyRecorderState extends ConsumerState<HotKeyRecorder> {
     );
   }
 }
-
-

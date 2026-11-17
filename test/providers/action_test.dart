@@ -1048,5 +1048,3 @@ class _RaceCommonAction extends CommonAction {
     updateTrafficCount++;
   }
 }
-
-

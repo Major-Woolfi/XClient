@@ -3,12 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Состояние загрузки одного ядра.
-enum CoreKernelStatus {
-  idle,
-  installing,
-  installed,
-  error,
-}
+enum CoreKernelStatus { idle, installing, installed, error }
 
 /// Модель ядра для отображения в UI.
 class CoreKernelModel {
@@ -109,76 +104,81 @@ class CoreKernelNotifier extends ChangeNotifier {
 
     final installed = <CoreKernelModel>[];
     for (final spec in manager.getInstalledVersions(type)) {
-      installed.add(CoreKernelModel(
-        type: type,
-        spec: spec,
-        status: CoreKernelStatus.installed,
-      ));
+      installed.add(
+        CoreKernelModel(
+          type: type,
+          spec: spec,
+          status: CoreKernelStatus.installed,
+        ),
+      );
     }
 
     final available = <CoreKernelModel>[];
     for (final spec in manager.getAvailableVersions(type)) {
       if (spec.isInstalled) continue;
-      available.add(CoreKernelModel(
-        type: type,
-        spec: spec,
-        status: CoreKernelStatus.idle,
-      ));
+      available.add(
+        CoreKernelModel(type: type, spec: spec, status: CoreKernelStatus.idle),
+      );
     }
 
-    state = state.copyWith(models: {
-      ...state.models,
-      type: [...installed, ...available],
-    });
+    state = state.copyWith(
+      models: {
+        ...state.models,
+        type: [...installed, ...available],
+      },
+    );
   }
 
   /// Установить (скачать) версию ядра.
   Future<void> install(CoreType type, String version) async {
     final manager = coreBinaryManager;
 
-    state = state.copyWith(models: {
-      ...state.models,
-      type: [
-        for (final m in state.models[type] ?? const [])
-          if (m.spec.version == version)
-            m.copyWith(status: CoreKernelStatus.installing, progress: 0.0)
-          else
-            m
-      ],
-    });
+    state = state.copyWith(
+      models: {
+        ...state.models,
+        type: [
+          for (final m in state.models[type] ?? const [])
+            if (m.spec.version == version)
+              m.copyWith(status: CoreKernelStatus.installing, progress: 0.0)
+            else
+              m,
+        ],
+      },
+    );
 
     try {
       final result = await manager.installCore(type, version, setActive: true);
 
       if (result.success && result.spec != null) {
         await _loadModels(type);
-        state = state.copyWith(
-          activeType: type,
-          activeVersion: version,
-        );
+        state = state.copyWith(activeType: type, activeVersion: version);
       } else {
-        state = state.copyWith(models: {
+        state = state.copyWith(
+          models: {
+            ...state.models,
+            type: [
+              for (final m in state.models[type] ?? const [])
+                if (m.spec.version == version)
+                  m.copyWith(status: CoreKernelStatus.error)
+                else
+                  m,
+            ],
+          },
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        models: {
           ...state.models,
           type: [
             for (final m in state.models[type] ?? const [])
               if (m.spec.version == version)
                 m.copyWith(status: CoreKernelStatus.error)
               else
-                m
+                m,
           ],
-        });
-      }
-    } catch (e) {
-      state = state.copyWith(models: {
-        ...state.models,
-        type: [
-          for (final m in state.models[type] ?? const [])
-            if (m.spec.version == version)
-              m.copyWith(status: CoreKernelStatus.error)
-            else
-              m
-        ],
-      });
+        },
+      );
     }
   }
 
@@ -187,10 +187,7 @@ class CoreKernelNotifier extends ChangeNotifier {
     final result = await coreBinaryManager.switchCore(type, version: version);
     if (result.success) {
       await _loadModels(type);
-      state = state.copyWith(
-        activeType: type,
-        activeVersion: version,
-      );
+      state = state.copyWith(activeType: type, activeVersion: version);
     }
   }
 
@@ -200,12 +197,17 @@ class CoreKernelNotifier extends ChangeNotifier {
     if (success) {
       await _loadModels(type);
       if (state.activeType == type && state.activeVersion == version) {
-        final clashVersion = await coreBinaryManager.getLatestInstalledVersion(CoreType.clash) ?? '1.19.33';
+        final clashVersion =
+            await coreBinaryManager.getLatestInstalledVersion(CoreType.clash) ??
+            '1.19.33';
         state = state.copyWith(
           activeType: CoreType.clash,
           activeVersion: clashVersion,
         );
-        await coreBinaryManager.switchCore(CoreType.clash, version: clashVersion);
+        await coreBinaryManager.switchCore(
+          CoreType.clash,
+          version: clashVersion,
+        );
       }
     }
   }
@@ -213,16 +215,18 @@ class CoreKernelNotifier extends ChangeNotifier {
   /// Проверить обновления.
   Future<void> checkUpdates(CoreType type) async {
     final updates = await coreBinaryManager.checkForUpdates(type);
-    state = state.copyWith(models: {
-      ...state.models,
-      type: [
-        for (final m in state.models[type] ?? const [])
-          if (updates.any((u) => u.version == m.spec.version))
-            m.copyWith(status: CoreKernelStatus.idle)
-          else
-            m
-      ],
-    });
+    state = state.copyWith(
+      models: {
+        ...state.models,
+        type: [
+          for (final m in state.models[type] ?? const [])
+            if (updates.any((u) => u.version == m.spec.version))
+              m.copyWith(status: CoreKernelStatus.idle)
+            else
+              m,
+        ],
+      },
+    );
   }
 }
 
@@ -241,6 +245,7 @@ final activeCoreVersionProvider = Provider<String>((ref) {
 });
 
 /// Провайдер моделей ядер для типа.
-final coreKernelModelsProvider = Provider.family<List<CoreKernelModel>, CoreType>((ref, type) {
-  return ref.watch(coreKernelProvider).state.models[type] ?? const [];
-});
+final coreKernelModelsProvider =
+    Provider.family<List<CoreKernelModel>, CoreType>((ref, type) {
+      return ref.watch(coreKernelProvider).state.models[type] ?? const [];
+    });

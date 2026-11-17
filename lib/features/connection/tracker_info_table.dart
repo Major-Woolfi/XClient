@@ -260,5 +260,3 @@ class TrackerRuleText extends StatelessWidget {
     );
   }
 }
-
-

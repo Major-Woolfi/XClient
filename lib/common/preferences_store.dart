@@ -109,5 +109,3 @@ class AtomicFilePreferencesStore extends SharedPreferencesStorePlatform {
         (filter.allowList?.contains(key) ?? true);
   }
 }
-
-

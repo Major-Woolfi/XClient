@@ -171,5 +171,3 @@ class _Diamond extends CustomClipper<Path> {
   @override
   bool shouldReclip(_Diamond oldClipper) => false;
 }
-
-

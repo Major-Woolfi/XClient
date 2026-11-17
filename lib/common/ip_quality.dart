@@ -403,5 +403,3 @@ int? _asn(Object? value) {
   };
   return asn == 0 ? null : asn;
 }
-
-

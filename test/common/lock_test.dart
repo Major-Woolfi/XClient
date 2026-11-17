@@ -70,6 +70,3 @@ void main() {
     expect(await SingleInstanceLock().acquire(), isFalse);
   });
 }
-
-
-

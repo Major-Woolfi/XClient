@@ -589,5 +589,3 @@ class _GroupsEmptySummary extends ConsumerWidget {
     );
   }
 }
-
-

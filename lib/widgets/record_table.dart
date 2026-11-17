@@ -481,5 +481,3 @@ class RecordCellText extends StatelessWidget {
     );
   }
 }
-
-

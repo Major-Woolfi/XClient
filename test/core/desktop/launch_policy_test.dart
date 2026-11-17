@@ -84,6 +84,3 @@ void main() {
     expect(readSmartAppControlState(), SmartAppControlState.unknown);
   });
 }
-
-
-

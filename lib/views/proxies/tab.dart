@@ -286,5 +286,3 @@ class ProxyGroupView extends ConsumerWidget {
     );
   }
 }
-
-

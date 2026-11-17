@@ -2323,6 +2323,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Автообновление GEO"),
     "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy-порт"),
     "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
-    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("Интервал обновления GEO"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage(
+      "Интервал обновления GEO",
+    ),
   };
 }

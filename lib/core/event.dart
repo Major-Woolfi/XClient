@@ -134,5 +134,3 @@ class CoreEventManager {
 }
 
 final coreEventManager = CoreEventManager.instance;
-
-

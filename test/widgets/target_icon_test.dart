@@ -201,5 +201,3 @@ Future<Uint8List> _squarePng(int size) async {
 final _onePixelPng = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
 );
-
-

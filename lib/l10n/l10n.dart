@@ -9155,7 +9155,12 @@ class AppLocalizations {
 
   /// `Installing...`
   String get installing {
-    return Intl.message('Installing...', name: 'installing', desc: '', args: []);
+    return Intl.message(
+      'Installing...',
+      name: 'installing',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Use`
@@ -9175,7 +9180,12 @@ class AppLocalizations {
 
   /// `Listen port`
   String get xrayListenPort {
-    return Intl.message('Listen port', name: 'xrayListenPort', desc: '', args: []);
+    return Intl.message(
+      'Listen port',
+      name: 'xrayListenPort',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Log level`
@@ -9185,12 +9195,22 @@ class AppLocalizations {
 
   /// `DNS servers`
   String get xrayDnsServers {
-    return Intl.message('DNS servers', name: 'xrayDnsServers', desc: '', args: []);
+    return Intl.message(
+      'DNS servers',
+      name: 'xrayDnsServers',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Routing rules`
   String get xrayRoutingRules {
-    return Intl.message('Routing rules', name: 'xrayRoutingRules', desc: '', args: []);
+    return Intl.message(
+      'Routing rules',
+      name: 'xrayRoutingRules',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Outbounds`
@@ -9220,7 +9240,12 @@ class AppLocalizations {
 
   /// `Kernel Manager`
   String get kernelManager {
-    return Intl.message('Kernel Manager', name: 'kernelManager', desc: '', args: []);
+    return Intl.message(
+      'Kernel Manager',
+      name: 'kernelManager',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Mihomo`
@@ -9250,7 +9275,12 @@ class AppLocalizations {
 
   /// `Mihomo controller`
   String get mihomoController {
-    return Intl.message('Controller', name: 'mihomoController', desc: '', args: []);
+    return Intl.message(
+      'Controller',
+      name: 'mihomoController',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Mihomo hosts`
@@ -9270,7 +9300,12 @@ class AppLocalizations {
 
   /// `Auto-update GEO`
   String get geoAutoUpdate {
-    return Intl.message('Auto-update GEO', name: 'geoAutoUpdate', desc: '', args: []);
+    return Intl.message(
+      'Auto-update GEO',
+      name: 'geoAutoUpdate',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `TProxy port`
@@ -9285,7 +9320,12 @@ class AppLocalizations {
 
   /// `GEO update interval`
   String get geoUpdateInterval {
-    return Intl.message('GEO update interval', name: 'geoUpdateInterval', desc: '', args: []);
+    return Intl.message(
+      'GEO update interval',
+      name: 'geoUpdateInterval',
+      desc: '',
+      args: [],
+    );
   }
 }
 
@@ -9320,6 +9360,3 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
     return false;
   }
 }
-
-
-

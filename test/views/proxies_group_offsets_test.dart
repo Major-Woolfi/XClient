@@ -26,5 +26,3 @@ void main() {
     expect(offsets.offsetOf('a'), 0);
   });
 }
-
-

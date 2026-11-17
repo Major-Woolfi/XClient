@@ -156,5 +156,3 @@ void main() {
     verify(() => core.outboundIp(any())).called(1);
   });
 }
-
-

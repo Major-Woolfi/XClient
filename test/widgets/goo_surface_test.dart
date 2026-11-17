@@ -163,5 +163,3 @@ void main() {
     expect(ElasticPress.paintBoundsOf(pane), rest);
   });
 }
-
-

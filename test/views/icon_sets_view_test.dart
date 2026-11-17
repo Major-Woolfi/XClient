@@ -272,5 +272,3 @@ void main() {
     expect(find.text('Qure'), findsOne);
   });
 }
-
-

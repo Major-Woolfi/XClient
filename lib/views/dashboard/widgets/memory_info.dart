@@ -121,7 +121,7 @@ class _MemoryInfoState extends ConsumerState<MemoryInfo>
     _memoryStateNotifier.value = memory;
   }
 
-// Лист переживает карточку, когда изменение размера переключает макет панели, поэтому он читает сам, а карточка отдыхает до его закрытия.
+  // Лист переживает карточку, когда изменение размера переключает макет панели, поэтому он читает сам, а карточка отдыхает до его закрытия.
   Future<void> _showDetail() async {
     if (_detailOpen) {
       return;
@@ -647,5 +647,3 @@ class _MemoryRow extends StatelessWidget {
     );
   }
 }
-
-

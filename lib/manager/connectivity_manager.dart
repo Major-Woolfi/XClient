@@ -114,5 +114,3 @@ class _ConnectivityManagerState extends ConsumerState<ConnectivityManager> {
     return widget.child;
   }
 }
-
-

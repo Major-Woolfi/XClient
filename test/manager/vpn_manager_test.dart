@@ -32,8 +32,8 @@ void main() {
     container = ProviderContainer(
       overrides: [
         setupActionProvider.overrideWith(() => setupAction),
-// Обход частных адресов вычисляет маршруты в Isolate.run, которые
-/// поддельные часы никогда не дают завершить.
+        // Обход частных адресов вычисляет маршруты в Isolate.run, которые
+        /// поддельные часы никогда не дают завершить.
         networkSettingProvider.overrideWithBuild(
           (_, _) => const NetworkProps(bypassPrivateRoute: false),
         ),
@@ -215,6 +215,3 @@ void main() {
     await drainTimers(tester);
   });
 }
-
-
-

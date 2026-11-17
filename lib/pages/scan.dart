@@ -877,5 +877,3 @@ class _ScanEffectPainter extends CustomPainter {
         highlight != oldDelegate.highlight;
   }
 }
-
-

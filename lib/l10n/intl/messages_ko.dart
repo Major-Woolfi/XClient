@@ -1831,7 +1831,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "xrayOutbounds": MessageLookupByLibrary.simpleMessage("아웃바운드"),
     "xraySave": MessageLookupByLibrary.simpleMessage("저장"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("초기화"),
-    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("변경 사항을 XRay 코어 구성에 적용"),
+    "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
+      "변경 사항을 XRay 코어 구성에 적용",
+    ),
     "kernelManager": MessageLookupByLibrary.simpleMessage("커널 관리자"),
     "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
     "xray": MessageLookupByLibrary.simpleMessage("XRay"),
@@ -1848,6 +1850,3 @@ class MessageLookup extends MessageLookupByLibrary {
     "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO 업데이트 간격"),
   };
 }
-
-
-

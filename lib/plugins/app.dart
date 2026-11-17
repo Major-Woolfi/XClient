@@ -312,5 +312,3 @@ class App {
 }
 
 final app = system.isAndroid ? App() : null;
-
-

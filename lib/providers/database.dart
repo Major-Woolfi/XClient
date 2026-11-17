@@ -1118,5 +1118,3 @@ class ProfileDisabledRuleIds extends _$ProfileDisabledRuleIds
     optimistic(next, () => database.rulesDao.putDisabled(profileId, ruleId));
   }
 }
-
-

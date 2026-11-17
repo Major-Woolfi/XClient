@@ -617,5 +617,3 @@ String? _ruleSaveError(BuildContext context, Rule rule) {
   }
   return null;
 }
-
-

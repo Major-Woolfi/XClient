@@ -46,5 +46,3 @@ extension IpQualitySourceStatusLabel on IpQualitySourceStatus {
     };
   }
 }
-
-

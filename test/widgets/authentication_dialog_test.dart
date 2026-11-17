@@ -103,5 +103,3 @@ void main() {
     expect(container.read(networkSettingProvider).authentication, _initial);
   });
 }
-
-

@@ -377,72 +377,70 @@ void main() {
     expect(painted(), resting);
   });
 
-  testWidgets(
-    'a hovering pointer highlights and draws only the item under it',
-    (tester) async {
-      await _pumpHome(
-        tester,
-        overrides: [
-          currentPageLabelProvider.overrideWithBuild((_, _) => PageLabel.tools),
-        ],
-      );
-      final bar = find.byType(FloatingNavigationBar);
-      final tools = find
-          .descendant(of: bar, matching: find.byType(GlyphIcon))
-          .last;
-      final resting = tester.getRect(tools);
-// Линза рисуется первой, поэтому подсветка — последний дочерний позиционированный элемент.
-      final positioned = find.descendant(
-        of: bar,
-        matching: find.byType(Positioned),
-      );
+  testWidgets('a hovering pointer highlights and draws only the item under it', (
+    tester,
+  ) async {
+    await _pumpHome(
+      tester,
+      overrides: [
+        currentPageLabelProvider.overrideWithBuild((_, _) => PageLabel.tools),
+      ],
+    );
+    final bar = find.byType(FloatingNavigationBar);
+    final tools = find
+        .descendant(of: bar, matching: find.byType(GlyphIcon))
+        .last;
+    final resting = tester.getRect(tools);
+    // Линза рисуется первой, поэтому подсветка — последний дочерний позиционированный элемент.
+    final positioned = find.descendant(
+      of: bar,
+      matching: find.byType(Positioned),
+    );
 
-      final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
-      addTearDown(mouse.removePointer);
-      await mouse.addPointer(location: Offset.zero);
-      await mouse.moveTo(resting.center + const Offset(30, 0));
-      await tester.pumpAndSettle();
-      final hovered = tester.getRect(tools);
-      expect(hovered.width, moreOrLessEquals(resting.width));
-      expect(positioned, findsNWidgets(2));
-      final highlight =
-          tester.getCenter(positioned.last).dx - resting.center.dx;
-      final drawn = hovered.center.dx - resting.center.dx;
-      expect(drawn, greaterThan(0.5));
-      expect(drawn, moreOrLessEquals(highlight / 2, epsilon: 0.5));
-      expect(highlight, lessThan(30));
+    final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    addTearDown(mouse.removePointer);
+    await mouse.addPointer(location: Offset.zero);
+    await mouse.moveTo(resting.center + const Offset(30, 0));
+    await tester.pumpAndSettle();
+    final hovered = tester.getRect(tools);
+    expect(hovered.width, moreOrLessEquals(resting.width));
+    expect(positioned, findsNWidgets(2));
+    final highlight = tester.getCenter(positioned.last).dx - resting.center.dx;
+    final drawn = hovered.center.dx - resting.center.dx;
+    expect(drawn, greaterThan(0.5));
+    expect(drawn, moreOrLessEquals(highlight / 2, epsilon: 0.5));
+    expect(highlight, lessThan(30));
+    expect(
+      tester.getRect(positioned.first),
+      rectMoreOrLessEquals(tester.getRect(positioned.last)),
+    );
+
+    await mouse.moveTo(resting.center - const Offset(80, 0));
+    for (var i = 0; i < 30; i++) {
+      await tester.pump(const Duration(milliseconds: 16));
       expect(
-        tester.getRect(positioned.first),
-        rectMoreOrLessEquals(tester.getRect(positioned.last)),
+        tester.getRect(tools).center.dx,
+        inInclusiveRange(resting.center.dx - 0.5, hovered.center.dx),
       );
+    }
+    await tester.pumpAndSettle();
+    expect(tester.getCenter(tools).dx, moreOrLessEquals(resting.center.dx));
 
-      await mouse.moveTo(resting.center - const Offset(80, 0));
-      for (var i = 0; i < 30; i++) {
-        await tester.pump(const Duration(milliseconds: 16));
-        expect(
-          tester.getRect(tools).center.dx,
-          inInclusiveRange(resting.center.dx - 0.5, hovered.center.dx),
-        );
-      }
-      await tester.pumpAndSettle();
-      expect(tester.getCenter(tools).dx, moreOrLessEquals(resting.center.dx));
+    await mouse.moveTo(resting.center);
+    await tester.pumpAndSettle();
 
-      await mouse.moveTo(resting.center);
-      await tester.pumpAndSettle();
+    await mouse.down(resting.center);
+    await tester.pumpAndSettle();
+    expect(positioned, findsOneWidget);
+    await mouse.up();
+    await tester.pumpAndSettle();
+    expect(positioned, findsNWidgets(2));
 
-      await mouse.down(resting.center);
-      await tester.pumpAndSettle();
-      expect(positioned, findsOneWidget);
-      await mouse.up();
-      await tester.pumpAndSettle();
-      expect(positioned, findsNWidgets(2));
-
-      await mouse.moveTo(Offset.zero);
-      await tester.pumpAndSettle();
-      expect(tester.getCenter(tools).dx, moreOrLessEquals(resting.center.dx));
-      expect(positioned, findsOneWidget);
-    },
-  );
+    await mouse.moveTo(Offset.zero);
+    await tester.pumpAndSettle();
+    expect(tester.getCenter(tools).dx, moreOrLessEquals(resting.center.dx));
+    expect(positioned, findsOneWidget);
+  });
 
   testWidgets('a tap leaves no highlight behind', (tester) async {
     await _pumpHome(tester);
@@ -767,5 +765,3 @@ void main() {
     },
   );
 }
-
-

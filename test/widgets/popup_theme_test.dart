@@ -108,5 +108,3 @@ void main() {
     expect(fillOf(tester), _floatingFill(elevated));
   });
 }
-
-
