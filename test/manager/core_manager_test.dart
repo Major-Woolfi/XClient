@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:xclient/core/core.dart';
-import 'package:xclient/core/interface.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/l10n/l10n.dart';
 import 'package:xclient/manager/core_manager.dart';

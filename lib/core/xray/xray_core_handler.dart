@@ -86,6 +86,7 @@ class XRayCoreHandler implements CoreHandlerInterface {
         }
       });
 
+      // ignore: unawaited_futures
       _process!.exitCode.then((code) {
         _connected = false;
       });
