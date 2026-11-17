@@ -157,9 +157,7 @@ class Bootstrap {
 
   Future<void> _initApp() async {
     unawaited(_container.read(systemActionProvider.notifier).updateTray());
-    unawaited(
-      _container.read(profilesActionProvider.notifier).autoUpdateProfiles(),
-    );
+    unawaited(_container.read(commonActionProvider.notifier).autoUpdateAll());
     unawaited(clearUpdateDownloads());
     unawaited(_container.read(commonActionProvider.notifier).autoCheckUpdate());
     unawaited(
@@ -180,8 +178,6 @@ class Bootstrap {
       await _container.read(setupActionProvider.notifier).initStatus();
     }
     _container.read(initProvider.notifier).value = true;
-    unawaited(_container.read(resourcesActionProvider.notifier).autoUpdate());
-    unawaited(_container.read(mitmModulesActionProvider.notifier).autoUpdate());
     await bootGuard.markRunning();
     unawaited(_container.read(locationPermissionsProvider.notifier).refresh());
   }

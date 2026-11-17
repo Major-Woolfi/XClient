@@ -123,6 +123,8 @@ const mitmModulesDirectoryName = 'modules';
 const mitmResourcesDirectoryName = 'resources';
 
 const localhost = '127.0.0.1';
+const externalControllerAddress = '127.0.0.1:9090';
+const validateDelay = Duration(milliseconds: 400);
 const clashConfigKey = 'clash_config';
 const configKey = 'config';
 const systemDnsRecordKey = 'system_dns_record';
@@ -131,6 +133,12 @@ const appliedConfigMd5Key = 'applied_config_md5';
 const defaultSystemDnsFallback = '223.5.5.5';
 const repository = 'Major-Woolfi/XClient';
 const maxMobileWidth = 600;
+
+/// Базовый URL GitHub API для репозитория.
+String githubApiUrl(String repo) => 'https://api.github.com/repos/$repo';
+
+/// Базовый URL GitHub для репозитория.
+String githubUrl(String repo) => 'https://github.com/$repo';
 const maxLaptopWidth = 840;
 const defaultTestUrl = 'https://www.gstatic.com/generate_204';
 

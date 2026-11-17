@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:ffi/ffi.dart';
 import 'package:xclient/common/boot_record.dart';
 import 'package:xclient/common/common.dart';
+import 'package:xclient/common/platform_elevator.dart' as pe;
 import 'package:xclient/common/system_dns.dart';
 import 'package:xclient/core/desktop/helper_client.dart';
 import 'package:xclient/enum/enum.dart';
@@ -29,6 +30,29 @@ class System {
     _instance ??= System._internal();
     return _instance!;
   }
+
+  @visibleForTesting
+  static List<String> statArguments(String corePath, {required bool isMacOS}) =>
+      pe.statArguments(corePath, isMacOS: isMacOS);
+
+  @visibleForTesting
+  static bool isPrivilegedStatOutput(
+    String output, {
+    required String ownerPrefix,
+  }) =>
+      pe.isPrivilegedStatOutput(output, ownerPrefix: ownerPrefix);
+
+  @visibleForTesting
+  static String macOSElevationShell(String corePath) =>
+      pe.macOSElevationShell(corePath);
+
+  @visibleForTesting
+  static String linuxElevationShell(String corePath) =>
+      pe.linuxElevationShell(corePath);
+
+  @visibleForTesting
+  static List<String> aclArguments(String homeDirPath, String userName) =>
+      pe.aclArguments(homeDirPath, userName);
 
   bool get isDesktop => isWindows || isMacOS || isLinux;
 
@@ -77,44 +101,6 @@ class System {
   /// [corePath] передаётся в `Process.run` как запись argv, поэтому должен оставаться
   /// без изменений. Экранирование оболочки здесь попадёт в `stat` как часть имени
   /// файла и превратит каждый путь с пробелом в промах.
-  @visibleForTesting
-  static List<String> statArguments(String corePath, {required bool isMacOS}) {
-    return isMacOS
-        ? ['-f', '%Su:%Sg %Sp', corePath]
-        : ['-c', '%U:%G %A', corePath];
-  }
-
-  /// Выполнение для остальных завершается неудачей, поэтому старый Core с `+sx` переавторизуется.
-  @visibleForTesting
-  static bool isPrivilegedStatOutput(
-    String output, {
-    required String ownerPrefix,
-  }) {
-    final trimmed = output.trim();
-    if (!trimmed.startsWith(ownerPrefix)) {
-      return false;
-    }
-    final mode = trimmed.split(RegExp(r'\s+')).last;
-    return mode.length >= 10 &&
-        mode[3] == 's' &&
-        mode[9] != 'x' &&
-        mode[9] != 't';
-  }
-
-  @visibleForTesting
-  static String macOSElevationShell(String corePath) {
-    final path = _shellEscape(corePath);
-    return 'chown root:admin $path && chmod 4750 $path';
-  }
-
-  @visibleForTesting
-  static String linuxElevationShell(String corePath) {
-    final path = _shellEscape(corePath);
-    return 'group=\$(id -g "\${PKEXEC_UID:-\$SUDO_UID}") && '
-        'chown "root:\$group" $path && '
-        'chmod 4750 $path';
-  }
-
   Future<bool> _isInAdminGroup() async {
     try {
       final result = await runProcess('id', ['-Gn']);
@@ -165,20 +151,6 @@ class System {
     return true;
   }
 
-  static const _inheritedAclPermissions =
-      'list,search,add_file,add_subdirectory,delete,delete_child,'
-      'file_inherit,directory_inherit';
-
-  @visibleForTesting
-  static List<String> aclArguments(String homeDirPath, String userName) {
-    return [
-      '-R',
-      '+a',
-      'user:$userName allow $_inheritedAclPermissions',
-      homeDirPath,
-    ];
-  }
-
   Future<void> grantHomeDirAccess(String homeDirPath) async {
     if (!isMacOS) {
       return;
@@ -204,10 +176,6 @@ class System {
         logLevel: LogLevel.warning,
       );
     }
-  }
-
-  static String _shellEscape(String value) {
-    return "'${value.replaceAll("'", "'\\''")}'";
   }
 
   Future<AuthorizeCode> authorizeCore() async {

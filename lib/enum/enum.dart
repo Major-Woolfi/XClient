@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:xclient/common/constant.dart';
 import 'package:xclient/common/context.dart';
 import 'package:xclient/common/system.dart';
 import 'package:flutter/services.dart';
@@ -375,8 +376,8 @@ enum GeneralOverrideKey with OverrideKey {
 enum ExternalControllerStatus {
   @JsonValue('')
   close(''),
-  @JsonValue('127.0.0.1:9090')
-  open('127.0.0.1:9090');
+  @JsonValue(externalControllerAddress)
+  open(externalControllerAddress);
 
   final String value;
 

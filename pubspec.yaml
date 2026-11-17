@@ -8,9 +8,9 @@ environment:
 hooks:
   user_defines:
     setup:
-      build_assets: true
+      build_assets: false
     rust_api:
-      build_assets: true
+      build_assets: false
 
 dependencies:
   flutter:

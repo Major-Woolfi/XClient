@@ -25,7 +25,7 @@ Future<bool> rootAccess(Ref ref) async {
   return app!.hasRootAccess();
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class AuthorizedTunEnable extends _$AuthorizedTunEnable
     with AutoDisposeNotifierMixin {
   @override
@@ -34,14 +34,14 @@ class AuthorizedTunEnable extends _$AuthorizedTunEnable
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class UpdateDownloadState extends _$UpdateDownloadState
     with AutoDisposeNotifierMixin {
   @override
   UpdateDownload? build() => null;
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class Logs extends _$Logs with AutoDisposeNotifierMixin {
   @override
   FixedList<Log> build() {
@@ -66,7 +66,7 @@ class Logs extends _$Logs with AutoDisposeNotifierMixin {
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class Requests extends _$Requests with AutoDisposeNotifierMixin {
   @override
   FixedList<TrackerInfo> build() {
@@ -106,7 +106,7 @@ class Requests extends _$Requests with AutoDisposeNotifierMixin {
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class DnsQueries extends _$DnsQueries with AutoDisposeNotifierMixin {
   @override
   FixedList<DnsQuery> build() {
@@ -137,7 +137,7 @@ class RequestCount extends _$RequestCount with AutoDisposeNotifierMixin {
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class Providers extends _$Providers with AutoDisposeNotifierMixin {
   @override
   List<ExternalProvider> build() {
@@ -157,7 +157,7 @@ class Providers extends _$Providers with AutoDisposeNotifierMixin {
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class Packages extends _$Packages with AutoDisposeNotifierMixin {
   @override
   List<Package> build() {
@@ -174,7 +174,7 @@ class SystemBrightness extends _$SystemBrightness
   }
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod()
 class Traffics extends _$Traffics with AutoDisposeNotifierMixin {
   @override
   FixedList<Traffic> build() {

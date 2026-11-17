@@ -181,9 +181,7 @@ class CommonAction extends _$CommonAction {
   }
 
   void _openReleasePage() {
-    unawaited(
-      launchUrl(Uri.parse('https://github.com/$repository/releases/latest')),
-    );
+    unawaited(launchUrl(Uri.parse('${githubUrl(repository)}/releases/latest')));
   }
 
   /// Качает последний релиз этой сборки, даже если он не новее.
@@ -296,5 +294,13 @@ class CommonAction extends _$CommonAction {
     if (res == true) {
       _openReleasePage();
     }
+  }
+
+  /// Единая точка обновления профилей, ресурсов и MITM-модулей.
+  /// Используется и при старте приложения, и в периодической задаче.
+  Future<void> autoUpdateAll() async {
+    await ref.read(profilesActionProvider.notifier).autoUpdateProfiles();
+    await ref.read(resourcesActionProvider.notifier).autoUpdate();
+    await ref.read(mitmModulesActionProvider.notifier).autoUpdate();
   }
 }

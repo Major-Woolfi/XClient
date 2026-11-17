@@ -530,7 +530,7 @@ class EditProxyGroupView extends ConsumerStatefulWidget {
 }
 
 class _EditProxyGroupViewState extends ConsumerState<EditProxyGroupView> {
-  static const _validateDelay = Duration(milliseconds: 400);
+  static const _validateDelay = validateDelay;
 
   late final bool _isNew;
   late Set<_GroupOption> _shown;

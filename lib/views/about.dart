@@ -78,7 +78,7 @@ class AboutView extends ConsumerWidget {
               _buildLinkItem(
                 glyph: AppGlyphs.code,
                 title: appLocalizations.project,
-                url: 'https://github.com/$repository',
+                url: githubUrl(repository),
                 label: 'github.com/$repository',
               ),
               _buildLinkItem(

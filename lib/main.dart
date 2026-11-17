@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:xclient/enum/enum.dart';
-import 'package:xclient/pages/error.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rust_api/rust_api.dart';
@@ -14,11 +12,18 @@ import 'common/app_data.dart';
 import 'common/common.dart';
 import 'common/preferences_store.dart';
 import 'common/window.dart';
+import 'enum/enum.dart';
+import 'pages/error.dart';
 
 void main(List<String> args) {
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      // Ограничиваем кэш изображений, чтобы не раздувать ОЗУ на больших списках
+      // и dashboard виджетах с иконками.
+      PaintingBinding.instance.imageCache
+        ..maximumSize = 100
+        ..maximumSizeBytes = 64 * 1024 * 1024;
       if (Platform.isWindows || Platform.isLinux) {
         SharedPreferencesStorePlatform.instance = AtomicFilePreferencesStore(
           appPath.sharedPreferencesPath,

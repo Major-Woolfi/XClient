@@ -157,8 +157,7 @@ class CoreBinaryManager {
 
     for (final t in types) {
       try {
-        final url =
-            'https://api.github.com/repos/${t.repo}/releases?per_page=20';
+        final url = '${githubApiUrl(t.repo)}/releases?per_page=20';
         final response = await _dio.get(url);
         if (response.statusCode != 200) continue;
 

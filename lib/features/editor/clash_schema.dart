@@ -1,3 +1,5 @@
+import 'package:xclient/common/constant.dart';
+
 enum YamlKind { scalar, map, list }
 
 /// Where a scalar's completions come from besides [YamlSchema.values].
@@ -1927,7 +1929,7 @@ const clashConfigSchema = YamlSchema.map({
   'interface-name': _str,
   'routing-mark': _str,
   'etag-support': _bool,
-  'external-controller': YamlSchema.scalar(['127.0.0.1:9090']),
+  'external-controller': YamlSchema.scalar([externalControllerAddress]),
   'external-controller-routing-mark': _str,
   'external-controller-cors': YamlSchema.map({
     'allow-origins': _strList,

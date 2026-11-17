@@ -803,7 +803,7 @@ class _EditCustomProxyView extends ConsumerStatefulWidget {
 }
 
 class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
-  static const _validateDelay = Duration(milliseconds: 400);
+  static const _validateDelay = validateDelay;
 
   late final bool _isNew;
   Timer? _validateTimer;

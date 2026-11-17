@@ -60,11 +60,9 @@ Future<void> main(List<String> args) async {
   if (skipped.isNotEmpty) {
     stderr.writeln(
       'pubspec.yaml sets hooks.user_defines.<package>.build_assets: false '
-      'for ${skipped.join(', ')}; a package built this way would ship '
-      'whatever is left in libclash/ and no Rust library. '
-      'Restore "build_assets: true".',
+      'for ${skipped.join(', ')}; Core and Helper will not be bundled. '
+      'The user must load a Core via core management before the app can proxy.',
     );
-    exit(1);
   }
   final targets = createPackageTargets(platform, results['targets']);
   final androidArch = results['arch'] as String?;
