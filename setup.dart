@@ -200,6 +200,7 @@ Future<int> _package(
         '--flutter-build-args=${flutterBuildArgs.join(',')}',
     ],
     includeParentEnvironment: true,
+    environment: {if (platform == 'linux') 'ARCH': _appImageArch()},
     runInShell: Platform.isWindows,
   );
 
@@ -223,6 +224,12 @@ String _detectArch() {
   if (machine == 'aarch64') return 'arm64';
   if (machine == 'x86_64') return 'amd64';
   return machine;
+}
+
+/// Архитектура в формате, который понимает appimagetool (aarch64 / x86_64).
+String _appImageArch() {
+  final result = Process.runSync('uname', ['-m']);
+  return result.stdout.trim();
 }
 
 Future<bool> _hasCommand(String cmd) async {
