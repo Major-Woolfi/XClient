@@ -1860,6 +1860,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "xraySave": MessageLookupByLibrary.simpleMessage("保存"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("リセット"),
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("変更を XRay コア設定に適用"),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("カーネルマネージャー"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("ポート"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("ログ"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("ネットワーク"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("コントローラー"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("ホスト"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("遅延テスト"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("GEO自動更新"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxyポート"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO更新間隔"),
   };
 }
 

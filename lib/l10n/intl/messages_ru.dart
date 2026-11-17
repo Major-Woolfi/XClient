@@ -2310,5 +2310,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
       "Применить изменения к конфигурации XRay ядра",
     ),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("Менеджер ядер"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("Порты"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("Логи"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("Сеть"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("Контроллер"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("Хосты"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("Тест задержки"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Автообновление GEO"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy-порт"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("Интервал обновления GEO"),
   };
 }

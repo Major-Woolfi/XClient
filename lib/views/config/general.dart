@@ -5,7 +5,6 @@ import 'package:xclient/l10n/l10n.dart';
 import 'package:xclient/models/models.dart';
 import 'package:xclient/providers/providers.dart';
 import 'package:xclient/views/config/on_demand.dart';
-import 'package:xclient/views/config/override.dart';
 import 'package:xclient/views/config/user_agents.dart';
 import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/services.dart';
@@ -290,12 +289,6 @@ class GeneralView extends ConsumerWidget {
     required bool externalController,
   }) {
     return [
-      const PortItem(),
-      _clashToggle(
-        title: (l) => l.allowLan,
-        select: (state) => state.allowLan,
-        update: (state, value) => state.copyWith(allowLan: value),
-      ),
       _clashToggle(
         title: (l) => l.externalController,
         select: (state) =>
@@ -319,14 +312,6 @@ class GeneralView extends ConsumerWidget {
 
   List<Widget> _connectionItems() {
     return [
-      const DelayTestTimeoutItem(),
-      _clashToggle(
-        title: (l) => l.findProcessMode,
-        select: (state) => state.findProcessMode == FindProcessMode.always,
-        update: (state, value) => state.copyWith(
-          findProcessMode: value ? FindProcessMode.always : FindProcessMode.off,
-        ),
-      ),
       _appSettingToggle(
         title: (l) => l.autoCloseConnections,
         select: (state) => state.closeConnections,
@@ -356,25 +341,8 @@ class GeneralView extends ConsumerWidget {
     ];
   }
 
-  List<Widget> _coreItems() {
-    return [
-      const HostsItem(key: ValueKey(#hosts)),
-      ConfigToggleItem(
-        key: const ValueKey(#appendSystemDns),
-        title: (l) => l.appendSystemDns,
-        selector: networkSettingProvider.select(
-          (state) => state.appendSystemDns,
-        ),
-        onChanged: (ref, value) => ref
-            .read(networkSettingProvider.notifier)
-            .update((state) => state.copyWith(appendSystemDns: value)),
-      ),
-    ];
-  }
-
   List<Widget> _logItems() {
     return [
-      const LogLevelItem(),
       _appSettingToggle(
         title: (l) => l.logcat,
         select: (state) => state.openLogs,
@@ -423,11 +391,6 @@ class GeneralView extends ConsumerWidget {
           generateSection(
             title: appLocalizations.connection,
             items: _connectionItems(),
-          ),
-          OverrideSection(
-            title: appLocalizations.core,
-            spec: _generalOverrideSpec,
-            items: _coreItems(),
           ),
           generateSection(
             title: appLocalizations.logsAndDiagnostics,

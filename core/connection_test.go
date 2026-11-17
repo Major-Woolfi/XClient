@@ -47,9 +47,10 @@ func TestProxyOnlyTrafficLeavesOutADirectProxyOfAnyName(t *testing.T) {
 		_ = tracker.Close()
 		_ = remote.Close()
 
-		all, _ := statistic.DefaultManager.Total()
-		if all != 5 {
-			t.Errorf("%s: total %d; want 5", test.outbound.Name(), all)
+		all, _ := statistic.DefaultManager.TotalTraffic(false)
+		proxied, _ := statistic.DefaultManager.TotalTraffic(true)
+		if all != 5 || proxied != test.proxied {
+			t.Errorf("%s: total %d, proxied %d; want 5 and %d", test.outbound.Name(), all, proxied, test.proxied)
 		}
 	}
 	statistic.DefaultManager.ResetStatistic()

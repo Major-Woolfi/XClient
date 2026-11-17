@@ -1698,6 +1698,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "xraySave": MessageLookupByLibrary.simpleMessage("保存"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("重置"),
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("将更改应用到 XRay 核心配置"),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("内核管理器"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("端口"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("日志"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("网络"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("控制器"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("主机"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("延迟测试"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("自动更新 GEO"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy 端口"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO 更新间隔"),
   };
 }
 

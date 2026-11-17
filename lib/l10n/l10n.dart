@@ -9217,6 +9217,76 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Kernel Manager`
+  String get kernelManager {
+    return Intl.message('Kernel Manager', name: 'kernelManager', desc: '', args: []);
+  }
+
+  /// `Mihomo`
+  String get mihomo {
+    return Intl.message('Mihomo', name: 'mihomo', desc: '', args: []);
+  }
+
+  /// `XRay`
+  String get xray {
+    return Intl.message('XRay', name: 'xray', desc: '', args: []);
+  }
+
+  /// `Mihomo ports`
+  String get mihomoPorts {
+    return Intl.message('Ports', name: 'mihomoPorts', desc: '', args: []);
+  }
+
+  /// `Mihomo log`
+  String get mihomoLog {
+    return Intl.message('Log', name: 'mihomoLog', desc: '', args: []);
+  }
+
+  /// `Mihomo network`
+  String get mihomoNetwork {
+    return Intl.message('Network', name: 'mihomoNetwork', desc: '', args: []);
+  }
+
+  /// `Mihomo controller`
+  String get mihomoController {
+    return Intl.message('Controller', name: 'mihomoController', desc: '', args: []);
+  }
+
+  /// `Mihomo hosts`
+  String get mihomoHosts {
+    return Intl.message('Hosts', name: 'mihomoHosts', desc: '', args: []);
+  }
+
+  /// `Mihomo GEO`
+  String get mihomoGeo {
+    return Intl.message('GEO', name: 'mihomoGeo', desc: '', args: []);
+  }
+
+  /// `Mihomo delay test`
+  String get mihomoDelay {
+    return Intl.message('Delay test', name: 'mihomoDelay', desc: '', args: []);
+  }
+
+  /// `Auto-update GEO`
+  String get geoAutoUpdate {
+    return Intl.message('Auto-update GEO', name: 'geoAutoUpdate', desc: '', args: []);
+  }
+
+  /// `TProxy port`
+  String get tProxyPort {
+    return Intl.message('TProxy port', name: 'tProxyPort', desc: '', args: []);
+  }
+
+  /// `IPv6`
+  String get ipv6 {
+    return Intl.message('IPv6', name: 'ipv6', desc: '', args: []);
+  }
+
+  /// `GEO update interval`
+  String get geoUpdateInterval {
+    return Intl.message('GEO update interval', name: 'geoUpdateInterval', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

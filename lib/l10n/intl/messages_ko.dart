@@ -1832,6 +1832,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "xraySave": MessageLookupByLibrary.simpleMessage("저장"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("초기화"),
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("변경 사항을 XRay 코어 구성에 적용"),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("커널 관리자"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("포트"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("로그"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("네트워크"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("컨트롤러"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("호스트"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("지연 테스트"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("GEO 자동 업데이트"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy 포트"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO 업데이트 간격"),
   };
 }
 

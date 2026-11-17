@@ -506,14 +506,19 @@ func TestHandleUpdateGeoDataRejectsAnUnknownResource(t *testing.T) {
 
 func TestSetTestURLIgnoresAnEmptyValue(t *testing.T) {
 	const configured = "https://example.test/generate_204"
+	previousDefault := constant.DefaultTestURL
 	previousStored := testURL.Load()
 	t.Cleanup(func() {
+		constant.DefaultTestURL = previousDefault
 		testURL.Store(previousStored)
 	})
 
 	setTestURL(configured)
 	setTestURL("")
 
+	if constant.DefaultTestURL != configured {
+		t.Errorf("DefaultTestURL = %q, an empty setup param cleared mihomo's own default", constant.DefaultTestURL)
+	}
 	if got := currentTestURL(); got != configured {
 		t.Errorf("currentTestURL() = %q, want %q", got, configured)
 	}
@@ -622,7 +627,7 @@ func TestGeoUpdateHookBlocksAManualUpdateOfTheSameResource(t *testing.T) {
 		},
 	})
 
-	geoUpdateHook(resource, true, false, nil)
+	updater.GeoUpdateHook(resource, true, false, nil)
 
 	if err := handleUpdateGeoData(GeoUpdateParams{Type: resource}); err == nil {
 		t.Fatal("handleUpdateGeoData reported no error while the hook already claimed this resource")
@@ -633,7 +638,7 @@ func TestGeoUpdateHookBlocksAManualUpdateOfTheSameResource(t *testing.T) {
 	case <-time.After(100 * time.Millisecond):
 	}
 
-	geoUpdateHook(resource, false, false, nil)
+	updater.GeoUpdateHook(resource, false, false, nil)
 
 	if !claimGeoUpdate(resource) {
 		t.Fatal("the hook never cleared the claim, so the resource stays blocked for the rest of the process")
@@ -669,8 +674,8 @@ func TestGeoUpdateHookDoesNotReleaseAManualClaim(t *testing.T) {
 		t.Fatal("the manual update never started")
 	}
 
-	geoUpdateHook(resource, true, false, nil)
-	geoUpdateHook(resource, false, false, nil)
+	updater.GeoUpdateHook(resource, true, false, nil)
+	updater.GeoUpdateHook(resource, false, false, nil)
 
 	if err := handleUpdateGeoData(GeoUpdateParams{Type: resource}); err == nil {
 		t.Fatal("the duplicate request reported no error while the manual claim was still held")

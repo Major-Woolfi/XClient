@@ -2343,6 +2343,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage(
       "Appliquer les modifications à la configuration du cœur XRay",
     ),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("Gestionnaire de noyau"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("Ports"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("Journal"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("Réseau"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("Contrôleur"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("Hôtes"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("Test de latence"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Mise à jour automatique GEO"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("Port TProxy"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("Intervalle de mise à jour GEO"),
   };
 }
 

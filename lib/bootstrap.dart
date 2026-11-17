@@ -91,6 +91,7 @@ class Bootstrap {
     DynamicColorSeeds dynamicColor,
   ) async {
     await _claimDataDirectory();
+    await coreBinaryManager.init();
     globalState.packageInfo = await PackageInfo.fromPlatform();
     var config = await migration.run();
     _bootDecision = await bootGuard.evaluate(

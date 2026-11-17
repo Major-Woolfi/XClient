@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:xclient/common/constant.dart';
-import 'package:xclient/common/system.dart';
+import 'package:xclient/common/common.dart';
+import 'package:xclient/core/core_manager.dart';
+import 'package:xclient/core/core_type.dart';
 import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/core.dart';
 import 'package:flutter/foundation.dart';
@@ -35,7 +37,9 @@ class CoreService extends CoreHandlerInterface {
 
   factory CoreService._create() {
     final address = system.isWindows ? windowsPipeName : unixSocketPath;
-    final directLauncher = DirectCoreLauncher();
+    final directLauncher = DirectCoreLauncher(
+      corePathResolver: _resolveClashBinaryPath,
+    );
 
     final lifecycle = DesktopCoreLifecycle(
       transportFactory: () => IpcCoreTransport(address: address),
@@ -50,6 +54,28 @@ class CoreService extends CoreHandlerInterface {
     return CoreService._(
       lifecycle: lifecycle,
       rpcClient: CoreRpcClient(lifecycle.transport),
+    );
+  }
+
+  /// Разрешает путь к бинарнику Clash.Meta через менеджер ядер.
+  /// Если версия не установлена — скачивает её автоматически (как для Xray).
+  static Future<String> _resolveClashBinaryPath() async {
+    final manager = coreBinaryManager;
+    final version = await manager.getActiveVersion();
+    final path = await manager.getBinaryPath(CoreType.clash, version);
+    if (path != null && await File(path).exists()) {
+      return path;
+    }
+    final result = await manager.installCore(CoreType.clash, version, setActive: true);
+    if (result.success) {
+      final installed = await manager.getBinaryPath(CoreType.clash, version);
+      if (installed != null && await File(installed).exists()) {
+        return installed;
+      }
+    }
+    throw StateError(
+      'Clash.Meta core binary is not installed for version $version. '
+      'Install it via the kernel manager first.',
     );
   }
 

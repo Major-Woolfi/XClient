@@ -23,17 +23,31 @@ abstract interface class DesktopCoreLauncherResolver {
 
 final class DirectCoreLauncher implements CoreProcessLauncher {
   final CoreProcessStarter _startProcess;
-  final String corePath;
+  final String? _explicitCorePath;
+  final Future<String> Function()? _corePathResolver;
 
-  DirectCoreLauncher({CoreProcessStarter? startProcess, String? corePath})
-    : _startProcess = startProcess ?? Process.start,
-      corePath = corePath ?? appPath.corePath;
+  DirectCoreLauncher({
+    CoreProcessStarter? startProcess,
+    String? corePath,
+    Future<String> Function()? corePathResolver,
+  }) : _startProcess = startProcess ?? Process.start,
+       _explicitCorePath = corePath,
+       _corePathResolver = corePathResolver;
+
+  Future<String> _resolveCorePath() async {
+    if (_explicitCorePath != null) return _explicitCorePath;
+    if (_corePathResolver != null) return _corePathResolver();
+    throw StateError(
+      'Core binary is not installed. Install it via the kernel manager first.',
+    );
+  }
 
   @override
   Future<CoreProcessLease> start({
     required String sessionId,
     required String address,
   }) async {
+    final corePath = await _resolveCorePath();
     final process = await _startProcess(corePath, [address]);
     process.stdout.listen((_) {});
     process.stderr.listen((data) {

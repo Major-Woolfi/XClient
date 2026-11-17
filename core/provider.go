@@ -29,12 +29,12 @@ var errNotExternalProvider = errors.New("not external provider")
 
 func externalProviders() map[string]cp.Provider {
 	eps := make(map[string]cp.Provider)
-	for n, p := range tunnel.Providers() {
+	for n, p := range tunnel.ProvidersSnapshot() {
 		if p.VehicleType() != cp.Compatible {
 			eps[n] = p
 		}
 	}
-	for n, p := range tunnel.RuleProviders() {
+	for n, p := range tunnel.RuleProvidersSnapshot() {
 		if p.VehicleType() != cp.Compatible {
 			eps[n] = p
 		}
@@ -43,10 +43,10 @@ func externalProviders() map[string]cp.Provider {
 }
 
 func lookupExternalProvider(name string) (cp.Provider, bool) {
-	if p, exist := tunnel.RuleProviders()[name]; exist && p.VehicleType() != cp.Compatible {
+	if p, exist := tunnel.RuleProvidersSnapshot()[name]; exist && p.VehicleType() != cp.Compatible {
 		return p, true
 	}
-	if p, exist := tunnel.Providers()[name]; exist && p.VehicleType() != cp.Compatible {
+	if p, exist := tunnel.ProvidersSnapshot()[name]; exist && p.VehicleType() != cp.Compatible {
 		return p, true
 	}
 	return nil, false
@@ -62,7 +62,7 @@ func toExternalProvider(p cp.Provider) (*ExternalProvider, error) {
 			Count:            typed.Count(),
 			UpdateAt:         typed.UpdatedAt(),
 			Path:             typed.Vehicle().Path(),
-			SubscriptionInfo: nil,
+			SubscriptionInfo: typed.GetSubscriptionInfo(),
 		}, nil
 	case *rp.RuleSetProvider:
 		return &ExternalProvider{
@@ -305,7 +305,7 @@ func handleDumpRuleSet(params PathParams) (string, error) {
 }
 
 // The profile ID is an int64 rendered through strconv, so the last element can
-// never carry a separator or a `..` - that is what keeps handleClearEffect from
+// never carry a separator or a `..` — that is what keeps handleClearEffect from
 // becoming a general-purpose privileged file deletion API.
 func providerPaths(homeDir string, profileId int64) (root string, target string) {
 	root = filepath.Join(homeDir, "profiles", "providers")

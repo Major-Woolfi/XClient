@@ -2,16 +2,17 @@ package core
 
 import (
 	"github.com/metacubex/mihomo/component/resolver"
+	"github.com/metacubex/mihomo/dns"
 	"github.com/metacubex/mihomo/tunnel/statistic"
 )
 
 func handleGetTraffic(params TrafficParams) Traffic {
-	up, down := statistic.DefaultManager.Now()
+	up, down := statistic.DefaultManager.NowTraffic(params.OnlyProxy)
 	return Traffic{Up: up, Down: down}
 }
 
 func handleGetTotalTraffic(params TrafficParams) Traffic {
-	up, down := statistic.DefaultManager.Total()
+	up, down := statistic.DefaultManager.TotalTraffic(params.OnlyProxy)
 	return Traffic{Up: up, Down: down}
 }
 
@@ -48,6 +49,7 @@ func handleResetConnections() {
 func handleClearDnsCache() {
 	configMu.Lock()
 	defer configMu.Unlock()
+	dns.ClearAll()
 }
 
 // handleNetworkChanged is how the desktop host reports a new network, which

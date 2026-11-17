@@ -66,12 +66,12 @@ func routeStamp() (epoch, version uint64) {
 
 func readPicks() (map[string]string, map[string]uint32) {
 	picks := map[string]string{}
-	for name, proxy := range tunnel.Proxies() {
+	for name, proxy := range tunnel.AllProxies() {
 		if group, ok := adapterAs[pickableGroup](proxy); ok {
 			picks[name] = group.Now()
 		}
 	}
-	providers := tunnel.Providers()
+	providers := tunnel.ProvidersSnapshot()
 	versions := make(map[string]uint32, len(providers))
 	for name, p := range providers {
 		versions[name] = p.Version()
@@ -82,7 +82,7 @@ func readPicks() (map[string]string, map[string]uint32) {
 // mihomo swaps in a new strategy each time a rule set, manually or on its
 // interval, loads new content.
 func readRuleSets() map[string]any {
-	providers := tunnel.RuleProviders()
+	providers := tunnel.RuleProvidersSnapshot()
 	ruleSets := make(map[string]any, len(providers))
 	for name, p := range providers {
 		ruleSets[name] = p.Strategy()
@@ -237,7 +237,11 @@ func resolveExit(host string, proxyName string) string {
 	if err != nil {
 		return ""
 	}
-	return ""
+	proxy, err := tunnel.ResolveRoute(metadata)
+	if err != nil {
+		return ""
+	}
+	return exitThrough(proxy, metadata)
 }
 
 func exitThrough(proxy constant.Proxy, metadata *constant.Metadata) string {
@@ -260,7 +264,7 @@ func exitOfChains(chains []string) string {
 	if len(chains) == 0 {
 		return ""
 	}
-	proxies := tunnel.Proxies()
+	proxies := tunnel.AllProxies()
 	for _, name := range slices.Backward(chains[1:]) {
 		if proxy := proxies[name]; proxy != nil && proxy.Type() == constant.LoadBalance {
 			return exitName(proxy)

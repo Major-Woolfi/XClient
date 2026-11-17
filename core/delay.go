@@ -29,6 +29,7 @@ func setTestURL(url string) {
 	if url == "" {
 		return
 	}
+	constant.DefaultTestURL = url
 	testURL.Store(&url)
 }
 
@@ -110,7 +111,7 @@ type testTimeoutProvider interface {
 // The longest stands, so no scheduled check passes a node the manual test fails.
 func configuredTestTimeout(name, url string) (time.Duration, bool) {
 	var longest time.Duration
-	for _, pd := range tunnel.Providers() {
+	for _, pd := range tunnel.ProvidersSnapshot() {
 		timed, ok := pd.(testTimeoutProvider)
 		if !ok {
 			continue

@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"syscall"
@@ -16,6 +17,7 @@ import (
 	"github.com/metacubex/mihomo/component/dialer"
 	"github.com/metacubex/mihomo/component/process"
 	"github.com/metacubex/mihomo/constant"
+	"github.com/metacubex/mihomo/dns"
 	"github.com/metacubex/mihomo/listener/sing_tun"
 	"github.com/metacubex/mihomo/log"
 )
@@ -49,7 +51,7 @@ func (th *TunHandler) start(fd int, stack, address, dns, options string) bool {
 
 	// t.Start runs outside th.mu on purpose. The hook is live from initHook
 	// onwards, and a socket opened anywhere inside Start reaches handleProtect
-	// on this very goroutine - an RLock taken while this one holds the write
+	// on this very goroutine — an RLock taken while this one holds the write
 	// lock deadlocks the start outright. Nothing is lost by dropping it: both
 	// hooks return early until th.listener is set, which is below.
 	tunListener := t.Start(fd, stack, address, dns, options)
@@ -216,6 +218,12 @@ var (
 )
 
 func handleUpdateDns(value string) {
+	// mihomo turns the [""] that Split returns for no servers into a "udp://:"
+	// nameserver, which keeps the system resolver off its default fallback.
+	var addr []string
+	if value != "" {
+		addr = strings.Split(value, ",")
+	}
 	seq := dnsUpdateSeq.Add(1)
 	safeGo("updateDns", func() {
 		dnsUpdateMu.Lock()
@@ -224,6 +232,8 @@ func handleUpdateDns(value string) {
 			return
 		}
 		log.Infoln("[DNS] updateDns %s", value)
+		dns.UpdateSystemDNS(addr)
+		dns.FlushCacheWithDefaultResolver()
 	})
 }
 

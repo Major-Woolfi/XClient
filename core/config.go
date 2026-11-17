@@ -10,6 +10,7 @@ import (
 
 	"github.com/metacubex/mihomo/adapter"
 	"github.com/metacubex/mihomo/adapter/inbound"
+	"github.com/metacubex/mihomo/adapter/provider"
 	"github.com/metacubex/mihomo/component/age"
 	"github.com/metacubex/mihomo/component/auth"
 	"github.com/metacubex/mihomo/component/dialer"
@@ -63,12 +64,12 @@ func handleGetProxyDefinition(params NameParams) (map[string]any, error) {
 	}
 	if proxy := lookupProxy(name); proxy != nil {
 		if pdName := proxy.ProxyInfo().ProviderName; pdName != "" {
-			_, running := tunnel.Providers()[pdName]
-			_, declared := raw.ProxyProvider[pdName]
+			pd, running := tunnel.ProvidersSnapshot()[pdName]
+			mapping, declared := raw.ProxyProvider[pdName]
 			if !running || !declared {
 				return nil, nil
 			}
-			return nil, nil
+			return provider.ProxyMapping(pd, mapping, name)
 		}
 	}
 	for _, mapping := range raw.Proxy {
@@ -244,6 +245,7 @@ func updateConfig(params *UpdateParams) error {
 
 func applyOptions(options CoreOptions) {
 	setTestURL(options.TestURL)
+	provider.SetDefaultTestTimeout(timeoutFromMillis(options.DelayTestTimeout, 0))
 	skipCertVerify.Store(options.SkipCertVerify)
 }
 

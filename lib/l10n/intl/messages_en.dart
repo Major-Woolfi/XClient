@@ -2178,6 +2178,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "xraySave": MessageLookupByLibrary.simpleMessage("Save"),
     "xrayReset": MessageLookupByLibrary.simpleMessage("Reset"),
     "xrayApplyDesc": MessageLookupByLibrary.simpleMessage("Apply changes to XRay core config"),
+    "kernelManager": MessageLookupByLibrary.simpleMessage("Kernel Manager"),
+    "mihomo": MessageLookupByLibrary.simpleMessage("Mihomo"),
+    "xray": MessageLookupByLibrary.simpleMessage("XRay"),
+    "mihomoPorts": MessageLookupByLibrary.simpleMessage("Ports"),
+    "mihomoLog": MessageLookupByLibrary.simpleMessage("Log"),
+    "mihomoNetwork": MessageLookupByLibrary.simpleMessage("Network"),
+    "mihomoController": MessageLookupByLibrary.simpleMessage("Controller"),
+    "mihomoHosts": MessageLookupByLibrary.simpleMessage("Hosts"),
+    "mihomoGeo": MessageLookupByLibrary.simpleMessage("GEO"),
+    "mihomoDelay": MessageLookupByLibrary.simpleMessage("Delay test"),
+    "geoAutoUpdate": MessageLookupByLibrary.simpleMessage("Auto-update GEO"),
+    "tProxyPort": MessageLookupByLibrary.simpleMessage("TProxy port"),
+    "ipv6": MessageLookupByLibrary.simpleMessage("IPv6"),
+    "geoUpdateInterval": MessageLookupByLibrary.simpleMessage("GEO update interval"),
   };
 }
 

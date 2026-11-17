@@ -8,6 +8,7 @@ import 'package:xclient/views/about.dart';
 import 'package:xclient/views/access.dart';
 import 'package:xclient/views/backup_and_restore.dart';
 import 'package:xclient/views/config/general.dart';
+import 'package:xclient/views/config/mihomo_config.dart';
 import 'package:xclient/views/hotkey.dart';
 import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
@@ -49,18 +50,39 @@ class _ToolViewState extends ConsumerState<ToolsView> {
   }
 
   Widget _getSettingList() {
-    return generateSection(
-      title: context.appLocalizations.settings,
-      items: [
-        const _LocaleItem(),
-        const _ThemeItem(),
-        if (system.isDesktop) const _HotkeyItem(),
-        if (system.isAndroid) const _AccessItem(),
-        const _BackupItem(),
-        const _AdvancedConfigItem(),
-        const _CoreKernelItem(),
-        const _XRayConfigItem(),
-        const _GeneralItem(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        generateSection(
+          title: context.appLocalizations.kernelManager,
+          items: [
+            const _KernelManagerItem(),
+          ],
+        ),
+        generateSection(
+          title: context.appLocalizations.xray,
+          items: [
+            const _XRayItem(),
+          ],
+        ),
+        generateSection(
+          title: context.appLocalizations.mihomo,
+          items: [
+            const _MihomoItem(),
+          ],
+        ),
+        generateSection(
+          title: context.appLocalizations.general,
+          items: [
+            const _LocaleItem(),
+            const _ThemeItem(),
+            if (system.isDesktop) const _HotkeyItem(),
+            if (system.isAndroid) const _AccessItem(),
+            const _BackupItem(),
+            const _GeneralItem(),
+            const _AdvancedConfigItem(),
+          ],
+        ),
       ],
     );
   }
@@ -211,28 +233,41 @@ class _AdvancedConfigItem extends StatelessWidget {
   }
 }
 
-class _CoreKernelItem extends StatelessWidget {
-  const _CoreKernelItem();
+class _KernelManagerItem extends StatelessWidget {
+  const _KernelManagerItem();
 
   @override
   Widget build(BuildContext context) {
     return ListItem.open(
       leading: const GlyphIcon(AppGlyphs.cpu),
-      title: Text(context.appLocalizations.coreKernel),
+      title: Text(context.appLocalizations.kernelManager),
       widget: const CoreKernelView(),
     );
   }
 }
 
-class _XRayConfigItem extends StatelessWidget {
-  const _XRayConfigItem();
+class _XRayItem extends StatelessWidget {
+  const _XRayItem();
 
   @override
   Widget build(BuildContext context) {
     return ListItem.open(
       leading: const GlyphIcon(AppGlyphs.vpn),
-      title: Text(context.appLocalizations.xrayConfig),
+      title: Text(context.appLocalizations.xray),
       widget: const XRayConfigView(),
+    );
+  }
+}
+
+class _MihomoItem extends StatelessWidget {
+  const _MihomoItem();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const GlyphIcon(AppGlyphs.wrench),
+      title: Text(context.appLocalizations.mihomo),
+      widget: const MihomoConfigView(),
     );
   }
 }
