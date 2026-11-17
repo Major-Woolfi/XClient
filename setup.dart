@@ -66,7 +66,6 @@ Future<void> main(List<String> args) async {
     );
     exit(1);
   }
-  final arch = _detectArch();
   final targets = createPackageTargets(platform, results['targets']);
   final androidArch = results['arch'] as String?;
   final verbose = results['verbose'] as bool;
@@ -76,7 +75,6 @@ Future<void> main(List<String> args) async {
     env,
     targets,
     rootDir,
-    arch,
     androidArch: androidArch,
     verbose: verbose,
   );
@@ -158,8 +156,7 @@ Future<int> _package(
   String platform,
   String env,
   String targets,
-  String rootDir,
-  String arch, {
+  String rootDir, {
   String? androidArch,
   required bool verbose,
 }) async {
@@ -170,11 +167,6 @@ Future<int> _package(
     platform: platform,
     verbose: verbose,
   );
-  final descriptionArgs = <String>[];
-  if (platform != 'android') {
-    descriptionArgs.addAll(['--description', arch]);
-  }
-
   final depExit = await _ensureDependencies(platform);
   if (depExit != 0) return depExit;
 
@@ -206,7 +198,6 @@ Future<int> _package(
         '--build-target-platform=${_androidFlutterTarget[androidArch]!}',
       if (flutterBuildArgs.isNotEmpty)
         '--flutter-build-args=${flutterBuildArgs.join(',')}',
-      ...descriptionArgs,
     ],
     includeParentEnvironment: true,
     runInShell: Platform.isWindows,
