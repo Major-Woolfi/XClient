@@ -342,4 +342,3 @@ mod tests {
         assert!(!is_owner_connection(&accepted, "S-1-5-21-1-2-3-1001"));
     }
 }
-

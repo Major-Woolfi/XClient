@@ -312,4 +312,3 @@ fn service_status(
         process_id: None,
     }
 }
-

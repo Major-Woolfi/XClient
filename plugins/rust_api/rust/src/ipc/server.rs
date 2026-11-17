@@ -469,4 +469,3 @@ mod tests {
         assert!(Server::bind(path.to_str().unwrap().to_owned()).is_err());
     }
 }
-
