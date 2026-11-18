@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         id: setup-flutter
@@ -36,8 +38,11 @@ jobs:
       - name: Flutter analyze
         run: flutter analyze --no-fatal-infos
 
-      - name: Run tests
-        run: dart run tool/test.dart -- --reporter expanded --coverage
+      - name: Run tests with coverage
+        run: |
+          flutter test --coverage --reporter expanded
+          # Also run the custom bundler for coverage check
+          dart run tool/test.dart -- --reporter expanded --coverage
 
       - name: Check coverage
         run: dart run tool/check_coverage.dart coverage/lcov.info 75
@@ -46,6 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -60,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -68,10 +77,14 @@ jobs:
           cache: true
           cache-dependency-path: core/go.sum
 
+      - name: Download Go modules
+        working-directory: ./core
+        run: go mod download
+
       - name: Go test and vet
         working-directory: ./core
         run: |
-          CGO_ENABLED=0 go test .
+          CGO_ENABLED=0 go test -v .
           CGO_ENABLED=0 go vet . ./cmd/...
           GOOS=android GOARCH=arm64 CGO_ENABLED=0 go vet -tags=with_gvisor . ./mobile ./tun ./platform
           GOOS=linux go vet ./platform
@@ -80,6 +93,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -121,6 +136,7 @@ jobs:
         env:
           ANDROID_NDK_HOME: ${{ steps.ndk.outputs.ndk-path }}
         run: |
+          set -euo pipefail
           export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
           FLUTTER_ROOT=$(dirname $(dirname $(which flutter)))
           {
@@ -133,15 +149,19 @@ jobs:
             chmod +x gradlew
             ./gradlew :common:testDebugUnitTest :service:testDebugUnitTest :app:testDebugUnitTest \
               -Ptarget-platform=android-arm64 \
-              -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug
+              -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug \
+              --stacktrace --info
           else
-            echo "Gradle wrapper not found, skipping Android unit tests"
+            echo "Gradle wrapper not found, failing build"
+            exit 1
           fi
 
   desktop-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -173,6 +193,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -202,6 +224,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -228,6 +252,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
@@ -244,6 +270,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Rust
         uses: actions-rs/toolchain@v1
