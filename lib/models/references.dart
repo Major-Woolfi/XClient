@@ -34,7 +34,7 @@ const _proxyHostSchemes = {'ts', 'tailscale', 'et', 'easytier'};
 
 /// Зеркалит parseNameServer mihomo, который декодирует фрагмент перед тем,
 /// как разделить его: последняя часть без `=` называет прокси, через которую сервер набирает
-/// номер, а хост сервера ts или et — это прокси.
+/// номер, а хост сервера ts или et - это прокси.
 List<String> dnsServerProxies(String server) {
   final hash = server.indexOf('#');
   final head = hash < 0 ? server : server.substring(0, hash);

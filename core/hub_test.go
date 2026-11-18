@@ -593,8 +593,8 @@ func TestAnyDelayTestStatusMatchesTheEmptyRange(t *testing.T) {
 	}
 }
 
-// The host reads the proxy tables — a proxy list for the UI, a provider lookup
-// for an update — while a config apply replaces them. The tunnel's plain
+// The host reads the proxy tables - a proxy list for the UI, a provider lookup
+// for an update - while a config apply replaces them. The tunnel's plain
 // accessors take no lock, so under -race this proves the reads share the lock
 // the apply writes with.
 func TestProxyTableReadsAreSerialisedAgainstAnApply(t *testing.T) {
@@ -915,8 +915,8 @@ func TestAllProxiesPicksUpAProviderThatLoadsAfterTheApply(t *testing.T) {
 	}
 }
 
-// forceGC is the host's "give the memory back" hook — Android calls it from
-// onLowMemory and handleShutdown ends with it — and a cache the collection
+// forceGC is the host's "give the memory back" hook - Android calls it from
+// onLowMemory and handleShutdown ends with it - and a cache the collection
 // cannot reach defeats it.
 func TestForceGCReleasesTheProxyCache(t *testing.T) {
 	provider := newCachingProvider("subscription", "node-a", "node-b")
@@ -1008,7 +1008,7 @@ func TestAllProxiesFollowsAProviderUpdate(t *testing.T) {
 }
 
 // A config apply replaces the maps outright, and the replacements start their
-// own version counts — so identical versions across an apply say nothing about
+// own version counts - so identical versions across an apply say nothing about
 // whether the proxies are the same. Only the invalidation on UpdateProxies
 // catches this.
 func TestAllProxiesFollowsAConfigApplyThatKeepsEveryVersion(t *testing.T) {

@@ -23,7 +23,7 @@ final class BackupException implements Exception {
   String toString() => 'BackupException(${failure.name})';
 }
 
-/// Записи архива зеркалируют каталог данных, поэтому имя записи — это
+/// Записи архива зеркалируют каталог данных, поэтому имя записи - это
 /// путь файла относительно домашнего каталога.
 abstract final class BackupEntries {
   static String profile(Object id) => '$profilesDirectoryName/$id.yaml';
@@ -260,7 +260,7 @@ Future<void> _extract(String archivePath, String stagingDirPath) async {
 
 /// `posix.normalize` схлопывает `a/../b`, но имя, начинающееся с `../`,
 /// нормализуется само в себя, а 절대ное остаётся абсолютным, поэтому любое из них
-/// запишет туда, куда просит архив. Резервная копия — недоверенный ввод.
+/// запишет туда, куда просит архив. Резервная копия - недоверенный ввод.
 String? _stagedEntryPath(String stagingDirPath, String name) {
   final normalized = posix.normalize(name.replaceAll('\\', '/'));
   if (normalized.isEmpty ||

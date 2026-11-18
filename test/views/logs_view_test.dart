@@ -72,7 +72,7 @@ void main() {
 
     final scrollableRect = tester.getRect(find.byType(Scrollable).first);
     // Список работает под баром, так что трек скроллбара начинается у подножия
-    /// бара. Минимальная длина большого пальца — 48, так что на новейшем конце центр
+    /// бара. Минимальная длина большого пальца - 48, так что на новейшем конце центр
     /// большого пальца лежит на 24 dp ниже верхнего края трека.
     final trackTop = tester.getRect(find.byType(AppBar)).bottom;
     expect(tester.getCenter(find.byKey(hintKey)).dy, closeTo(trackTop + 24, 6));

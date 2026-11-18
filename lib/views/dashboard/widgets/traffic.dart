@@ -73,7 +73,7 @@ class _Figure extends StatelessWidget {
   }
 }
 
-/// Нулевая линия — низ графика: карточка позволяет графику выходить за край, так что простая или ещё не отсAMPлированная нагрузка не оставляет линии.
+/// Нулевая линия - низ графика: карточка позволяет графику выходить за край, так что простая или ещё не отсAMPлированная нагрузка не оставляет линии.
 class _SpeedChart extends StatelessWidget {
   const _SpeedChart({required this.direction, required this.traffics});
 

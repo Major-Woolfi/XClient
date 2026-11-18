@@ -562,7 +562,7 @@ void main() {
     bool following() => tester.widget<ScrollToEndBox>(box).enable;
     expect(following(), isTrue);
 
-    // Список обращён, поэтому его голова — конец extent прокрутки, и
+    // Список обращён, поэтому его голова - конец extent прокрутки, и
     /// перетаскивание вверх удаляется от него.
     await tester.drag(box, const Offset(0, -300));
     await tester.pumpAndSettle();

@@ -7,7 +7,7 @@ import 'package:xclient/features/form/map_edit_view.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Настройка ядра Mihomo (Clash.Meta) — конфигуратор.
+/// Настройка ядра Mihomo (Clash.Meta) - конфигуратор.
 ///
 /// Содержит параметры, которые пишутся в профиль Mihomo:
 /// порты, логи, LAN, внешний контроллер, хосты, автообновление GEO и т.д.

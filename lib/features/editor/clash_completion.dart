@@ -390,7 +390,7 @@ class _DocumentNames {
   }
 
   /// Живут ли имена после [edit], что они делают внутри секции, которая ничего не называет;
-  /// [lines] — это текст после него.
+  /// [lines] - это текст после него.
   bool follow(
     ({int line, int removed, int inserted}) edit,
     List<String> lines,

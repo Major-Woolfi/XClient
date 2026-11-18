@@ -476,7 +476,7 @@ class SetupAction extends _$SetupAction {
     }
   }
 
-  /// С базой [BuiltProfile.yaml] — это только наложение, которое применяет Core.
+  /// С базой [BuiltProfile.yaml] - это только наложение, которое применяет Core.
   Future<BuiltProfile> getProfile({
     required SetupState setupState,
     required PatchClashConfig patchConfig,

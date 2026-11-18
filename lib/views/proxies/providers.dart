@@ -378,7 +378,7 @@ const _probeLength = 512;
 
 enum _ProviderFile { text, ruleSet, binary }
 
-// .mrs набор правил — это zstd-поток, и любой другой бинарный файл выдает себя
+// .mrs набор правил - это zstd-поток, и любой другой бинарный файл выдает себя
 // байтом NUL; ни один не может пройти через строковую side-load ядра,
 // но ядро может дампнуть .mrs набор обратно в текст для чтения.
 Future<_ProviderFile> _probeProviderFile(String? path) async {

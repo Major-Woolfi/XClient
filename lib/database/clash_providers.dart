@@ -28,7 +28,7 @@ class ClashProvidersDao extends DatabaseAccessor<Database>
     with _$ClashProvidersDaoMixin {
   ClashProvidersDao(super.attachedDatabase);
 
-  /// На уровне приложения провайдеры — это rule-провайдеры. Старые сборки всё ещё читают [kind],
+  /// На уровне приложения провайдеры - это rule-провайдеры. Старые сборки всё ещё читают [kind],
   /// и save одного из них как proxy-провайдер остается вне поля зрения.
   Expression<bool> _isRuleProvider($ClashProvidersTable t) {
     return t.kind.equalsValue(ProviderKind.rule);

@@ -120,7 +120,7 @@ class ClashProvidersAction extends _$ClashProvidersAction {
     return null;
   }
 
-  /// Возвращает false, когда набор изменил форму — перезагрузить его может только повторное применение.
+  /// Возвращает false, когда набор изменил форму - перезагрузить его может только повторное применение.
   Future<bool> syncRemote(ClashProvider provider) async {
     final next = await _compile(provider, download: true);
     if (next == provider) {

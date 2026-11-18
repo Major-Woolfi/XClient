@@ -46,7 +46,7 @@ class MitmCa extends _$MitmCa {
 MitmTrustStore? mitmTrustStore(Ref ref) => mitmTrustStoreForPlatform();
 
 /// Доверяет ли это устройство ЦС. Проверка фиксирует ЦС, который нашла
-/// доверенным — именно с ним ядро расшифровывает HTTPS.
+/// доверенным - именно с ним ядро расшифровывает HTTPS.
 @Riverpod(keepAlive: true)
 class MitmTrustState extends _$MitmTrustState {
   @override

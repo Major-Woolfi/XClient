@@ -82,7 +82,7 @@ String _unquote(String value) {
   return value;
 }
 
-/// Сохраняет каждую строку целой: запятые и кавычки правила перезаписи — его собственные.
+/// Сохраняет каждую строку целой: запятые и кавычки правила перезаписи - его собственные.
 ParsedInput<String> parseLineInput(
   String text, {
   Set<String> existing = const {},

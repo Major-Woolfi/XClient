@@ -9,7 +9,7 @@ import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// `proxies` называет прокси группы, `use` — её провайдеры, `use-position` — где те сидят среди прокси, а `filter` — каких из прокси провайдеров она берет. `exclude-filter` отбрасывает всё совпадающее, и именованные члены тоже. Ключи include-all принимают только локальные прокси и провайдеры, которых группа профиля называет, так как конфиг не объявляет других.
+/// `proxies` называет прокси группы, `use` - её провайдеры, `use-position` - где те сидят среди прокси, а `filter` - каких из прокси провайдеров она берет. `exclude-filter` отбрасывает всё совпадающее, и именованные члены тоже. Ключи include-all принимают только локальные прокси и провайдеры, которых группа профиля называет, так как конфиг не объявляет других.
 enum _MemberKind {
   proxy,
   provider,

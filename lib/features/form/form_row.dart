@@ -137,7 +137,7 @@ class FormRow extends StatelessWidget {
 }
 
 /// Голое текстовое поле в конце [FormRow], как iOS и macOS ставят одно
-/// в сгруппированной форме; кольцо фокуса строки — единственный её контур.
+/// в сгруппированной форме; кольцо фокуса строки - единственный её контур.
 class FormRowTextField extends StatelessWidget {
   static const _cursorWidth = 2.0;
 

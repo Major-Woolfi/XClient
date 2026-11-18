@@ -40,7 +40,7 @@ SmartAppControlState readSmartAppControlState() {
 }
 
 /// Код ошибки ОС за неудачный запуск ядра, независимо от того, породил ли Helper ядро
-/// (код лежит в деталях ответа, старые Helper — только в сообщении)
+/// (код лежит в деталях ответа, старые Helper - только в сообщении)
 /// или приложение (dart:io хранит её на исключении).
 int? launchOsError(Object? error) {
   return switch (error) {

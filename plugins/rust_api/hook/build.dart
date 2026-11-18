@@ -17,7 +17,7 @@ void main(List<String> args) async {
 }
 
 // rquickjs запускает bindgen на Android, который должен загружать libclang NDK; Linux
-// NDK до r26 хранит его в lib64, более поздние и каждый macOS NDK — в lib.
+// NDK до r26 хранит его в lib64, более поздние и каждый macOS NDK - в lib.
 Map<String, String> _bindgenEnvironment(BuildInput input) {
   if (!input.config.buildCodeAssets ||
       input.config.code.targetOS != OS.android) {

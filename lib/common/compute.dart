@@ -82,7 +82,7 @@ List<Group> computeHideTimeout({
       selectedMap[group.name] ?? '',
     );
     final visible = group.all.where((proxy) {
-      // Задержка группы — это задержка её выбора, и скрытие его забрало бы
+      // Задержка группы - это задержка её выбора, и скрытие его забрало бы
       // единственный способ выбрать группу, где режим не показывает её сам.
       if (proxy.name == selectedName ||
           allGroups.getGroup(proxy.name) != null) {

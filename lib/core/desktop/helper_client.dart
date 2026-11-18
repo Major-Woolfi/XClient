@@ -68,7 +68,7 @@ final class HelperClient {
        _expectedHelperPath = expectedHelperPath ?? _defaultHelperPath,
        _readCoreSha256 = readCoreSha256 ?? _readBundledCoreSha256;
 
-  // Встроенный manifest.json — фиксированный артефакт сборки; пригодное значение
+  // Встроенный manifest.json - фиксированный артефакт сборки; пригодное значение
   // читается один раз. Пустой результат означает, что оно сейчас непригодно, и
   // Helper пропускается.
   Future<String> _readCoreSha256Once() async {
@@ -90,7 +90,7 @@ final class HelperClient {
 
   // Протокол Helper никогда не покидает машину; никогда не маршрутизируйте его
   // через прокси. Linux несёт его через Unix-сокет, которым владеет systemd, поэтому
-  // authority в URL — заглушка, которую фабрика соединений игнорирует.
+  // authority в URL - заглушка, которую фабрика соединений игнорирует.
   static Dio _createDio() {
     return Dio()
       ..httpClientAdapter = IOHttpClientAdapter(

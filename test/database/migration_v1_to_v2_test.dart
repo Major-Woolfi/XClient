@@ -10,7 +10,7 @@ import 'package:sqlite3/sqlite3.dart';
 /// всё правило в одном столбце `value`.
 ///
 /// Drift создаёт текущую схему сразу на новой базе, поэтому прогон реальной
-/// базы назад к v1 и повторное открытие — единственный способ запустить реальный
+/// базы назад к v1 и повторное открытие - единственный способ запустить реальный
 /// `onUpgrade` против реального файла SQLite.
 void _downgradeToV1(Database raw) {
   _downgradeToV2(raw);
@@ -156,7 +156,7 @@ void _downgradeToV17(Database raw) {
   raw.execute('PRAGMA user_version = 17');
 }
 
-/// Версия схемы 10 — форма, которую оставил последний релиз.
+/// Версия схемы 10 - форма, которую оставил последний релиз.
 void _downgradeToV10(Database raw) {
   _downgradeToV17(raw);
   raw.execute('PRAGMA foreign_keys = OFF');

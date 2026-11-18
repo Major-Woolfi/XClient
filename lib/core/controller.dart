@@ -76,7 +76,7 @@ class CoreController {
     final type = coreBinaryManager.activeCoreType;
     final impl = coreRegistry.get(type);
     if (impl != null) return impl;
-    // Фолбэк: Android использует CoreLib, desktop — CoreService.
+    // Фолбэк: Android использует CoreLib, desktop - CoreService.
     return system.isAndroid ? coreLib! : coreService!;
   }
 
@@ -399,7 +399,7 @@ class CoreController {
   CoreType _detectCoreType(String content) {
     final trimmed = content.trim();
     if (trimmed.isEmpty) return CoreType.clash;
-    // JSON-конфиги — это XRay.
+    // JSON-конфиги - это XRay.
     if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
       try {
         jsonDecode(trimmed);
@@ -431,7 +431,7 @@ class CoreController {
   }
 
   /// Конфиг, зашифрованный через age, перезаписывается на месте в plaintext, а
-  /// список share-ссылок — в конфиг из его прокси.
+  /// список share-ссылок - в конфиг из его прокси.
   Future<String?> validateProfile(
     String path, [
     String ageSecretKey = '',

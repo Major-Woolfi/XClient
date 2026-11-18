@@ -290,7 +290,7 @@ class _SpectrumPainter extends CustomPainter {
       shape,
       Paint()..shader = LinearGradient(colors: _hues).createShader(rect),
     );
-    // Смешивание чистого оттенка с белым посередине и черным ниже — это в точности HSL светлота при полной насыщенности, которую подбор считывает обратно.
+    // Смешивание чистого оттенка с белым посередине и черным ниже - это в точности HSL светлота при полной насыщенности, которую подбор считывает обратно.
     canvas.drawRSuperellipse(
       shape,
       Paint()

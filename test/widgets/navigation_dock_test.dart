@@ -391,7 +391,7 @@ void main() {
         .descendant(of: bar, matching: find.byType(GlyphIcon))
         .last;
     final resting = tester.getRect(tools);
-    // Линза рисуется первой, поэтому подсветка — последний дочерний позиционированный элемент.
+    // Линза рисуется первой, поэтому подсветка - последний дочерний позиционированный элемент.
     final positioned = find.descendant(
       of: bar,
       matching: find.byType(Positioned),

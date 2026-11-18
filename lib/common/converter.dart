@@ -93,7 +93,7 @@ Object? _salvage(
     _ => null,
   };
   // Оставлен пустым, список был бы прочитан как тот, что пользователь очистил;
-  // дефолт — более точная догадка.
+  // дефолт - более точная догадка.
   if (salvaged case Map(isNotEmpty: true) || List(isNotEmpty: true)
       when accepts(salvaged)) {
     dropped.addAll(nestedDropped);

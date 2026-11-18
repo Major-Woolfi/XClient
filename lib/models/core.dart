@@ -301,7 +301,7 @@ abstract class RouteSnapshot with _$RouteSnapshot {
       _$RouteSnapshotFromJson(json);
 }
 
-/// [exit] — это имя ядра для того, где соединение ушло, сравнивается только целиком.
+/// [exit] - это имя ядра для того, где соединение ушло, сравнивается только целиком.
 @freezed
 abstract class RouteHit with _$RouteHit {
   const factory RouteHit({

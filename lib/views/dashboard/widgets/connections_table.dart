@@ -19,7 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'card.dart';
 import 'current_outbound.dart';
 
-/// Достаточно, чтобы заполнить самую высокую карточку несколько раз; вся лента — в один тап.
+/// Достаточно, чтобы заполнить самую высокую карточку несколько раз; вся лента - в один тап.
 const _maxFeedRows = 100;
 const _midTableWidth = 620.0;
 const _wideTableWidth = 880.0;
@@ -75,7 +75,7 @@ void openDashboardFeed(BuildContext context, DashboardFeed feed) {
   );
 }
 
-/// Опрашивает живые соединения, пока показана панель: весь список, пока его таблица открыта, иначе — только счётчик.
+/// Опрашивает живые соединения, пока показана панель: весь список, пока его таблица открыта, иначе - только счётчик.
 mixin ConnectionsPolling<T extends ConsumerStatefulWidget>
     on
         ConsumerState<T>,

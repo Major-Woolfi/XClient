@@ -115,7 +115,7 @@ void main() {
     );
 
     // Открытие запускается в масштабе страницы, который задаёт ширина прямоугольника, а
-    /// закрытие — в масштабе экрана.
+    /// закрытие - в масштабе экрана.
     PaintPattern container({required bool opening}) {
       final progress = ModalRoute.of(
         tester.element(find.text('Page', skipOffstage: false)),

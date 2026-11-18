@@ -35,7 +35,7 @@ String _nestedBlockAt(List<String> lines, int start) {
 }
 
 /// Голый `context`, который никакая замыкающая closure или член не декларирует,
-/// это геттер `State`, так что блок, из которого он читается — весь класс.
+/// это геттер `State`, так что блок, из которого он читается - весь класс.
 String? _declaringBlock(List<String> lines, int line, int column, String name) {
   if (_declares(lines[line].substring(0, column), name)) {
     return null;

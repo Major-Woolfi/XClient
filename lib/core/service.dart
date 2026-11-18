@@ -58,7 +58,7 @@ class CoreService extends CoreHandlerInterface {
   }
 
   /// Разрешает путь к бинарнику Clash.Meta через менеджер ядер.
-  /// Если версия не установлена — скачивает её автоматически (как для Xray).
+  /// Если версия не установлена - скачивает её автоматически (как для Xray).
   static Future<String> _resolveClashBinaryPath() async {
     final manager = coreBinaryManager;
     final version = await manager.getActiveVersion();

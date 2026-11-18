@@ -5,7 +5,7 @@ import 'package:xclient/enum/enum.dart';
 import 'package:flutter/foundation.dart';
 
 /// Не даёт двум процессам работать с одной директорией данных. Поднятие окна
-/// запущенного приложения — задача платформы: повторное открытие LaunchServices,
+/// запущенного приложения - задача платформы: повторное открытие LaunchServices,
 /// активация GApplication или передача app_links в Windows-раннере.
 class SingleInstanceLock {
   static SingleInstanceLock? _instance;

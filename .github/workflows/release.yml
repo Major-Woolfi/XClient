@@ -191,7 +191,6 @@ jobs:
       - name: Skip native build hooks
         run: |
           yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
-          yq -i '.hooks.user_defines.rust_api.build_assets = false' pubspec.yaml
 
       - name: Generate release notes
         shell: bash

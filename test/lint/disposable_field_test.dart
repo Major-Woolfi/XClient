@@ -19,10 +19,10 @@ const _disposableTypes = {
 /// Поля, которые анализатор бы пометил, но умышленно никогда не освобождаются, ключевые по
 /// `<path>#<field>`. Всё здесь должно пережить процесс, а не виджет.
 const _allowed = {
-  // `CoreEventManager` — синглтон с приватным конструктором, который распространяет
+  // `CoreEventManager` - синглтон с приватным конструктором, который распространяет
   /// ядерные события на всём протяжении прогона; закрытие его контроллера ukonчит доставку событий.
   'lib/core/event.dart#_controller',
-  // `App` — Android-плагин на весь процесс; notifier retransлирует состояние
+  // `App` - Android-плагин на весь процесс; notifier retransлирует состояние
   /// клавиатуры с канала платформы на всём протяжении прогона.
   'lib/plugins/app.dart#floatingKeyboard',
 };
@@ -36,7 +36,7 @@ final _declaration = RegExp(
 
 /// Поле `late`, объявленное без инициализатора, которое паттерн выше не может
 /// увидеть, потому что на строке нет вызова конструктора. Они строятся в `initState`
-/// и владеются так же — `pages/editor.dart` держал `late TextEditingController`
+/// и владеются так же - `pages/editor.dart` держал `late TextEditingController`
 /// живым для процесса таким образом.
 final _lateDeclaration = RegExp(
   '^\\s+late\\s+(?:final\\s+)?(${_disposableTypes.join('|')})'

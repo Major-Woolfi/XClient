@@ -38,7 +38,7 @@ Future<void> _setEnabled(WidgetRef ref, MitmModule module, bool enabled) async {
 }
 
 /// Запускает cron-, event- или общую строку скрипта прямо сейчас; для любой
-/// другой строки, при выключенной дешифровке или пока задача ещё выполняется — ничего.
+/// другой строки, при выключенной дешифровке или пока задача ещё выполняется - ничего.
 PopupMenuItem? mitmRunScriptItem(WidgetRef ref, String line) {
   final name = mitmTaskName(line);
   if (name == null ||

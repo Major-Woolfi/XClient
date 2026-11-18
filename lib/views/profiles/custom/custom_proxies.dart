@@ -336,7 +336,7 @@ class _CustomProxiesViewState extends ConsumerState<CustomProxiesView> {
     );
   }
 
-  /// Строка, чье имя изменилось — новый прокси: то, чем кастомные профили называли старый, остается без имени, так что правка говорит, какие уходят, а какие приходят.
+  /// Строка, чье имя изменилось - новый прокси: то, чем кастомные профили называли старый, остается без имени, так что правка говорит, какие уходят, а какие приходят.
   Future<bool> _confirmReplaced(
     List<CustomProxy> previous,
     List<CustomProxy> next,
@@ -814,7 +814,7 @@ class _EditCustomProxyViewState extends ConsumerState<_EditCustomProxyView> {
   var _revealed = <String>{};
   late Set<ProxyField> _shown;
 
-  /// Добавленные опции без значения — единственные, которые сохранение оставляет пустыми.
+  /// Добавленные опции без значения - единственные, которые сохранение оставляет пустыми.
   late Set<ProxyField> _untouched;
 
   /// Увеличивается, когда всё отображение заменяется, так что поля сбрасывают текст, с которым были инициализированы.

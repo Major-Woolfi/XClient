@@ -803,7 +803,7 @@ enum RuleTarget {
   static final Set<String> baseTargets = Set.unmodifiable(baseTargetNames);
 
   /// Ядро добавляет GLOBAL только после того, как распарсит группы, поэтому правило,
-  /// диалер или DNS-сервер могут называть его, а группа — нет.
+  /// диалер или DNS-сервер могут называть его, а группа - нет.
   static final List<String> ruleTargetNames = List.unmodifiable([
     ...baseTargetNames,
     GroupName.GLOBAL.name,

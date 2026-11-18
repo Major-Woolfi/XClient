@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 const _entryPoints = ['lib/main.dart'];
 
-/// Типы, и верхние имена, которые файл публикует рядом с ними — паттерн
+/// Типы, и верхние имена, которые файл публикует рядом с ними - паттерн
 /// синглтона `final appPath = AppPath()` так большая часть `lib/common`
 /// на самом деле потребляется.
 final _declaration = RegExp(

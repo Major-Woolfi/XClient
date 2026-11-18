@@ -11,7 +11,7 @@ final class AgeSecretKeyRequiredException implements Exception {
   const AgeSecretKeyRequiredException();
 }
 
-/// [reason] — это COLUMN_REASON DownloadManager, null без загрузки.
+/// [reason] - это COLUMN_REASON DownloadManager, null без загрузки.
 final class SystemDownloadException implements Exception {
   final int? reason;
 

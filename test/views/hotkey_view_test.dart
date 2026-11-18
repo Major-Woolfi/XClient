@@ -33,7 +33,7 @@ ProviderContainer _containerFor(
   addTearDown(container.dispose);
   globalState.container = container;
   container.read(viewSizeProvider.notifier).update((_) => size);
-  // hotKeyActionsProvider — autoDispose: без живого слушателя посеянное значение
+  // hotKeyActionsProvider - autoDispose: без живого слушателя посеянное значение
   /// выбрасывается до того, как утверждения прочитают его обратно.
   final subscription = container.listen(
     hotKeyActionsProvider,

@@ -423,7 +423,7 @@ class _ClashProvidersViewState extends ConsumerState<ClashProvidersView> {
   }
 }
 
-/// Время обновления — время кэшированного файла, поэтому оно считывается повторно
+/// Время обновления - время кэшированного файла, поэтому оно считывается повторно
 /// после каждого сохранения или синхронизации на этой странице.
 class _RuleSetUpdateTime extends ConsumerStatefulWidget {
   final ClashProvider provider;

@@ -69,7 +69,7 @@ Future<ProviderContainer> pumpApp(WidgetTester tester, {Locale? locale}) async {
   final container = ProviderContainer();
   addTearDown(container.dispose);
   globalState.container = container;
-  // appSettingProvider — autoDispose; в приложении `configProvider` держит его
+  // appSettingProvider - autoDispose; в приложении `configProvider` держит его
   /// живым, поэтому тест должен держать слушателя, или правки отбрасываются.
   container.listen(appSettingProvider, (_, _) {}, fireImmediately: true);
   container

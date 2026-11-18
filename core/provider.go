@@ -305,7 +305,7 @@ func handleDumpRuleSet(params PathParams) (string, error) {
 }
 
 // The profile ID is an int64 rendered through strconv, so the last element can
-// never carry a separator or a `..` — that is what keeps handleClearEffect from
+// never carry a separator or a `..` - that is what keeps handleClearEffect from
 // becoming a general-purpose privileged file deletion API.
 func providerPaths(homeDir string, profileId int64) (root string, target string) {
 	root = filepath.Join(homeDir, "profiles", "providers")

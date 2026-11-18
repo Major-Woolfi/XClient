@@ -151,7 +151,7 @@ class BackupAction extends _$BackupAction {
     }
   }
 
-  /// Файлы попадают раньше строк, их называющих, поэтому возвращённый callback — это как откат файлов при восстановлении, строки которого не прошли.
+  /// Файлы попадают раньше строк, их называющих, поэтому возвращённый callback - это как откат файлов при восстановлении, строки которого не прошли.
   Future<Future<void> Function()> _copyStagedFiles(
     MigrationData data,
     String stagingDirPath,

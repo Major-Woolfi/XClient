@@ -57,6 +57,18 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+        // Unit tests live under android/tests/ instead of each module's src/test.
+        getByName("test").java.setSrcDirs(listOf("../tests/app"))
+    }
+
+    ndk {
+        abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -78,11 +90,6 @@ android {
                 "proguard-rules.pro",
             )
         }
-    }
-
-    sourceSets {
-        // Unit tests live under android/tests/ instead of each module's src/test.
-        getByName("test").java.setSrcDirs(listOf("../tests/app"))
     }
 }
 

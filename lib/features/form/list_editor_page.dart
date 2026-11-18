@@ -296,7 +296,7 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
     );
   }
 
-  // Индексы здесь — позиции среди совпадений, которые onReorder не может
+  // Индексы здесь - позиции среди совпадений, которые onReorder не может
   // отобразить обратно на полный список, поэтому отфильтрованный список не переупорядочивается.
   Widget _buildSearchResults(
     BuildContext context,

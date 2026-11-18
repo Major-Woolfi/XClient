@@ -460,7 +460,7 @@ typedef _FileInfoQuery = ({
   List<int> scriptIds,
 });
 
-/// Имена файлов набора правил — это md5-хеши, поэтому пути строятся вне изолята UI
+/// Имена файлов набора правил - это md5-хеши, поэтому пути строятся вне изолята UI
 /// вместе с одним stat на файл.
 Future<Map<String, FileInfo?>> _loadFileInfos(
   _RemoteResources resources,

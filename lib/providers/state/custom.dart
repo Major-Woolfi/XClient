@@ -190,7 +190,7 @@ Map<int, List<CustomIssue>> customProxyListIssues(Ref ref) {
   };
 }
 
-/// [groupNames] — это каждый кастомный профиль: прокси и группа с одним именем
+/// [groupNames] - это каждый кастомный профиль: прокси и группа с одним именем
 /// будут представлять друг друга в профилях, именующих прокси.
 List<CustomIssue> customProxyIssues(
   CustomProxy proxy, {
@@ -569,7 +569,7 @@ class _DialerGraph {
     }
   }
 
-  /// Собственный диаллер прокси — это проверяемый набор, никогда не путь
+  /// Собственный диаллер прокси - это проверяемый набор, никогда не путь
   /// назад.
   Set<String> Function(String target) loopsOf(String proxy) {
     if (!declared.contains(proxy)) {

@@ -102,7 +102,7 @@ void main() {
     addTearDown(container.dispose);
     globalState.container = container;
     container.read(viewSizeProvider.notifier).update((_) => size);
-    // providersProvider — autoDispose; держите слушателя, чтобы посеянный список
+    // providersProvider - autoDispose; держите слушателя, чтобы посеянный список
     /// пережил до того, как виджет подпишется.
     final subscription = container.listen(
       providersProvider,

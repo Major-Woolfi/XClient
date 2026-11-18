@@ -43,9 +43,9 @@ final class CoreRpcClient implements CoreRpcChannel {
   int _methodCallId = 0;
   Future<void>? _closeOperation;
 
-  /// Время с последнего ответа ядра на любой запрос. Таймаут метода — это
+  /// Время с последнего ответа ядра на любой запрос. Таймаут метода - это
   /// сторожевой зависшего канала (перезапуск на ходу, поток, который перестал
-  /// таскать данные), а не бюджет на то, сколько может длиться один метод —
+  /// таскать данные), а не бюджет на то, сколько может длиться один метод -
   /// поэтому запрос, который всё ещё ждёт, пока ядро демонстративно отвечает
   /// на свои «соседние» запросы, получает продлённое окно вместо отказа.
   final Stopwatch _sinceLastResponse = Stopwatch()..start();
@@ -129,7 +129,7 @@ final class CoreRpcClient implements CoreRpcChannel {
   /// что канал ещё жив, отвечая на другой запрос, поэтому медленный метод не
   /// обрывается из-за здорового канала. Две вещи всё равно завершают ожидание:
   /// [idleTimeout] молчания и жесткий дедлайн, что срабатывает раньше из окон
-  /// [_maxTimeoutExtension] и [extensionGrace] сверху — ядро, отвечающее на всё,
+  /// [_maxTimeoutExtension] и [extensionGrace] сверху - ядро, отвечающее на всё,
   /// кроме этого запроса, всё равно всплывёт.
   Future<Object?> _awaitResponse({
     required CoreMethod method,
@@ -142,7 +142,7 @@ final class CoreRpcClient implements CoreRpcChannel {
       idleTimeout + extensionGrace,
     );
     while (true) {
-      // Тишина меряется от последнего ответа или от начала этого же запроса —
+      // Тишина меряется от последнего ответа или от начала этого же запроса -
       // whichever позже: бездействующее приложение не должно сокращать свежее окно.
       final silence = _shorter(_sinceLastResponse.elapsed, elapsed.elapsed);
       final remaining = _shorter(

@@ -133,7 +133,7 @@ final debouncer = Debouncer();
 final throttler = Throttler();
 
 /// Кадры останавливаются, пока окно скрыто, поэтому одного post-frame
-/// колбэка было бы недостаточно — работа трея и горячих клавиш задержится,
+/// колбэка было бы недостаточно - работа трея и горячих клавиш задержится,
 /// пока окно не покажется снова.
 void runAfterFrame(VoidCallback callback) {
   final binding = SchedulerBinding.instance;

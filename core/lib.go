@@ -49,7 +49,7 @@ func (th *TunHandler) start(fd int, stack, address, dns, options string) bool {
 
 	// t.Start runs outside th.mu on purpose. The hook is live from initHook
 	// onwards, and a socket opened anywhere inside Start reaches handleProtect
-	// on this very goroutine — an RLock taken while this one holds the write
+	// on this very goroutine - an RLock taken while this one holds the write
 	// lock deadlocks the start outright. Nothing is lost by dropping it: both
 	// hooks return early until th.listener is set, which is below.
 	tunListener := t.Start(fd, stack, address, dns, options)

@@ -60,7 +60,7 @@ class DashboardColors {
   final Color onWarnContainer;
 }
 
-/// Значения — это CSS-тени дизайна. CSS-размытие в два раза больше сигмы, а Flutter превращает радиус размытия r в сигму 0.577r + 0.5, поэтому каждое проходит через [_blur], иначе отрисовывается на треть тяжелее.
+/// Значения - это CSS-тени дизайна. CSS-размытие в два раза больше сигмы, а Flutter превращает радиус размытия r в сигму 0.577r + 0.5, поэтому каждое проходит через [_blur], иначе отрисовывается на треть тяжелее.
 abstract final class DashboardShadows {
   static List<BoxShadow> e1(BuildContext context) =>
       context.colorScheme.brightness == Brightness.dark ? _e1Dark : _e1Light;
