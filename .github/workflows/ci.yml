@@ -39,10 +39,7 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Run tests with coverage
-        run: |
-          flutter test --coverage --reporter expanded
-          # Also run the custom bundler for coverage check
-          dart run tool/test.dart -- --reporter expanded --coverage
+        run: flutter test --coverage --reporter expanded
 
       - name: Check coverage
         run: dart run tool/check_coverage.dart coverage/lcov.info 75
@@ -77,14 +74,16 @@ jobs:
           cache: true
           cache-dependency-path: core/go.sum
 
-      - name: Download Go modules
+      - name: Tidy and download Go modules
         working-directory: ./core
-        run: go mod download
+        run: |
+          go mod tidy
+          go mod download
 
       - name: Go test and vet
         working-directory: ./core
         run: |
-          CGO_ENABLED=0 go test -v .
+          CGO_ENABLED=0 go test -count=1 -v .
           CGO_ENABLED=0 go vet . ./cmd/...
           GOOS=android GOARCH=arm64 CGO_ENABLED=0 go vet -tags=with_gvisor . ./mobile ./tun ./platform
           GOOS=linux go vet ./platform
@@ -127,34 +126,33 @@ jobs:
           if [ -d "$wrapper" ]; then
             echo "Found gradle wrapper at $wrapper"
           else
-            echo "Gradle wrapper not found at $wrapper, searching..."
-            find "$FLUTTER_ROOT" -name "gradle-wrapper.jar" 2>/dev/null | head -5
+            echo "Gradle wrapper not found at $wrapper"
+            find "$FLUTTER_ROOT" -name "gradle-wrapper.jar" 2>/dev/null | head -5 || true
+            echo "::error::Gradle wrapper not found"
+            exit 1
           fi
 
       - name: Run Android unit tests
         working-directory: ./android
         env:
           ANDROID_NDK_HOME: ${{ steps.ndk.outputs.ndk-path }}
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
         run: |
           set -euo pipefail
           export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
-          FLUTTER_ROOT=$(dirname $(dirname $(which flutter)))
+          export FLUTTER_ROOT="$(dirname $(dirname $(which flutter)))"
+          export ANDROID_HOME="${ANDROID_HOME:-$HOME/Android/Sdk}"
           {
             echo "flutter.sdk=$FLUTTER_ROOT"
             echo "sdk.dir=$ANDROID_HOME"
           } > local.properties
           wrapper="$FLUTTER_ROOT/bin/cache/artifacts/gradle_wrapper"
-          if [ -d "$wrapper" ]; then
-            cp -R "$wrapper/." .
-            chmod +x gradlew
-            ./gradlew :common:testDebugUnitTest :service:testDebugUnitTest :app:testDebugUnitTest \
-              -Ptarget-platform=android-arm64 \
-              -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug \
-              --stacktrace --info
-          else
-            echo "Gradle wrapper not found, failing build"
-            exit 1
-          fi
+          cp -R "$wrapper/." .
+          chmod +x gradlew
+          ./gradlew :common:testDebugUnitTest :service:testDebugUnitTest :app:testDebugUnitTest \
+            -Ptarget-platform=android-arm64 \
+            -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug \
+            --stacktrace --info
 
   desktop-linux:
     runs-on: ubuntu-latest
