@@ -24,7 +24,7 @@ void main() {
     final offenders = <String>[];
 
     for (final entity in sourceEntities()) {
-      final path = p.relative(entity.path);
+      final path = portablePath(p.relative(entity.path));
       if (entity is! File || !path.endsWith('.dart') || _isGenerated(path)) {
         continue;
       }

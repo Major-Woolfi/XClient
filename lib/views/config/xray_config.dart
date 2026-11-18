@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:material_ui/material_ui.dart' as m;
-import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:xclient/common/common.dart';
+import 'package:xclient/features/form/form.dart';
 import 'package:xclient/ui/ui.dart';
 import 'package:xclient/widgets/widgets.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
 
-/// Простой и красивый экран настройки ядра XRay.
-///
-/// Разделы: порт прослушивания, уровень логирования, DNS-серверы, правила маршрутизации, аутбаунды.
-/// Изменения применяются к конфигу XRay при нажатии Save.
 class XRayConfigView extends ConsumerStatefulWidget {
   const XRayConfigView({super.key});
 
@@ -20,19 +18,20 @@ class XRayConfigView extends ConsumerStatefulWidget {
 }
 
 class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
-  late final m.TextEditingController _portController = m.TextEditingController(
-    text: '10808',
-  );
-  late final m.TextEditingController _dnsController = m.TextEditingController();
-  late final m.TextEditingController _routingController =
-      m.TextEditingController();
+  static const _defaultPort = 10808;
+  static const _logLevels = ['debug', 'info', 'warning', 'error', 'none'];
+
+  final _portController = TextEditingController();
+  final _dnsController = TextEditingController();
+  final _routingController = TextEditingController();
+  Map<String, dynamic> _config = {};
   String _logLevel = 'warning';
   bool _hasChanges = false;
 
   @override
   void initState() {
     super.initState();
-    _loadCurrentConfig();
+    _loadConfig();
   }
 
   @override
@@ -43,172 +42,239 @@ class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
     super.dispose();
   }
 
-  Future<void> _loadCurrentConfig() async {
-    final path = await appPath.homeDirPath;
-    final configFile = File('${path}xray/config.json');
-    if (await configFile.exists()) {
-      final json = await configFile.readAsString();
+  Future<File> _configFile() async {
+    return File(p.join(await appPath.homeDirPath, 'xray', 'config.json'));
+  }
+
+  Future<void> _loadConfig() async {
+    final file = await _configFile();
+    var config = <String, dynamic>{};
+    if (await file.exists()) {
       try {
-        final Map<String, dynamic> decoded = jsonDecode(json);
-        final inbounds = decoded['inbounds'] as List?;
-        if (inbounds != null && inbounds.isNotEmpty) {
-          final port = inbounds.first['port'];
-          if (port != null) {
-            _portController.text = port.toString();
-          }
-        }
-        final log = decoded['log'];
-        if (log is Map) {
-          _logLevel = log['loglevel']?.toString() ?? 'warning';
-        }
-        final dns = decoded['dns'];
-        if (dns is Map) {
-          final servers = dns['servers'];
-          if (servers is List) {
-            _dnsController.text = servers.join('\n');
-          }
+        final decoded = jsonDecode(await file.readAsString());
+        if (decoded is Map<String, dynamic>) {
+          config = decoded;
         }
       } catch (_) {}
     }
-    if (mounted) {
-      setState(() => _hasChanges = false);
+
+    final inbounds = config['inbounds'];
+    final inbound = inbounds is List && inbounds.isNotEmpty
+        ? inbounds.first
+        : null;
+    final log = config['log'];
+    final dns = config['dns'];
+    final routing = config['routing'];
+    final rules = routing is Map ? routing['rules'] : null;
+
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _config = config;
+      _portController.text =
+          (inbound is Map ? inbound['port'] : null)?.toString() ??
+          _defaultPort.toString();
+      _logLevel = log is Map
+          ? log['loglevel']?.toString() ?? 'warning'
+          : 'warning';
+      final servers = dns is Map ? dns['servers'] : null;
+      _dnsController.text = servers is List ? servers.join('\n') : '';
+      _routingController.text = rules is List
+          ? const JsonEncoder.withIndent('  ').convert(rules)
+          : '[]';
+      _hasChanges = false;
+    });
+  }
+
+  void _markChanged() {
+    if (!_hasChanges) {
+      setState(() => _hasChanges = true);
+    }
+  }
+
+  void _resetConfig() {
+    setState(() {
+      _portController.text = _defaultPort.toString();
+      _logLevel = 'warning';
+      _dnsController.clear();
+      _routingController.text = '[]';
+      _hasChanges = false;
+    });
+  }
+
+  List<dynamic>? _parseRoutingRules() {
+    try {
+      final decoded = jsonDecode(_routingController.text);
+      return decoded is List ? decoded : null;
+    } catch (_) {
+      return null;
     }
   }
 
   Future<void> _saveConfig() async {
-    final port = int.tryParse(_portController.text.trim()) ?? 10808;
-    final dnsServers = _dnsController.text
-        .split('\n')
-        .where((s) => s.trim().isNotEmpty)
-        .toList();
+    final appLocalizations = context.appLocalizations;
+    final port = int.tryParse(_portController.text.trim());
+    if (port == null || port < 1 || port > 65535) {
+      await dialogs.showAlert(
+        message: TextSpan(
+          text: appLocalizations.portTip(appLocalizations.xrayListenPort),
+        ),
+      );
+      return;
+    }
 
-    final config = <String, dynamic>{
-      'log': {'loglevel': _logLevel},
-      'inbounds': [
-        {
-          'port': port,
-          'protocol': 'socks',
-          'settings': {'udp': true},
-        },
-      ],
-      'dns': {
-        'servers': dnsServers.isNotEmpty ? dnsServers : ['localhost'],
-      },
-      'outbounds': [
-        {'protocol': 'freedom', 'tag': 'direct'},
-        {'protocol': 'blackhole', 'tag': 'blocked'},
-      ],
-      'routing': {
-        'rules': [
-          {
-            'type': 'field',
-            'ip': ['geoip:private'],
-            'outboundTag': 'direct',
-          },
-        ],
-      },
+    final rules = _parseRoutingRules();
+    if (rules == null) {
+      await dialogs.showAlert(
+        message: TextSpan(text: appLocalizations.ruleListInvalid),
+      );
+      return;
+    }
+
+    final config = Map<String, dynamic>.from(_config);
+    final existingLog = config['log'];
+    config['log'] = {
+      if (existingLog is Map) ...existingLog,
+      'loglevel': _logLevel,
     };
 
-    final homeDir = await appPath.homeDirPath;
-    final xrayDir = Directory('${homeDir}xray');
-    if (!await xrayDir.exists()) {
-      await xrayDir.create(recursive: true);
+    final inbounds = config['inbounds'];
+    final inbound = inbounds is List && inbounds.isNotEmpty
+        ? inbounds.first
+        : null;
+    config['inbounds'] = [
+      {
+        if (inbound is Map) ...inbound,
+        'port': port,
+        if (inbound is! Map) 'protocol': 'socks',
+        if (inbound is! Map) 'listen': '127.0.0.1',
+        if (inbound is! Map) 'settings': <String, dynamic>{},
+      },
+      if (inbounds is List) ...inbounds.skip(1),
+    ];
+
+    final dnsServers = _dnsController.text
+        .split('\n')
+        .map((server) => server.trim())
+        .where((server) => server.isNotEmpty)
+        .toList();
+    final existingDns = config['dns'];
+    config['dns'] = {
+      if (existingDns is Map) ...existingDns,
+      'servers': dnsServers.isEmpty ? ['localhost'] : dnsServers,
+    };
+
+    final existingRouting = config['routing'];
+    config['routing'] = {
+      if (existingRouting is Map) ...existingRouting,
+      'rules': rules,
+    };
+
+    if (config['outbounds'] is! List) {
+      config['outbounds'] = [
+        {'protocol': 'freedom', 'tag': 'direct'},
+        {'protocol': 'blackhole', 'tag': 'blocked'},
+      ];
     }
-    final configFile = File('${xrayDir.path}/config.json');
-    await configFile.writeAsString(
+
+    final file = await _configFile();
+    await file.parent.create(recursive: true);
+    await file.writeAsString(
       const JsonEncoder.withIndent('  ').convert(config),
       flush: true,
     );
 
-    if (mounted) {
-      setState(() => _hasChanges = false);
+    if (!mounted) {
+      return;
     }
-
-    if (!mounted) return;
+    setState(() {
+      _config = config;
+      _hasChanges = false;
+    });
     await dialogs.showMessage(
-      title: context.appLocalizations.xraySave,
-      message: TextSpan(text: context.appLocalizations.xrayApplyDesc),
-      confirmText: context.appLocalizations.confirm,
+      title: appLocalizations.xraySave,
+      message: TextSpan(text: appLocalizations.xrayApplyDesc),
+      confirmText: appLocalizations.confirm,
     );
-  }
-
-  void _resetConfig() {
-    _portController.text = '10808';
-    _dnsController.clear();
-    _routingController.clear();
-    _logLevel = 'warning';
-    setState(() => _hasChanges = false);
   }
 
   @override
   Widget build(BuildContext context) {
     final appLocalizations = context.appLocalizations;
 
-    return Scaffold(
+    return BaseScaffold(
       title: appLocalizations.xrayConfig,
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(
-          top: context.contentTopPadding,
-          bottom: 32 + context.bottomInset,
+          top: context.sectionsTopPadding,
+          bottom: 16 + context.bottomInset,
         ),
         children: [
-          _SectionCard(
+          generateSection(
             title: appLocalizations.xrayConfig,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _ConfigTextField(
-                  label: appLocalizations.xrayListenPort,
-                  hint: '10808',
+            items: [
+              FormRow(
+                title: appLocalizations.xrayListenPort,
+                trailing: FormRowTextField(
                   controller: _portController,
-                  keyboardType: m.TextInputType.number,
-                  onChanged: (_) => setState(() => _hasChanges = true),
+                  hintText: _defaultPort.toString(),
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  inputFormatters: TextInputLimits.digitsOnly(
+                    TextInputLimits.port,
+                  ),
+                  onChanged: (_) => _markChanged(),
                 ),
-                const SizedBox(height: 16),
-                _ConfigDropdown<String>(
-                  label: appLocalizations.xrayLogLevel,
-                  value: _logLevel,
-                  items: const ['debug', 'info', 'warning', 'error', 'none'],
-                  onChanged: (value) {
-                    setState(() {
-                      _logLevel = value!;
-                      _hasChanges = true;
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                _ConfigTextField(
-                  label: appLocalizations.xrayDnsServers,
-                  hint: '8.8.8.8\n1.1.1.1',
-                  controller: _dnsController,
-                  keyboardType: m.TextInputType.text,
-                  maxLines: 3,
-                  onChanged: (_) => setState(() => _hasChanges = true),
-                ),
-                const SizedBox(height: 16),
-                _ConfigTextField(
-                  label: appLocalizations.xrayRoutingRules,
-                  hint: 'DOMAIN,google.com,direct\nGEOIP,CN,direct',
-                  controller: _routingController,
-                  keyboardType: m.TextInputType.text,
-                  maxLines: 3,
-                  onChanged: (_) => setState(() => _hasChanges = true),
-                ),
-              ],
-            ),
+              ),
+              ListItem<String>.options(
+                title: Text(appLocalizations.xrayLogLevel),
+                options: _logLevels,
+                value: _logLevel,
+                textBuilder: (level) => level,
+                onChanged: (level) {
+                  setState(() {
+                    _logLevel = level;
+                    _hasChanges = true;
+                  });
+                },
+              ),
+            ],
           ),
-          const SizedBox(height: 24),
+          generateSection(
+            title: appLocalizations.xrayDnsServers,
+            items: [
+              _ConfigTextArea(
+                controller: _dnsController,
+                hint: '8.8.8.8\n1.1.1.1',
+                onChanged: (_) => _markChanged(),
+              ),
+            ],
+          ),
+          generateSection(
+            title: appLocalizations.xrayRoutingRules,
+            items: [
+              _ConfigTextArea(
+                controller: _routingController,
+                hint:
+                    '[\n  {"type": "field", "ip": ["geoip:private"], '
+                    '"outboundTag": "direct"}\n]',
+                onChanged: (_) => _markChanged(),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
-                child: m.OutlinedButton(
-                  onPressed: _resetConfig,
+                child: OutlinedButton(
+                  onPressed: _hasChanges ? _resetConfig : null,
                   child: Text(appLocalizations.xrayReset),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: m.FilledButton(
+                child: FilledButton(
                   onPressed: _hasChanges ? _saveConfig : null,
                   child: Text(appLocalizations.xraySave),
                 ),
@@ -221,175 +287,36 @@ class _XRayConfigViewState extends ConsumerState<XRayConfigView> {
   }
 }
 
-/// Карточка с заголовком и разделителем.
-class _SectionCard extends StatelessWidget {
-  const _SectionCard({required this.title, required this.child});
+class _ConfigTextArea extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final ValueChanged<String> onChanged;
 
-  final String title;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: context.colorScheme.surfaceContainerHighest,
-        borderRadius: AppRadius.md,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              title,
-              style: AppTextStyle.title3
-                  .of(context)
-                  .copyWith(fontWeight: FontWeight.w600),
-            ),
-          ),
-          const Divider(height: 1),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-/// Поле ввода текста с меткой.
-class _ConfigTextField extends StatelessWidget {
-  const _ConfigTextField({
-    required this.label,
+  const _ConfigTextArea({
     required this.controller,
-    this.hint,
-    this.keyboardType,
-    this.maxLines,
-    this.onChanged,
-  });
-
-  final String label;
-  final String? hint;
-  final m.TextEditingController controller;
-  final m.TextInputType? keyboardType;
-  final int? maxLines;
-  final ValueChanged<String>? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyle.body
-                .of(context)
-                .copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: 8),
-          m.TextField(
-            controller: controller,
-            keyboardType: keyboardType,
-            maxLines: maxLines ?? 1,
-            onChanged: onChanged,
-            decoration: m.InputDecoration(
-              hintText: hint,
-              hintStyle: AppTextStyle.body
-                  .of(context)
-                  .copyWith(
-                    color: context.colorScheme.onSurfaceVariant.withValues(
-                      alpha: 0.5,
-                    ),
-                  ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 12,
-              ),
-              border: m.OutlineInputBorder(
-                borderRadius: AppRadius.sm,
-                borderSide: m.BorderSide(
-                  color: context.colorScheme.outlineVariant,
-                ),
-              ),
-              enabledBorder: m.OutlineInputBorder(
-                borderRadius: AppRadius.sm,
-                borderSide: m.BorderSide(
-                  color: context.colorScheme.outlineVariant,
-                ),
-              ),
-              focusedBorder: m.OutlineInputBorder(
-                borderRadius: AppRadius.sm,
-                borderSide: m.BorderSide(color: context.colorScheme.primary),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Выпадающее поле выбора с меткой.
-class _ConfigDropdown<T> extends StatelessWidget {
-  const _ConfigDropdown({
-    required this.label,
-    required this.value,
-    required this.items,
+    required this.hint,
     required this.onChanged,
   });
 
-  final String label;
-  final T value;
-  final List<T> items;
-  final ValueChanged<T?> onChanged;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyle.body
-                .of(context)
-                .copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.colorScheme.onSurfaceVariant,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: AppRadius.sm,
-              color: context.colorScheme.surfaceContainerHighest,
-            ),
-            child: m.DropdownButtonFormField<T>(
-              initialValue: value,
-              items: items
-                  .map(
-                    (item) => m.DropdownMenuItem<T>(
-                      value: item,
-                      child: Text(item.toString()),
-                    ),
-                  )
-                  .toList(),
-              onChanged: onChanged,
-              decoration: const m.InputDecoration(
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 12,
-                ),
-                border: m.InputBorder.none,
-              ),
-            ),
-          ),
-        ],
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: FilledInputTheme(
+        borderRadius: AppRadius.md,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 10,
+        ),
+        child: TextField(
+          controller: controller,
+          minLines: 3,
+          maxLines: null,
+          keyboardType: TextInputType.multiline,
+          autocorrect: false,
+          decoration: InputDecoration(hintText: hint),
+          onChanged: onChanged,
+        ),
       ),
     );
   }

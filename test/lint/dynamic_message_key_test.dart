@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:xclient/common/l10n_labels.dart';
 import 'package:xclient/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as p;
 
 const _arbDir = 'arb';
 const _libDir = 'lib';
@@ -46,7 +47,7 @@ void main() {
     final offenders = <String>[];
     for (final entity in Directory(_libDir).listSync(recursive: true)) {
       if (entity is! File || !entity.path.endsWith('.dart')) continue;
-      final path = entity.path;
+      final path = p.split(entity.path).join('/');
       if (path.contains('/generated/') || path.contains('/l10n/')) continue;
       if (entity.readAsStringSync().contains('Intl.message(')) {
         offenders.add(path);

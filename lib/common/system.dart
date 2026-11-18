@@ -39,8 +39,7 @@ class System {
   static bool isPrivilegedStatOutput(
     String output, {
     required String ownerPrefix,
-  }) =>
-      pe.isPrivilegedStatOutput(output, ownerPrefix: ownerPrefix);
+  }) => pe.isPrivilegedStatOutput(output, ownerPrefix: ownerPrefix);
 
   @visibleForTesting
   static String macOSElevationShell(String corePath) =>

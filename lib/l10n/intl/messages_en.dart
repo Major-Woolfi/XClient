@@ -2166,7 +2166,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Not installed",
     ),
     "preRelease": MessageLookupByLibrary.simpleMessage("Pre-release"),
-    "autoUpdate": MessageLookupByLibrary.simpleMessage("Auto-update"),
     "autoUpdateTip": MessageLookupByLibrary.simpleMessage(
       "Automatically download new core versions",
     ),
@@ -2174,7 +2173,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "installing": MessageLookupByLibrary.simpleMessage("Installing..."),
     "use": MessageLookupByLibrary.simpleMessage("Use"),
     "active": MessageLookupByLibrary.simpleMessage("Active"),
-    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "xrayConfig": MessageLookupByLibrary.simpleMessage("XRay config"),
     "xrayListenPort": MessageLookupByLibrary.simpleMessage("Listen port"),
     "xrayLogLevel": MessageLookupByLibrary.simpleMessage("Log level"),

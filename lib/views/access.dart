@@ -478,7 +478,8 @@ class _PackageList extends ConsumerStatefulWidget {
   ConsumerState<_PackageList> createState() => _PackageListState();
 }
 
-class _PackageListState extends ConsumerState<_PackageList> {
+class _PackageListState extends ConsumerState<_PackageList>
+    with ArrivalCacheExtentMixin<_PackageList> {
   late final ScrollController _controller;
 
   @override
@@ -507,6 +508,7 @@ class _PackageListState extends ConsumerState<_PackageList> {
           top: context.contentTopPadding,
           bottom: context.bottomInset,
         ),
+        scrollCacheExtent: arrivalCacheExtent,
         itemCount: packages.length,
         itemExtent: 72,
         itemBuilder: (_, index) {

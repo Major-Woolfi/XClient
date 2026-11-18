@@ -590,7 +590,7 @@ final class HelperCoreLease implements CoreProcessLease {
         'session $sessionId is released',
         logLevel: LogLevel.warning,
       );
-      return const CoreProcessStopResult(stopped: false, exitConfirmed: false);
+      return const CoreProcessStopResult(stopped: false, exitConfirmed: true);
     }
     return CoreProcessStopResult(
       stopped: response.stopped,

@@ -623,12 +623,13 @@ void main() {
     final editor = await openEditor(tester, 'editable');
     expect(shownText(tester), 'payload:\n  - old\n');
 
-    await editor.onSave!(
+    final saving = editor.onSave!(
       tester.element(find.byType(EditorPage)),
       'editable',
       const EditorContent.text('payload:\n  - new\n'),
     );
     await pumpUntil(tester, find.byType(EditorPage), found: false);
+    await saving;
 
     expect(file.readAsStringSync(), 'payload:\n  - new\n');
     verify(

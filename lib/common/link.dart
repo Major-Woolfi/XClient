@@ -17,7 +17,7 @@ String? profileUrlFromQrCodes(Iterable<String?> values) {
       return text;
     }
     final uri = Uri.tryParse(text);
-    if (uri == null || !protocolSchemes.contains(uri.scheme)) {
+    if (uri == null || !isProtocolScheme(uri.scheme)) {
       continue;
     }
     final url = _installConfigUrl(uri);
@@ -50,7 +50,7 @@ class LinkManager {
   void seedInitialLink(List<String> args) {
     for (final arg in args) {
       final uri = Uri.tryParse(arg);
-      if (uri != null && protocolSchemes.contains(uri.scheme)) {
+      if (uri != null && isProtocolScheme(uri.scheme)) {
         _pendingUri = uri;
         return;
       }

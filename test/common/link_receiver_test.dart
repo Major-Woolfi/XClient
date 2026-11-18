@@ -122,7 +122,7 @@ void main() {
 
       await expectLater(
         _request(receiver.address),
-        throwsA(isA<SocketException>()),
+        throwsA(isA<IOException>()),
       );
     });
 

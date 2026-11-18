@@ -204,8 +204,7 @@ class _RecentFeedState extends State<_RecentFeed> {
   void initState() {
     super.initState();
     _scrollController =
-        widget.scrollController ??
-        sheetScrollController(context, initialScrollOffset: double.maxFinite);
+        widget.scrollController ?? sheetScrollController(context);
     // Один контроллер листа мог остаться там, где читает лента live.
     if (widget.scrollController != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -104,7 +104,7 @@ void main() {
     expect(second, 0.5);
     expect(
       methodCalls.where((call) => call.method == 'isEffectSupported'),
-      hasLength(Platform.isWindows ? 4 : 3),
+      hasLength(3),
     );
     expect(methodCalls.last.arguments['effect'], isNot('none'));
   });

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import 'sources.dart';
+
 const _platformPackages = [
   'tray',
   'window',
@@ -61,7 +63,7 @@ Iterable<File> _dartFilesIn(String root) sync* {
   for (final entity in directory.listSync(recursive: true)) {
     if (entity is File &&
         entity.path.endsWith('.dart') &&
-        !entity.path.contains('/generated/')) {
+        !portablePath(entity.path).contains('/generated/')) {
       yield entity;
     }
   }
@@ -90,7 +92,7 @@ void main() {
 
     for (final root in ['lib/common', 'lib/enum', 'lib/models']) {
       for (final file in _dartFilesIn(root)) {
-        final relative = p.relative(file.path);
+        final relative = portablePath(p.relative(file.path));
         if (_platformModules.contains(relative)) {
           continue;
         }

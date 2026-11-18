@@ -2284,7 +2284,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Не установлено",
     ),
     "preRelease": MessageLookupByLibrary.simpleMessage("Предварительная"),
-    "autoUpdate": MessageLookupByLibrary.simpleMessage("Автообновление"),
     "autoUpdateTip": MessageLookupByLibrary.simpleMessage(
       "Автоматически скачивать новые версии ядра",
     ),
@@ -2292,7 +2291,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "installing": MessageLookupByLibrary.simpleMessage("Установка..."),
     "use": MessageLookupByLibrary.simpleMessage("Использовать"),
     "active": MessageLookupByLibrary.simpleMessage("Активно"),
-    "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
     "xrayConfig": MessageLookupByLibrary.simpleMessage("Конфигурация XRay"),
     "xrayListenPort": MessageLookupByLibrary.simpleMessage(
       "Порт прослушивания",

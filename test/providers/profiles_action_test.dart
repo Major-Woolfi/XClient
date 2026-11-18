@@ -80,7 +80,7 @@ void main() {
 
   group('addProfileFromLink with a share link', () {
     test('saves a file profile named after the proxy it holds', () async {
-      const link = 'vless://id@hk.example.com:443#HK';
+      const link = 'hysteria2://pass@hk.example.com:443#HK';
       decodesTo(link, [
         {'name': 'HK', 'type': 'vless', 'server': 'hk.example.com'},
       ]);
@@ -100,7 +100,7 @@ void main() {
     });
 
     test('names an unnamed proxy after its server', () async {
-      const link = 'ss://YWVzLTEyOC1nY206cGFzcw@ss.example.com:8388';
+      const link = 'hysteria2://pass@ss.example.com:8388#SS';
       decodesTo(link, [
         {'name': '', 'type': 'ss', 'server': 'ss.example.com'},
       ]);
@@ -115,7 +115,7 @@ void main() {
     });
 
     test('moves a proxy off a name mihomo reserves', () async {
-      const link = 'trojan://pass@t.example.com:443#DIRECT';
+      const link = 'hysteria2://pass@t.example.com:443#DIRECT';
       decodesTo(link, [
         {'name': 'DIRECT', 'type': 'trojan', 'server': 't.example.com'},
       ]);
@@ -131,7 +131,7 @@ void main() {
     testWidgets('reports a link no proxy can be read from and adds nothing', (
       tester,
     ) async {
-      const link = 'vmess://not-base64';
+      const link = 'hysteria2://not-a-link';
       decodesTo(link, const []);
       await pumpHost(tester);
 
@@ -149,9 +149,9 @@ void main() {
 
   group('addProfilesFromLinks with share links', () {
     const links = [
-      'vless://id@hk.example.com:443#HK',
-      'trojan://pass@hk2.example.com:443#HK',
-      'ss://YWVzLTEyOC1nY206cGFzcw@ss.example.com:8388',
+      'hysteria2://pass@hk.example.com:443#HK',
+      'hysteria2://pass@hk2.example.com:443#HK',
+      'hysteria2://pass@ss.example.com:8388#SS',
     ];
 
     test('makes one profile of all their proxies', () async {

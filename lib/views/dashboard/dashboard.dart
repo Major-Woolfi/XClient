@@ -310,6 +310,10 @@ class _MobileDashboard extends ConsumerWidget {
     final top = context.contentTopPadding;
     final bottom = 16 + context.bottomInset;
     return CustomScrollView(
+      // Один вьюпорт на карточку раскладывает их все и удерживает конец скролла на месте.
+      scrollCacheExtent: editing
+          ? ScrollCacheExtent.viewport(DashboardWidget.values.length.toDouble())
+          : null,
       slivers: [
         SliverLayoutBuilder(
           builder: (context, constraints) {

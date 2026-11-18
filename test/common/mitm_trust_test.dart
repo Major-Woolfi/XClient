@@ -344,186 +344,196 @@ void main() {
     });
   });
 
-  group('Linux', () {
-    late Map<String, String> files;
-    late Map<String, List<String>> directories;
-    late List<List<String>> elevated;
-    late bool elevation;
+  group(
+    'Linux',
+    skip: Platform.isLinux ? false : 'The Linux trust store runs on Linux',
+    () {
+      late Map<String, String> files;
+      late Map<String, List<String>> directories;
+      late List<List<String>> elevated;
+      late bool elevation;
 
-    setUp(() {
-      files = {};
-      directories = {};
-      elevated = [];
-      elevation = true;
-    });
+      setUp(() {
+        files = {};
+        directories = {};
+        elevated = [];
+        elevation = true;
+      });
 
-    Future<void> touch(String path) async {
-      await File('${root.path}$path').create(recursive: true);
-    }
-
-    LinuxMitmTrustStore store({bool certutil = true}) {
-      final bin = Directory('${root.path}/bin')..createSync(recursive: true);
-      if (certutil) {
-        File('${bin.path}/certutil').createSync();
+      Future<void> touch(String path) async {
+        await File('${root.path}$path').create(recursive: true);
       }
-      return LinuxMitmTrustStore(
-        home: '${root.path}/home',
-        searchPath: '/nonexistent:${bin.path}',
-        run: processes.run,
-        elevate: (command) async {
-          elevated.add(command);
-          return elevation;
-        },
-        writeTemp: writeTemp,
-        readFile: (path) async => files[path],
-        listDirectory: (path) async => directories[path] ?? const [],
-      );
-    }
 
-    String database(String path) => '${root.path}/home$path';
+      LinuxMitmTrustStore store({bool certutil = true}) {
+        final bin = Directory('${root.path}/bin')..createSync(recursive: true);
+        if (certutil) {
+          File('${bin.path}/certutil').createSync();
+        }
+        return LinuxMitmTrustStore(
+          home: '${root.path}/home',
+          searchPath: '/nonexistent:${bin.path}',
+          run: processes.run,
+          elevate: (command) async {
+            elevated.add(command);
+            return elevation;
+          },
+          writeTemp: writeTemp,
+          readFile: (path) async => files[path],
+          listDirectory: (path) async => directories[path] ?? const [],
+        );
+      }
 
-    group('removing', () {
-      void listDatabases({required bool stays}) {
-        var deleted = false;
-        processes.handle('${root.path}/bin/certutil', (arguments) {
-          if (arguments.contains('-D')) {
-            deleted = true;
-            return ProcessResult(0, 0, '', '');
-          }
-          return deleted && !stays
-              ? ProcessResult(0, 255, '', 'not found')
-              : ProcessResult(0, 0, _pem, '');
+      String database(String path) => '${root.path}/home$path';
+
+      group('removing', () {
+        void listDatabases({required bool stays}) {
+          var deleted = false;
+          processes.handle('${root.path}/bin/certutil', (arguments) {
+            if (arguments.contains('-D')) {
+              deleted = true;
+              return ProcessResult(0, 0, '', '');
+            }
+            return deleted && !stays
+                ? ProcessResult(0, 255, '', 'not found')
+                : ProcessResult(0, 0, _pem, '');
+          });
+        }
+
+        test('takes the CA out of the bundle and each browser', () async {
+          files[LinuxMitmTrustStore.bundles.first] = _pem;
+          await touch('/home/.pki/nssdb/cert9.db');
+          listDatabases(stays: false);
+
+          expect(await store().remove(_ca), isTrue);
+
+          expect(elevated, [
+            ['/bin/sh', '-c', LinuxMitmTrustStore.removeScript, 'XClient'],
+          ]);
         });
-      }
 
-      test('takes the CA out of the bundle and each browser', () async {
-        files[LinuxMitmTrustStore.bundles.first] = _pem;
+        test(
+          'asks for no elevation for a CA the bundle does not hold',
+          () async {
+            expect(await store().remove(_ca), isTrue);
+
+            expect(elevated, isEmpty);
+          },
+        );
+
+        test('reports a declined elevation', () async {
+          files[LinuxMitmTrustStore.bundles.first] = _pem;
+          elevation = false;
+
+          expect(await store().remove(_ca), isFalse);
+        });
+
+        test('reports a database it could not clear', () async {
+          await touch('/home/.pki/nssdb/cert9.db');
+          listDatabases(stays: true);
+
+          expect(await store().remove(_ca), isFalse);
+        });
+
+        test('reports databases no certutil can reach', () async {
+          await touch('/home/.pki/nssdb/cert9.db');
+
+          expect(await store(certutil: false).remove(_ca), isFalse);
+        });
+      });
+
+      test('a CA in the system bundle and every browser is trusted', () async {
+        files[LinuxMitmTrustStore.bundles.first] = 'other\n$_pem';
         await touch('/home/.pki/nssdb/cert9.db');
-        listDatabases(stays: false);
+        processes.stub('${root.path}/bin/certutil', stdout: _pem);
 
-        expect(await store().remove(_ca), isTrue);
+        final check = await store().check(_ca, issueLeaf);
 
-        expect(elevated, [
-          ['/bin/sh', '-c', LinuxMitmTrustStore.removeScript, 'XClient'],
+        expect(check.trust, MitmTrust.ready);
+        expect(check.missingStores, isEmpty);
+        expect(processes.argumentsOf('${root.path}/bin/certutil').single, [
+          '-d',
+          'sql:${database('/.pki/nssdb')}',
+          '-L',
+          '-n',
+          LinuxMitmTrustStore.nickname,
+          '-a',
         ]);
       });
 
-      test('asks for no elevation for a CA the bundle does not hold', () async {
-        expect(await store().remove(_ca), isTrue);
+      test('a browser without the CA leaves it partly trusted', () async {
+        files[LinuxMitmTrustStore.bundles.last] = _pem;
+        final profiles = database('/.mozilla/firefox');
+        directories[profiles] = ['$profiles/abc.default-release'];
+        await touch('/home/.mozilla/firefox/abc.default-release/cert9.db');
+        processes.stub('${root.path}/bin/certutil', exitCode: 255);
 
-        expect(elevated, isEmpty);
+        final check = await store().check(_ca, issueLeaf);
+
+        expect(check.trust, MitmTrust.untrusted);
+        expect(check.missingStores, ['Firefox (abc.default-release)']);
+        expect(check.certutilInstall, isNull);
       });
 
-      test('reports a declined elevation', () async {
-        files[LinuxMitmTrustStore.bundles.first] = _pem;
+      test('no store with the CA means it is not installed', () async {
+        await touch('/home/.pki/nssdb/cert9.db');
+
+        final check = await store(certutil: false).check(_ca, issueLeaf);
+
+        expect(check.trust, MitmTrust.notInstalled);
+        expect(check.certutilInstall, isNotNull);
+      });
+
+      test('the system bundle alone is enough without a browser', () async {
+        files[LinuxMitmTrustStore.bundles[2]] = _pem;
+
+        final check = await store(certutil: false).check(_ca, issueLeaf);
+
+        expect(check.trust, MitmTrust.ready);
+        expect(check.certutilInstall, isNull);
+      });
+
+      test(
+        'installing elevates once and replaces the browser copies',
+        () async {
+          await touch('/home/.pki/nssdb/cert9.db');
+
+          expect(await store().install(_ca), MitmInstallOutcome.installed);
+
+          final pemPath = '${root.path}/temp-0.pem';
+          expect(elevated, [
+            [
+              '/bin/sh',
+              '-c',
+              LinuxMitmTrustStore.installScript,
+              'XClient',
+              pemPath,
+            ],
+          ]);
+          final db = 'sql:${database('/.pki/nssdb')}';
+          expect(processes.argumentsOf('${root.path}/bin/certutil'), [
+            ['-d', db, '-D', '-n', LinuxMitmTrustStore.nickname],
+            [
+              '-d',
+              db,
+              '-A',
+              '-t',
+              'C,,',
+              '-n',
+              LinuxMitmTrustStore.nickname,
+              '-i',
+              pemPath,
+            ],
+          ]);
+        },
+      );
+
+      test('a declined elevation adds nothing to the browsers', () async {
+        await touch('/home/.pki/nssdb/cert9.db');
         elevation = false;
 
-        expect(await store().remove(_ca), isFalse);
+        await expectLater(store().install(_ca), throwsA(anything));
+        expect(processes.runs, isEmpty);
       });
-
-      test('reports a database it could not clear', () async {
-        await touch('/home/.pki/nssdb/cert9.db');
-        listDatabases(stays: true);
-
-        expect(await store().remove(_ca), isFalse);
-      });
-
-      test('reports databases no certutil can reach', () async {
-        await touch('/home/.pki/nssdb/cert9.db');
-
-        expect(await store(certutil: false).remove(_ca), isFalse);
-      });
-    });
-
-    test('a CA in the system bundle and every browser is trusted', () async {
-      files[LinuxMitmTrustStore.bundles.first] = 'other\n$_pem';
-      await touch('/home/.pki/nssdb/cert9.db');
-      processes.stub('${root.path}/bin/certutil', stdout: _pem);
-
-      final check = await store().check(_ca, issueLeaf);
-
-      expect(check.trust, MitmTrust.ready);
-      expect(check.missingStores, isEmpty);
-      expect(processes.argumentsOf('${root.path}/bin/certutil').single, [
-        '-d',
-        'sql:${database('/.pki/nssdb')}',
-        '-L',
-        '-n',
-        LinuxMitmTrustStore.nickname,
-        '-a',
-      ]);
-    });
-
-    test('a browser without the CA leaves it partly trusted', () async {
-      files[LinuxMitmTrustStore.bundles.last] = _pem;
-      final profiles = database('/.mozilla/firefox');
-      directories[profiles] = ['$profiles/abc.default-release'];
-      await touch('/home/.mozilla/firefox/abc.default-release/cert9.db');
-      processes.stub('${root.path}/bin/certutil', exitCode: 255);
-
-      final check = await store().check(_ca, issueLeaf);
-
-      expect(check.trust, MitmTrust.untrusted);
-      expect(check.missingStores, ['Firefox (abc.default-release)']);
-      expect(check.certutilInstall, isNull);
-    });
-
-    test('no store with the CA means it is not installed', () async {
-      await touch('/home/.pki/nssdb/cert9.db');
-
-      final check = await store(certutil: false).check(_ca, issueLeaf);
-
-      expect(check.trust, MitmTrust.notInstalled);
-      expect(check.certutilInstall, isNotNull);
-    });
-
-    test('the system bundle alone is enough without a browser', () async {
-      files[LinuxMitmTrustStore.bundles[2]] = _pem;
-
-      final check = await store(certutil: false).check(_ca, issueLeaf);
-
-      expect(check.trust, MitmTrust.ready);
-      expect(check.certutilInstall, isNull);
-    });
-
-    test('installing elevates once and replaces the browser copies', () async {
-      await touch('/home/.pki/nssdb/cert9.db');
-
-      expect(await store().install(_ca), MitmInstallOutcome.installed);
-
-      final pemPath = '${root.path}/temp-0.pem';
-      expect(elevated, [
-        [
-          '/bin/sh',
-          '-c',
-          LinuxMitmTrustStore.installScript,
-          'XClient',
-          pemPath,
-        ],
-      ]);
-      final db = 'sql:${database('/.pki/nssdb')}';
-      expect(processes.argumentsOf('${root.path}/bin/certutil'), [
-        ['-d', db, '-D', '-n', LinuxMitmTrustStore.nickname],
-        [
-          '-d',
-          db,
-          '-A',
-          '-t',
-          'C,,',
-          '-n',
-          LinuxMitmTrustStore.nickname,
-          '-i',
-          pemPath,
-        ],
-      ]);
-    });
-
-    test('a declined elevation adds nothing to the browsers', () async {
-      await touch('/home/.pki/nssdb/cert9.db');
-      elevation = false;
-
-      await expectLater(store().install(_ca), throwsA(anything));
-      expect(processes.runs, isEmpty);
-    });
-  });
+    },
+  );
 }

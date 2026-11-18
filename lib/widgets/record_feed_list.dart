@@ -35,7 +35,8 @@ class RecordFeedList<T> extends StatefulWidget {
   State<RecordFeedList<T>> createState() => _RecordFeedListState<T>();
 }
 
-class _RecordFeedListState<T> extends State<RecordFeedList<T>> {
+class _RecordFeedListState<T> extends State<RecordFeedList<T>>
+    with ArrivalCacheExtentMixin<RecordFeedList<T>> {
   Map<Key, int>? _indexes;
   var _built = <Key, int>{};
   var _builtBefore = const <Key, int>{};
@@ -104,6 +105,7 @@ class _RecordFeedListState<T> extends State<RecordFeedList<T>> {
       physics: widget.physics,
       controller: widget.controller,
       padding: widget.padding,
+      scrollCacheExtent: arrivalCacheExtent,
       itemCount: widget.items.length,
       gap: widget.gap,
       estimatedItemExtent: widget.estimatedItemExtent,

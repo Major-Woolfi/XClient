@@ -6,6 +6,9 @@ import 'print.dart';
 
 const protocolSchemes = ['clash', 'clashmeta', 'XClient'];
 
+bool isProtocolScheme(String scheme) =>
+    protocolSchemes.any((value) => value.toLowerCase() == scheme.toLowerCase());
+
 class ProtocolRegistrationPlan {
   final String scheme;
   final String executable;

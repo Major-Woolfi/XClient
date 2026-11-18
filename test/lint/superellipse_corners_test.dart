@@ -43,7 +43,7 @@ void main() {
     for (final entity in sourceEntities()) {
       if (entity is! File ||
           !entity.path.endsWith('.dart') ||
-          entity.path.contains('/generated/')) {
+          portablePath(entity.path).contains('/generated/')) {
         continue;
       }
       final source = entity.readAsStringSync();

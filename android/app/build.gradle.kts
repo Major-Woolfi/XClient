@@ -38,6 +38,9 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        ndk {
+            abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
+        }
     }
 
     signingConfigs {
@@ -58,15 +61,11 @@ android {
     }
 
     sourceSets {
-        main {
-            jniLibs.srcDirs = ['src/main/jniLibs']
+        getByName("main") {
+            jniLibs.srcDirs("src/main/jniLibs")
         }
         // Unit tests live under android/tests/ instead of each module's src/test.
         getByName("test").java.setSrcDirs(listOf("../tests/app"))
-    }
-
-    ndk {
-        abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64"))
     }
 
     buildTypes {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
 import 'sources.dart';
@@ -15,10 +16,11 @@ void main() {
     final offenders = <String>[];
 
     for (final entity in sourceEntities()) {
-      if (entity is! File ||
-          !entity.path.endsWith('.dart') ||
-          entity.path.contains('/generated/') ||
-          _secretFields.contains(entity.path)) {
+      if (entity is! File || !entity.path.endsWith('.dart')) {
+        continue;
+      }
+      final path = portablePath(p.relative(entity.path));
+      if (path.contains('/generated/') || _secretFields.contains(path)) {
         continue;
       }
       final lines = entity.readAsLinesSync();
@@ -26,7 +28,7 @@ void main() {
         final match = _passwordInputType.firstMatch(lines[i]);
         if (match != null) {
           offenders.add(
-            '${entity.path}:${i + 1} - ${match[0]} makes Android input '
+            '$path:${i + 1} - ${match[0]} makes Android input '
             'methods treat the field as a password, with no clipboard or '
             'Chinese input; keep autocorrect: false alone.',
           );

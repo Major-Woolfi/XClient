@@ -1,0 +1,51 @@
+[target.aarch64-linux-android]
+linker = "rust-lld"
+
+[target.armv7-linux-androideabi]
+linker = "rust-lld"
+
+[target.x86_64-linux-android]
+linker = "rust-lld"
+
+[target.i686-linux-android]
+linker = "rust-lld"
+
+[target.aarch64-apple-darwin]
+linker = "rust-lld"
+
+[target.x86_64-apple-darwin]
+linker = "rust-lld"
+
+[target.aarch64-pc-windows-msvc]
+linker = "rust-lld"
+
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "rust-lld"
+
+[target.x86_64-unknown-linux-gnu]
+linker = "rust-lld"
+
+[build]
+rustflags = [
+  "-C", "link-arg=-fuse-ld=lld",
+]
+
+[target.'cfg(all(target_os = "android", any(target_arch = "aarch64", target_arch = "arm")))'.rustflags]
+[
+  "-C", "link-arg=-fuse-ld=lld",
+  "-C", "link-arg=-Wl,--no-rosegment",
+]
+
+[target.'cfg(all(target_os = "android", any(target_arch = "x86_64", target_arch = "x86")))'.rustflags]
+[
+  "-C", "link-arg=-fuse-ld=lld",
+]
+
+[target.'cfg(target_os = "android")'.rustflags]
+[
+  "-C", "link-arg=-fuse-ld=lld",
+  "-C", "link-arg=-Wl,-z,nocopyreloc",
+]

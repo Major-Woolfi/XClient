@@ -8,7 +8,7 @@ import 'package:xclient/enum/enum.dart';
 import 'package:xclient/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as p;
 
 Future<T> decodeJSONTask<T>(String data) async {
   return compute<String, T>(_decodeJSON, data);
@@ -122,14 +122,24 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
   final addedRules = data.addedRules;
   final appendSystemDns = data.appendSystemDns;
   final defaultUA = data.defaultUA;
+  List<String> providerPathParts(String type, String key) => [
+    profilesPath,
+    providersDirectoryName,
+    profileId.toString(),
+    type,
+    key.toMd5(),
+  ];
+
   String getProvidersFilePathInner(String type, String key) {
-    return join(
-      profilesPath,
-      providersDirectoryName,
-      profileId.toString(),
-      type,
-      key.toMd5(),
-    );
+    return p.joinAll(providerPathParts(type, key));
+  }
+
+  String getProvidersConfigPathInner(String type, String key) {
+    final parts = providerPathParts(type, key);
+    final windowsStyle =
+        profilesPath.contains(r'\') ||
+        RegExp(r'^[A-Za-z]:').hasMatch(profilesPath);
+    return windowsStyle ? p.joinAll(parts) : p.posix.joinAll(parts);
   }
 
   void confineProviders(String section, String type) {
@@ -145,14 +155,14 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
       // Два провайдера могут делить URL и отличаться только заголовком.
       final url = provider['url'];
       final hasUrl = url is String && url.isNotEmpty;
-      final path = getProvidersFilePathInner(
+      final path = getProvidersConfigPathInner(
         type,
         hasUrl ? '$name@$url' : '$section/$name',
       );
       if (hasUrl) {
         _migrateLegacyProviderFile(
           legacyPath: getProvidersFilePathInner(type, url),
-          newPath: path,
+          newPath: getProvidersFilePathInner(type, '$name@$url'),
         );
       }
       provider['path'] = path;
@@ -437,7 +447,7 @@ List<String> shakeOrphanFiles({
       if (!selected) {
         continue;
       }
-      if (!isLive(basenameWithoutExtension(entity.path))) {
+      if (!isLive(p.basenameWithoutExtension(entity.path))) {
         targets.add(entity.path);
       }
     }
@@ -453,7 +463,7 @@ List<String> shakeOrphanFiles({
     includeDirectories: true,
   );
   scanDirectory(
-    Directory(join(providerCacheDirPath, rulesProviderDirectoryName)),
+    Directory(p.join(providerCacheDirPath, rulesProviderDirectoryName)),
     providerFileNames.toSet().contains,
   );
   scanDirectory(Directory(scriptsDirPath), isLiveId(scriptIds));
@@ -472,7 +482,7 @@ void _migrateLegacyProviderFile({
   try {
     final legacyFile = File(legacyPath);
     if (legacyFile.existsSync()) {
-      Directory(dirname(newPath)).createSync(recursive: true);
+      Directory(p.dirname(newPath)).createSync(recursive: true);
       legacyFile.renameSync(newPath);
     }
   } catch (_) {}

@@ -66,7 +66,7 @@ class _ToolViewState extends ConsumerState<ToolsView> {
           items: [const _MihomoItem()],
         ),
         generateSection(
-          title: context.appLocalizations.general,
+          title: context.appLocalizations.settings,
           items: [
             const _LocaleItem(),
             const _ThemeItem(),

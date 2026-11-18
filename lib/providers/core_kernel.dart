@@ -1,11 +1,8 @@
 import 'package:xclient/core/core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Состояние загрузки одного ядра.
 enum CoreKernelStatus { idle, installing, installed, error }
 
-/// Модель ядра для отображения в UI.
 class CoreKernelModel {
   final CoreType type;
   final CoreSpec spec;
@@ -38,214 +35,175 @@ class CoreKernelModel {
   bool get hasError => status == CoreKernelStatus.error;
 }
 
-/// Состояние менеджера ядер.
 class CoreKernelState {
   final CoreType activeType;
   final String activeVersion;
   final Map<CoreType, List<CoreKernelModel>> models;
-  final Map<CoreType, List<CoreSpec>> available;
 
   const CoreKernelState({
     required this.activeType,
     required this.activeVersion,
     this.models = const {},
-    this.available = const {},
   });
 
-  CoreKernelModel? getActiveModel() {
-    return models[activeType]?.firstWhere(
-      (m) => m.spec.version == activeVersion,
-      orElse: () => throw StateError('Model not found'),
-    );
+  CoreKernelModel? get activeModel {
+    for (final model in models[activeType] ?? const <CoreKernelModel>[]) {
+      if (model.spec.version == activeVersion) {
+        return model;
+      }
+    }
+    return null;
   }
 
   CoreKernelState copyWith({
     CoreType? activeType,
     String? activeVersion,
     Map<CoreType, List<CoreKernelModel>>? models,
-    Map<CoreType, List<CoreSpec>>? available,
   }) {
     return CoreKernelState(
       activeType: activeType ?? this.activeType,
       activeVersion: activeVersion ?? this.activeVersion,
       models: models ?? this.models,
-      available: available ?? this.available,
     );
   }
 }
 
-/// Менеджер ядер (состояние + операции).
-class CoreKernelNotifier extends ChangeNotifier {
-  CoreKernelState _state = const CoreKernelState(
-    activeType: CoreType.clash,
-    activeVersion: '1.19.33',
-  );
-
-  CoreKernelState get state => _state;
-
-  set state(CoreKernelState value) {
-    _state = value;
-    notifyListeners();
+class CoreKernelNotifier extends Notifier<CoreKernelState> {
+  @override
+  CoreKernelState build() {
+    final type = coreBinaryManager.activeCoreType;
+    final version = _installedVersion(type);
+    Future.microtask(init);
+    return CoreKernelState(
+      activeType: type,
+      activeVersion: version,
+      models: {for (final type in CoreType.values) type: _modelsOf(type)},
+    );
   }
 
-  /// Инициализация из сохранённых настроек.
   Future<void> init() async {
-    final manager = coreBinaryManager;
-    final type = await manager.getSavedCoreType();
-    final version = await manager.getActiveVersion();
-    await _loadModels(type);
-    state = state.copyWith(activeType: type, activeVersion: version);
-  }
-
-  /// Загрузить модели для типа ядра.
-  Future<void> _loadModels(CoreType type) async {
-    final manager = coreBinaryManager;
-    await manager.loadAvailableVersions(type: type);
-
-    final installed = <CoreKernelModel>[];
-    for (final spec in manager.getInstalledVersions(type)) {
-      installed.add(
-        CoreKernelModel(
-          type: type,
-          spec: spec,
-          status: CoreKernelStatus.installed,
-        ),
-      );
-    }
-
-    final available = <CoreKernelModel>[];
-    for (final spec in manager.getAvailableVersions(type)) {
-      if (spec.isInstalled) continue;
-      available.add(
-        CoreKernelModel(type: type, spec: spec, status: CoreKernelStatus.idle),
-      );
-    }
-
+    final type = await coreBinaryManager.getSavedCoreType();
+    final version = await coreBinaryManager.getActiveVersion();
     state = state.copyWith(
-      models: {
-        ...state.models,
-        type: [...installed, ...available],
-      },
+      activeType: type,
+      activeVersion: version,
+      models: {for (final type in CoreType.values) type: _modelsOf(type)},
     );
   }
 
-  /// Установить (скачать) версию ядра.
   Future<void> install(CoreType type, String version) async {
-    final manager = coreBinaryManager;
-
-    state = state.copyWith(
-      models: {
-        ...state.models,
-        type: [
-          for (final m in state.models[type] ?? const [])
-            if (m.spec.version == version)
-              m.copyWith(status: CoreKernelStatus.installing, progress: 0.0)
-            else
-              m,
-        ],
-      },
-    );
-
+    _updateModel(type, version, status: CoreKernelStatus.installing);
     try {
-      final result = await manager.installCore(type, version, setActive: true);
-
-      if (result.success && result.spec != null) {
-        await _loadModels(type);
+      final result = await coreBinaryManager.installCore(
+        type,
+        version,
+        setActive: true,
+      );
+      if (result.success) {
+        _reload(type);
         state = state.copyWith(activeType: type, activeVersion: version);
       } else {
-        state = state.copyWith(
-          models: {
-            ...state.models,
-            type: [
-              for (final m in state.models[type] ?? const [])
-                if (m.spec.version == version)
-                  m.copyWith(status: CoreKernelStatus.error)
-                else
-                  m,
-            ],
-          },
-        );
+        _updateModel(type, version, status: CoreKernelStatus.error);
       }
-    } catch (e) {
-      state = state.copyWith(
-        models: {
-          ...state.models,
-          type: [
-            for (final m in state.models[type] ?? const [])
-              if (m.spec.version == version)
-                m.copyWith(status: CoreKernelStatus.error)
-              else
-                m,
-          ],
-        },
-      );
+    } catch (_) {
+      _updateModel(type, version, status: CoreKernelStatus.error);
     }
   }
 
-  /// Переключиться на установленное ядро.
   Future<void> switchTo(CoreType type, String version) async {
     final result = await coreBinaryManager.switchCore(type, version: version);
     if (result.success) {
-      await _loadModels(type);
+      _reload(type);
       state = state.copyWith(activeType: type, activeVersion: version);
     }
   }
 
-  /// Удалить версию ядра.
   Future<void> uninstall(CoreType type, String version) async {
-    final success = await coreBinaryManager.uninstallCore(type, version);
-    if (success) {
-      await _loadModels(type);
-      if (state.activeType == type && state.activeVersion == version) {
-        final clashVersion =
-            await coreBinaryManager.getLatestInstalledVersion(CoreType.clash) ??
-            '1.19.33';
-        state = state.copyWith(
-          activeType: CoreType.clash,
-          activeVersion: clashVersion,
-        );
-        await coreBinaryManager.switchCore(
-          CoreType.clash,
-          version: clashVersion,
-        );
-      }
+    if (!await coreBinaryManager.uninstallCore(type, version)) {
+      return;
+    }
+    _reload(type);
+    if (state.activeType == type && state.activeVersion == version) {
+      final fallback =
+          await coreBinaryManager.getLatestInstalledVersion(CoreType.clash) ??
+          _defaultVersion(CoreType.clash);
+      await coreBinaryManager.switchCore(CoreType.clash, version: fallback);
+      state = state.copyWith(
+        activeType: CoreType.clash,
+        activeVersion: fallback,
+      );
     }
   }
 
-  /// Проверить обновления.
-  Future<void> checkUpdates(CoreType type) async {
-    final updates = await coreBinaryManager.checkForUpdates(type);
+  void _reload(CoreType type) {
+    state = state.copyWith(models: {...state.models, type: _modelsOf(type)});
+  }
+
+  void _updateModel(
+    CoreType type,
+    String version, {
+    required CoreKernelStatus status,
+    double? progress,
+  }) {
+    final models = state.models[type] ?? const <CoreKernelModel>[];
     state = state.copyWith(
       models: {
         ...state.models,
         type: [
-          for (final m in state.models[type] ?? const [])
-            if (updates.any((u) => u.version == m.spec.version))
-              m.copyWith(status: CoreKernelStatus.idle)
+          for (final model in models)
+            if (model.spec.version == version)
+              model.copyWith(status: status, progress: progress)
             else
-              m,
+              model,
         ],
       },
     );
   }
+
+  List<CoreKernelModel> _modelsOf(CoreType type) {
+    final installed = coreBinaryManager
+        .getInstalledVersions(type)
+        .map(
+          (spec) => CoreKernelModel(
+            type: type,
+            spec: spec,
+            status: CoreKernelStatus.installed,
+          ),
+        );
+    final available = coreBinaryManager
+        .getAvailableVersions(type)
+        .where((spec) => !spec.isInstalled)
+        .map((spec) => CoreKernelModel(type: type, spec: spec));
+    return [...installed, ...available];
+  }
+
+  String _installedVersion(CoreType type) {
+    final installed = coreBinaryManager.getInstalledVersions(type);
+    return installed.isEmpty ? '' : installed.first.version;
+  }
+
+  String _defaultVersion(CoreType type) {
+    return switch (type) {
+      CoreType.clash => '1.19.33',
+      CoreType.xray => '1.8.1',
+    };
+  }
 }
 
-final coreKernelProvider = Provider<CoreKernelNotifier>((ref) {
-  return CoreKernelNotifier();
-});
+final coreKernelProvider =
+    NotifierProvider<CoreKernelNotifier, CoreKernelState>(
+      CoreKernelNotifier.new,
+    );
 
-/// Провайдер активного типа ядра.
 final activeCoreTypeProvider = Provider<CoreType>((ref) {
-  return ref.watch(coreKernelProvider).state.activeType;
+  return ref.watch(coreKernelProvider).activeType;
 });
 
-/// Провайдер активной версии ядра.
 final activeCoreVersionProvider = Provider<String>((ref) {
-  return ref.watch(coreKernelProvider).state.activeVersion;
+  return ref.watch(coreKernelProvider).activeVersion;
 });
 
-/// Провайдер моделей ядер для типа.
 final coreKernelModelsProvider =
     Provider.family<List<CoreKernelModel>, CoreType>((ref, type) {
-      return ref.watch(coreKernelProvider).state.models[type] ?? const [];
+      return ref.watch(coreKernelProvider).models[type] ?? const [];
     });

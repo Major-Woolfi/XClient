@@ -147,9 +147,10 @@ class TrackerInfoAnimatedList extends StatelessWidget {
               trackerInfo.id: index,
           };
     return ArrivalCacheExtentBuilder(
-      builder: () => KeyedAnimatedList<TrackerInfo>(
+      builder: (cacheExtent) => KeyedAnimatedList<TrackerInfo>(
         controller: controller,
         padding: padding,
+        scrollCacheExtent: cacheExtent,
         items: trackerInfos,
         keyOf: (trackerInfo) => trackerInfo.id,
         estimatedItemExtent: table?.rowHeight ?? recordListEstimatedExtent,

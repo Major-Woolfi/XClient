@@ -243,9 +243,9 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
             return Scrollbar(
               controller: _scrollController,
               child: ArrivalCacheExtentBuilder(
-                builder: () => isSearching
-                    ? _buildSearchResults(context, items, rowAt)
-                    : _buildReorderableList(context, items, rowAt),
+                builder: (cacheExtent) => isSearching
+                    ? _buildSearchResults(context, items, rowAt, cacheExtent)
+                    : _buildReorderableList(context, items, rowAt, cacheExtent),
               ),
             );
           },
@@ -283,10 +283,12 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
     BuildContext context,
     List<T> items,
     Widget Function(int index) rowAt,
+    ScrollCacheExtent? cacheExtent,
   ) {
     return PrismReorderableListView(
       controller: _scrollController,
       padding: _listPadding(context),
+      scrollCacheExtent: cacheExtent,
       itemBuilder: (_, index) => rowAt(index),
       itemExtent: widget.itemExtent,
       itemCount: items.length,
@@ -302,10 +304,12 @@ class _ListEditorPageState<T, K> extends ConsumerState<ListEditorPage<T, K>> {
     BuildContext context,
     List<T> items,
     Widget Function(int index) rowAt,
+    ScrollCacheExtent? cacheExtent,
   ) {
     return PrismListView(
       controller: _scrollController,
       padding: _listPadding(context),
+      scrollCacheExtent: cacheExtent,
       itemBuilder: (_, index) => rowAt(index),
       itemExtent: widget.itemExtent,
       itemCount: items.length,

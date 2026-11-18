@@ -82,6 +82,7 @@ Future<void> _loadSources(ProviderContainer container) async {
 }
 
 void main() {
+  final hasCoreSources = Directory('core/Clash.Meta/adapter').existsSync();
   TestWidgetsFlutterBinding.ensureInitialized();
 
   const proxyGroup = ProxyGroup(
@@ -941,9 +942,17 @@ void main() {
       ).allMatches(source))
         match.group(1)!,
     ]);
-  });
+  }, skip: hasCoreSources ? false : 'Clash.Meta sources are not checked out');
 
   group('proxy fields follow the option structs of the core', () {
+    if (!hasCoreSources) {
+      test(
+        'core sources are checked out',
+        () {},
+        skip: 'Clash.Meta sources are not checked out',
+      );
+      return;
+    }
     const root = 'core/Clash.Meta/adapter';
     final structs = {
       for (final file in Directory(
@@ -1167,7 +1176,7 @@ void main() {
           }
         }
       }
-    });
+    }, skip: hasCoreSources ? false : 'Clash.Meta sources are not checked out');
   });
 
   test('a nested field adds and drops the maps that hold it, in any case the '

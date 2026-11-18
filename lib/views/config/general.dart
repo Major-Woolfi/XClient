@@ -5,6 +5,7 @@ import 'package:xclient/l10n/l10n.dart';
 import 'package:xclient/models/models.dart';
 import 'package:xclient/providers/providers.dart';
 import 'package:xclient/views/config/on_demand.dart';
+import 'package:xclient/views/config/override.dart';
 import 'package:xclient/views/config/user_agents.dart';
 import 'package:xclient/widgets/widgets.dart';
 import 'package:flutter/services.dart';
@@ -391,6 +392,10 @@ class GeneralView extends ConsumerWidget {
           generateSection(
             title: appLocalizations.connection,
             items: _connectionItems(),
+          ),
+          OverrideSection(
+            title: appLocalizations.core,
+            spec: _generalOverrideSpec,
           ),
           generateSection(
             title: appLocalizations.logsAndDiagnostics,

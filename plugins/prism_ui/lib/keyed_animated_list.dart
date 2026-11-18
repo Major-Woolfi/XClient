@@ -20,6 +20,7 @@ class KeyedAnimatedList<T> extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final double estimatedItemExtent;
   final Duration duration;
+  final ScrollCacheExtent? scrollCacheExtent;
 
   const KeyedAnimatedList({
     super.key,
@@ -31,6 +32,7 @@ class KeyedAnimatedList<T> extends StatefulWidget {
     this.padding,
     this.estimatedItemExtent = SliverPrismList.defaultEstimatedItemExtent,
     this.duration = _defaultDuration,
+    this.scrollCacheExtent,
   });
 
   @override
@@ -189,6 +191,7 @@ class _KeyedAnimatedListState<T> extends State<KeyedAnimatedList<T>>
     return PrismListView(
       controller: widget.controller,
       padding: widget.padding,
+      scrollCacheExtent: widget.scrollCacheExtent,
       itemCount: _entries.length,
       estimatedItemExtent: widget.estimatedItemExtent,
       addRepaintBoundaries: false,

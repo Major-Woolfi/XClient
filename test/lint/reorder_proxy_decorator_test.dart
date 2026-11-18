@@ -43,7 +43,7 @@ void main() {
             entity.path.contains('/generated/')) {
           continue;
         }
-        final path = p.relative(entity.path);
+        final path = portablePath(p.relative(entity.path));
         if (_allowed.contains(path)) {
           continue;
         }

@@ -50,11 +50,11 @@ final class SystemExitCoordinator {
     try {
       await runStep(cleanup);
       await runStep(closeWindow);
+      await runStep(closeCore);
     } finally {
       watchdog.cancel();
     }
 
-    await runStep(closeCore);
     await runStep(_exitApplicationOnce);
 
     final error = firstError;

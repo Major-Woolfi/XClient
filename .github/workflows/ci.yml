@@ -31,16 +31,16 @@ jobs:
         run: flutter pub get
 
       - name: Dart format check
-        run: dart format --output=none lib test tool plugins setup.dart || true
+        run: dart format --output=none lib test tool plugins setup.dart
 
       - name: Flutter analyze
-        run: flutter analyze --no-fatal-infos || true
+        run: flutter analyze --no-fatal-infos
 
       - name: Run tests
-        run: dart run tool/test.dart -- --reporter expanded --coverage || true
+        run: dart run tool/test.dart -- --reporter expanded --coverage
 
       - name: Check coverage
-        run: dart run tool/check_coverage.dart coverage/lcov.info 75 || true
+        run: dart run tool/check_coverage.dart coverage/lcov.info 75
 
   plugins:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
           channel: stable
 
       - name: Check plugins
-        run: bash tool/check_plugins.sh || true
+        run: bash tool/check_plugins.sh
 
   go-core:
     runs-on: ubuntu-latest
@@ -71,7 +71,7 @@ jobs:
       - name: Go test and vet
         working-directory: ./core
         run: |
-          CGO_ENABLED=0 go test . || true
+          CGO_ENABLED=0 go test .
           CGO_ENABLED=0 go vet . ./cmd/...
           GOOS=android GOARCH=arm64 CGO_ENABLED=0 go vet -tags=with_gvisor . ./mobile ./tun ./platform
           GOOS=linux go vet ./platform
@@ -133,7 +133,7 @@ jobs:
             chmod +x gradlew
             ./gradlew :common:testDebugUnitTest :service:testDebugUnitTest :app:testDebugUnitTest \
               -Ptarget-platform=android-arm64 \
-              -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug || true
+              -x :app:compileFlutterBuildDebug -x :app:copyFlutterAssetsDebug
           else
             echo "Gradle wrapper not found, skipping Android unit tests"
           fi
@@ -167,7 +167,7 @@ jobs:
           toolchain: stable
 
       - name: Flutter build Linux debug
-        run: flutter build linux --debug || true
+        run: flutter build linux --debug
 
   desktop-windows:
     runs-on: windows-latest
@@ -196,7 +196,7 @@ jobs:
         run: choco install innosetup -y
 
       - name: Flutter build Windows debug
-        run: flutter build windows --debug || true
+        run: flutter build windows --debug
 
   desktop-macos:
     runs-on: macos-latest
@@ -222,7 +222,7 @@ jobs:
           toolchain: stable
 
       - name: Flutter build macOS debug
-        run: flutter build macos --debug || true
+        run: flutter build macos --debug
 
   rust:
     runs-on: ubuntu-latest
@@ -235,10 +235,10 @@ jobs:
           toolchain: stable
 
       - name: Rust fmt check
-        run: cargo fmt --manifest-path plugins/rust_api/rust/Cargo.toml -- --check || true
+        run: cargo fmt --manifest-path plugins/rust_api/rust/Cargo.toml -- --check
 
       - name: Rust test
-        run: cargo test --manifest-path plugins/rust_api/rust/Cargo.toml || true
+        run: cargo test --manifest-path plugins/rust_api/rust/Cargo.toml
 
   windows-helper-test:
     runs-on: windows-latest
@@ -251,7 +251,7 @@ jobs:
           toolchain: stable
 
       - name: Windows helper test (default)
-        run: cargo test --manifest-path services/helper/Cargo.toml || true
+        run: cargo test --manifest-path services/helper/Cargo.toml
 
       - name: Windows helper test (windows-service feature)
-        run: cargo test --manifest-path services/helper/Cargo.toml --features windows-service || true
+        run: cargo test --manifest-path services/helper/Cargo.toml --features windows-service
