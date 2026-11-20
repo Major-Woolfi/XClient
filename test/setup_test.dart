@@ -25,6 +25,35 @@ void main() {
       expect(setup.createBuildEnvironment('dev'), {'APP_ENV': 'dev'});
     });
 
+    test('runs the globally activated distributor through dart', () {
+      final args = setup.createDistributorArgs(
+        platform: 'windows',
+        targets: 'exe,zip',
+        flutterBuildArgs: const ['verbose'],
+      );
+
+      expect(args.take(5), [
+        'pub',
+        'global',
+        'run',
+        'flutter_distributor:main',
+        'package',
+      ]);
+      expect(args, contains('--flutter-build-args=verbose'));
+    });
+
+    test('maps the Android target architecture for the distributor', () {
+      final args = setup.createDistributorArgs(
+        platform: 'android',
+        targets: 'apk',
+        androidArch: 'arm64',
+        flutterBuildArgs: const [],
+      );
+
+      expect(args, contains('--build-target-platform=android-arm64'));
+      expect(args, isNot(contains(startsWith('--flutter-build-args'))));
+    });
+
     test('omits verbose from flutter build args by default', () {
       final args = setup.createFlutterBuildArgs(
         platform: 'android',

@@ -16,6 +16,7 @@ import (
 
 	"github.com/metacubex/mihomo/adapter/inbound"
 	"github.com/metacubex/mihomo/adapter/provider"
+	"github.com/metacubex/mihomo/component/profile/cachefile"
 	"github.com/metacubex/mihomo/component/updater"
 	"github.com/metacubex/mihomo/config"
 	"github.com/metacubex/mihomo/constant"
@@ -797,7 +798,13 @@ func TestApplyConfigTellsARejectedProfileFromAFailedCall(t *testing.T) {
 	home := t.TempDir()
 	previous := constant.Path.HomeDir()
 	constant.SetHomeDir(home)
-	t.Cleanup(func() { constant.SetHomeDir(previous) })
+	t.Cleanup(func() {
+		if cache := cachefile.Cache(); cache != nil && cache.DB != nil {
+			_ = cache.DB.Close()
+			cache.DB = nil
+		}
+		constant.SetHomeDir(previous)
+	})
 	withCurrentConfig(t, nil)
 	keepTunnel(t)
 	if err := os.WriteFile(filepath.Join(home, "config.yaml"), []byte("proxies: [unterminated\n"), 0o600); err != nil {
@@ -1005,6 +1012,15 @@ func TestTestDelayDoesNotSpendTheProbeBudgetQueueing(t *testing.T) {
 	delayTestSlots <- struct{}{}
 }
 
+type timedProxyProvider struct {
+	cp.ProxyProvider
+	timeout time.Duration
+}
+
+func (p timedProxyProvider) TestTimeout(string) (time.Duration, bool) {
+	return p.timeout, true
+}
+
 func TestTestDelayKeepsToTheTimeoutTheGroupNames(t *testing.T) {
 	const named = 100 * time.Millisecond
 	testURL := "http://" + blackHoleServer(t).String()
@@ -1015,7 +1031,8 @@ func TestTestDelayKeepsToTheTimeoutTheGroupNames(t *testing.T) {
 	if err != nil {
 		t.Fatalf("NewCompatibleProvider: %v", err)
 	}
-	tunnel.UpdateProxies(map[string]constant.Proxy{"node": node}, map[string]cp.ProxyProvider{"group": group})
+	timed := timedProxyProvider{ProxyProvider: group, timeout: named}
+	tunnel.UpdateProxies(map[string]constant.Proxy{"node": node}, map[string]cp.ProxyProvider{"group": timed})
 	t.Cleanup(func() { tunnel.UpdateProxies(nil, nil) })
 
 	start := time.Now()
@@ -1059,4 +1076,3 @@ func TestTestDelayStopsQueueingOnceTheTimeoutIsSpent(t *testing.T) {
 		t.Fatal("handleTestDelay outlived the timeout it was given, waiting for a slot")
 	}
 }
-

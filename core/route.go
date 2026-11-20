@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"maps"
 	"slices"
+	"strings"
 	"sync"
 	"time"
 
@@ -66,7 +67,7 @@ func routeStamp() (epoch, version uint64) {
 
 func readPicks() (map[string]string, map[string]uint32) {
 	picks := map[string]string{}
-	for name, proxy := range tunnel.Proxies() {
+	for name, proxy := range allProxies() {
 		if group, ok := adapterAs[pickableGroup](proxy); ok {
 			picks[name] = group.Now()
 		}
@@ -234,10 +235,10 @@ func resolveExit(host string, proxyName string) string {
 	if proxyName != "" {
 		return exitThrough(lookupProxy(proxyName), metadata)
 	}
-	if err != nil {
+	if err != nil || metadata == nil {
 		return ""
 	}
-	return ""
+	return resolveExitByRules(metadata)
 }
 
 func exitThrough(proxy constant.Proxy, metadata *constant.Metadata) string {
@@ -260,7 +261,7 @@ func exitOfChains(chains []string) string {
 	if len(chains) == 0 {
 		return ""
 	}
-	proxies := tunnel.Proxies()
+	proxies := allProxies()
 	for _, name := range slices.Backward(chains[1:]) {
 		if proxy := proxies[name]; proxy != nil && proxy.Type() == constant.LoadBalance {
 			return exitName(proxy)
@@ -272,8 +273,79 @@ func exitOfChains(chains []string) string {
 	return ""
 }
 
+func resolveExitByRules(metadata *constant.Metadata) string {
+	return exitNameOfProxy(resolveProxyByRules(metadata))
+}
+
+func resolveProxyByRules(metadata *constant.Metadata) constant.Proxy {
+	proxies := allProxies()
+	for _, rule := range tunnel.Rules() {
+		matched, adapterName := rule.Match(metadata, constant.RuleMatchHelper{})
+		if !matched {
+			continue
+		}
+		return proxyForAdapter(normalizeAdapterName(adapterName), proxies, metadata)
+	}
+	if proxy := proxies["DIRECT"]; proxy != nil {
+		return proxy
+	}
+	return nil
+}
+
+func proxyForAdapter(adapterName string, proxies map[string]constant.Proxy, metadata *constant.Metadata) constant.Proxy {
+	switch adapterName {
+	case "", "DIRECT", "REJECT", "REJECT-DROP", "PASS", "COMPATIBLE":
+		if proxy := proxies[adapterName]; proxy != nil {
+			return exitProxy(proxy, metadata)
+		}
+		if adapterName == "DIRECT" {
+			if proxy := proxies["DIRECT"]; proxy != nil {
+				return exitProxy(proxy, metadata)
+			}
+		}
+		return nil
+	}
+	if proxy := proxies[adapterName]; proxy != nil {
+		return exitProxy(proxy, metadata)
+	}
+	return nil
+}
+
+func exitProxy(proxy constant.Proxy, metadata *constant.Metadata) constant.Proxy {
+	for proxy != nil {
+		if proxy.Type() == constant.LoadBalance {
+			return proxy
+		}
+		next := proxy.Unwrap(metadata, false)
+		if next == nil {
+			return proxy
+		}
+		proxy = next
+	}
+	return nil
+}
+
+func exitNameOfProxy(proxy constant.Proxy) string {
+	if proxy == nil {
+		return ""
+	}
+	return exitName(proxy)
+}
+
+func normalizeAdapterName(name string) string {
+	switch strings.ToUpper(name) {
+	case "DIRECT", "REJECT", "REJECT-DROP", "PASS", "COMPATIBLE":
+		return strings.ToUpper(name)
+	default:
+		return name
+	}
+}
+
 // A load balancer spreads connections without the route moving, so it is the
 // exit; the server counts since a provider can swap the node behind a name.
 func exitName(proxy constant.Proxy) string {
+	if proxy == nil {
+		return ""
+	}
 	return fmt.Sprintf("%q %s %s", proxy.Name(), proxy.Type(), proxy.Addr())
 }

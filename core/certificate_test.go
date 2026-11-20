@@ -47,7 +47,7 @@ func TestDownloadRejectsAnUntrustedCertificateByDefault(t *testing.T) {
 func TestDownloadAcceptsAnUntrustedCertificateWhenCheckIsOff(t *testing.T) {
 	withSkipCertVerify(t, true)
 
-	if err := fetchSelfSigned(t); err != nil {
+	if err := fetchSelfSigned(t, mihomoHttp.WithCAOption(ca.Option{TLSConfig: relaxedTLSConfig()})); err != nil {
 		t.Fatalf("error = %v, want the self-signed server accepted", err)
 	}
 }

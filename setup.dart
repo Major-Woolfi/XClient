@@ -124,6 +124,30 @@ Map<String, String> createBuildEnvironment(String env) {
   return {'APP_ENV': env};
 }
 
+List<String> createDistributorArgs({
+  required String platform,
+  required String targets,
+  String? androidArch,
+  required List<String> flutterBuildArgs,
+}) {
+  return [
+    'pub',
+    'global',
+    'run',
+    'flutter_distributor:main',
+    'package',
+    '--skip-clean',
+    '--platform',
+    platform,
+    '--targets',
+    targets,
+    if (androidArch != null)
+      '--build-target-platform=${_androidFlutterTarget[androidArch]!}',
+    if (flutterBuildArgs.isNotEmpty)
+      '--flutter-build-args=${flutterBuildArgs.join(',')}',
+  ];
+}
+
 /// Пакеты, чей хук сборки `pubspec.yaml` становится no-op.
 List<String> packagesNotBuildingAssets(String pubspec) {
   final document = loadYaml(pubspec);
@@ -184,19 +208,13 @@ Future<int> _package(
   }
 
   final process = await Process.start(
-    'flutter_distributor',
-    [
-      'package',
-      '--skip-clean',
-      '--platform',
-      platform,
-      '--targets',
-      targets,
-      if (androidArch != null)
-        '--build-target-platform=${_androidFlutterTarget[androidArch]!}',
-      if (flutterBuildArgs.isNotEmpty)
-        '--flutter-build-args=${flutterBuildArgs.join(',')}',
-    ],
+    'dart',
+    createDistributorArgs(
+      platform: platform,
+      targets: targets,
+      androidArch: androidArch,
+      flutterBuildArgs: flutterBuildArgs,
+    ),
     includeParentEnvironment: true,
     environment: {if (platform == 'linux') 'ARCH': _appImageArch()},
     runInShell: Platform.isWindows,

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"sync"
@@ -23,6 +24,7 @@ import (
 	LC "github.com/metacubex/mihomo/listener/config"
 	"github.com/metacubex/mihomo/log"
 	"github.com/metacubex/mihomo/tunnel"
+	"go.yaml.in/yaml/v3"
 )
 
 var (
@@ -63,10 +65,14 @@ func handleGetProxyDefinition(params NameParams) (map[string]any, error) {
 	}
 	if proxy := lookupProxy(name); proxy != nil {
 		if pdName := proxy.ProxyInfo().ProviderName; pdName != "" {
-			_, running := tunnel.Providers()[pdName]
-			_, declared := raw.ProxyProvider[pdName]
-			if !running || !declared {
+			if _, running := tunnel.Providers()[pdName]; !running {
 				return nil, nil
+			}
+			if _, declared := raw.ProxyProvider[pdName]; !declared {
+				return nil, nil
+			}
+			if mapping := providerProxyDefinition(pdName, proxy.Name()); mapping != nil {
+				return mapping, nil
 			}
 			return nil, nil
 		}
@@ -317,4 +323,180 @@ func applyAuthentication(cfg *config.Config, authentication []string) {
 		cfg.General.SkipAuthPrefixes = nil
 		inbound.SetSkipAuthPrefixes(nil)
 	}
+}
+
+func providerProxyDefinition(pdName, wantName string) map[string]any {
+	raw, err := readRawConfig(runningConfigPath())
+	if err != nil {
+		return nil
+	}
+	declared, ok := raw.ProxyProvider[pdName]
+	if !ok {
+		return nil
+	}
+	mappings := providerDeclaredMappings(declared)
+	exclude := providerRegexp(declared, "exclude-filter")
+	filter := providerRegexp(declared, "filter")
+	excludeTypes := providerExcludeTypes(declared)
+	prefix, suffix, overrideFields := providerOverride(declared)
+	for _, mapping := range mappings {
+		name, _ := mapping["name"].(string)
+		if name == "" {
+			continue
+		}
+		if exclude != nil && exclude.MatchString(name) {
+			continue
+		}
+		if filter != nil && !filter.MatchString(name) {
+			continue
+		}
+		if shouldExcludeProxyType(mapping, excludeTypes) {
+			continue
+		}
+		built := cloneStringAnyMap(mapping)
+		builtName := prefix + name + suffix
+		built["name"] = builtName
+		for k, v := range overrideFields {
+			built[k] = v
+		}
+		if builtName == wantName {
+			return built
+		}
+	}
+	return nil
+}
+
+func providerDeclaredMappings(declared map[string]any) []map[string]any {
+	typeName, _ := declared["type"].(string)
+	switch typeName {
+	case "inline":
+		return anySliceToStringAnyMaps(declared["payload"])
+	case "file":
+		path, _ := declared["path"].(string)
+		if path == "" {
+			return nil
+		}
+		if !filepath.IsAbs(path) {
+			path = filepath.Join(filepath.Dir(runningConfigPath()), path)
+		}
+		buf, err := os.ReadFile(path)
+		if err != nil {
+			return nil
+		}
+		var schema struct {
+			Proxies []map[string]any `yaml:"proxies"`
+		}
+		if err := yaml.Unmarshal(buf, &schema); err != nil {
+			return nil
+		}
+		return schema.Proxies
+	default:
+		return nil
+	}
+}
+
+func anySliceToStringAnyMaps(v any) []map[string]any {
+	items, ok := v.([]any)
+	if !ok {
+		if typed, ok := v.([]map[string]any); ok {
+			return typed
+		}
+		return nil
+	}
+	out := make([]map[string]any, 0, len(items))
+	for _, item := range items {
+		switch m := item.(type) {
+		case map[string]any:
+			out = append(out, m)
+		case map[any]any:
+			converted := make(map[string]any, len(m))
+			for k, v := range m {
+				ks, ok := k.(string)
+				if !ok {
+					continue
+				}
+				converted[ks] = v
+			}
+			out = append(out, converted)
+		}
+	}
+	return out
+}
+
+func providerRegexp(declared map[string]any, key string) *regexp.Regexp {
+	expr, _ := declared[key].(string)
+	if expr == "" {
+		return nil
+	}
+	re, err := regexp.Compile(expr)
+	if err != nil {
+		return nil
+	}
+	return re
+}
+
+func providerExcludeTypes(declared map[string]any) []string {
+	raw, _ := declared["exclude-type"].(string)
+	if raw == "" {
+		return nil
+	}
+	parts := strings.Split(raw, "|")
+	out := make([]string, 0, len(parts))
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		if part != "" {
+			out = append(out, part)
+		}
+	}
+	return out
+}
+
+func shouldExcludeProxyType(mapping map[string]any, excludeTypes []string) bool {
+	if len(excludeTypes) == 0 {
+		return false
+	}
+	t, _ := mapping["type"].(string)
+	for _, exclude := range excludeTypes {
+		if strings.EqualFold(t, exclude) {
+			return true
+		}
+	}
+	return false
+}
+
+func providerOverride(declared map[string]any) (prefix, suffix string, fields map[string]any) {
+	fields = map[string]any{}
+	override, ok := declared["override"].(map[string]any)
+	if !ok {
+		// try map[any]any
+		if m, ok := declared["override"].(map[any]any); ok {
+			override = make(map[string]any, len(m))
+			for k, v := range m {
+				if ks, ok := k.(string); ok {
+					override[ks] = v
+				}
+			}
+		} else {
+			return "", "", fields
+		}
+	}
+	prefix, _ = override["additional-prefix"].(string)
+	suffix, _ = override["additional-suffix"].(string)
+	for k, v := range override {
+		switch k {
+		case "additional-prefix", "additional-suffix":
+			continue
+		default:
+			fields[k] = v
+		}
+	}
+	return prefix, suffix, fields
+}
+
+func cloneStringAnyMap(in map[string]any) map[string]any {
+	out := make(map[string]any, len(in))
+	for k, v := range in {
+		out[k] = v
+	}
+	return out
 }

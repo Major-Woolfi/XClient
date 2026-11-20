@@ -101,6 +101,7 @@ func handleShutdown() {
 }
 
 func handleForceGC() {
+	invalidateProxyView()
 	debug.FreeOSMemory()
 }
 

@@ -15,6 +15,7 @@ import (
 	"github.com/metacubex/mihomo/adapter/provider"
 	"github.com/metacubex/mihomo/common/convert"
 	"github.com/metacubex/mihomo/constant"
+	cp "github.com/metacubex/mihomo/constant/provider"
 	"github.com/metacubex/mihomo/log"
 	"github.com/metacubex/mihomo/tunnel"
 )
@@ -37,7 +38,83 @@ type pickableGroup interface {
 }
 
 func lookupProxy(name string) constant.Proxy {
-	return 	tunnel.Proxies()[name]
+	return allProxies()[name]
+}
+
+// Upstream mihomo keeps provider nodes out of tunnel.Proxies and exposes no
+// notification when a subscription replaces its list, so the merged view is
+// cached against the provider versions and the two maps' identities.
+type proxyViewSignature struct {
+	base      map[string]constant.Proxy
+	providers map[string]cp.ProxyProvider
+	versions  map[string]uint32
+}
+
+type proxyViewEntry struct {
+	signature proxyViewSignature
+	result    map[string]constant.Proxy
+}
+
+var (
+	proxyViewMu    sync.Mutex
+	proxyViewCache *proxyViewEntry
+)
+
+func (s proxyViewSignature) matches(other proxyViewSignature) bool {
+	if len(s.base) != len(other.base) || len(s.providers) != len(other.providers) {
+		return false
+	}
+	for name, proxy := range s.base {
+		if other.base[name] != proxy {
+			return false
+		}
+	}
+	for name, provider := range s.providers {
+		otherProvider, exists := other.providers[name]
+		if !exists || otherProvider != provider || s.versions[name] != other.versions[name] {
+			return false
+		}
+	}
+	return true
+}
+
+func allProxies() map[string]constant.Proxy {
+	proxyViewMu.Lock()
+	defer proxyViewMu.Unlock()
+
+	base := tunnel.Proxies()
+	providers := tunnel.Providers()
+	signature := proxyViewSignature{
+		base:      base,
+		providers: providers,
+		versions:  make(map[string]uint32, len(providers)),
+	}
+	for name, provider := range providers {
+		signature.versions[name] = provider.Version()
+	}
+	if cached := proxyViewCache; cached != nil && cached.signature.matches(signature) {
+		return cached.result
+	}
+
+	merged := make(map[string]constant.Proxy, len(base))
+	for name, proxy := range base {
+		merged[name] = proxy
+	}
+	for _, provider := range providers {
+		for _, proxy := range provider.Proxies() {
+			if proxy != nil {
+				merged[proxy.Name()] = proxy
+			}
+		}
+	}
+	proxyViewCache = &proxyViewEntry{signature: signature, result: merged}
+	return merged
+}
+
+func invalidateProxyView() {
+	proxyViewMu.Lock()
+	proxyViewCache = nil
+	proxyViewMu.Unlock()
 }
 
 func adapterAs[T any](proxy constant.Proxy) (group T, ok bool) {
@@ -84,7 +161,7 @@ func proxyGroupNames(
 }
 
 func handleGetProxies() ProxiesData {
-	proxies := 	tunnel.Proxies()
+	proxies := allProxies()
 
 	names := proxyGroupNames(slices.Collect(maps.Keys(proxies)), func(name string) (constant.AdapterType, bool) {
 		p, ok := proxies[name]
@@ -205,7 +282,7 @@ func handleChangeProxy(params *ChangeProxyParams) *ChangeProxyResult {
 func patchSelectGroup(mapping map[string]string) {
 	selectMu.Lock()
 	defer selectMu.Unlock()
-	proxies := 	tunnel.Proxies()
+	proxies := allProxies()
 	for name, selected := range mapping {
 		if selector, ok := adapterAs[outboundgroup.SelectAble](proxies[name]); ok {
 			selector.ForceSet(selected)

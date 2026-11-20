@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  IS_STABLE: ${{ !contains(github.ref, '-') }}
+  IS_STABLE: ${{ (github.event_name == 'workflow_dispatch' && inputs.version != '' && !contains(inputs.version, '-')) || (github.event_name == 'push' && !contains(github.ref, '-')) }}
   FLUTTER_VERSION: '3.50.0'
   GO_VERSION: '1.27.1'
   NDK_VERSION: r28c
@@ -158,8 +158,31 @@ jobs:
     name: Release
     needs: [ build ]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
     steps:
+      - name: Resolve release version
+        id: version
+        shell: bash
+        run: |
+          event='${{ github.event_name }}'
+          requested='${{ inputs.version }}'
+          if [[ "$event" == 'workflow_dispatch' && -n "$requested" ]]; then
+            version="$requested"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          if [[ -z "$version" ]]; then
+            echo "::error::A release needs a tag or the version input."
+            exit 1
+          fi
+          stable=true
+          if [[ "$version" == *-* ]]; then
+            stable=false
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          echo "stable=$stable" >> "$GITHUB_OUTPUT"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -191,57 +214,64 @@ jobs:
       - name: Skip native build hooks
         run: |
           yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
+          yq -i '.hooks.user_defines.rust_api.build_assets = false' pubspec.yaml
 
       - name: Generate release notes
         shell: bash
         env:
-          IS_STABLE: ${{ env.IS_STABLE == 'true' }}
-          TAG: ${{ github.ref_name }}
+          STABLE: ${{ steps.version.outputs.stable }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          target=()
-          if [[ "$IS_STABLE" == 'true' ]]; then
-            target=(--tag "$TAG")
+          if [[ "$STABLE" == 'true' ]]; then
+            dart run tool/changelog.dart release --version "$VERSION"
+            dart run tool/changelog.dart render release --tag "$TAG" --out release.md
           else
             dart run tool/changelog.dart build --unreleased
+            dart run tool/changelog.dart render release --out release.md
           fi
-          dart run tool/changelog.dart render release "${target[@]}" --out release.md
 
       - name: Patch release.md
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
-          sed "s|VERSION|$version|g" ./.github/release_template.md >> release.md
+          printf '\n' >> release.md
+          sed "s|VERSION|$VERSION|g" ./.github/release_template.md >> release.md
 
       - name: Generate sha256
-        if: ${{ env.IS_STABLE == 'true' }}
+        if: ${{ steps.version.outputs.stable == 'true' }}
         run: |
           cd ./dist
           sha256sum ./* > SHA256SUMS
 
       - name: Release
-        if: ${{ env.IS_STABLE == 'true' }}
+        if: ${{ steps.version.outputs.stable == 'true' }}
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
           files: ./dist/*
           body_path: './release.md'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Homebrew Cask Source Dir
-        if: ${{ env.IS_STABLE == 'true' }}
+        if: ${{ steps.version.outputs.stable == 'true' }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          version=$(echo "${{ github.ref_name }}" | sed 's/^v//')
-          arm_sha=$(sha256sum "./dist/XClient-${version}-macos-arm64.dmg" | awk '{print $1}')
-          amd_sha=$(sha256sum "./dist/XClient-${version}-macos-amd64.dmg" | awk '{print $1}')
+          arm_sha=$(sha256sum "./dist/XClient-${VERSION}-macos-arm64.dmg" | awk '{print $1}')
+          amd_sha=$(sha256sum "./dist/XClient-${VERSION}-macos-amd64.dmg" | awk '{print $1}')
 
           mkdir -p ./brew/Casks
           sed \
-            -e "s|VERSION|$version|g" \
+            -e "s|VERSION|$VERSION|g" \
             -e "s|ARM_SHA256|$arm_sha|g" \
             -e "s|AMD_SHA256|$amd_sha|g" \
-            ./.github/release_template.md > ./brew/Casks/XClient.rb
+            ./.github/homebrew_cask_template.rb > ./brew/Casks/XClient.rb
 
       - name: Push to Homebrew tap
-        if: ${{ env.IS_STABLE == 'true' }}
+        if: ${{ steps.version.outputs.stable == 'true' }}
         uses: cpina/github-action-push-to-another-repository@v1.7.2
         env:
           SSH_DEPLOY_KEY: ${{ secrets.HOMEBREW_SSH_DEPLOY_KEY }}
@@ -252,7 +282,7 @@ jobs:
           user-name: 'chen08029'
           user-email: 'Major-Woolfi@gmail.com'
           target-branch: main
-          commit-message: Update Homebrew cask from ${{ github.ref_name }}
+          commit-message: Update Homebrew cask from ${{ steps.version.outputs.tag }}
           target-directory: /
 
       - name: Create Fdroid Source Dir

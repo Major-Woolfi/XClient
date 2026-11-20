@@ -104,4 +104,5 @@ func reconcileGeoUpdater() {
 		registerGeoUpdater()
 		return
 	}
+	stopGeoUpdater()
 }

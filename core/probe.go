@@ -183,6 +183,12 @@ func (d *probeDialer) route() *probeRoute {
 	return last.resolve()
 }
 
+func (d *probeDialer) lastConn() *routedConn {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	return d.last
+}
+
 // The tunnel registers the tracker, which settles the route, before it relays
 // the first byte back, so the request never has to wait for the route.
 type routedConn struct {
@@ -289,6 +295,7 @@ func runProbe(parent context.Context, req probeRequest) *ProbeResult {
 	if err != nil {
 		return fail(err)
 	}
+	relaxCertVerify(tlsConfig)
 
 	timeout := req.timeout
 	if timeout <= 0 {
@@ -346,6 +353,12 @@ func runProbe(parent context.Context, req probeRequest) *ProbeResult {
 	result.Url = response.Request.URL.String()
 	if route := dialer.route(); route != nil {
 		result.Chains = route.chains
+	} else if req.proxyName == "" {
+		if last := dialer.lastConn(); last != nil && last.metadata != nil {
+			if proxy := resolveProxyByRules(last.metadata); proxy != nil {
+				result.Chains = []string{proxy.Name()}
+			}
+		}
 	}
 	if req.maxBody > 0 {
 		result.Body = readProbeBody(response.Body, req.maxBody, req.until)

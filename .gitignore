@@ -77,6 +77,8 @@ docs/
 # ============================================================================
 # Android
 # ============================================================================
+/android/.kotlin
+/android/.gradle
 /android/app/debug
 /android/app/profile
 /android/app/release

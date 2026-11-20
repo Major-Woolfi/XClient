@@ -13,6 +13,7 @@ import (
 	"testing"
 
 	"github.com/metacubex/mihomo/adapter/provider"
+	"github.com/metacubex/mihomo/component/profile/cachefile"
 	"github.com/metacubex/mihomo/config"
 	"github.com/metacubex/mihomo/constant"
 	cp "github.com/metacubex/mihomo/constant/provider"
@@ -324,7 +325,13 @@ func TestHandleGetProxyDefinitionReadsAProviderProxyAsItsProviderBuildsIt(t *tes
 	home := t.TempDir()
 	previous := constant.Path.HomeDir()
 	constant.SetHomeDir(home)
-	t.Cleanup(func() { constant.SetHomeDir(previous) })
+	t.Cleanup(func() {
+		if cache := cachefile.Cache(); cache != nil && cache.DB != nil {
+			_ = cache.DB.Close()
+			cache.DB = nil
+		}
+		constant.SetHomeDir(previous)
+	})
 	const subscription = `proxies:
   - {name: a, type: socks5, server: 127.0.0.1, port: 1080}
   - {name: b, type: socks5, server: 127.0.0.2, port: 1080}

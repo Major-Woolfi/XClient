@@ -28,6 +28,12 @@ func relaxCertVerify(tlsConfig *tls.Config) {
 	}
 }
 
+func relaxedTLSConfig() *tls.Config {
+	config := &tls.Config{MinVersion: tls.VersionTLS12}
+	relaxCertVerify(config)
+	return config
+}
+
 func verifyPeer(tlsConfig *tls.Config, state tls.ConnectionState) error {
 	opts := x509.VerifyOptions{
 		Roots:         tlsConfig.RootCAs,
@@ -43,4 +49,3 @@ func verifyPeer(tlsConfig *tls.Config, state tls.ConnectionState) error {
 	_, err := state.PeerCertificates[0].Verify(opts)
 	return err
 }
-
